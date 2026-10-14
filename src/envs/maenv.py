@@ -30,11 +30,22 @@ class MGEnv(ParallelEnv):
         render_mode="human",
     ):
         self.render_mode = render_mode
+        self.battery_model_version = "efficiency_balance_v2"
+        self.time_step_hours = float(config.get("time_step_hours", 1.0))
+        if not np.isfinite(self.time_step_hours) or self.time_step_hours <= 0:
+            raise ValueError("time_step_hours must be finite and positive")
         self.n_agents = len(config["data"])
         self.state = None
         self.possible_agents = ["agent" + str(r + 1) for r in range(self.n_agents)]
         agents_config = {agent.pop("agent_name"): agent for agent in config["data"]}
         self.params = self.params_init(agents_config)
+        for key in ("battery_caps", "battery_charge_max", "battery_discharge_max"):
+            if not np.all(np.isfinite(self.params[key]) & (self.params[key] > 0)):
+                raise ValueError(f"{key} must be finite and positive")
+        for key in ("raw_ch", "raw_dis"):
+            if not np.all(np.isfinite(self.params[key]) & (self.params[key] > 0)
+                          & (self.params[key] <= 1)):
+                raise ValueError(f"{key} must be an efficiency in (0, 1]")
 
         self.action_lows = np.stack(
             [
@@ -98,24 +109,15 @@ class MGEnv(ParallelEnv):
         price_data = np.array(read_csv(data_path / "price.csv", header=None))
         pv_data = np.array(read_csv(data_path / "pv.csv", header=None))
         load_data = np.array(read_csv(data_path / "load.csv", header=None))
-        price_min = float(np.min(price_data))
-        price_max = float(np.max(price_data))
-
         self.spaces = {}
         for agent in self.possible_agents:
             base_low = np.array(agents_config[agent]["low_state"], dtype=np.float32)
             base_high = np.array(agents_config[agent]["high_state"], dtype=np.float32)
-            obs_low = np.concatenate(
-                [base_low, np.array([price_min, 0.0], dtype=np.float32)]
-            )
-            obs_high = np.concatenate(
-                [base_high, np.array([price_max, 1.0], dtype=np.float32)]
-            )
             self.spaces[agent] = {
                 "observation": spaces.Box(
-                    low=obs_low,
-                    high=obs_high,
-                    shape=(obs_low.shape[0],),
+                    low=base_low,
+                    high=base_high,
+                    shape=base_low.shape,
                 ),
                 "action": spaces.Box(
                     low=self.action_lows[self.possible_agents.index(agent)],
@@ -134,14 +136,12 @@ class MGEnv(ParallelEnv):
         perm = self.rng.permutation(num_rows)
         split_point = int(num_rows * 0.8)
         self.train_indices = perm[:split_point]
-        self.test_indices = perm[split_point:]
+        heldout = perm[split_point:]
+        self.validation_indices = heldout[:len(heldout) // 2]
+        self.test_indices = heldout[len(heldout) // 2:]
 
-        pv_train = pv_data[self.train_indices]
-        load_train = load_data[self.train_indices]
-        pv_sd = standardize_data(pv_data, mean=pv_train.mean(), std=pv_train.std())
-        load_sd = standardize_data(
-            load_data, mean=load_train.mean(), std=load_train.std()
-        )
+        pv_sd = standardize_data(pv_data)
+        load_sd = standardize_data(load_data)
 
         self.data_dict = {"price": price_data, "load_pv": load_data - pv_data}
         for key in agents_config.keys():
@@ -167,6 +167,7 @@ class MGEnv(ParallelEnv):
         self.ep_buffer = []
         self.is_testing = False
         self.test_source = "test"
+        self.trajectory_context = {}
 
         self.bucket_size = 10_000
         self.episode_limit = self.data_shape[1]
@@ -196,16 +197,12 @@ class MGEnv(ParallelEnv):
 
     def get_obs(self):
         """返回一个长度为 n_agents 的列表，每个元素是对应 Agent 的 NumPy 数组"""
-        time_frac = self.idx[1] / max(self.episode_limit - 1, 1)
-        price = float(self.data_dict["price"][tuple(self.idx)])
         return [
             np.array(
                 [
                     self.data_dict[agent_id]["load_data"][tuple(self.idx)],
                     self.data_dict[agent_id]["pv_data"][tuple(self.idx)],
                     self.params["socs"][i],
-                    price,
-                    time_frac,
                 ],
                 dtype=np.float32,
             )
@@ -225,6 +222,14 @@ class MGEnv(ParallelEnv):
             "battery_caps": np.array(
                 [agents_config[a]["battery_cap"] for a in self.possible_agents],
                 dtype=float,
+            ),
+            "battery_charge_max": np.array(
+                [agents_config[a]["battery_charge_max"]
+                 for a in self.possible_agents], dtype=float,
+            ),
+            "battery_discharge_max": np.array(
+                [agents_config[a]["battery_discharge_max"]
+                 for a in self.possible_agents], dtype=float,
             ),
             "battery_punishment_params": np.array(
                 [
@@ -296,6 +301,7 @@ class MGEnv(ParallelEnv):
         self.ep_counter += 1
         self.is_testing = False
         self.test_source = "train"
+        self.trajectory_context = {}
         self._ep_steps = 0
         self._ep_total_power_loss = 0.0
         self._ep_grid_purchase_cost = 0.0
@@ -317,17 +323,29 @@ class MGEnv(ParallelEnv):
         # 严格注意：框架的 runner.py 里写的是 self.env.reset()，它只认观察列表
         return self.get_obs()
 
-    def reset_test(self, seed=None, source: str = "test"):
+    def reset_test(self, seed=None, source: str = "test", row_idx=None,
+                   initial_soc=None, trajectory_context=None):
         rng = np.random.default_rng(seed) if seed is not None else self.rng
-        if source == "test":
-            row_index = int(rng.choice(self.test_indices))
-        elif source == "train":
-            row_index = int(rng.choice(self.train_indices))
+        subsets = {"test": self.test_indices, "validation": self.validation_indices,
+                   "train": self.train_indices, "all": np.arange(self.data_shape[0])}
+        if source not in subsets:
+            raise ValueError(f"Unknown evaluation source: {source}")
+        indices = subsets[source]
+        if row_idx is not None:
+            if isinstance(row_idx, bool) or int(row_idx) != row_idx or row_idx not in indices:
+                raise ValueError(f"row_idx {row_idx} is not in the {source} split")
+            row_index = int(row_idx)
         else:
-            num_rows = self.data_shape[0]
-            row_index = int(rng.integers(num_rows))
+            row_index = int(rng.choice(indices))
+        if initial_soc is None:
+            socs = rng.uniform(0.2, 0.5, size=self.n_agents)
+        else:
+            socs = np.broadcast_to(np.asarray(initial_soc, dtype=float), (self.n_agents,)).copy()
+            if not np.all(np.isfinite(socs) & (socs >= 0.2) & (socs <= 0.8)):
+                raise ValueError("initial_soc must be finite and in [0.2, 0.8]")
         self.idx = [row_index, 0]
-        self.params["socs"] = rng.uniform(0.2, 0.5, size=self.n_agents)
+        self.params["socs"] = socs
+        self.trajectory_context = dict(trajectory_context or {})
         self.ep_buffer = []
         self.ep_counter += 1
         self.is_testing = True
@@ -365,130 +383,61 @@ class MGEnv(ParallelEnv):
         socs = self.params["socs"].copy()
         battery_caps = self.params["battery_caps"]
         battery_punishment_params = self.params["battery_punishment_params"]
-        last_socs = socs
-
         pds = actions_raw[:, 0] * self.params["dg_max"]
-        max_charge_power = (0.8 - last_socs) * battery_caps / self.params["raw_ch"]
-        max_discharge_power = (last_socs - 0.2) * battery_caps / self.params["raw_dis"]
-        pbs_requested = np.where(
+        pbs_requested = actions_raw[:, 1] * np.where(
             actions_raw[:, 1] < 0,
-            actions_raw[:, 1] * max_charge_power,
-            actions_raw[:, 1] * max_discharge_power,
+            self.params["battery_charge_max"],
+            self.params["battery_discharge_max"],
         )
-        pbs = np.clip(pbs_requested, -max_charge_power, max_discharge_power)
+        dt = self.time_step_hours
+        eta_ch, eta_dis = self.params["raw_ch"], self.params["raw_dis"]
+        max_discharge = (socs - 0.2) * battery_caps * eta_dis / dt
+        max_charge = (0.8 - socs) * battery_caps / (eta_ch * dt)
+        pbs = np.clip(pbs_requested, -max_charge, max_discharge)
         battery_action_clip = np.abs(pbs_requested - pbs)
-        battery_punishment = -battery_punishment_params * battery_action_clip
-
-        delta_soc = np.where(
-            pbs < 0,
-            -self.params["raw_ch"] * pbs / battery_caps,
-            -self.params["raw_dis"] * pbs / battery_caps,
+        battery_punishment = -battery_punishment_params * (
+            battery_action_clip
         )
-        socs_raw = last_socs + delta_soc
-        socs = np.clip(last_socs + delta_soc, 0.2, 0.8)
+
+        last_socs = socs.copy()
+        socs_raw = last_socs + np.where(
+            pbs_requested < 0, -eta_ch * pbs_requested,
+            -pbs_requested / eta_dis,
+        ) * dt / battery_caps
+        socs = np.clip(last_socs + np.where(
+            pbs < 0, -eta_ch * pbs, -pbs / eta_dis,
+        ) * dt / battery_caps, 0.2, 0.8)
 
         self.params["socs"] = socs
         pg = self.data_dict["load_pv"][tuple(self.idx)] - sum(pds) - sum(pbs)
 
-        bess_cost = np.abs(
-            self.params["bessa"] * pbs**2
-            + self.params["bessb"] * np.abs(pbs)
+        x = pbs + 3.0 * battery_caps * (1.0 - socs)
+        bess_cost = -np.abs(
+            self.params["bessa"] * x**2
+            + self.params["bessb"] * x
             + self.params["bessc"]
         )
-
-        generate_costs = (
+        generate_costs = -(
             self.params["costa"] * pds**2
             + self.params["costb"] * pds
             + self.params["costc"]
         )
+        price = float(self.data_dict["price"][tuple(self.idx)])
+        buy_cost = -abs(float(pg)) * price
+        eco_reward = generate_costs + bess_cost + buy_cost
+        env_reward = -pds * self.params["env_param"]
+        punishment = battery_punishment
+        reward_list = eco_reward + env_reward + punishment
+
         baseline_pg = max(float(self.data_dict["load_pv"][tuple(self.idx)]), 0.0)
-        baseline_grid_purchase_cost = (
-            baseline_pg * self.data_dict["price"][tuple(self.idx)]
-        )
-        actual_grid_purchase_cost = (
-            max(float(pg), 0.0) * self.data_dict["price"][tuple(self.idx)]
-        )
-        if self.reward_mode == "milp_economic":
-            split_weights = self.params["split_ratio"] / max(
-                np.sum(self.params["split_ratio"]), 1e-6
-            )
-            grid_cost_share = actual_grid_purchase_cost * split_weights
-            env_cost = pds * self.params["env_param"]
-            curtailment = np.full(self.n_agents, np.maximum(-pg, 0.0), dtype=float)
-            curtailment_cost = (
-                self.curtailment_penalty_weight * curtailment * split_weights
-            )
-            economic_cost = (
-                grid_cost_share
-                + generate_costs
-                + bess_cost
-                + env_cost
-                + curtailment_cost
-            )
-            economic_reward = -economic_cost
-            weighted_generate_costs = -generate_costs
-            weighted_bess_cost = -bess_cost
-            weighted_buy_cost = -grid_cost_share
-            weighted_curtailment_cost = -curtailment_cost
-        elif self.buy_reward_mode == "relative_saving":
-            buy_signal = self.buy_reward_scale * (
-                (baseline_grid_purchase_cost - actual_grid_purchase_cost)
-                / max(baseline_grid_purchase_cost, 1e-6)
-            )
-            buy_cost = float(buy_signal)
-            weighted_buy_cost = self.buy_cost_weight * buy_cost
-            weighted_generate_costs = self.generate_cost_weight * (-generate_costs)
-            weighted_bess_cost = self.bess_cost_weight * (-bess_cost)
-            env_cost = pds * self.params["env_param"]
-            weighted_curtailment_cost = -self.curtailment_penalty_weight * np.full(
-                self.n_agents, np.maximum(-pg, 0.0), dtype=float
-            )
-            economic_cost = (
-                actual_grid_purchase_cost
-                + np.sum(generate_costs)
-                + np.sum(bess_cost)
-                + np.sum(env_cost)
-                + np.sum(np.maximum(-pg, 0.0)) * self.curtailment_penalty_weight
-            )
-            economic_reward = -economic_cost
-        else:
-            buy_cost = -actual_grid_purchase_cost
-            weighted_buy_cost = self.buy_cost_weight * buy_cost
-            weighted_generate_costs = self.generate_cost_weight * (-generate_costs)
-            weighted_bess_cost = self.bess_cost_weight * (-bess_cost)
-            env_cost = pds * self.params["env_param"]
-            weighted_curtailment_cost = -self.curtailment_penalty_weight * np.full(
-                self.n_agents, np.maximum(-pg, 0.0), dtype=float
-            )
-            economic_cost = (
-                actual_grid_purchase_cost
-                + np.sum(generate_costs)
-                + np.sum(bess_cost)
-                + np.sum(env_cost)
-                + np.sum(np.maximum(-pg, 0.0)) * self.curtailment_penalty_weight
-            )
-            economic_reward = -economic_cost
-
-        env_reward = self.env_reward_weight * (-pds * self.params["env_param"])
-        punishment = self.battery_punishment_weight * battery_punishment
-        curtailment = np.full(self.n_agents, np.maximum(-pg, 0.0), dtype=float)
-        curtailment_penalty = weighted_curtailment_cost
-        soc_reserve_penalty = -self.soc_reserve_weight * (
-            np.maximum(self.soc_reserve_target - socs, 0.0)
-            + np.maximum(socs_raw - 0.8, 0.0)
-        )
-        eco_reward = (
-            weighted_generate_costs
-            + weighted_bess_cost
-            + weighted_buy_cost
-            + curtailment_penalty
-        )
-
-        # 每一个 Agent 算出来的单兵奖励列表
-        if self.reward_mode == "milp_economic":
-            reward_list = economic_reward + punishment + soc_reserve_penalty
-        else:
-            reward_list = eco_reward + env_reward + punishment + soc_reserve_penalty
+        baseline_grid_purchase_cost = baseline_pg * price
+        actual_grid_purchase_cost = abs(float(pg)) * price
+        economic_reward = eco_reward
+        weighted_generate_costs = generate_costs
+        weighted_bess_cost = bess_cost
+        weighted_buy_cost = np.full(self.n_agents, buy_cost, dtype=float)
+        curtailment_penalty = np.zeros(self.n_agents, dtype=float)
+        soc_reserve_penalty = np.zeros(self.n_agents, dtype=float)
 
         step_total_power_loss = float(np.abs(pg))
         step_grid_purchase_cost = float(actual_grid_purchase_cost)
@@ -523,6 +472,10 @@ class MGEnv(ParallelEnv):
             self.ep_buffer.append(
                 {
                     "episode": int(self.ep_counter),
+                    "policy_source": self.trajectory_context.get("policy_source", "unspecified"),
+                    "checkpoint_step": self.trajectory_context.get("checkpoint_step", ""),
+                    "battery_model_version": self.battery_model_version,
+                    "time_step_hours": dt,
                     "agent": i,
                     "row_idx": int(self.idx[0]),
                     "col_idx": int(self.idx[1]),
@@ -537,6 +490,9 @@ class MGEnv(ParallelEnv):
                     "action_pb": float(actions_raw[j, 1]),
                     "pd": float(pds[j]),
                     "pb": float(pbs[j]),
+                    "pb_requested": float(pbs_requested[j]),
+                    "soc_requested": float(socs_raw[j]),
+                    "battery_action_clip": float(battery_action_clip[j]),
                     "pg_total": float(pg),
                     "gen_cost": float(-weighted_generate_costs[j]),
                     "bess_cost": float(-weighted_bess_cost[j]),
@@ -595,7 +551,6 @@ class MGEnv(ParallelEnv):
             total_reward = float(np.mean(reward_list))
         else:
             total_reward = float(np.sum(reward_list))
-        total_reward *= self.reward_scale
 
         # 2. 打造环境附加信息包 env_info，供框架统计胜率和画网损图
         #    注意：这里加入 "episode_limit"，这样 runner.py 就能区分出是否是时间到了下班。
@@ -637,11 +592,7 @@ class MGEnv(ParallelEnv):
         bucket_idx = (max(self.ep_counter, 1) - 1) // self.bucket_size
         start_ep = bucket_idx * self.bucket_size + 1
         end_ep = (bucket_idx + 1) * self.bucket_size
-        src = (
-            "test"
-            if self.test_source == "test"
-            else ("train" if self.test_source == "train" else "all")
-        )
+        src = self.test_source
         filename = f"episodes_{src}_{start_ep:06d}-{end_ep:06d}.csv"
         return self.render_dir / filename
 
@@ -660,6 +611,8 @@ if __name__ == "__main__":
                 "split_ratio": 0.25,
                 "dg_max": 2.0,
                 "battery_cap": 5.0,
+                "battery_charge_max": 5.0,
+                "battery_discharge_max": 5.0,
                 "battery_punishment_param": 0.1,
                 "raw_ch": 0.95,
                 "raw_dis": 0.95,
@@ -680,6 +633,8 @@ if __name__ == "__main__":
                 "split_ratio": 0.25,
                 "dg_max": 2.0,
                 "battery_cap": 5.0,
+                "battery_charge_max": 5.0,
+                "battery_discharge_max": 5.0,
                 "battery_punishment_param": 0.1,
                 "raw_ch": 0.95,
                 "raw_dis": 0.95,

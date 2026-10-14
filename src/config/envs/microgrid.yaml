@@ -1,5 +1,8 @@
 # microgrid.yaml
+env: "microgrid"
 env_args:
+  # Simulation convention; input CSV physical units still require provenance.
+  time_step_hours: 1.0
   result_dir: "./results"
   log_trajectories: false
   log_trajectories_mode: "test"
@@ -24,6 +27,8 @@ env_args:
       high_action: [1.0, 1.0]
       dg_max: 80.0
       battery_cap: 200.0
+      battery_charge_max: 200.0
+      battery_discharge_max: 200.0
       battery_punishment_param: 1.0
       raw_ch: 0.95
       raw_dis: 0.95
@@ -42,6 +47,8 @@ env_args:
       high_action: [1.0, 1.0]
       dg_max: 80.0
       battery_cap: 200.0
+      battery_charge_max: 200.0
+      battery_discharge_max: 200.0
       battery_punishment_param: 1.0
       raw_ch: 0.95
       raw_dis: 0.95
@@ -60,6 +67,8 @@ env_args:
       high_action: [1.0, 1.0]
       dg_max: 80.0
       battery_cap: 200.0
+      battery_charge_max: 200.0
+      battery_discharge_max: 200.0
       battery_punishment_param: 1.0
       raw_ch: 0.95
       raw_dis: 0.95

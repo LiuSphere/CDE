@@ -96,6 +96,12 @@ def main():
 
     for override in args.override:
         key, raw_value = override.split("=", 1)
+        if key == "policy_checkpoint" and yaml.safe_load(raw_value):
+            checkpoint = yaml.safe_load(raw_value)
+            config = load_yaml(os.path.join(checkpoint, "config.yaml"))
+
+    for override in args.override:
+        key, raw_value = override.split("=", 1)
         set_nested(config, key, yaml.safe_load(raw_value))
 
     config = normalize_scalars(config_copy(config))
@@ -104,7 +110,7 @@ def main():
     th.manual_seed(config["seed"])
     config.setdefault("env_args", {})
     config["env_args"]["seed"] = config["seed"]
-    config["env_args"]["run_id"] = "direct"
+    config["env_args"].setdefault("run_id", "direct")
 
     logger = get_logger()
     run(config, logger)

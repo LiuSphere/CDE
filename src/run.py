@@ -5,6 +5,8 @@ import threading
 import time
 from os.path import abspath, dirname
 from types import SimpleNamespace as SN
+from copy import deepcopy
+from pathlib import Path
 
 import numpy as np
 import torch as th
@@ -17,6 +19,9 @@ from learners.facmac_learner import FACMACLearner
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
+from utils.policy_evaluation import (
+    BestPolicyStore, evaluate_fixed, evaluate_saved_policy, fixed_rows,
+)
 
 def rl_to_evo(rl_agent, evo_net):
     for target_param, param in zip(
@@ -47,6 +52,13 @@ def run(_config, _log):
         args.name, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     )
     args.unique_token = unique_token
+    if args.env == "microgrid":
+        output_id = getattr(args, "evaluation_output_id", "") if args.evaluate else ""
+        args.env_args["run_id"] = output_id or unique_token
+        trajectory_path = (Path(args.env_args["result_dir"]) / "microgrid_trajs"
+                           / args.name / args.env_args["run_id"])
+        if trajectory_path.exists() and any(trajectory_path.iterdir()):
+            raise FileExistsError(f"Use a new run/output id; artifacts exist at {trajectory_path}")
     logger.setup_wandb(
         config=_config,
         name=unique_token,
@@ -71,6 +83,11 @@ def run(_config, _log):
 
 def run_sequential(args, logger):
 
+    saved_config = deepcopy(vars(args))
+    if getattr(args, "policy_checkpoint", "") and not args.evaluate:
+        raise ValueError("policy_checkpoint is inference-only; set evaluate=True")
+    if args.env == "microgrid" and args.use_cuda:
+        raise ValueError("Microgrid training and evaluation must run on CPU")
     # Init runner so we can get env info
     runner = EpisodeRunner(args=args, logger=logger)
 
@@ -122,6 +139,22 @@ def run_sequential(args, logger):
     # Give runner the scheme
     runner.setup(scheme=scheme, groups=groups, preprocess=preprocess, mac=mac)
 
+    if getattr(args, "policy_checkpoint", ""):
+        evaluate_saved_policy(runner, mac, args)
+        runner.close_env()
+        return
+
+    policy_store = None
+    validation_rows = None
+    if args.env == "microgrid":
+        validation_rows = fixed_rows(
+            runner.env, "validation", args.validation_rows, args.fixed_eval_days,
+        )
+        if args.save_model and args.save_best_policy and not args.evaluate:
+            policy_store = BestPolicyStore(
+                Path(args.local_results_path) / "models" / args.unique_token / "best_policies",
+                saved_config,
+            )
     # Learner
     if args.EA:
         learner = EA_FACMACLearner(mac, buffer.scheme, logger, args)
@@ -253,10 +286,19 @@ def run_sequential(args, logger):
             last_test_T = runner.t_env
 
             rl_eval_reward = 0
-            for _ in range(n_test_runs):
-                _, rl_tp_reward = runner.run(mac, test_mode=True)
-                rl_eval_reward += rl_tp_reward
-            rl_eval_reward = rl_eval_reward / n_test_runs
+            if validation_rows is not None:
+                rl_evaluation = evaluate_fixed(
+                    runner, mac, validation_rows, args.evaluation_initial_soc,
+                    "validation", "rl", runner.t_env,
+                )
+                rl_eval_reward = rl_evaluation["mean_return"]
+                if policy_store is not None:
+                    policy_store.consider(mac, "rl", runner.t_env, rl_evaluation, runner.env)
+            else:
+                for _ in range(n_test_runs):
+                    _, rl_tp_reward = runner.run(mac, test_mode=True)
+                    rl_eval_reward += rl_tp_reward
+                rl_eval_reward = rl_eval_reward / n_test_runs
             print("RL eval ", rl_eval_reward)
             logger.log_stat(
                 "eval/rl_reward", rl_eval_reward, runner.t_env
@@ -264,12 +306,20 @@ def run_sequential(args, logger):
             if args.EA:
                 ea_eval_reward = 0
                 last_test_T = runner.t_env
-                for _ in range(n_test_runs):
-                    _, ea_tp_reward = runner.run(
-                        pop[ea_elite_index], test_mode=True
+                if validation_rows is not None:
+                    ea_evaluation = evaluate_fixed(
+                        runner, pop[ea_elite_index], validation_rows,
+                        args.evaluation_initial_soc, "validation", "ea", runner.t_env,
                     )
-                    ea_eval_reward += ea_tp_reward
-                ea_eval_reward = ea_eval_reward / n_test_runs
+                    ea_eval_reward = ea_evaluation["mean_return"]
+                    if policy_store is not None and ea_cycle > 0:
+                        policy_store.consider(pop[ea_elite_index], "ea", runner.t_env,
+                                              ea_evaluation, runner.env)
+                else:
+                    for _ in range(n_test_runs):
+                        _, ea_tp_reward = runner.run(pop[ea_elite_index], test_mode=True)
+                        ea_eval_reward += ea_tp_reward
+                    ea_eval_reward = ea_eval_reward / n_test_runs
             else:
                 ea_eval_reward = 0
             print("EA eval ", ea_eval_reward)
@@ -278,7 +328,7 @@ def run_sequential(args, logger):
             )
             logger.log_stat(
                 "eval/best_reward",
-                max(rl_eval_reward, ea_eval_reward),
+                max(rl_eval_reward, ea_eval_reward) if args.EA else rl_eval_reward,
                 runner.t_env,
             )
         if is_ea_cycle:

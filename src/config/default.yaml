@@ -6,7 +6,7 @@ buffer_warmup: 512
 learner_update_interval: 2
 learner_updates_per_episode: 1
 ea_learner_updates: 3
-use_cuda: true
+use_cuda: false
 t_max: 3e6
 
 # --- Evaluation and logging ---
@@ -25,6 +25,13 @@ checkpoint_path: ""
 evaluate: false
 load_step: 0
 local_results_path: "results"
+save_best_policy: true
+fixed_eval_days: 8
+validation_rows: []
+typical_day_rows: []
+evaluation_initial_soc: 0.35
+policy_checkpoint: ""
+evaluation_output_id: ""
 
 # --- FACMAC optimization ---
 gamma: 0.99

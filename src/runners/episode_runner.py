@@ -1,4 +1,5 @@
 from functools import partial
+from copy import deepcopy
 
 import numpy as np
 import torch as th
@@ -16,7 +17,7 @@ class EpisodeRunner:
         assert self.batch_size == 1
 
         if self.args.env == "microgrid":
-            self.env = MGEnv(config=self.args.env_args, algo_name=self.args.name)
+            self.env = MGEnv(config=deepcopy(self.args.env_args), algo_name=self.args.name)
         elif self.args.env == "vmas_transport":
             self.env = VMASTransportEnv(config=self.args.env_args)
         else:
@@ -54,17 +55,17 @@ class EpisodeRunner:
     def close_env(self):
         self.env.close()
 
-    def reset(self, test_mode=False):
+    def reset(self, test_mode=False, test_options=None):
         self.batch = self.new_batch()
         if test_mode:
-            self.env.reset_test()
+            self.env.reset_test(**(test_options or {}))
         else:
             self.env.reset()
         self.t = 0
 
-    def run(self, mac, test_mode=False):
+    def run(self, mac, test_mode=False, test_options=None):
         self.mac = mac
-        self.reset(test_mode=test_mode)
+        self.reset(test_mode=test_mode, test_options=test_options)
 
         terminated = False
         episode_return = 0
