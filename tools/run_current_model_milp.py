@@ -231,6 +231,8 @@ def replay_request(before, target, requested, mode, cap, eta_ch, eta_dis):
 
 
 def replay_day(env, row, solutions, initial_soc):
+    if env.battery_model_version != "maenv_sep_v1":
+        raise ValueError("Legacy sep MILP cannot replay the physical model; use run_physical_microgrid_milp.py")
     env.reset_test(source="test", row_idx=row, initial_soc=initial_soc)
     corrections = []
     for t in range(24):
@@ -268,6 +270,8 @@ def replay_day(env, row, solutions, initial_soc):
 
 
 def baseline_day(env, row, initial_soc):
+    if env.battery_model_version != "maenv_sep_v1":
+        raise ValueError("Legacy sep baseline cannot evaluate the physical model")
     env.reset_test(source="test", row_idx=row, initial_soc=initial_soc)
     for _ in range(24):
         env.step(np.zeros((env.n_agents, 2)))
@@ -368,6 +372,8 @@ def main():
     env_config = deepcopy(config["env_args"])
     env_config.update(result_dir=str(out), run_id="replay", log_trajectories=False)
     env = MGEnv(env_config, "perfect_foresight")
+    if env.battery_model_version != "maenv_sep_v1":
+        raise ValueError("This is the historical sep solver; use tools/run_physical_microgrid_milp.py")
     rows = fixed_rows(env, "test", config["typical_day_rows"], args.days)
     initial = config["evaluation_initial_soc"]
     all_records, all_baselines, summaries, all_solutions = [], [], [], {}

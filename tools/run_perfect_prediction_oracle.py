@@ -6,6 +6,8 @@ from pathlib import Path
 import numpy as np
 import yaml
 from scipy.optimize import minimize
+from datetime import datetime, timezone
+from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
@@ -16,98 +18,32 @@ from envs.maenv import MGEnv  # noqa: E402
 
 
 def simulate_episode(x, env, row_idx, initial_socs):
-    t_horizon = env.episode_limit
-    n_agents = env.n_agents
-    dg_max = env.params["dg_max"]
-    battery_caps = env.params["battery_caps"]
-    raw_ch = env.params["raw_ch"]
-    raw_dis = env.params["raw_dis"]
-    env_param = env.params["env_param"]
-    bessa = env.params["bessa"]
-    bessb = env.params["bessb"]
-    bessc = env.params["bessc"]
-    costa = env.params["costa"]
-    costb = env.params["costb"]
-    costc = env.params["costc"]
-
-    actions = x.reshape(t_horizon, n_agents, 2)
+    actions = x.reshape(env.episode_limit, env.n_agents, 2)
     socs = initial_socs.astype(float).copy()
-
-    total_reward = 0.0
-    total_grid_purchase_cost = 0.0
-    total_baseline_grid_purchase_cost = 0.0
-    total_grid_purchase_saving = 0.0
-    total_generate_cost = 0.0
-    total_bess_cost = 0.0
-    total_env_cost = 0.0
-    total_curtailment_penalty = 0.0
-    total_soc_reserve_penalty = 0.0
-    mean_soc_sum = 0.0
-
-    for t in range(t_horizon):
-        price = float(env.data_dict["price"][row_idx, t])
-        load_pv = float(env.data_dict["load_pv"][row_idx, t])
-
-        pds = actions[t, :, 0] * dg_max
-        requested = actions[t, :, 1] * battery_caps
-        punishment = -env.params["battery_punishment_params"] * (
-            np.maximum(requested - socs * battery_caps, 0)
-            + np.maximum(-(1 - socs) * battery_caps - requested, 0)
+    totals = dict.fromkeys((
+        "episode_return", "grid_purchase_cost", "baseline_grid_purchase_cost",
+        "generate_cost", "bess_cost", "env_cost", "mean_soc",
+    ), 0.0)
+    for t in range(env.episode_limit):
+        result = env.dispatch(actions[t], socs, (row_idx, t))
+        socs = result["soc"]
+        totals["episode_return"] += float(np.mean(result["reward"].astype(np.float32)))
+        totals["grid_purchase_cost"] += float(result["buy_cost"].sum())
+        totals["baseline_grid_purchase_cost"] += float(
+            np.maximum(result["load"] - result["pv"], 0).sum()
+            * result["price"] * env.time_step_hours,
         )
-        socs_raw = socs + np.where(
-            requested < 0,
-            -raw_ch * requested / battery_caps,
-            -raw_dis * requested / battery_caps,
-        )
-        pbs = requested.copy()
-        low, high = socs_raw < 0.2, socs_raw > 0.8
-        pbs[low] = (socs[low] - 0.2) * battery_caps[low]
-        pbs[high] = (socs[high] - 0.8) * battery_caps[high]
-        socs = np.clip(socs_raw, 0.2, 0.8)
-        pg = load_pv - pds - pbs
-
-        x_bess = pbs + 3.0 * battery_caps * (1.0 - socs)
-        bess_poly = -(bessa * x_bess**2 + bessb * x_bess + bessc) * np.where(
-            pbs > 0, 0.3, 1.0,
-        )
-        generate_costs = -(costa * pds**2 + costb * pds + costc)
-        env_reward = -(pds * env_param)
-
-        baseline_pg = max(load_pv, 0.0)
-        baseline_grid_purchase_cost = baseline_pg * price * n_agents
-        actual_grid_purchase_cost = float(np.sum(np.where(pg > 0, pg * price, 0)))
-        buy_cost = np.where(pg > 0, -pg * price, 0)
-        eco_reward = 0.5 * generate_costs + bess_poly + buy_cost
-        reward_list = (eco_reward + env_reward + punishment) * 0.1
-        total_reward += float(np.mean(reward_list.astype(np.float32)))
-
-        total_grid_purchase_cost += actual_grid_purchase_cost
-        total_baseline_grid_purchase_cost += baseline_grid_purchase_cost
-        total_grid_purchase_saving += (
-            baseline_grid_purchase_cost - actual_grid_purchase_cost
-        )
-        total_generate_cost += float(np.sum(-generate_costs))
-        total_bess_cost += float(np.sum(-bess_poly))
-        total_env_cost += float(np.sum(-env_reward))
-        mean_soc_sum += float(np.mean(socs))
-
-    saving_ratio = (
-        total_grid_purchase_saving / total_baseline_grid_purchase_cost
-        if abs(total_baseline_grid_purchase_cost) > 1e-6 else 0.0
+        totals["generate_cost"] += float(result["gen_cost"].sum())
+        totals["bess_cost"] += float(result["bess_cost"].sum())
+        totals["env_cost"] += float(-result["env_reward"].sum())
+        totals["mean_soc"] += float(socs.mean()) / env.episode_limit
+    totals["grid_purchase_saving"] = (
+        totals["baseline_grid_purchase_cost"] - totals["grid_purchase_cost"]
     )
-    return {
-        "episode_return": total_reward,
-        "grid_purchase_cost": total_grid_purchase_cost,
-        "baseline_grid_purchase_cost": total_baseline_grid_purchase_cost,
-        "grid_purchase_saving": total_grid_purchase_saving,
-        "grid_purchase_saving_ratio": saving_ratio,
-        "generate_cost": total_generate_cost,
-        "bess_cost": total_bess_cost,
-        "env_cost": total_env_cost,
-        "curtailment_penalty": total_curtailment_penalty,
-        "soc_reserve_penalty": total_soc_reserve_penalty,
-        "mean_soc": mean_soc_sum / t_horizon,
-    }
+    baseline = totals["baseline_grid_purchase_cost"]
+    totals["grid_purchase_saving_ratio"] = totals["grid_purchase_saving"] / baseline if baseline > 1e-9 else 0
+    totals.update(curtailment_penalty=0.0, soc_reserve_penalty=0.0)
+    return totals
 
 
 def objective_fn(x, env, row_idx, initial_socs):
@@ -119,18 +55,22 @@ def make_initial_guess(env, row_idx, initial_socs, mode):
     t_horizon = env.episode_limit
     n_agents = env.n_agents
     dg_max = env.params["dg_max"]
-    load_pv = env.data_dict["load_pv"][row_idx]
+    load_pv = env.agent_data["load"][row_idx] - env.agent_data["pv"][row_idx]
     price = env.data_dict["price"][row_idx]
 
     x0 = np.zeros((t_horizon, n_agents, 2), dtype=np.float64)
     if mode == "gen_cover":
         positive_net = np.maximum(load_pv, 0.0)
-        pd = np.clip(positive_net[:, None] / dg_max[None, :], 0.0, 1.0)
+        pd = np.zeros_like(positive_net)
+        np.divide(positive_net, dg_max[None, :], out=pd, where=dg_max[None, :] > 0)
+        pd = np.clip(pd, 0.0, 1.0)
         x0[:, :, 0] = pd
     elif mode == "price_shift":
         median_price = float(np.median(price))
         positive_net = np.maximum(load_pv, 0.0)
-        pd = np.clip(positive_net[:, None] / dg_max[None, :], 0.0, 1.0)
+        pd = np.zeros_like(positive_net)
+        np.divide(positive_net, dg_max[None, :], out=pd, where=dg_max[None, :] > 0)
+        pd = np.clip(pd, 0.0, 1.0)
         x0[:, :, 0] = pd
         x0[:, :, 1] = np.where(price[:, None] >= median_price, 0.7, -0.7)
     return x0.reshape(-1)
@@ -240,8 +180,11 @@ def main():
         "mean_soc_mean": float(np.mean([r["mean_soc"] for r in results])),
     }
 
-    out_dir = ROOT / "results" / "oracle_perfect_prediction"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    out_dir = ROOT / "results" / "oracle_perfect_prediction" / (
+        env.battery_model_version + "_" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        + "_" + uuid4().hex[:6]
+    )
+    out_dir.mkdir(parents=True, exist_ok=False)
     stem = f"{args.env_config}_{args.split}_{len(results)}d_seed{args.seed}"
     with open(out_dir / f"{stem}_summary.json", "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)

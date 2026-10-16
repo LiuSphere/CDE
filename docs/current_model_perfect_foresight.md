@@ -1,5 +1,9 @@
 # 当前模型的完美预测经济调度
 
+> 历史记录：本文对应 `maenv_sep_v1`，不适用于当前 `heterogeneous_exchange_v2` 分支。
+> 新入口为 `tools/run_physical_microgrid_milp.py`，新说明见
+> `docs/heterogeneous_microgrid_validation.md`。下文保留用于解释旧结果。
+
 独立入口：
 
 ```powershell

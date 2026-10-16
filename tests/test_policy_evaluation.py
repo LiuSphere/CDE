@@ -57,8 +57,8 @@ class PolicyEvaluationTest(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(state, runner.env.rng.bit_generator.state)
             self.assertEqual(runner.t_env, 0)
-            self.assertEqual(runner.batch["obs"].shape, (1, 25, 3, 4))
-            self.assertEqual(runner.batch["state"].shape, (1, 25, 12))
+            self.assertEqual(runner.batch["obs"].shape, (1, 25, 3, 12))
+            self.assertEqual(runner.batch["state"].shape, (1, 25, 36))
             self.assertEqual(runner.batch["actions"].shape, (1, 25, 3, 2))
             self.assertEqual(runner.batch["reward"].shape, (1, 25, 1))
             self.assertEqual(runner.batch["obs"].device.type, "cpu")
@@ -92,15 +92,14 @@ class PolicyEvaluationTest(unittest.TestCase):
             self.assertEqual({r["checkpoint_step"] for r in records}, {"123"})
             agents = {a["agent_name"]: a for a in config["env_args"]["data"]}
             for r in records:
-                requested = float(r["pb_requested"])
+                executed = float(r["pb"])
                 before = float(r["soc_init"])
                 agent = agents[r["agent"]]
-                efficiency = agent["raw_ch"] if requested < 0 else agent["raw_dis"]
-                after = np.clip(
-                    before - requested * efficiency / agent["battery_cap"], 0.2, 0.8,
-                )
+                energy = (executed * agent["raw_ch"] if executed < 0
+                          else executed / agent["raw_dis"])
+                after = before - energy / agent["battery_cap"]
                 self.assertAlmostEqual(float(r["soc"]), after)
-                self.assertEqual(r["battery_model_version"], "maenv_sep_v1")
+                self.assertEqual(r["battery_model_version"], "heterogeneous_exchange_v2")
             manifest = json.loads((Path(directory) / "best/best_ea.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["checkpoint"], str(checkpoint.resolve()))
             runner.env.time_step_hours = 0.25

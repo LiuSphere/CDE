@@ -1,78 +1,86 @@
-# microgrid.yaml
 env: "microgrid"
 env_args:
-  # maenv_sep.py uses standardized data and an implicit one-hour step.
+  model_version: "heterogeneous_exchange_v2"
+  # Scenario assumptions, not verified CSV metadata: kW, kWh, CU/kWh.
+  # price_scale converts the source numeric tariff to scenario currency units.
   time_step_hours: 1.0
+  load_scale: 1.0
+  # Selected on validation medoids; see docs/heterogeneous_microgrid_validation.md.
+  # Community-bus losses and wheeling fee are explicit scenario assumptions.
+  pv_scale: 4.0
+  exchange_efficiency: 0.98
+  exchange_fee: 0.003
+  price_scale: 0.01
+  observation_price_scale: 0.3
+  observation_power_scale: 300.0
+  soc_min: 0.2
+  soc_max: 0.8
+  initial_soc: 0.35
+  reward_scale: 0.1
   result_dir: "./results"
   log_trajectories: false
   log_trajectories_mode: "test"
-  # Equipment and declared bounds match IPPO4CPT/envs/MG/env_config.json.
-  # Confirmed: use maenv_sep.py's single-objective branch for FACMAC,
-  # not the reference file's multi_target=True setting.
-  # Security fields are inactive in the reference maenv_sep.py as well.
-  security_matrix: [[1.23, -0.55, -0.68], [-0.55, 1.47, -0.92], [-0.68, -0.92, 1.60]]
-  v_slack: [220, 220, 220]
   data:
     - agent_name: "agent1"
-      env_name: "mg1"
-      split_ratio: 0.3
-      low_state: [0.0, 0.0, 0.0, -1.0]
-      high_state: [1.0, 1.0, 1.0, 1.0]
-      low_action: [0.0, -1.0]
-      high_action: [1.0, 1.0]
-      dg_max: 225.0
-      battery_cap: 100.0
-      battery_punishment_param: 27.5
-      raw_ch: 0.98
-      raw_dis: 0.98
-      bessa: 0.0152
-      bessb: 5.61
-      bessc: 24.0
-      costa: 0.0083
-      costb: 5.76
-      costc: 64.0
-      env_param: 1.6481
-      v_ref: 175
-      adm_matrix: 0
+      role: "evening_load"
+      load_share: 0.55
+      load_profile_amplitude: 0.4
+      load_profile_peak_hour: 20.0
+      pv_share: 0.1
+      pv_profile_amplitude: 0.25
+      pv_profile_peak_hour: 10.0
+      exchange_max: 160.0
+      dg_max: 110.0
+      battery_cap: 220.0
+      battery_charge_max: 70.0
+      battery_discharge_max: 70.0
+      raw_ch: 0.93
+      raw_dis: 0.93
+      cycle_cost: 0.01
+      battery_punishment_param: 0.5
+      costa: 0.00015
+      costb: 0.17
+      costc: 0.0
+      env_param: 0.015
     - agent_name: "agent2"
-      env_name: "mg2"
-      split_ratio: 0.3
-      low_state: [0.0, 0.0, 0.0, -1.0]
-      high_state: [1.0, 1.0, 1.0, 1.0]
-      low_action: [0.0, -1.0]
-      high_action: [1.0, 1.0]
-      dg_max: 225.0
-      battery_cap: 100.0
-      battery_punishment_param: 27.5
-      raw_ch: 0.98
-      raw_dis: 0.98
-      bessa: 0.0158
-      bessb: 5.63
-      bessc: 34.0
-      costa: 0.0079
-      costb: 5.67
-      costc: 357.0
-      env_param: 1.6481
-      v_ref: 205
-      adm_matrix: 0
+      role: "daytime_solar"
+      load_share: 0.2
+      load_profile_amplitude: 0.35
+      load_profile_peak_hour: 12.0
+      pv_share: 0.7
+      pv_profile_amplitude: 0.2
+      pv_profile_peak_hour: 12.0
+      exchange_max: 240.0
+      dg_max: 50.0
+      battery_cap: 180.0
+      battery_charge_max: 45.0
+      battery_discharge_max: 45.0
+      raw_ch: 0.93
+      raw_dis: 0.93
+      cycle_cost: 0.01
+      battery_punishment_param: 0.5
+      costa: 0.00018
+      costb: 0.15
+      costc: 0.0
+      env_param: 0.015
     - agent_name: "agent3"
-      env_name: "mg3"
-      split_ratio: 0.4
-      low_state: [0.0, 0.0, 0.0, -1.0]
-      high_state: [1.0, 1.0, 1.0, 1.0]
-      low_action: [0.0, -1.0]
-      high_action: [1.0, 1.0]
-      dg_max: 180.0
-      battery_cap: 100.0
-      battery_punishment_param: 100.0
-      raw_ch: 0.98
-      raw_dis: 0.98
-      bessa: 0.0172
-      bessb: 5.72
-      bessc: 37.0
-      costa: 0.0096
-      costb: 5.79
-      costc: 104.0
-      env_param: 1.6481
-      v_ref: 190
-      adm_matrix: 0
+      role: "flexible_supply"
+      load_share: 0.25
+      load_profile_amplitude: 0.3
+      load_profile_peak_hour: 5.0
+      pv_share: 0.2
+      pv_profile_amplitude: 0.25
+      pv_profile_peak_hour: 14.0
+      exchange_max: 160.0
+      dg_max: 240.0
+      battery_cap: 600.0
+      battery_charge_max: 120.0
+      battery_discharge_max: 120.0
+      raw_ch: 0.93
+      raw_dis: 0.93
+      cycle_cost: 0.01
+      battery_punishment_param: 0.5
+      costa: 0.00012
+      costb: 0.12
+      costc: 0.0
+      env_param: 0.015

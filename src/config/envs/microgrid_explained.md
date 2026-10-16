@@ -1,162 +1,180 @@
-# 微电网模型：maenv_sep.py 对齐说明
+# 微电网环境：heterogeneous_exchange_v2
 
-`src/envs/maenv.py` 复现桌面 MG 中 `maenv_sep.py` 的单目标数值模型，
-并适配当前 FACMAC 的观察、团队标量奖励与 24 步轨迹接口。
-模型版本为 `maenv_sep_v1`。
+当前分支采用异构、物理耦合的合作场景，不再复现 `maenv_sep_v1` 的数值公式。
+修改前源码由 tag `maenv-sep-v1-pre-physical-20261017` 保留。
+既有结果、源 CSV 和检查点均不改写；旧策略需要重新训练。
 
-## 数据与观察
+## 数据与量纲
 
-三个源 CSV 不做修改。价格、负荷、光伏分别按整张表标准化：
+三个 CSV 原样读取，以下映射是明确的**实验场景假设**，不是已经核实的源数据单位：
 
-```python
-std = sqrt(data.var())
-if std < 1e-8:
-    std = 1.0
-normalized = ((data - data.mean()) / std).astype(float32)
-```
+- 总负荷 = `load.csv × load_scale`，当前 `load_scale = 1`。
+- 光伏装机场景 = `pv.csv × pv_scale`，当前 `pv_scale = 4`。
+- 购电价格 = `price.csv × price_scale`，当前 `price_scale = 0.01`。
+- 场景采用 kW、kWh、CU/kWh，CU 是场景货币单位，不冒充美元或人民币。
+- 负荷基础权重为 `[0.55, 0.20, 0.25]`，光伏基础权重为 `[0.10, 0.70, 0.20]`。
+- 每小时用不同的平滑时段权重重新分配，总负荷和总光伏仍逐小时守恒。
+- 有限功率、有损耗的社区互济用于匹配动作执行后的余缺，不允许从大电网购电再转卖。
+- 不把 z-score 标准化结果放入功率平衡或购电结算；价格、负荷、光伏必须非负，
+  且当前无售电场景要求购电价格严格为正。
 
-标准化结果同时用于观察、功率平衡和成本计算，不会再还原成原始值。
-因此标准化后的价格、负荷、光伏可以为负；这不表示原始 CSV 是负值。
-每个智能体使用相同的完整数据，不使用 `split_ratio` 分摊。
-
-每个智能体的观察固定为：
+每类资源的基础份额不是每日最终能量份额。具体分配公式为：
 
 ```text
-[标准化价格, 标准化负荷, 标准化光伏, SOC]
+w_i(h) = share_i × [1 + amplitude_i × cos(2π(h - peak_hour_i)/24)]
+resource_i(day,h) = resource_total(day,h) × w_i(h) / sum_j w_j(h)
 ```
 
-当前 3 个智能体对应观察维度 4、全局状态维度 12、动作维度 2。
-全局状态为观察的拼接；维度由环境接口传递给 runner、回放、控制器和 learner。
-与参考代码相同，`step()` 后返回当前小时的数据与更新后的 SOC，
-再推进内部时钟，而不是立即将观察切换到下一小时。
+负荷振幅为 `[0.40, 0.35, 0.30]`，权重峰时为 `[20, 12, 5]`；
+光伏振幅为 `[0.25, 0.20, 0.25]`，权重峰时为 `[10, 12, 14]`。
+这是可复现的合成区域类型，不代表三个真实站点测量，也不改变原 CSV。
 
-## 动作、电池与功率平衡
+每个智能体观察从 4 维增加到 12 维，顺序如下：
 
-动作 `[a_dg, a_batt]` 映射为：
-
-```python
-pd = a_dg * dg_max
-pb_requested = a_batt * battery_cap
+```text
+[price/0.3, load_i/300, pv_i/300, SOC_i,
+ sin(2πh/24), cos(2πh/24),
+ sum_other_load/300, sum_other_pv/300,
+ sum_other_usable_AC_energy/1200,
+ local_dg_max/300, local_battery_capacity/1200, local_exchange_max/300]
 ```
 
-正电池功率为放电，负电池功率为充电。每步按参考代码隐含的一小时处理。
-没有独立的充放电功率配置。
+观察只包含当前时刻信息，没有完美预测。其他微网的可用储能为
+`sum_j≠i (SOC_j - SOC_min) × E_j × eta_dis_j`。
+这是明示的当前信息广播假设，策略不再是严格无通信的本地控制。
+固定缩放不依赖测试集统计量，不裁剪实际观察。
+全局状态是三个观察的拼接，维度为 36；每个智能体的动作仍为 2 维连续 Box。
+共享 RNN 策略仍由智能体 ID 和不同观察区分角色，没有增加独立策略网络。
+`step()` 后观察推进到下一小时，避免以前的小时错位。
 
-```python
-punishment = -battery_punishment_param * (
-    max(pb_requested - soc * battery_cap, 0)
-    + max(-(1 - soc) * battery_cap - pb_requested, 0)
-)
-
-soc_requested = soc + (
-    -raw_ch * pb_requested / battery_cap if pb_requested < 0
-    else -raw_dis * pb_requested / battery_cap
-)
-```
-
-越过下界时，SOC 置为 0.2，实际 `pb = (soc_before - 0.2) * battery_cap`；
-越过上界时，SOC 置为 0.8，实际 `pb = (soc_before - 0.8) * battery_cap`。
-惩罚仍用修正前的请求功率计算。
-
-这些规则是为了复现参考代码，不是对效率能量平衡的修正。
-
-各智能体独立结算，不使用其他智能体的发电或电池功率：
-
-```python
-pg_i = load_normalized - pv_normalized - pd_i - pb_i
-buy_reward_i = -pg_i * price_normalized if pg_i > 0 else 0
-```
-
-`pg_i <= 0` 时没有售电收入，也不额外惩罚反送。
-
-## 奖励
-
-```python
-x = pb + 3 * battery_cap * (1 - soc_after)
-bess_reward = -(bessa * x**2 + bessb * x + bessc)
-if pb > 0:
-    bess_reward *= 0.3
-
-gen_reward = -(costa * pd**2 + costb * pd + costc)
-eco_reward = 0.5 * gen_reward + bess_reward + buy_reward
-env_reward = -pd * env_param
-agent_reward = (eco_reward + env_reward + punishment) * 0.1
-team_reward = mean(agent_reward)
-```
-
-参考包装器先将单体奖励转成 float32，再计算平均；当前接口保留这一舍入。
-不加绝对值电池成本、弃电惩罚、SOC 储备惩罚或期末 SOC 惩罚。
-不再读取旧版的可选奖励模式、额外权重或额外奖励缩放。
-多目标元组奖励分支不在本次适配内，因为当前 FACMAC 使用团队标量奖励。
-
-## 日期与重置
-
-初始 SOC 为 0.2，训练从第 0 行开始。
-训练按时间顺序使用第 0 至第 730 行，之后回到第 0 行。
-正常 `reset()` 不随机重置 SOC，日末 SOC 延续到下一天。
-显式 `reset_all()` 才随机选择训练起始日，并把 SOC 重新设为 0.2。
-
-当前框架仍将每 24 步存为一段轨迹，但标记为时间截断，不是物理终止。
-GRU 隐状态按现有 runner 在每段开头初始化；参考文件本身不定义策略隐状态。
-
-为保留项目的固定日选优功能，参考代码训练区间之后的日期按顺序均分为
-validation 与 test，两个集合互不重叠。这是评估适配，不是参考文件的原始划分：
-参考文件测试从第 730 行开始，存在训练/测试边界行重叠。
-`reset_test(row_idx=..., initial_soc=...)` 仍支持指定日期和初始 SOC；
-固定日评估依照现有实验配置，每个指定日独立初始化。
-评估前暂存训练日期与 SOC，下次训练恢复，不把测试状态带回训练。
-
-## 参数来源与奖励选择
-
-设备参数与空间声明采用用户提供的
-`C:/Users/xyx/Desktop/IPPO4CPT/envs/MG/env_config.json`，
-并与同目录的 `env_config.toml` 核对。
-两份文件的共有字段一致；JSON 另有 `split_ratio = [0.3, 0.3, 0.4]`，
-按原值保存到 YAML，但参考 `maenv_sep.py` 不使用这些比例。
-运行仍只加载项目内的 `microgrid.yaml`，不依赖桌面文件路径。
+## 设备参数
 
 | 参数 | agent1 | agent2 | agent3 |
-|---|---|---|---|
-| 发电上限 | 225 | 225 | 180 |
-| 电池容量 | 100 | 100 | 100 |
-| `raw_ch / raw_dis` | 0.98 / 0.98 | 0.98 / 0.98 | 0.98 / 0.98 |
-| 电池惩罚系数 | 27.5 | 27.5 | 100 |
-| 发电成本 `(a,b,c)` | (0.0083, 5.76, 64) | (0.0079, 5.67, 357) | (0.0096, 5.79, 104) |
-| 电池成本 `(a,b,c)` | (0.0152, 5.61, 24) | (0.0158, 5.63, 34) | (0.0172, 5.72, 37) |
-| 排放系数 | 1.6481 | 1.6481 | 1.6481 |
+| --- | ---: | ---: | ---: |
+| 角色 | 傍晚负荷型 | 日间光伏型 | 灵活供给型 |
+| 发电上限，场景 kW | 110 | 50 | 240 |
+| 电池容量，场景 kWh | 220 | 180 | 600 |
+| 充电额定功率，场景 kW | 70 | 45 | 120 |
+| 放电额定功率，场景 kW | 70 | 45 | 120 |
+| 互济发送/接收各自上限，场景 kW | 160 | 240 | 160 |
+| 充电 / 放电效率 | 0.93 / 0.93 | 0.93 / 0.93 | 0.93 / 0.93 |
+| 吞吐退化成本，CU/kWh | 0.01 | 0.01 | 0.01 |
+| 发电二次项，CU/(kW²·h) | 0.00015 | 0.00018 | 0.00012 |
+| 发电线性项，CU/kWh | 0.17 | 0.15 | 0.12 |
+| 发电常数项，CU/h | 0 | 0 | 0 |
+| 发电排放成本代理，CU/kWh | 0.015 | 0.015 | 0.015 |
+| 不可行电池请求惩罚，CU/kWh | 0.5 | 0.5 | 0.5 |
 
-观察上下界照原文件保存为 `[0,0,0,-1]` 和 `[1,1,1,1]`。
-这份空间声明并不包含所有标准化后的实际观察；为复现原版，不裁剪或重新缩放观察。
-动作上下界仍为 `[0,-1]` 和 `[1,1]`。
-`security_matrix`、`v_slack`、`v_ref`、`adm_matrix` 按原值保存，
-但参考 `maenv_sep.py` 中的安全约束代码被注释，本次也不启用。
+SOC 范围 `[0.2, 0.8]`，训练初始 SOC 为 0.35，步长固定一小时。
+三块电池名义时长分别约为 3.14、4、5 小时，容量与负荷不再同比例。
+两侧效率乘积为 86.49%。这些值属于场景假设，而非设备标定结果。
+不引入最小运行时长、爬坡、启停成本或机组最小出力的额外假设。
 
-**奖励模式已确认**：设备参数采用这两份来源，但按用户选择，
-FACMAC 继续使用 `maenv_sep.py` 的单目标奖励分支，
-不采用来源文件中的 `multi_target = "True"` 设置：
+## 动作与能量守恒
 
-```python
-agent_reward = (eco_reward + env_reward + punishment) * 0.1
-team_reward = mean(agent_reward)
+动作 `[a_dg, a_batt]` 范围分别为 `[0,1]` 和 `[-1,1]`。
+正电池功率放电，负电池功率充电。
+
+```text
+pd = a_dg × dg_max
+pb_requested = a_batt × (discharge_rating if a_batt >= 0 else charge_rating)
+max_discharge = min(discharge_rating, (SOC - SOC_min) × E × eta_dis / dt)
+max_charge = min(charge_rating, (SOC_max - SOC) × E / (eta_ch × dt))
+pb = clip(pb_requested, -max_charge, max_discharge)
+
+pb >= 0: SOC_next = SOC - pb × dt / (eta_dis × E)
+pb <  0: SOC_next = SOC - eta_ch × pb × dt / E
 ```
 
-`env_reward` 只计一次。不是把双目标元组相加，也不新增目标合成权重。
-FACMAC 的团队标量奖励接口和 learner 的奖励维度保持不变。
+先将功率限制到真实可行范围，再更新 SOC，不再通过事后裁剪 SOC 制造或丢失电量。
+请求修正量计入惩罚，NaN、无穷和越动作边界的输入报错。
+没有同时充放电的动作路径。
 
-## 日志与历史结果
+```text
+net_i = load_i - pv_i - pd_i - pb_i
+supply_i = min(max(-net_i, 0), link_i)
+demand_i = min(max(net_i, 0), link_i)
+sent_total = min(sum(supply_i), sum(demand_i)/eta_link)
+export_i = supply_i/sum(supply) × sent_total
+import_i = demand_i/sum(demand) × sent_total × eta_link
+pg_i = max(net_i - import_i, 0)
+spill_i = max(-net_i - export_i, 0)
+pv_i + pd_i + pb_i + pg_i + import_i = load_i + spill_i + export_i
+```
 
-轨迹仍写到 `results/microgrid_trajs/<algorithm>/<run_id>/`：
+总供给或总需求为零时，对应交换量为零，不进行除零。
+`eta_link=0.98` 是整段源端到受端的统一交付效率，不是每端各损失 2%。
+因此 `sum(import) = 0.98 × sum(export)`。发送量和接收量都分别受本站联络上限约束。
+互济按可交换余量/缺额等比例撮合，无未来数据，无每小时优化器，
+不会替智能体修改发电或充放电动作。任何合法动作都可以通过大电网补足缺额。
+本版本不加入共享变压器上限、负荷削减或交流电压/无功潮流。
 
-- `price/load/pv` 为模型实际使用的标准化值。
-- `price_raw/load_raw/pv_raw` 为对应 CSV 原值。
-- `pg` 为当前智能体交换功率，`pg_total` 为所有智能体交换功率之和。
-- `buy_cost` 为当前智能体的购电成本；负的标准化价格可使其为负。
-- `reward` 为已乘 0.1 的单体奖励，`team_reward` 为实际传给 learner 的均值。
-- `gen_cost` 为未乘 0.5 的发电成本，`economic_reward` 包含这一系数。
-- 所有新轨迹携带 `battery_model_version=maenv_sep_v1`。
+`pg` 仅表示购电，无售电收入。`spill` 是未利用的总剩余功率，
+一般策略也可能过量发电，不能总把它叫作光伏弃电。
+在优化结果没有过量发电的前提下，它可以用于统计未利用光伏。
 
-旧检查点的观察维度和模型版本不兼容，应重新训练。
-不修改现有 CSV、历史训练结果或检查点。
-`run_perfect_prediction_oracle.py` 的仿真奖励与本模型对齐，但它只是局部数值搜索，
-不是全局最优上界。原有 `run_microgrid_milp_oracle.py` 仍是历史原始数据线性调度模型，
-不能作为此模型的同条件最优基准。
+## 成本与奖励
+
+```text
+generation = (costa × pd² + costb × pd + costc) × dt
+battery = cycle_cost × abs(pb) × dt
+purchase = pg × price × dt
+emission = env_param × pd × dt
+request_penalty = battery_punishment_param × abs(pb_requested - pb) × dt
+exchange = 0.003 × export_i × dt
+
+economic_cost = generation + battery + purchase + exchange
+full_cost = economic_cost + emission + request_penalty
+agent_reward = -reward_scale × full_cost
+team_reward = mean(float32(agent_reward))
+```
+
+删除了正放电即乘 0.3 的电池成本折扣，以及与高 SOC 绑定的电池成本多项式。
+没有额外的“设备活跃奖励”、吞吐奖励、强制最低放电功率或 SOC 高位奖励。
+静置电池没有吞吐成本，循环必须承担效率损失和正的退化成本。
+发电成本也不再额外乘 0.5。
+
+## 日期与评估
+
+训练使用行 0–730，验证使用 731–912，测试使用 913–1094，均为零基索引。
+正常训练每 24 小时存为一段时间截断轨迹，但日期和 SOC 连续；
+`reset_all()` 才随机选训练起点并恢复初始 SOC。
+评估前保存训练日期和 SOC，结束后恢复，不消耗训练 RNG。
+
+联合 MILP 使用 `tools/run_physical_microgrid_milp.py`：
+
+- 一起优化三个智能体，成本包括购电、发电、退化、排放和输送费。
+- 互济同样受节点功率限制、统一损耗和禁止购电再转供约束。
+- 当前统一电价/输送费/损耗下，最优总交换量与环境等比例撮合一致；
+  个别节点可能有多个等成本分配，回放核对全队每小时购电、弃电、发送与接收总量。
+- 同时逐智能体核对电池功率与 SOC，检查分段线性误差证书。
+- 显式充放电互斥，使用 SciPy/HiGHS，不增加依赖。
+- 发电二次成本采用 32 段凸弦插值，保留误差界、下界和求解间隙。
+- 每个解在当前 `MGEnv` 中逐小时回放，核对能量、成本和约束。
+- 每天初始和末尾 SOC 都为 0.35，防止靠免费消耗初始储能节费。
+- 日循环约束属于 MILP 的保守参考条件，训练环境仍跨天连续。
+  因此不宣称它是任意非循环 RL 策略的严格奖励上界。
+- 同日、同初始和末尾 SOC 分别重新优化关闭互济与关闭电池方案，用完整成本比较。
+- 互济没有内部买卖电价，源端承担输送费和本地成本；优化的是全队成本，
+  不声称实现了对每个独立业主公平的结算机制。
+
+## 参数迭代与验收
+
+物理 v1 的历史校准见 `docs/physical_microgrid_validation.md`。
+本次先在六个验证代表日比较九组容量、联络功率、发电成本组合；
+首个通过的候选在完整验证集出现两个发电机活跃度边缘案例，
+所以转到同一预声明序列中的下一候选。全部 182 个验证日通过后才锁定参数测试。
+每个智能体每天需满足：
+
+- SOC 跨度至少覆盖可用窗口的 90%，放电量至少为可用储能电网侧电量的 90%。
+- 充、放电各至少两小时，小时功率超过额定值 1% 才计为有效。
+- 发电机有效运行至少四小时而非全天，每小时超过额定值 5% 才计数。
+- 本地发电和电网分别至少对应本地负荷的 5%；
+  全队发电供给负荷 10%–75%，全队电网至少 10%。
+  供给型微网可以向外发送，不能再要求其发电量小于本地负荷的 75%。
+- 利用至少 90% 的可用光伏。测试日光照变化不受固定光伏发电占比约束。
+- 每日完整成本比无电池优化方案至少低 1%，比无互济优化方案至少低 0.5%；
+  平均互济成本收益至少 1%，每天送达互济量至少为总负荷的 2%。
+- 所有联合/对照 MILP 求解成功，通过日末 SOC、回放和误差证书检查。
+
+详细结果、运行命令与限制见 `docs/heterogeneous_microgrid_validation.md`。

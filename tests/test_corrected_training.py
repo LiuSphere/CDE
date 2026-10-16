@@ -26,7 +26,18 @@ class TrainingTest(unittest.TestCase):
                         calls["learner"] += 1
                         self.assertGreaterEqual(t_env, 512 * 24)
                         self.assertEqual(batch.batch_size, 512)
-                        return train(learner, batch, t_env, episode_num)
+                        self.assertEqual(tuple(batch["obs"].shape[-2:]), (3, 12))
+                        self.assertEqual(batch["state"].shape[-1], 36)
+                        self.assertEqual(tuple(batch["actions"].shape[-2:]), (3, 2))
+                        self.assertEqual(batch["obs"].device.type, "cpu")
+                        self.assertTrue(bool(batch["obs"].isfinite().all()))
+                        value = train(learner, batch, t_env, episode_num)
+                        for network in (learner.mac.agent, learner.critic, learner.mixer):
+                            for parameter in network.parameters():
+                                self.assertEqual(parameter.device.type, "cpu")
+                                if parameter.grad is not None:
+                                    self.assertTrue(bool(parameter.grad.isfinite().all()))
+                        return value
 
                     def count_epoch(evolver, *args, **kwargs):
                         calls["ea"] += 1

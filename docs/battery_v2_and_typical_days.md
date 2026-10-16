@@ -1,5 +1,10 @@
 # Corrected Battery Model and Fixed-Day Policy Evaluation
 
+Historical version note: this document describes `efficiency_balance_v2`.
+The active branch now uses `heterogeneous_exchange_v2`; see
+`docs/heterogeneous_microgrid_validation.md`. Statements below about "new runs"
+apply only to that historical implementation, not the active branch.
+
 ## Scope and Version
 
 New runs use `efficiency_balance_v2`. This is a new simulator version, not a
