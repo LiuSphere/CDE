@@ -48,80 +48,59 @@ def simulate_episode(x, env, row_idx, initial_socs):
         price = float(env.data_dict["price"][row_idx, t])
         load_pv = float(env.data_dict["load_pv"][row_idx, t])
 
-        pd_frac = np.clip(actions[t, :, 0], 0.0, 1.0)
-        pb_gate = np.clip(actions[t, :, 1], -1.0, 1.0)
-
-        pds = pd_frac * dg_max
-
-        # Map [-1, 1] into the dynamically feasible battery power range so SOC stays valid.
-        pb_low = -((0.8 - socs) * battery_caps / raw_ch)
-        pb_high = (socs - 0.2) * battery_caps / raw_dis
-        pbs = pb_low + 0.5 * (pb_gate + 1.0) * (pb_high - pb_low)
-
-        delta_soc = np.where(
-            pbs < 0,
-            -raw_ch * pbs / battery_caps,
-            -raw_dis * pbs / battery_caps,
+        pds = actions[t, :, 0] * dg_max
+        requested = actions[t, :, 1] * battery_caps
+        punishment = -env.params["battery_punishment_params"] * (
+            np.maximum(requested - socs * battery_caps, 0)
+            + np.maximum(-(1 - socs) * battery_caps - requested, 0)
         )
-        socs = np.clip(socs + delta_soc, 0.2, 0.8)
-
-        pg = load_pv - float(np.sum(pds)) - float(np.sum(pbs))
+        socs_raw = socs + np.where(
+            requested < 0,
+            -raw_ch * requested / battery_caps,
+            -raw_dis * requested / battery_caps,
+        )
+        pbs = requested.copy()
+        low, high = socs_raw < 0.2, socs_raw > 0.8
+        pbs[low] = (socs[low] - 0.2) * battery_caps[low]
+        pbs[high] = (socs[high] - 0.8) * battery_caps[high]
+        socs = np.clip(socs_raw, 0.2, 0.8)
+        pg = load_pv - pds - pbs
 
         x_bess = pbs + 3.0 * battery_caps * (1.0 - socs)
-        bess_poly = -np.abs(bessa * x_bess**2 + bessb * x_bess + bessc)
+        bess_poly = -(bessa * x_bess**2 + bessb * x_bess + bessc) * np.where(
+            pbs > 0, 0.3, 1.0,
+        )
         generate_costs = -(costa * pds**2 + costb * pds + costc)
         env_reward = -(pds * env_param)
-        soc_reserve_penalty = -env.soc_reserve_weight * np.maximum(
-            env.soc_reserve_target - socs, 0.0
-        )
 
         baseline_pg = max(load_pv, 0.0)
-        baseline_grid_purchase_cost = baseline_pg * price
-        actual_grid_purchase_cost = max(pg, 0.0) * price
-        curtailment = max(-pg, 0.0)
-        curtailment_penalty = -env.curtailment_penalty_weight * curtailment
-        if env.buy_reward_mode == "relative_saving":
-            buy_cost = env.buy_reward_scale * (
-                (baseline_grid_purchase_cost - actual_grid_purchase_cost)
-                / max(baseline_grid_purchase_cost, 1e-6)
-            )
-        else:
-            buy_cost = -actual_grid_purchase_cost
+        baseline_grid_purchase_cost = baseline_pg * price * n_agents
+        actual_grid_purchase_cost = float(np.sum(np.where(pg > 0, pg * price, 0)))
+        buy_cost = np.where(pg > 0, -pg * price, 0)
+        eco_reward = 0.5 * generate_costs + bess_poly + buy_cost
+        reward_list = (eco_reward + env_reward + punishment) * 0.1
+        total_reward += float(np.mean(reward_list.astype(np.float32)))
 
-        eco_reward = (
-            env.generate_cost_weight * generate_costs
-            + env.bess_cost_weight * bess_poly
-            + env.buy_cost_weight * buy_cost
-            + curtailment_penalty
-        )
-        reward_list = (
-            eco_reward + env.env_reward_weight * env_reward + soc_reserve_penalty
-        )
-
-        if env.reward_aggregate == "mean":
-            total_reward += float(np.mean(reward_list)) * env.reward_scale
-        else:
-            total_reward += float(np.sum(reward_list)) * env.reward_scale
-
-        total_grid_purchase_cost += float(actual_grid_purchase_cost)
-        total_baseline_grid_purchase_cost += float(baseline_grid_purchase_cost)
-        total_grid_purchase_saving += float(
+        total_grid_purchase_cost += actual_grid_purchase_cost
+        total_baseline_grid_purchase_cost += baseline_grid_purchase_cost
+        total_grid_purchase_saving += (
             baseline_grid_purchase_cost - actual_grid_purchase_cost
         )
         total_generate_cost += float(np.sum(-generate_costs))
         total_bess_cost += float(np.sum(-bess_poly))
         total_env_cost += float(np.sum(-env_reward))
-        total_curtailment_penalty += float(curtailment_penalty)
-        total_soc_reserve_penalty += float(np.sum(-soc_reserve_penalty))
         mean_soc_sum += float(np.mean(socs))
 
+    saving_ratio = (
+        total_grid_purchase_saving / total_baseline_grid_purchase_cost
+        if abs(total_baseline_grid_purchase_cost) > 1e-6 else 0.0
+    )
     return {
         "episode_return": total_reward,
         "grid_purchase_cost": total_grid_purchase_cost,
         "baseline_grid_purchase_cost": total_baseline_grid_purchase_cost,
         "grid_purchase_saving": total_grid_purchase_saving,
-        "grid_purchase_saving_ratio": total_grid_purchase_saving
-        / max(total_baseline_grid_purchase_cost, 1e-6),
+        "grid_purchase_saving_ratio": saving_ratio,
         "generate_cost": total_generate_cost,
         "bess_cost": total_bess_cost,
         "env_cost": total_env_cost,
@@ -146,25 +125,22 @@ def make_initial_guess(env, row_idx, initial_socs, mode):
     x0 = np.zeros((t_horizon, n_agents, 2), dtype=np.float64)
     if mode == "gen_cover":
         positive_net = np.maximum(load_pv, 0.0)
-        pd = np.clip((positive_net[:, None] / n_agents) / dg_max[None, :], 0.0, 1.0)
+        pd = np.clip(positive_net[:, None] / dg_max[None, :], 0.0, 1.0)
         x0[:, :, 0] = pd
     elif mode == "price_shift":
         median_price = float(np.median(price))
         positive_net = np.maximum(load_pv, 0.0)
-        pd = np.clip((positive_net[:, None] / n_agents) / dg_max[None, :], 0.0, 1.0)
+        pd = np.clip(positive_net[:, None] / dg_max[None, :], 0.0, 1.0)
         x0[:, :, 0] = pd
         x0[:, :, 1] = np.where(price[:, None] >= median_price, 0.7, -0.7)
     return x0.reshape(-1)
 
 
 def optimize_day(env, row_idx, initial_socs, maxiter):
-    bounds = []
-    n_vars = env.episode_limit * env.n_agents * 2
-    for k in range(n_vars):
-        if k % 2 == 0:
-            bounds.append((0.0, 1.0))
-        else:
-            bounds.append((-1.0, 1.0))
+    bounds = list(zip(
+        np.tile(env.action_lows.flatten(), env.episode_limit),
+        np.tile(env.action_highs.flatten(), env.episode_limit),
+    ))
 
     candidates = ["zeros", "gen_cover", "price_shift"]
     best = None
@@ -177,7 +153,8 @@ def optimize_day(env, row_idx, initial_socs, maxiter):
             args=(env, row_idx, initial_socs),
             method="L-BFGS-B",
             bounds=bounds,
-            options={"maxiter": maxiter, "ftol": 1e-6, "maxfun": 50000},
+            # The reference rounds team rewards to float32.
+            options={"maxiter": maxiter, "ftol": 1e-6, "maxfun": 50000, "eps": 1e-4},
         )
         metrics = simulate_episode(res.x, env, row_idx, initial_socs)
         if best is None or metrics["episode_return"] > best["episode_return"]:
@@ -232,6 +209,8 @@ def main():
         )
 
     summary = {
+        "model_version": env.battery_model_version,
+        "solver_kind": "local_numerical_search_not_a_global_bound",
         "seed": args.seed,
         "split": args.split,
         "num_days": len(results),

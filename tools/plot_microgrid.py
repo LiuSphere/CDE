@@ -84,10 +84,18 @@ def plot_microgrid(csv_path: Path, out_dir: Path, episode: int | None):
     fig.savefig(out_dir / f"episode_{ep:06d}_pg_price.png", dpi=200)
     plt.close(fig)
 
-    x_cost, buy_cost = _series_shared(df_ep, "buy_cost")
+    if "team_reward" in df_ep:
+        costs = df_ep.groupby("col_idx")["buy_cost"].sum().sort_index()
+        x_cost, buy_cost = costs.index.to_numpy(dtype=int), costs.to_numpy()
+    else:
+        x_cost, buy_cost = _series_shared(df_ep, "buy_cost")
+    reward_group = df_ep.groupby("col_idx")
+    team_reward = (
+        reward_group["team_reward"].first()
+        if "team_reward" in df_ep else reward_group["reward"].sum()
+    ).sort_index()
     x_reward, reward_sum = (
-        df_ep.groupby("col_idx")["reward"].sum().sort_index().index.to_numpy(dtype=int),
-        df_ep.groupby("col_idx")["reward"].sum().sort_index().to_numpy(),
+        team_reward.index.to_numpy(dtype=int), team_reward.to_numpy(),
     )
     fig = plt.figure(figsize=(10, 4))
     plt.plot(x_cost, buy_cost, label="buy_cost", color="tab:red")

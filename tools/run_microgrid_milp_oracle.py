@@ -1,3 +1,5 @@
+"""Legacy raw-data linear dispatch, not an oracle for the maenv_sep model."""
+
 import argparse
 import json
 from pathlib import Path
@@ -52,7 +54,6 @@ def load_case(env_config, seed, split, num_days):
         "costb": _as_agent_array([a["costb"] for a in agents]),
         "costc": _as_agent_array([a["costc"] for a in agents]),
         "env_param": _as_agent_array([a["env_param"] for a in agents]),
-        "split_ratio": _as_agent_array([a["split_ratio"] for a in agents]),
         "curtailment_penalty_weight": float(
             env_args.get("curtailment_penalty_weight", 0.0)
         ),
@@ -310,7 +311,7 @@ def summarize(results):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--env-config", default="microgrid")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--split", choices=["test", "train", "all"], default="test")
@@ -324,6 +325,7 @@ def main():
     parser.add_argument("--mip-rel-gap", type=float, default=1e-8)
     parser.add_argument("--time-limit", type=float, default=None)
     args = parser.parse_args()
+    print("Legacy raw-data MILP: not an equivalent oracle for maenv_sep_v1.")
 
     case = load_case(args.env_config, args.seed, args.split, args.num_days)
     case["params"] = apply_parameter_overrides(
@@ -378,6 +380,8 @@ def main():
         )
 
     summary = {
+        "model_version": "legacy_raw_linear_dispatch",
+        "matches_training_environment": False,
         "seed": args.seed,
         "split": args.split,
         "num_days": len(results),

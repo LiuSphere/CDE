@@ -1,84 +1,78 @@
 # microgrid.yaml
 env: "microgrid"
 env_args:
-  # Simulation convention; input CSV physical units still require provenance.
+  # maenv_sep.py uses standardized data and an implicit one-hour step.
   time_step_hours: 1.0
   result_dir: "./results"
   log_trajectories: false
   log_trajectories_mode: "test"
-  reward_mode: "milp_economic"
-  reward_aggregate: "sum"
-  reward_scale: 0.0001
-  buy_cost_weight: 1.0
-  buy_reward_mode: "raw_cost"
-  buy_reward_scale: 100.0
-  generate_cost_weight: 1.0
-  bess_cost_weight: 1.0
-  env_reward_weight: 1.0
-  battery_punishment_weight: 1.0
-  curtailment_penalty_weight: 1.0
-  soc_reserve_target: 0.35
-  soc_reserve_weight: 2.0
+  # Equipment and declared bounds match IPPO4CPT/envs/MG/env_config.json.
+  # Confirmed: use maenv_sep.py's single-objective branch for FACMAC,
+  # not the reference file's multi_target=True setting.
+  # Security fields are inactive in the reference maenv_sep.py as well.
+  security_matrix: [[1.23, -0.55, -0.68], [-0.55, 1.47, -0.92], [-0.68, -0.92, 1.60]]
+  v_slack: [220, 220, 220]
   data:
     - agent_name: "agent1"
-      low_state: [0.0, 0.0, 0.2]
-      high_state: [5.0, 5.0, 0.8]
+      env_name: "mg1"
+      split_ratio: 0.3
+      low_state: [0.0, 0.0, 0.0, -1.0]
+      high_state: [1.0, 1.0, 1.0, 1.0]
       low_action: [0.0, -1.0]
       high_action: [1.0, 1.0]
-      dg_max: 80.0
-      battery_cap: 200.0
-      battery_charge_max: 200.0
-      battery_discharge_max: 200.0
-      battery_punishment_param: 1.0
-      raw_ch: 0.95
-      raw_dis: 0.95
-      split_ratio: 0.3333333333333333
-      bessa: 0.01
-      bessb: 0.1
-      bessc: 0.05
-      costa: 0.02
-      costb: 0.5
-      costc: 0.1
-      env_param: 0.05
+      dg_max: 225.0
+      battery_cap: 100.0
+      battery_punishment_param: 27.5
+      raw_ch: 0.98
+      raw_dis: 0.98
+      bessa: 0.0152
+      bessb: 5.61
+      bessc: 24.0
+      costa: 0.0083
+      costb: 5.76
+      costc: 64.0
+      env_param: 1.6481
+      v_ref: 175
+      adm_matrix: 0
     - agent_name: "agent2"
-      low_state: [0.0, 0.0, 0.2]
-      high_state: [5.0, 5.0, 0.8]
+      env_name: "mg2"
+      split_ratio: 0.3
+      low_state: [0.0, 0.0, 0.0, -1.0]
+      high_state: [1.0, 1.0, 1.0, 1.0]
       low_action: [0.0, -1.0]
       high_action: [1.0, 1.0]
-      dg_max: 80.0
-      battery_cap: 200.0
-      battery_charge_max: 200.0
-      battery_discharge_max: 200.0
-      battery_punishment_param: 1.0
-      raw_ch: 0.95
-      raw_dis: 0.95
-      split_ratio: 0.3333333333333333
-      bessa: 0.01
-      bessb: 0.1
-      bessc: 0.05
-      costa: 0.02
-      costb: 0.5
-      costc: 0.1
-      env_param: 0.05
+      dg_max: 225.0
+      battery_cap: 100.0
+      battery_punishment_param: 27.5
+      raw_ch: 0.98
+      raw_dis: 0.98
+      bessa: 0.0158
+      bessb: 5.63
+      bessc: 34.0
+      costa: 0.0079
+      costb: 5.67
+      costc: 357.0
+      env_param: 1.6481
+      v_ref: 205
+      adm_matrix: 0
     - agent_name: "agent3"
-      low_state: [0.0, 0.0, 0.2]
-      high_state: [5.0, 5.0, 0.8]
+      env_name: "mg3"
+      split_ratio: 0.4
+      low_state: [0.0, 0.0, 0.0, -1.0]
+      high_state: [1.0, 1.0, 1.0, 1.0]
       low_action: [0.0, -1.0]
       high_action: [1.0, 1.0]
-      dg_max: 80.0
-      battery_cap: 200.0
-      battery_charge_max: 200.0
-      battery_discharge_max: 200.0
-      battery_punishment_param: 1.0
-      raw_ch: 0.95
-      raw_dis: 0.95
-      split_ratio: 0.3333333333333333
-      bessa: 0.01
-      bessb: 0.1
-      bessc: 0.05
-      costa: 0.02
-      costb: 0.5
-      costc: 0.1
-      env_param: 0.05
-    
-    # 如果有多个 agent，依此类推在下面贴上 agent2, agent3, agent4...
+      dg_max: 180.0
+      battery_cap: 100.0
+      battery_punishment_param: 100.0
+      raw_ch: 0.98
+      raw_dis: 0.98
+      bessa: 0.0172
+      bessb: 5.72
+      bessc: 37.0
+      costa: 0.0096
+      costb: 5.79
+      costc: 104.0
+      env_param: 1.6481
+      v_ref: 190
+      adm_matrix: 0

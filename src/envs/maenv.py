@@ -4,675 +4,384 @@ import pathlib
 
 import numpy as np
 from gymnasium import spaces
+from pandas import read_csv
 from pettingzoo import ParallelEnv
 
 
-def standardize_data(data: np.ndarray, mean=None, std=None) -> np.ndarray:
-    if mean is None:
-        mean = data.mean()
-    if std is None:
-        std = data.std()
-    if np.isclose(std, 0):
-        return data - mean
-    return (data - mean) / std
+def standardize_data(data: np.ndarray) -> np.ndarray:
+    std = float(np.sqrt(data.var()))
+    if std < 1e-8:
+        std = 1.0
+    return ((data - float(data.mean())) / std).astype(np.float32)
 
 
 class MGEnv(ParallelEnv):
-    metadata = {
-        "render_modes": ["human", None],
-        "name": "MGEnv_v0",
-    }
+    """The maenv_sep.py single-objective model with the FACMAC rollout API."""
 
-    def __init__(
-        self,
-        config,
-        algo_name,
-        render_mode="human",
-    ):
+    metadata = {"render_modes": ["human", None], "name": "MGEnv_maenv_sep_v1"}
+
+    def __init__(self, config, algo_name, render_mode="human"):
         self.render_mode = render_mode
-        self.battery_model_version = "efficiency_balance_v2"
+        self.battery_model_version = "maenv_sep_v1"
         self.time_step_hours = float(config.get("time_step_hours", 1.0))
-        if not np.isfinite(self.time_step_hours) or self.time_step_hours <= 0:
-            raise ValueError("time_step_hours must be finite and positive")
+        if self.time_step_hours != 1.0:
+            raise ValueError("maenv_sep uses a fixed one-hour time step")
         self.n_agents = len(config["data"])
-        self.state = None
-        self.possible_agents = ["agent" + str(r + 1) for r in range(self.n_agents)]
+        self.possible_agents = [f"agent{i + 1}" for i in range(self.n_agents)]
         agents_config = {agent.pop("agent_name"): agent for agent in config["data"]}
         self.params = self.params_init(agents_config)
-        for key in ("battery_caps", "battery_charge_max", "battery_discharge_max"):
-            if not np.all(np.isfinite(self.params[key]) & (self.params[key] > 0)):
-                raise ValueError(f"{key} must be finite and positive")
-        for key in ("raw_ch", "raw_dis"):
-            if not np.all(np.isfinite(self.params[key]) & (self.params[key] > 0)
-                          & (self.params[key] <= 1)):
-                raise ValueError(f"{key} must be an efficiency in (0, 1]")
-
-        self.action_lows = np.stack(
-            [
-                np.array(agents_config[agent]["low_action"], dtype=np.float32)
-                for agent in self.possible_agents
-            ],
-            axis=0,
+        self.action_lows = np.array(
+            [agents_config[a]["low_action"] for a in self.possible_agents],
+            dtype=np.float32,
         )
-        self.action_highs = np.stack(
-            [
-                np.array(agents_config[agent]["high_action"], dtype=np.float32)
-                for agent in self.possible_agents
-            ],
-            axis=0,
+        self.action_highs = np.array(
+            [agents_config[a]["high_action"] for a in self.possible_agents],
+            dtype=np.float32,
         )
-        self.n_actions = int(self.action_lows.shape[1])
-
-        self.reward_aggregate = config.get("reward_aggregate", "sum")
-        self.reward_scale = float(config.get("reward_scale", 1.0))
-        self.reward_mode = config.get("reward_mode", "legacy")
-        self.buy_cost_weight = float(config.get("buy_cost_weight", 1.0))
-        self.buy_reward_mode = config.get("buy_reward_mode", "raw_cost")
-        self.buy_reward_scale = float(config.get("buy_reward_scale", 100.0))
-        self.generate_cost_weight = float(config.get("generate_cost_weight", 1.0))
-        self.bess_cost_weight = float(config.get("bess_cost_weight", 1.0))
-        self.env_reward_weight = float(config.get("env_reward_weight", 1.0))
-        self.battery_punishment_weight = float(
-            config.get("battery_punishment_weight", 1.0)
-        )
-        self.curtailment_penalty_weight = float(
-            config.get("curtailment_penalty_weight", 0.0)
-        )
-        self.soc_reserve_target = float(config.get("soc_reserve_target", 0.35))
-        self.soc_reserve_weight = float(config.get("soc_reserve_weight", 0.0))
-        self._ep_steps = 0
-        self._ep_total_power_loss = 0.0
-        self._ep_grid_purchase_cost = 0.0
-        self._ep_baseline_grid_purchase_cost = 0.0
-        self._ep_grid_purchase_saving = 0.0
-        self._ep_soc_violation = 0.0
-        self._ep_mean_soc_sum = 0.0
-        self._ep_buy_cost_reward = 0.0
-        self._ep_generate_cost_reward = 0.0
-        self._ep_bess_cost_reward = 0.0
-        self._ep_battery_punishment_reward = 0.0
-        self._ep_battery_action_clip = 0.0
-        self._ep_curtailment_reward = 0.0
-        self._ep_soc_reserve_reward = 0.0
-        self._ep_economic_reward = 0.0
-        self._ep_economic_cost = 0.0
-        self._ep_curtailment_cost = 0.0
-
-        env_folder_path = pathlib.Path(__file__ or ".").parent
-
-        # 2. 定位到数据表格所在的 data/ 专属宿舍（即 src/envs/data/）
-
-        data_path = env_folder_path / "data"
-
-        from pandas import read_csv
-
-        price_data = np.array(read_csv(data_path / "price.csv", header=None))
-        pv_data = np.array(read_csv(data_path / "pv.csv", header=None))
-        load_data = np.array(read_csv(data_path / "load.csv", header=None))
-        self.spaces = {}
-        for agent in self.possible_agents:
-            base_low = np.array(agents_config[agent]["low_state"], dtype=np.float32)
-            base_high = np.array(agents_config[agent]["high_state"], dtype=np.float32)
-            self.spaces[agent] = {
+        self.n_actions = 2
+        self.spaces = {
+            agent: {
                 "observation": spaces.Box(
-                    low=base_low,
-                    high=base_high,
-                    shape=base_low.shape,
+                    low=np.array(agents_config[agent]["low_state"], dtype=np.float32),
+                    high=np.array(agents_config[agent]["high_state"], dtype=np.float32),
+                    shape=(4,),
+                    dtype=np.float32,
                 ),
                 "action": spaces.Box(
-                    low=self.action_lows[self.possible_agents.index(agent)],
-                    high=self.action_highs[self.possible_agents.index(agent)],
-                    shape=(self.n_actions,),
+                    low=self.action_lows[i],
+                    high=self.action_highs[i],
+                    shape=(2,),
                     dtype=np.float32,
                 ),
             }
+            for i, agent in enumerate(self.possible_agents)
+        }
 
-        self.data_shape = price_data.shape
-        self.idx = [0, 0]
+        data_path = pathlib.Path(__file__).parent / "data"
+        self.raw_data = {
+            name: np.array(read_csv(data_path / f"{name}.csv", header=None))
+            for name in ("price", "load", "pv")
+        }
+        self.data_dict = {
+            name: standardize_data(data) for name, data in self.raw_data.items()
+        }
+        self.data_dict["load_pv"] = self.data_dict["load"] - self.data_dict["pv"]
+        self.data_shape = self.data_dict["price"].shape
+        self.episode_limit = self.data_shape[1]
+        if self.episode_limit != 24:
+            raise ValueError("maenv_sep requires 24 columns per day")
 
-        self.seed = config.get("seed", None)
+        # Preserve the reference's training rows 0..730. Split the remaining
+        # days for the project's disjoint checkpoint-selection and test sets.
+        self.train_indices = np.arange(min(731, self.data_shape[0]))
+        heldout = np.arange(len(self.train_indices), self.data_shape[0])
+        self.validation_indices, self.test_indices = np.array_split(heldout, 2)
+        self.seed = config.get("seed")
         self.rng = np.random.default_rng(self.seed)
-        num_rows = self.data_shape[0]
-        perm = self.rng.permutation(num_rows)
-        split_point = int(num_rows * 0.8)
-        self.train_indices = perm[:split_point]
-        heldout = perm[split_point:]
-        self.validation_indices = heldout[:len(heldout) // 2]
-        self.test_indices = heldout[len(heldout) // 2:]
-
-        pv_sd = standardize_data(pv_data)
-        load_sd = standardize_data(load_data)
-
-        self.data_dict = {"price": price_data, "load_pv": load_data - pv_data}
-        for key in agents_config.keys():
-            self.data_dict[key] = {}
-            self.data_dict[key]["pv_data"] = pv_sd * agents_config[key]["split_ratio"]
-            self.data_dict[key]["load_data"] = (
-                load_sd * agents_config[key]["split_ratio"]
-            )
-            self.data_dict[key]["load"] = load_data * agents_config[key]["split_ratio"]
-            self.data_dict[key]["pv"] = pv_data * agents_config[key]["split_ratio"]
-
-        run_id = config.get("run_id", "no_run_id")
+        self.idx = [0, 0]
+        self.state = self._observations()
+        self._training_state = None
+        self.is_testing = False
+        self.test_source = "train"
+        self.trajectory_context = {}
         self.log_trajectories = bool(config.get("log_trajectories", False))
         self.log_trajectories_mode = config.get("log_trajectories_mode", "test")
         self.render_dir = (
-            pathlib.Path(config["result_dir"])
-            / "microgrid_trajs"
-            / str(algo_name)
-            / str(run_id)
+            pathlib.Path(config["result_dir"]) / "microgrid_trajs"
+            / str(algo_name) / str(config.get("run_id", "no_run_id"))
         )
         self.render_dir.mkdir(parents=True, exist_ok=True)
-        self.ep_counter = 0
-        self.ep_buffer = []
-        self.is_testing = False
-        self.test_source = "test"
-        self.trajectory_context = {}
-
         self.bucket_size = 10_000
-        self.episode_limit = self.data_shape[1]
+        self.ep_counter = 0
+        self._start_episode()
+
+    def params_init(self, agents_config):
+        names = {
+            "dg_max": "dg_max",
+            "battery_caps": "battery_cap",
+            "battery_punishment_params": "battery_punishment_param",
+            "raw_ch": "raw_ch",
+            "raw_dis": "raw_dis",
+            "bessa": "bessa",
+            "bessb": "bessb",
+            "bessc": "bessc",
+            "costa": "costa",
+            "costb": "costb",
+            "costc": "costc",
+            "env_param": "env_param",
+        }
+        params = {
+            key: np.array(
+                [agents_config[a][field] for a in self.possible_agents], dtype=float,
+            )
+            for key, field in names.items()
+        }
+        # These derived ratings retain checkpoint metadata compatibility; the
+        # reference maps battery actions to capacity, not separate power limits.
+        params["battery_charge_max"] = params["battery_caps"].copy()
+        params["battery_discharge_max"] = params["battery_caps"].copy()
+        params["socs"] = np.full(self.n_agents, 0.2, dtype=float)
+        return params
+
+    def _observations(self):
+        index = tuple(self.idx)
+        return np.array(
+            [
+                [
+                    self.data_dict["price"][index],
+                    self.data_dict["load"][index],
+                    self.data_dict["pv"][index],
+                    soc,
+                ]
+                for soc in self.params["socs"]
+            ],
+            dtype=np.float32,
+        )
+
+    def get_obs(self):
+        return [obs.copy() for obs in self.state]
+
+    def get_state(self):
+        return self.state.flatten()
 
     def get_env_info(self):
-        """框架通过此函数自动配置神经网络的输入输出维度"""
-        first_agent = self.possible_agents[0]
-        # 每个智能体的观察维度 (当前代码中是 3 维: load_data, pv_data, soc)
-        obs_shape = self.spaces[first_agent]["observation"].shape[0]
-        action_shape = self.spaces[first_agent]["action"].shape[0]
-
         return {
-            "n_agents": self.n_agents,  # 智能体数量
-            "n_actions": action_shape,  # 每个智能体的动作维数
-            "obs_shape": obs_shape,  # 每个智能体的观察维数
-            "state_shape": obs_shape
-            * self.n_agents,  # 全局状态维数（所有智能体obs拼接）
-            "episode_limit": self.data_shape[
-                1
-            ],  # 一局的最大时序步数（你表格里的总列数，比如24）
-            "action_spaces": [
-                self.spaces[agent]["action"] for agent in self.possible_agents
-            ],
+            "n_agents": self.n_agents,
+            "n_actions": self.n_actions,
+            "obs_shape": 4,
+            "state_shape": 4 * self.n_agents,
+            "episode_limit": self.episode_limit,
+            "action_spaces": [self.spaces[a]["action"] for a in self.possible_agents],
             "actions_dtype": np.float32,
             "normalise_actions": False,
         }
 
-    def get_obs(self):
-        """返回一个长度为 n_agents 的列表，每个元素是对应 Agent 的 NumPy 数组"""
-        return [
-            np.array(
-                [
-                    self.data_dict[agent_id]["load_data"][tuple(self.idx)],
-                    self.data_dict[agent_id]["pv_data"][tuple(self.idx)],
-                    self.params["socs"][i],
-                ],
-                dtype=np.float32,
-            )
-            for i, agent_id in enumerate(self.possible_agents)
-        ]
-
-    def get_state(self):
-        """Return the concatenated observations as the global state."""
-        return np.concatenate(self.get_obs())
-
-    def params_init(self, agents_config):
-        return {
-            "dg_max": np.array(
-                [agents_config[a]["dg_max"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "battery_caps": np.array(
-                [agents_config[a]["battery_cap"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "battery_charge_max": np.array(
-                [agents_config[a]["battery_charge_max"]
-                 for a in self.possible_agents], dtype=float,
-            ),
-            "battery_discharge_max": np.array(
-                [agents_config[a]["battery_discharge_max"]
-                 for a in self.possible_agents], dtype=float,
-            ),
-            "battery_punishment_params": np.array(
-                [
-                    agents_config[a]["battery_punishment_param"]
-                    for a in self.possible_agents
-                ],
-                dtype=float,
-            ),
-            "raw_ch": np.array(
-                [agents_config[a]["raw_ch"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "raw_dis": np.array(
-                [agents_config[a]["raw_dis"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "bessa": np.array(
-                [agents_config[a]["bessa"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "bessb": np.array(
-                [agents_config[a]["bessb"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "bessc": np.array(
-                [agents_config[a]["bessc"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "costa": np.array(
-                [agents_config[a]["costa"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "costb": np.array(
-                [agents_config[a]["costb"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "costc": np.array(
-                [agents_config[a]["costc"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "env_param": np.array(
-                [agents_config[a]["env_param"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "split_ratio": np.array(
-                [agents_config[a]["split_ratio"] for a in self.possible_agents],
-                dtype=float,
-            ),
-            "socs": np.full(self.n_agents, 0.2, dtype=float),
-        }
-
     @functools.cache
     def observation_space(self, agent: int):
-        agent = "agent" + str(agent)
-        return self.spaces[agent]["observation"]
+        return self.spaces[f"agent{agent}"]["observation"]
 
     @functools.cache
     def action_space(self, agent: int):
-        agent = "agent" + str(agent)
-        return self.spaces[agent]["action"]
+        return self.spaces[f"agent{agent}"]["action"]
+
+    def _start_episode(self):
+        self.ep_buffer = []
+        self._ep_steps = 0
+        self._stats = dict.fromkeys(
+            (
+                "total_power_loss", "grid_purchase_cost",
+                "baseline_grid_purchase_cost", "grid_purchase_saving",
+                "soc_violation", "mean_soc", "economic_reward", "economic_cost",
+                "buy_cost_reward", "generate_cost_reward", "bess_cost_reward",
+                "battery_punishment_reward", "battery_action_clip",
+            ),
+            0.0,
+        )
 
     def reset(self, seed=None, options=None):
-        """改动：剥离原本的字典外壳，直接返回 get_obs()"""
-        rng = np.random.default_rng(seed) if seed is not None else self.rng
-        row_index = int(rng.choice(self.train_indices))
-        self.idx = [row_index, 0]
-        self.params["socs"] = rng.uniform(0.2, 0.5, size=self.n_agents)
-        self.ep_buffer = []
-        self.ep_counter += 1
+        if seed is not None:
+            self.rng = np.random.default_rng(seed)
+        if self._training_state is not None:
+            self.idx, self.params["socs"] = self._training_state
+            self._training_state = None
         self.is_testing = False
         self.test_source = "train"
         self.trajectory_context = {}
-        self._ep_steps = 0
-        self._ep_total_power_loss = 0.0
-        self._ep_grid_purchase_cost = 0.0
-        self._ep_baseline_grid_purchase_cost = 0.0
-        self._ep_grid_purchase_saving = 0.0
-        self._ep_soc_violation = 0.0
-        self._ep_mean_soc_sum = 0.0
-        self._ep_buy_cost_reward = 0.0
-        self._ep_generate_cost_reward = 0.0
-        self._ep_bess_cost_reward = 0.0
-        self._ep_battery_punishment_reward = 0.0
-        self._ep_battery_action_clip = 0.0
-        self._ep_curtailment_reward = 0.0
-        self._ep_soc_reserve_reward = 0.0
-        self._ep_economic_reward = 0.0
-        self._ep_economic_cost = 0.0
-        self._ep_curtailment_cost = 0.0
-
-        # 严格注意：框架的 runner.py 里写的是 self.env.reset()，它只认观察列表
+        self.ep_counter += 1
+        self._start_episode()
+        self.state = self._observations()
         return self.get_obs()
 
-    def reset_test(self, seed=None, source: str = "test", row_idx=None,
-                   initial_soc=None, trajectory_context=None):
+    def reset_all(self, seed=None):
         rng = np.random.default_rng(seed) if seed is not None else self.rng
-        subsets = {"test": self.test_indices, "validation": self.validation_indices,
-                   "train": self.train_indices, "all": np.arange(self.data_shape[0])}
+        self._training_state = None
+        self.idx = [int(rng.choice(self.train_indices)), 0]
+        self.params["socs"] = np.full(self.n_agents, 0.2, dtype=float)
+        return self.reset()
+
+    def reset_test(
+        self, seed=None, source="test", row_idx=None, initial_soc=None,
+        trajectory_context=None,
+    ):
+        subsets = {
+            "train": self.train_indices, "validation": self.validation_indices,
+            "test": self.test_indices, "all": np.arange(self.data_shape[0]),
+        }
         if source not in subsets:
             raise ValueError(f"Unknown evaluation source: {source}")
         indices = subsets[source]
         if row_idx is not None:
-            if isinstance(row_idx, bool) or int(row_idx) != row_idx or row_idx not in indices:
+            if (
+                isinstance(row_idx, bool) or int(row_idx) != row_idx
+                or row_idx not in indices
+            ):
                 raise ValueError(f"row_idx {row_idx} is not in the {source} split")
             row_index = int(row_idx)
+        elif self.is_testing and self.test_source == source:
+            row_index = self.idx[0]
         else:
-            row_index = int(rng.choice(indices))
-        if initial_soc is None:
-            socs = rng.uniform(0.2, 0.5, size=self.n_agents)
-        else:
-            socs = np.broadcast_to(np.asarray(initial_soc, dtype=float), (self.n_agents,)).copy()
+            row_index = int(indices[0])
+        socs = self.params["socs"].copy()
+        if initial_soc is not None:
+            socs = np.broadcast_to(
+                np.asarray(initial_soc, dtype=float), (self.n_agents,),
+            ).copy()
             if not np.all(np.isfinite(socs) & (socs >= 0.2) & (socs <= 0.8)):
                 raise ValueError("initial_soc must be finite and in [0.2, 0.8]")
+        if not self.is_testing:
+            self._training_state = (self.idx.copy(), self.params["socs"].copy())
         self.idx = [row_index, 0]
         self.params["socs"] = socs
-        self.trajectory_context = dict(trajectory_context or {})
-        self.ep_buffer = []
-        self.ep_counter += 1
         self.is_testing = True
         self.test_source = source
-        self._ep_steps = 0
-        self._ep_total_power_loss = 0.0
-        self._ep_grid_purchase_cost = 0.0
-        self._ep_baseline_grid_purchase_cost = 0.0
-        self._ep_grid_purchase_saving = 0.0
-        self._ep_soc_violation = 0.0
-        self._ep_mean_soc_sum = 0.0
-        self._ep_buy_cost_reward = 0.0
-        self._ep_generate_cost_reward = 0.0
-        self._ep_bess_cost_reward = 0.0
-        self._ep_battery_punishment_reward = 0.0
-        self._ep_battery_action_clip = 0.0
-        self._ep_curtailment_reward = 0.0
-        self._ep_soc_reserve_reward = 0.0
-        self._ep_economic_reward = 0.0
-        self._ep_economic_cost = 0.0
-        self._ep_curtailment_cost = 0.0
+        self.trajectory_context = dict(trajectory_context or {})
+        self.ep_counter += 1
+        self._start_episode()
+        self.state = self._observations()
         return self.get_obs()
 
     def step(self, actions):
-        """
-        EPyMARL框架传入连续动作，直接映射到发电功率和电池功率
-        """
         if hasattr(actions, "cpu"):
             actions = actions.cpu().numpy()
-        actions_raw = np.asarray(actions, dtype=np.float32).reshape(
-            self.n_agents, self.n_actions
+        actions = np.asarray(actions).reshape(self.n_agents, self.n_actions)
+        index = tuple(self.idx)
+        price = self.data_dict["price"][index]
+        load = self.data_dict["load"][index]
+        pv = self.data_dict["pv"][index]
+        last_socs = self.params["socs"].copy()
+        caps = self.params["battery_caps"]
+        pds = actions[:, 0] * self.params["dg_max"]
+        requested = actions[:, 1] * caps
+        punishment = -self.params["battery_punishment_params"] * (
+            np.maximum(requested - last_socs * caps, 0)
+            + np.maximum(-(1 - last_socs) * caps - requested, 0)
         )
-        actions_raw = np.clip(actions_raw, self.action_lows, self.action_highs)
-
-        socs = self.params["socs"].copy()
-        battery_caps = self.params["battery_caps"]
-        battery_punishment_params = self.params["battery_punishment_params"]
-        pds = actions_raw[:, 0] * self.params["dg_max"]
-        pbs_requested = actions_raw[:, 1] * np.where(
-            actions_raw[:, 1] < 0,
-            self.params["battery_charge_max"],
-            self.params["battery_discharge_max"],
-        )
-        dt = self.time_step_hours
-        eta_ch, eta_dis = self.params["raw_ch"], self.params["raw_dis"]
-        max_discharge = (socs - 0.2) * battery_caps * eta_dis / dt
-        max_charge = (0.8 - socs) * battery_caps / (eta_ch * dt)
-        pbs = np.clip(pbs_requested, -max_charge, max_discharge)
-        battery_action_clip = np.abs(pbs_requested - pbs)
-        battery_punishment = -battery_punishment_params * (
-            battery_action_clip
-        )
-
-        last_socs = socs.copy()
         socs_raw = last_socs + np.where(
-            pbs_requested < 0, -eta_ch * pbs_requested,
-            -pbs_requested / eta_dis,
-        ) * dt / battery_caps
-        socs = np.clip(last_socs + np.where(
-            pbs < 0, -eta_ch * pbs, -pbs / eta_dis,
-        ) * dt / battery_caps, 0.2, 0.8)
-
-        self.params["socs"] = socs
-        pg = self.data_dict["load_pv"][tuple(self.idx)] - sum(pds) - sum(pbs)
-
-        x = pbs + 3.0 * battery_caps * (1.0 - socs)
-        bess_cost = -np.abs(
-            self.params["bessa"] * x**2
-            + self.params["bessb"] * x
-            + self.params["bessc"]
+            requested < 0,
+            -self.params["raw_ch"] * requested / caps,
+            -self.params["raw_dis"] * requested / caps,
         )
-        generate_costs = -(
-            self.params["costa"] * pds**2
-            + self.params["costb"] * pds
+        pbs = requested.copy()
+        low, high = socs_raw < 0.2, socs_raw > 0.8
+        pbs[low] = (last_socs[low] - 0.2) * caps[low]
+        pbs[high] = (last_socs[high] - 0.8) * caps[high]
+        socs = np.clip(socs_raw, 0.2, 0.8)
+        self.params["socs"] = socs
+        pg = load - pv - pds - pbs
+        x = pbs + 3 * caps * (1 - socs)
+        bess_cost = -(
+            self.params["bessa"] * x**2 + self.params["bessb"] * x
+            + self.params["bessc"]
+        ) * np.where(pbs > 0, 0.3, 1.0)
+        generate_cost = -(
+            self.params["costa"] * pds**2 + self.params["costb"] * pds
             + self.params["costc"]
         )
-        price = float(self.data_dict["price"][tuple(self.idx)])
-        buy_cost = -abs(float(pg)) * price
-        eco_reward = generate_costs + bess_cost + buy_cost
+        buy_cost = np.where(pg > 0, -pg * price, 0.0)
+        economic_reward = 0.5 * generate_cost + bess_cost + buy_cost
         env_reward = -pds * self.params["env_param"]
-        punishment = battery_punishment
-        reward_list = eco_reward + env_reward + punishment
+        reward = (economic_reward + env_reward + punishment) * 0.1
+        team_reward = float(np.mean(reward.astype(np.float32)))
+        # maenv_sep returns the current hour's inputs with the updated SOC,
+        # before advancing its clock. Keep that observation timing unchanged.
+        self.state = self._observations()
 
-        baseline_pg = max(float(self.data_dict["load_pv"][tuple(self.idx)]), 0.0)
-        baseline_grid_purchase_cost = baseline_pg * price
-        actual_grid_purchase_cost = abs(float(pg)) * price
-        economic_reward = eco_reward
-        weighted_generate_costs = generate_costs
-        weighted_bess_cost = bess_cost
-        weighted_buy_cost = np.full(self.n_agents, buy_cost, dtype=float)
-        curtailment_penalty = np.zeros(self.n_agents, dtype=float)
-        soc_reserve_penalty = np.zeros(self.n_agents, dtype=float)
-
-        step_total_power_loss = float(np.abs(pg))
-        step_grid_purchase_cost = float(actual_grid_purchase_cost)
-        step_baseline_grid_purchase_cost = float(baseline_grid_purchase_cost)
-        step_grid_purchase_saving = float(
-            baseline_grid_purchase_cost - actual_grid_purchase_cost
-        )
-        step_soc_violation = float(
-            np.sum(np.maximum(0.2 - socs_raw, 0) + np.maximum(socs_raw - 0.8, 0))
-        )
-        step_mean_soc = float(np.mean(self.params["socs"]))
+        baseline_cost = max(float(load - pv), 0.0) * float(price)
+        grid_cost = -buy_cost
+        saving = baseline_cost - grid_cost
+        action_clip = np.abs(requested - pbs)
         self._ep_steps += 1
-        self._ep_total_power_loss += step_total_power_loss
-        self._ep_grid_purchase_cost += step_grid_purchase_cost
-        self._ep_baseline_grid_purchase_cost += step_baseline_grid_purchase_cost
-        self._ep_grid_purchase_saving += step_grid_purchase_saving
-        self._ep_soc_violation += step_soc_violation
-        self._ep_mean_soc_sum += step_mean_soc
-        self._ep_buy_cost_reward += float(np.sum(weighted_buy_cost))
-        self._ep_generate_cost_reward += float(np.sum(weighted_generate_costs))
-        self._ep_bess_cost_reward += float(np.sum(weighted_bess_cost))
-        self._ep_battery_punishment_reward += float(np.sum(punishment))
-        self._ep_battery_action_clip += float(np.sum(battery_action_clip))
-        self._ep_curtailment_reward += float(np.sum(curtailment_penalty))
-        self._ep_soc_reserve_reward += float(np.sum(soc_reserve_penalty))
-        self._ep_economic_reward += float(np.sum(economic_reward))
-        self._ep_economic_cost += float(np.sum(-economic_reward))
-        self._ep_curtailment_cost += float(np.sum(-curtailment_penalty))
+        values = {
+            "total_power_loss": np.sum(np.abs(pg)),
+            "grid_purchase_cost": np.sum(grid_cost),
+            "baseline_grid_purchase_cost": baseline_cost * self.n_agents,
+            "grid_purchase_saving": np.sum(saving),
+            "soc_violation": np.sum(
+                np.maximum(0.2 - socs_raw, 0) + np.maximum(socs_raw - 0.8, 0),
+            ),
+            "mean_soc": np.mean(socs),
+            "economic_reward": np.sum(economic_reward),
+            "economic_cost": np.sum(-economic_reward),
+            "buy_cost_reward": np.sum(buy_cost),
+            "generate_cost_reward": np.sum(0.5 * generate_cost),
+            "bess_cost_reward": np.sum(bess_cost),
+            "battery_punishment_reward": np.sum(punishment),
+            "battery_action_clip": np.sum(action_clip),
+        }
+        for key, value in values.items():
+            self._stats[key] += float(value)
+        for i, agent in enumerate(self.possible_agents):
+            self.ep_buffer.append({
+                "episode": self.ep_counter,
+                "policy_source": self.trajectory_context.get("policy_source", "unspecified"),
+                "checkpoint_step": self.trajectory_context.get("checkpoint_step", ""),
+                "battery_model_version": self.battery_model_version,
+                "time_step_hours": self.time_step_hours,
+                "agent": agent, "row_idx": self.idx[0], "col_idx": self.idx[1],
+                "price": float(price), "load": float(load), "pv": float(pv),
+                "load_sd": float(load), "pv_sd": float(pv),
+                "price_raw": float(self.raw_data["price"][index]),
+                "load_raw": float(self.raw_data["load"][index]),
+                "pv_raw": float(self.raw_data["pv"][index]),
+                "soc_init": float(last_socs[i]), "soc": float(socs[i]),
+                "action_pd": float(actions[i, 0]), "action_pb": float(actions[i, 1]),
+                "pd": float(pds[i]), "pb": float(pbs[i]),
+                "pb_requested": float(requested[i]), "soc_requested": float(socs_raw[i]),
+                "battery_action_clip": float(action_clip[i]),
+                "pg": float(pg[i]), "pg_total": float(np.sum(pg)),
+                "gen_cost": float(-generate_cost[i]), "bess_cost": float(-bess_cost[i]),
+                "buy_cost": float(grid_cost[i]),
+                "economic_reward": float(economic_reward[i]),
+                "economic_cost": float(-economic_reward[i]),
+                "baseline_grid_purchase_cost": float(baseline_cost),
+                "grid_purchase_saving": float(saving[i]),
+                "eco_reward": float(economic_reward[i]),
+                "env_reward": float(env_reward[i]), "punishment": float(punishment[i]),
+                "reward": float(reward[i]), "team_reward": team_reward,
+            })
 
-        # --- 记账保存逻辑（保留你原本写 CSV 的行为） ---
-        for j, i in enumerate(self.possible_agents):
-            self.ep_buffer.append(
-                {
-                    "episode": int(self.ep_counter),
-                    "policy_source": self.trajectory_context.get("policy_source", "unspecified"),
-                    "checkpoint_step": self.trajectory_context.get("checkpoint_step", ""),
-                    "battery_model_version": self.battery_model_version,
-                    "time_step_hours": dt,
-                    "agent": i,
-                    "row_idx": int(self.idx[0]),
-                    "col_idx": int(self.idx[1]),
-                    "price": float(self.data_dict["price"][tuple(self.idx)]),
-                    "load_sd": float(self.data_dict[i]["load_data"][tuple(self.idx)]),
-                    "pv_sd": float(self.data_dict[i]["pv_data"][tuple(self.idx)]),
-                    "load": float(self.data_dict[i]["load"][tuple(self.idx)]),
-                    "pv": float(self.data_dict[i]["pv"][tuple(self.idx)]),
-                    "soc_init": float(last_socs[j]),
-                    "soc": float(self.params["socs"][j]),
-                    "action_pd": float(actions_raw[j, 0]),
-                    "action_pb": float(actions_raw[j, 1]),
-                    "pd": float(pds[j]),
-                    "pb": float(pbs[j]),
-                    "pb_requested": float(pbs_requested[j]),
-                    "soc_requested": float(socs_raw[j]),
-                    "battery_action_clip": float(battery_action_clip[j]),
-                    "pg_total": float(pg),
-                    "gen_cost": float(-weighted_generate_costs[j]),
-                    "bess_cost": float(-weighted_bess_cost[j]),
-                    "buy_cost": float(-weighted_buy_cost[j]),
-                    "curtailment_penalty": float(curtailment_penalty[j]),
-                    "economic_reward": float(economic_reward[j]),
-                    "economic_cost": float(-economic_reward[j]),
-                    "baseline_grid_purchase_cost": float(baseline_grid_purchase_cost),
-                    "grid_purchase_saving": float(step_grid_purchase_saving),
-                    "eco_reward": float(eco_reward[j]),
-                    "env_reward": float(env_reward[j]),
-                    "punishment": float(punishment[j]),
-                    "soc_reserve_penalty": float(soc_reserve_penalty[j]),
-                    "reward": float(reward_list[j]),
-                }
-            )
-        # ======================================================================
-
-        # 时钟前进一步
         self.idx[1] += 1
-        terminated = False
-
-        # 判断今天 24 小时（或其他步长上限）是否结束
-        if self.idx[1] >= self.data_shape[1]:
-            terminated = True
-            self.idx[1] = 0  # 重置时钟指针供下一轮使用
-
-            write_ok = False
-            if self.log_trajectories and self.ep_buffer:
-                if self.log_trajectories_mode == "all":
-                    write_ok = True
-                elif self.log_trajectories_mode == "test" and self.is_testing:
-                    write_ok = True
-                elif self.log_trajectories_mode == "train" and (not self.is_testing):
-                    write_ok = True
-
-            if write_ok:
-                file_path = self._current_csv_path()
-                file_path.parent.mkdir(parents=True, exist_ok=True)
-                file_exists = file_path.exists()
-                with open(
-                    file_path, "a" if file_exists else "w", newline="", encoding="utf-8"
-                ) as f:
-                    writer = csv.DictWriter(
-                        f, fieldnames=list(self.ep_buffer[0].keys())
-                    )
-                    if not file_exists:
+        terminated = self.idx[1] == self.episode_limit
+        if terminated:
+            indices = (
+                getattr(self, f"{self.test_source}_indices")
+                if self.test_source != "all" else np.arange(self.data_shape[0])
+            )
+            next_row = self.idx[0] + 1
+            self.idx = [next_row if next_row <= indices[-1] else int(indices[0]), 0]
+            write_ok = self.log_trajectories and (
+                self.log_trajectories_mode == "all"
+                or (self.log_trajectories_mode == "test" and self.is_testing)
+                or (self.log_trajectories_mode == "train" and not self.is_testing)
+            )
+            if write_ok and self.ep_buffer:
+                path = self._current_csv_path()
+                exists = path.exists()
+                with path.open(
+                    "a" if exists else "w", newline="", encoding="utf-8",
+                ) as file:
+                    writer = csv.DictWriter(file, fieldnames=list(self.ep_buffer[0]))
+                    if not exists:
                         writer.writeheader()
                     writer.writerows(self.ep_buffer)
 
-        # --- 关键改动：组装 EPyMARL 框架绝对需要的标准返回格式 ---
+        info = dict(self._stats)
+        info["mean_soc"] /= max(self._ep_steps, 1)
+        baseline = info["baseline_grid_purchase_cost"]
+        info["grid_purchase_saving_ratio"] = (
+            info["grid_purchase_saving"] / baseline if abs(baseline) > 1e-6 else 0.0
+        )
+        # Daily rollout boundaries truncate a continuing process, not the model.
+        info["episode_limit"] = terminated
+        return team_reward, terminated, info
 
-        # 1. 团队总奖励：框架（如QMIX）默认所有 Agent 协同共享一个标量奖励。
-        #    这里支持 sum/mean 两种聚合方式，并支持 reward_scale 缩放，便于稳定训练。
-        if self.reward_aggregate == "mean":
-            total_reward = float(np.mean(reward_list))
-        else:
-            total_reward = float(np.sum(reward_list))
-
-        # 2. 打造环境附加信息包 env_info，供框架统计胜率和画网损图
-        #    注意：这里加入 "episode_limit"，这样 runner.py 就能区分出是否是时间到了下班。
-        env_info = {
-            "total_power_loss": float(self._ep_total_power_loss),
-            "mean_soc": float(self._ep_mean_soc_sum / max(self._ep_steps, 1)),
-            "soc_violation": float(self._ep_soc_violation),
-            "grid_purchase_cost": float(self._ep_grid_purchase_cost),
-            "baseline_grid_purchase_cost": float(self._ep_baseline_grid_purchase_cost),
-            "grid_purchase_saving": float(self._ep_grid_purchase_saving),
-            "grid_purchase_saving_ratio": float(
-                self._ep_grid_purchase_saving
-                / max(self._ep_baseline_grid_purchase_cost, 1e-6)
-            ),
-            "economic_reward": float(self._ep_economic_reward),
-            "economic_cost": float(self._ep_economic_cost),
-            "curtailment_cost": float(self._ep_curtailment_cost),
-            "buy_cost_reward": float(self._ep_buy_cost_reward),
-            "generate_cost_reward": float(self._ep_generate_cost_reward),
-            "bess_cost_reward": float(self._ep_bess_cost_reward),
-            "battery_punishment_reward": float(self._ep_battery_punishment_reward),
-            "battery_action_clip": float(self._ep_battery_action_clip),
-            "curtailment_reward": float(self._ep_curtailment_reward),
-            "soc_reserve_reward": float(self._ep_soc_reserve_reward),
-            "episode_limit": terminated,
-        }
-
-        # 严格按照这个顺序返回！
-        # 框架的这一行接收它：reward, terminated, env_info = self.env.step(actions[0].cpu())
-        return total_reward, terminated, env_info
+    def _current_csv_path(self):
+        start = ((max(self.ep_counter, 1) - 1) // self.bucket_size) * self.bucket_size + 1
+        end = start + self.bucket_size - 1
+        return self.render_dir / f"episodes_{self.test_source}_{start:06d}-{end:06d}.csv"
 
     def render(self, mode="human"):
-        self.render_mode = "human"
+        self.render_mode = mode
 
     def close(self):
         pass
-
-    def _current_csv_path(self) -> pathlib.Path:
-        bucket_idx = (max(self.ep_counter, 1) - 1) // self.bucket_size
-        start_ep = bucket_idx * self.bucket_size + 1
-        end_ep = (bucket_idx + 1) * self.bucket_size
-        src = self.test_source
-        filename = f"episodes_{src}_{start_ep:06d}-{end_ep:06d}.csv"
-        return self.render_dir / filename
-
-
-if __name__ == "__main__":
-    print("\n" + "=" * 50)
-    print("🚀 [START] 成功进入独立测试流程...")
-    print("=" * 50)
-
-    # 手动制造一个符合你 YAML 格式的虚拟配置字典
-    mock_config = {
-        "result_dir": "./results",
-        "data": [
-            {
-                "agent_name": "agent1",
-                "split_ratio": 0.25,
-                "dg_max": 2.0,
-                "battery_cap": 5.0,
-                "battery_charge_max": 5.0,
-                "battery_discharge_max": 5.0,
-                "battery_punishment_param": 0.1,
-                "raw_ch": 0.95,
-                "raw_dis": 0.95,
-                "bessa": 0.1,
-                "bessb": 0.2,
-                "bessc": 0.3,
-                "costa": 0.05,
-                "costb": 0.1,
-                "costc": 0.2,
-                "env_param": 0.01,
-                "low_state": [0.0, 0.0, 0.2],
-                "high_state": [10.0, 10.0, 0.8],
-                "low_action": [-1.0, -1.0],
-                "high_action": [1.0, 1.0],
-            },
-            {
-                "agent_name": "agent2",
-                "split_ratio": 0.25,
-                "dg_max": 2.0,
-                "battery_cap": 5.0,
-                "battery_charge_max": 5.0,
-                "battery_discharge_max": 5.0,
-                "battery_punishment_param": 0.1,
-                "raw_ch": 0.95,
-                "raw_dis": 0.95,
-                "bessa": 0.1,
-                "bessb": 0.2,
-                "bessc": 0.3,
-                "costa": 0.05,
-                "costb": 0.1,
-                "costc": 0.2,
-                "env_param": 0.01,
-                "low_state": [0.0, 0.0, 0.2],
-                "high_state": [10.0, 10.0, 0.8],
-                "low_action": [-1.0, -1.0],
-                "high_action": [1.0, 1.0],
-            },
-        ],
-    }
-
-    # 彻底不用 try-except，让任何一丁点错误直接原形毕露砸在控制台上！
-    print("[STEP 1] 正在尝试读取 CSV 并初始化 MGEnv...")
-    env = MGEnv(config=mock_config, algo_name="debug_run")
-    print("✅ 环境构建成功！")
-
-    print("\n[STEP 2] 正在测试 get_env_info()...")
-    env_info = env.get_env_info()
-    print(f"✅ 环境信息: {env_info}")
-
-    print("\n[STEP 3] 正在测试 reset()...")
-    obs = env.reset()
-    print(f"✅ Reset 成功！初始观察矩阵维度: {np.array(obs).shape}")
-
-    print("\n[STEP 4] 正在模拟跑一步 step()...")
-    # 模拟两个智能体的连续动作 [n_agents, n_actions]
-    mock_actions = np.array([[0.5, -0.2], [0.1, 0.8]], dtype=np.float32)
-    total_reward, terminated, env_info = env.step(mock_actions)
-    print(f"✅ Step 成功！团队总奖励: {total_reward}, 是否结束: {terminated}")
-    print(f"✅ 附加网损信息: {env_info}")
-
-    print("\n" + "=" * 50)
-    print("🎉 [SUCCESS] 你的微电网环境所有核心接口完全正常！")
-    print("=" * 50 + "\n")

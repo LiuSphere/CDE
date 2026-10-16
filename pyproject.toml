@@ -13,6 +13,7 @@ dependencies = [
     "pettingzoo>=1.25.0",
     "pyyaml>=6.0.3",
     "scipy>=1.15.3",
+    "stable-baselines3>=2.9.0",
     "torch==2.11.0",
     "vmas>=1.5.2",
     "wandb>=0.25.0",

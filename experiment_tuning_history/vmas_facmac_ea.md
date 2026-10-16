@@ -1,5 +1,9 @@
 # VMAS FACMAC-EA tuning state
 
+## Reliability note (2026-07-23)
+
+The runs documented in this file use the pre-correction `success_rate` semantics. Treat success-related conclusions as low-confidence historical evidence; reward, optimizer, and exploration observations remain provisional priors only. The active runs `8bs2laau` (`facmac_ea_lr_mid_seed2`) and `ftcyl8br` (`facmac_ea_lr_mid_seed1`) also use the pre-correction metric. When they finish, record their tuning experience in this file. For seed5/6 and later corrected-metric runs, use `vmas_facmac_ea_lr_mid_seed34_2026-07-24.md` as the primary record and consult this file only for provisional historical priors.
+
 ## Reference runs
 
 | Run | Algorithm override | Final `t_env` | Best | RL | EA |

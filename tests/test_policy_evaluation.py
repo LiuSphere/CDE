@@ -57,6 +57,11 @@ class PolicyEvaluationTest(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(state, runner.env.rng.bit_generator.state)
             self.assertEqual(runner.t_env, 0)
+            self.assertEqual(runner.batch["obs"].shape, (1, 25, 3, 4))
+            self.assertEqual(runner.batch["state"].shape, (1, 25, 12))
+            self.assertEqual(runner.batch["actions"].shape, (1, 25, 3, 2))
+            self.assertEqual(runner.batch["reward"].shape, (1, 25, 1))
+            self.assertEqual(runner.batch["obs"].device.type, "cpu")
             self.assertTrue(set(rows).isdisjoint(runner.env.test_indices))
             with self.assertRaises(ValueError):
                 fixed_rows(runner.env, "test", rows, 2)
@@ -85,10 +90,17 @@ class PolicyEvaluationTest(unittest.TestCase):
             self.assertEqual(len(records), 2 * 24 * 3)
             self.assertEqual({r["policy_source"] for r in records}, {"ea"})
             self.assertEqual({r["checkpoint_step"] for r in records}, {"123"})
+            agents = {a["agent_name"]: a for a in config["env_args"]["data"]}
             for r in records:
-                p = float(r["pb"])
-                delta = -p / 0.95 / 200 if p >= 0 else -p * 0.95 / 200
-                self.assertAlmostEqual(float(r["soc"]) - float(r["soc_init"]), delta)
+                requested = float(r["pb_requested"])
+                before = float(r["soc_init"])
+                agent = agents[r["agent"]]
+                efficiency = agent["raw_ch"] if requested < 0 else agent["raw_dis"]
+                after = np.clip(
+                    before - requested * efficiency / agent["battery_cap"], 0.2, 0.8,
+                )
+                self.assertAlmostEqual(float(r["soc"]), after)
+                self.assertEqual(r["battery_model_version"], "maenv_sep_v1")
             manifest = json.loads((Path(directory) / "best/best_ea.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["checkpoint"], str(checkpoint.resolve()))
             runner.env.time_step_hours = 0.25

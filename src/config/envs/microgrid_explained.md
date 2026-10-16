@@ -1,697 +1,162 @@
-# microgrid.yaml 详细解析
+# 微电网模型：maenv_sep.py 对齐说明
 
-本文解释 `src/config/envs/microgrid.yaml` 中每个配置项的作用，以及它们在电网环境 `src/envs/maenv.py` 中如何参与观测、动作、状态更新和奖励计算。
+`src/envs/maenv.py` 复现桌面 MG 中 `maenv_sep.py` 的单目标数值模型，
+并适配当前 FACMAC 的观察、团队标量奖励与 24 步轨迹接口。
+模型版本为 `maenv_sep_v1`。
 
-## 1. 文件定位
+## 数据与观察
 
-`microgrid.yaml` 是微电网环境配置文件。运行命令中使用：
+三个源 CSV 不做修改。价格、负荷、光伏分别按整张表标准化：
 
-```powershell
-uv run python src/direct_main.py --config facmac_ea --env-config microgrid --override use_cuda=False
+```python
+std = sqrt(data.var())
+if std < 1e-8:
+    std = 1.0
+normalized = ((data - data.mean()) / std).astype(float32)
 ```
 
-其中 `--env-config=microgrid` 会加载：
+标准化结果同时用于观察、功率平衡和成本计算，不会再还原成原始值。
+因此标准化后的价格、负荷、光伏可以为负；这不表示原始 CSV 是负值。
+每个智能体使用相同的完整数据，不使用 `split_ratio` 分摊。
+
+每个智能体的观察固定为：
 
 ```text
-src/config/envs/microgrid.yaml
+[标准化价格, 标准化负荷, 标准化光伏, SOC]
 ```
 
-该文件主要提供两层配置：
+当前 3 个智能体对应观察维度 4、全局状态维度 12、动作维度 2。
+全局状态为观察的拼接；维度由环境接口传递给 runner、回放、控制器和 learner。
+与参考代码相同，`step()` 后返回当前小时的数据与更新后的 SOC，
+再推进内部时钟，而不是立即将观察切换到下一小时。
 
-```yaml
-env: "microgrid"
+## 动作、电池与功率平衡
 
-env_args:
-  ...
-```
-
-训练代码直接实例化 `MGEnv`，并将 `env_args` 作为 `config` 传入。
-
-## 2. 顶层字段
-
-微电网是项目唯一环境，运行时直接实例化 `MGEnv`。
-
-## 3. env_args 总体作用
-
-`env_args` 是微电网环境本体使用的参数集合，主要控制：
-
-- 结果目录与轨迹记录。
-- 动作维度和动作范围。
-- 奖励聚合方式和奖励缩放。
-- 购电、发电、电池、弃电、SOC 约束等奖励权重。
-- 每个智能体的发电机、电池、成本函数和数据分摊比例。
-
-代码中读取位置主要在 `MGEnv.__init__()` 和 `MGEnv.step()`。
-
-## 4. 结果与轨迹记录
-
-```yaml
-result_dir: "./results"
-```
-
-含义：实验结果根目录。环境会把轨迹 CSV 写到：
-
-```text
-<result_dir>/microgrid_trajs/<algo_name>/<run_id>/
-```
-
-当前配置下，默认根目录是 `./results`。
-
-```yaml
-log_trajectories: false
-```
-
-含义：是否把每一步的微电网调度轨迹写入 CSV。
-
-- `false`：不写轨迹文件。
-- `true`：按 `log_trajectories_mode` 决定写哪些 episode。
-
-```yaml
-log_trajectories_mode: "test"
-```
-
-含义：轨迹记录模式。只有 `log_trajectories: true` 时生效。
-
-可用语义：
-
-- `"test"`：只记录测试 episode。
-- `"train"`：只记录训练 episode。
-- `"all"`：训练和测试都记录。
-
-每条轨迹记录包括价格、负荷、光伏、SOC、动作、发电功率、电池功率、购电成本、奖励分量等字段。
-
-## 5. 动作相关配置
-
-主线训练使用连续动作。
-
-每个 agent 中有：
-
-```yaml
-low_action: [0.0, -1.0]
-high_action: [1.0, 1.0]
-```
-
-含义：每个智能体动作是二维连续向量：
-
-```text
-action = [a_dg, a_batt]
-```
-
-其中：
-
-- `a_dg` 范围 `[0.0, 1.0]`，控制柴油发电机输出比例。
-- `a_batt` 范围 `[-1.0, 1.0]`，控制电池充放电比例。
-
-在 `MGEnv.step()` 中：
+动作 `[a_dg, a_batt]` 映射为：
 
 ```python
-pds = actions_raw[:, 0] * self.params["dg_max"]
-pbs_requested = actions_raw[:, 1] * self.params["battery_caps"]
+pd = a_dg * dg_max
+pb_requested = a_batt * battery_cap
 ```
 
-所以：
-
-- `pds` 是每个 agent 的发电功率。
-- `pbs_requested` 是每个 agent 请求的电池功率。
-
-按当前配置：
-
-```yaml
-dg_max: 80.0
-battery_cap: 200.0
-```
-
-则每个 agent：
-
-- `a_dg = 1.0` 表示发电 `80.0`。
-- `a_dg = 0.5` 表示发电 `40.0`。
-- `a_batt = 1.0` 表示请求电池功率 `200.0`。
-- `a_batt = -1.0` 表示请求电池功率 `-200.0`。
-
-注意：代码中 `pbs_requested < 0` 按充电处理，`pbs_requested > 0` 按放电处理。
-
-## 6. 奖励聚合与缩放
-
-```yaml
-reward_aggregate: "mean"
-reward_scale: 0.1
-```
-
-环境内部会先为每个 agent 计算一个 `reward_list`。然后把多个 agent 的奖励合成为一个团队奖励，返回给强化学习框架。
-
-如果：
-
-```yaml
-reward_aggregate: "mean"
-```
-
-则：
+正电池功率为放电，负电池功率为充电。每步按参考代码隐含的一小时处理。
+没有独立的充放电功率配置。
 
 ```python
-total_reward = mean(reward_list)
-```
+punishment = -battery_punishment_param * (
+    max(pb_requested - soc * battery_cap, 0)
+    + max(-(1 - soc) * battery_cap - pb_requested, 0)
+)
 
-如果不是 `"mean"`，代码走求和逻辑：
-
-```python
-total_reward = sum(reward_list)
-```
-
-最后都会乘：
-
-```python
-total_reward *= reward_scale
-```
-
-当前配置表示：使用三个 agent 奖励的平均值，再乘 `0.1`。这样可以降低奖励量级，让训练更稳定。
-
-## 7. 购电奖励配置
-
-```yaml
-buy_cost_weight: 1.0
-buy_reward_mode: "relative_saving"
-buy_reward_scale: 100.0
-```
-
-环境中先计算净负荷：
-
-```python
-load_pv = load - pv
-```
-
-然后根据 agent 发电和电池动作计算电网购电功率：
-
-```python
-pg = load_pv - sum(pds) - sum(pbs)
-```
-
-其中：
-
-- `pg > 0` 表示仍需从电网购电。
-- `pg < 0` 表示发电和放电超过当前负荷，出现反送或弃电语义。
-
-基准购电成本：
-
-```python
-baseline_pg = max(load_pv, 0.0)
-baseline_grid_purchase_cost = baseline_pg * price
-```
-
-实际购电成本：
-
-```python
-actual_grid_purchase_cost = max(pg, 0.0) * price
-```
-
-当前模式：
-
-```yaml
-buy_reward_mode: "relative_saving"
-```
-
-表示购电奖励按相对节省比例计算：
-
-```python
-buy_signal = buy_reward_scale * (
-    (baseline_grid_purchase_cost - actual_grid_purchase_cost)
-    / max(baseline_grid_purchase_cost, 1e-6)
+soc_requested = soc + (
+    -raw_ch * pb_requested / battery_cap if pb_requested < 0
+    else -raw_dis * pb_requested / battery_cap
 )
 ```
 
-再乘：
+越过下界时，SOC 置为 0.2，实际 `pb = (soc_before - 0.2) * battery_cap`；
+越过上界时，SOC 置为 0.8，实际 `pb = (soc_before - 0.8) * battery_cap`。
+惩罚仍用修正前的请求功率计算。
+
+这些规则是为了复现参考代码，不是对效率能量平衡的修正。
+
+各智能体独立结算，不使用其他智能体的发电或电池功率：
 
 ```python
-weighted_buy_cost = buy_cost_weight * buy_signal
+pg_i = load_normalized - pv_normalized - pd_i - pb_i
+buy_reward_i = -pg_i * price_normalized if pg_i > 0 else 0
 ```
 
-当前含义：相比“什么都不调度、直接按净负荷购电”的基准，实际购电越省，奖励越高。
+`pg_i <= 0` 时没有售电收入，也不额外惩罚反送。
 
-如果 `buy_reward_mode` 不是 `"relative_saving"`，代码会使用：
+## 奖励
 
 ```python
-buy_cost = -actual_grid_purchase_cost
+x = pb + 3 * battery_cap * (1 - soc_after)
+bess_reward = -(bessa * x**2 + bessb * x + bessc)
+if pb > 0:
+    bess_reward *= 0.3
+
+gen_reward = -(costa * pd**2 + costb * pd + costc)
+eco_reward = 0.5 * gen_reward + bess_reward + buy_reward
+env_reward = -pd * env_param
+agent_reward = (eco_reward + env_reward + punishment) * 0.1
+team_reward = mean(agent_reward)
 ```
 
-即直接把购电成本作为负奖励。
+参考包装器先将单体奖励转成 float32，再计算平均；当前接口保留这一舍入。
+不加绝对值电池成本、弃电惩罚、SOC 储备惩罚或期末 SOC 惩罚。
+不再读取旧版的可选奖励模式、额外权重或额外奖励缩放。
+多目标元组奖励分支不在本次适配内，因为当前 FACMAC 使用团队标量奖励。
 
-## 8. 发电成本配置
+## 日期与重置
 
-```yaml
-generate_cost_weight: 0.1
-```
+初始 SOC 为 0.2，训练从第 0 行开始。
+训练按时间顺序使用第 0 至第 730 行，之后回到第 0 行。
+正常 `reset()` 不随机重置 SOC，日末 SOC 延续到下一天。
+显式 `reset_all()` 才随机选择训练起始日，并把 SOC 重新设为 0.2。
 
-每个 agent 的发电成本参数在 `data` 中：
+当前框架仍将每 24 步存为一段轨迹，但标记为时间截断，不是物理终止。
+GRU 隐状态按现有 runner 在每段开头初始化；参考文件本身不定义策略隐状态。
 
-```yaml
-costa: 0.02
-costb: 0.5
-costc: 0.1
-```
+为保留项目的固定日选优功能，参考代码训练区间之后的日期按顺序均分为
+validation 与 test，两个集合互不重叠。这是评估适配，不是参考文件的原始划分：
+参考文件测试从第 730 行开始，存在训练/测试边界行重叠。
+`reset_test(row_idx=..., initial_soc=...)` 仍支持指定日期和初始 SOC；
+固定日评估依照现有实验配置，每个指定日独立初始化。
+评估前暂存训练日期与 SOC，下次训练恢复，不把测试状态带回训练。
 
-代码中的发电奖励分量：
+## 参数来源与奖励选择
+
+设备参数与空间声明采用用户提供的
+`C:/Users/xyx/Desktop/IPPO4CPT/envs/MG/env_config.json`，
+并与同目录的 `env_config.toml` 核对。
+两份文件的共有字段一致；JSON 另有 `split_ratio = [0.3, 0.3, 0.4]`，
+按原值保存到 YAML，但参考 `maenv_sep.py` 不使用这些比例。
+运行仍只加载项目内的 `microgrid.yaml`，不依赖桌面文件路径。
+
+| 参数 | agent1 | agent2 | agent3 |
+|---|---|---|---|
+| 发电上限 | 225 | 225 | 180 |
+| 电池容量 | 100 | 100 | 100 |
+| `raw_ch / raw_dis` | 0.98 / 0.98 | 0.98 / 0.98 | 0.98 / 0.98 |
+| 电池惩罚系数 | 27.5 | 27.5 | 100 |
+| 发电成本 `(a,b,c)` | (0.0083, 5.76, 64) | (0.0079, 5.67, 357) | (0.0096, 5.79, 104) |
+| 电池成本 `(a,b,c)` | (0.0152, 5.61, 24) | (0.0158, 5.63, 34) | (0.0172, 5.72, 37) |
+| 排放系数 | 1.6481 | 1.6481 | 1.6481 |
+
+观察上下界照原文件保存为 `[0,0,0,-1]` 和 `[1,1,1,1]`。
+这份空间声明并不包含所有标准化后的实际观察；为复现原版，不裁剪或重新缩放观察。
+动作上下界仍为 `[0,-1]` 和 `[1,1]`。
+`security_matrix`、`v_slack`、`v_ref`、`adm_matrix` 按原值保存，
+但参考 `maenv_sep.py` 中的安全约束代码被注释，本次也不启用。
+
+**奖励模式已确认**：设备参数采用这两份来源，但按用户选择，
+FACMAC 继续使用 `maenv_sep.py` 的单目标奖励分支，
+不采用来源文件中的 `multi_target = "True"` 设置：
 
 ```python
-generate_costs = -(costa * pds**2 + costb * pds + costc)
-weighted_generate_costs = generate_cost_weight * generate_costs
+agent_reward = (eco_reward + env_reward + punishment) * 0.1
+team_reward = mean(agent_reward)
 ```
 
-这是一个负奖励。发电功率 `pds` 越高，成本惩罚通常越大。
-
-当前 `generate_cost_weight: 0.1` 表示把发电成本惩罚缩小到 10%。
-
-## 9. 电池成本配置
-
-```yaml
-bess_cost_weight: 0.1
-```
-
-每个 agent 的电池成本参数：
-
-```yaml
-bessa: 0.01
-bessb: 0.1
-bessc: 0.05
-```
-
-代码中先构造：
-
-```python
-x = pbs + 3 * battery_caps * (1 - socs)
-```
-
-再计算电池成本：
-
-```python
-bess_poly = -abs(bessa * x**2 + bessb * x + bessc)
-weighted_bess_cost = bess_cost_weight * bess_poly
-```
-
-这是负奖励。它惩罚电池使用与 SOC 状态相关的成本。
-
-当前 `bess_cost_weight: 0.1` 表示把该成本分量缩小到 10%。
-
-## 10. 环境排放或运行惩罚
-
-```yaml
-env_reward_weight: 0.1
-```
-
-每个 agent 还有：
-
-```yaml
-env_param: 0.05
-```
-
-代码中的环境惩罚：
-
-```python
-env_reward = env_reward_weight * (-pds * env_param)
-```
-
-含义：发电越多，环境惩罚越大。当前配置中该惩罚权重是 `0.1`。
-
-## 11. 电池动作裁剪惩罚
-
-```yaml
-battery_punishment_weight: 5.0
-```
-
-每个 agent 还有：
-
-```yaml
-battery_punishment_param: 1.0
-```
-
-环境会根据 SOC 约束裁剪电池动作，保证 SOC 最终被限制在 `[0.2, 0.8]`。
-
-如果智能体请求的电池功率导致 SOC 越界，代码会调整实际执行的电池功率：
-
-```python
-pbs = pb_adj
-battery_action_clip = abs(pbs_requested - pbs)
-battery_punishment = -battery_punishment_param * battery_action_clip
-punishment = battery_punishment_weight * battery_punishment
-```
-
-含义：请求动作越不符合电池可行范围，惩罚越大。
-
-当前 `battery_punishment_weight: 5.0` 较大，说明配置强烈鼓励智能体输出可执行的电池动作。
-
-## 12. 弃电惩罚
-
-```yaml
-curtailment_penalty_weight: 1.0
-```
-
-代码中：
-
-```python
-curtailment = max(-pg, 0.0)
-curtailment_penalty = -curtailment_penalty_weight * curtailment
-```
-
-含义：
-
-- 如果 `pg < 0`，说明发电和电池放电超过当前净负荷。
-- 超出的部分被视作弃电或过剩功率。
-- 过剩越大，惩罚越大。
-
-当前权重 `1.0` 表示直接按弃电量给负奖励。
-
-## 13. SOC 储备惩罚
-
-```yaml
-soc_reserve_target: 0.35
-soc_reserve_weight: 2.0
-```
-
-代码中：
-
-```python
-soc_reserve_penalty = -soc_reserve_weight * (
-    max(soc_reserve_target - socs, 0.0)
-    + max(socs_raw - 0.8, 0.0)
-)
-```
-
-含义：
-
-- 如果最终 SOC 低于 `0.35`，会受到惩罚。
-- 如果原始 SOC 更新值 `socs_raw` 高于 `0.8`，也会受到惩罚。
-
-这不仅要求 SOC 不越过硬边界 `[0.2, 0.8]`，还鼓励电池保留一定电量，不要长期贴近下限。
-
-当前 `soc_reserve_target: 0.35` 表示希望 SOC 至少保持在 35% 左右。
-
-## 14. 每个 agent 的观测范围
-
-每个 agent 都有：
-
-```yaml
-low_state: [0.0, 0.0, 0.2]
-high_state: [5.0, 5.0, 0.8]
-```
-
-这三个值对应基础观测中的：
-
-```text
-[load_data, pv_data, soc]
-```
-
-代码会额外拼接两个观测量：
-
-```text
-price
-time_frac
-```
-
-所以实际每个 agent 的观测是 5 维：
-
-```text
-[标准化负荷, 标准化光伏, 当前SOC, 当前电价, 当前时间比例]
-```
-
-对应代码：
-
-```python
-return [
-    np.array([
-        load_data,
-        pv_data,
-        soc,
-        price,
-        time_frac,
-    ], dtype=np.float32)
-]
-```
-
-全局状态 `state` 是所有 agent 的观测拼接：
-
-```python
-state = concat(all_agent_obs)
-```
-
-当前 3 个 agent，每个观测 5 维，所以：
-
-```text
-state_shape = 5 * 3 = 15
-```
-
-## 15. 每个 agent 的设备参数
-
-当前有 3 个 agent，参数完全相同：
-
-```yaml
-agent_name: "agent1"
-...
-agent_name: "agent2"
-...
-agent_name: "agent3"
-...
-```
-
-### agent_name
-
-```yaml
-agent_name: "agent1"
-```
-
-含义：智能体名称。代码中会把 `data` 列表转换成以 agent 名称为 key 的字典。
-
-注意：`MGEnv` 内部默认可能的 agent 名称是：
-
-```text
-agent1, agent2, agent3, ...
-```
-
-所以这里的名字要和这个格式匹配。
-
-### split_ratio
-
-```yaml
-split_ratio: 0.25
-```
-
-含义：该 agent 分摊总负荷和总光伏数据的比例。
-
-代码中：
-
-```python
-agent_load = load_data * split_ratio
-agent_pv = pv_data * split_ratio
-```
-
-当前 3 个 agent 都是 `0.25`，总共只覆盖 `0.75`。这不一定是错误，因为环境的系统净负荷 `load_pv` 仍然使用全局 `load - pv`；每个 agent 的 `split_ratio` 主要影响局部观测和轨迹记录。
-
-### dg_max
-
-```yaml
-dg_max: 80.0
-```
-
-含义：该 agent 柴油发电机最大出力。
-
-动作映射：
-
-```python
-pd = action[0] * dg_max
-```
-
-当前 `action[0]` 范围 `[0, 1]`，所以发电功率范围是 `[0, 80]`。
-
-### battery_cap
-
-```yaml
-battery_cap: 200.0
-```
-
-含义：该 agent 电池容量，也是动作映射中的电池功率尺度。
-
-动作映射：
-
-```python
-pb_requested = action[1] * battery_cap
-```
-
-当前 `action[1]` 范围 `[-1, 1]`，所以请求电池功率范围是 `[-200, 200]`。
-
-### raw_ch 和 raw_dis
-
-```yaml
-raw_ch: 0.95
-raw_dis: 0.95
-```
-
-含义：电池充电、放电效率参数。
-
-代码中 SOC 更新：
-
-```python
-delta_soc = where(
-    pb < 0,
-    -raw_ch * pb / battery_cap,
-    -raw_dis * pb / battery_cap,
-)
-soc_next = soc + delta_soc
-```
-
-由于 `pb < 0` 表示充电，`-raw_ch * pb` 为正，SOC 上升。
-
-由于 `pb > 0` 表示放电，`-raw_dis * pb` 为负，SOC 下降。
-
-### battery_punishment_param
-
-```yaml
-battery_punishment_param: 1.0
-```
-
-含义：单个 agent 的电池动作裁剪惩罚系数。
-
-它先作用在 agent 自身的裁剪偏差上，然后再乘全局的 `battery_punishment_weight`。
-
-### bessa, bessb, bessc
-
-```yaml
-bessa: 0.01
-bessb: 0.1
-bessc: 0.05
-```
-
-含义：电池成本二次函数参数。
-
-用于：
-
-```python
--(abs(bessa * x**2 + bessb * x + bessc))
-```
-
-再乘 `bess_cost_weight`。
-
-### costa, costb, costc
-
-```yaml
-costa: 0.02
-costb: 0.5
-costc: 0.1
-```
-
-含义：发电成本二次函数参数。
-
-用于：
-
-```python
--(costa * pd**2 + costb * pd + costc)
-```
-
-再乘 `generate_cost_weight`。
-
-### env_param
-
-```yaml
-env_param: 0.05
-```
-
-含义：发电相关环境惩罚系数。
-
-用于：
-
-```python
-env_reward = env_reward_weight * (-pd * env_param)
-```
-
-## 16. 当前奖励结构总览
-
-每一步中，每个 agent 的奖励大致由以下部分组成：
-
-```text
-agent_reward =
-    发电成本惩罚
-  + 电池成本惩罚
-  + 购电节省奖励或购电成本惩罚
-  + 弃电惩罚
-  + 发电环境惩罚
-  + 电池动作裁剪惩罚
-  + SOC 储备惩罚
-```
-
-对应代码结构：
-
-```python
-eco_reward = (
-    weighted_generate_costs
-    + weighted_bess_cost
-    + weighted_buy_cost
-    + curtailment_penalty
-)
-
-reward_list = (
-    eco_reward
-    + env_reward
-    + punishment
-    + soc_reserve_penalty
-)
-```
-
-最后：
-
-```python
-total_reward = mean(reward_list) * reward_scale
-```
-
-因为当前配置是：
-
-```yaml
-reward_aggregate: "mean"
-reward_scale: 0.1
-```
-
-## 17. 当前配置的直观含义
-
-这份配置描述了一个 3 智能体协同微电网环境：
-
-- 每个 agent 有一个最大出力 `80.0` 的发电机。
-- 每个 agent 有一个容量尺度 `200.0` 的电池。
-- 每个 agent 输出二维连续动作：发电比例和电池充放电比例。
-- 环境使用真实数据表中的价格、负荷和光伏序列。
-- 训练目标不是简单最小化购电成本，而是综合考虑购电节省、发电成本、电池使用成本、弃电、SOC 储备和动作可行性。
-- 返回给算法的是团队标量奖励，因此这是协作式多智能体强化学习问题。
-
-## 18. 调参时最常改的字段
-
-如果想改变训练目标，通常优先看：
-
-- `buy_cost_weight`
-- `buy_reward_mode`
-- `buy_reward_scale`
-- `generate_cost_weight`
-- `bess_cost_weight`
-- `battery_punishment_weight`
-- `curtailment_penalty_weight`
-- `soc_reserve_target`
-- `soc_reserve_weight`
-- `reward_scale`
-
-如果想改变物理设备能力，通常改：
-
-- `dg_max`
-- `battery_cap`
-- `raw_ch`
-- `raw_dis`
-- `low_action`
-- `high_action`
-
-如果想改变多 agent 分摊局部观测，通常改：
-
-- `split_ratio`
-
-## 19. 阅读代码时的对应路线
-
-建议按下面顺序对照阅读：
-
-1. `src/config/envs/microgrid.yaml`：看配置值。
-2. `src/runners/episode_runner.py`：看训练流程如何直接实例化 `MGEnv`。
-3. `src/envs/maenv.py` 的 `__init__()`：看配置如何变成环境属性。
-4. `src/envs/maenv.py` 的 `get_obs()` 和 `get_state()`：看观测和全局状态。
-5. `src/envs/maenv.py` 的 `step()`：看动作、SOC、电网购电和奖励。
-6. `src/runners/episode_runner.py`：看环境返回值如何进入 batch。
-7. `src/learners/facmac_learner.py`：看 `reward` 如何参与 FACMAC 更新。
+`env_reward` 只计一次。不是把双目标元组相加，也不新增目标合成权重。
+FACMAC 的团队标量奖励接口和 learner 的奖励维度保持不变。
+
+## 日志与历史结果
+
+轨迹仍写到 `results/microgrid_trajs/<algorithm>/<run_id>/`：
+
+- `price/load/pv` 为模型实际使用的标准化值。
+- `price_raw/load_raw/pv_raw` 为对应 CSV 原值。
+- `pg` 为当前智能体交换功率，`pg_total` 为所有智能体交换功率之和。
+- `buy_cost` 为当前智能体的购电成本；负的标准化价格可使其为负。
+- `reward` 为已乘 0.1 的单体奖励，`team_reward` 为实际传给 learner 的均值。
+- `gen_cost` 为未乘 0.5 的发电成本，`economic_reward` 包含这一系数。
+- 所有新轨迹携带 `battery_model_version=maenv_sep_v1`。
+
+旧检查点的观察维度和模型版本不兼容，应重新训练。
+不修改现有 CSV、历史训练结果或检查点。
+`run_perfect_prediction_oracle.py` 的仿真奖励与本模型对齐，但它只是局部数值搜索，
+不是全局最优上界。原有 `run_microgrid_milp_oracle.py` 仍是历史原始数据线性调度模型，
+不能作为此模型的同条件最优基准。
