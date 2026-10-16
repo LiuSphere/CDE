@@ -11,11 +11,11 @@ from pettingzoo import ParallelEnv
 
 
 class MGEnv(ParallelEnv):
-    metadata = {"render_modes": ["human", None], "name": "MGEnv_heterogeneous_exchange_v2"}
+    metadata = {"render_modes": ["human", None], "name": "MGEnv_facmac_dispatch_v3"}
 
     def __init__(self, config, algo_name, render_mode="human"):
-        if config.get("model_version") != "heterogeneous_exchange_v2":
-            raise ValueError("Use heterogeneous_exchange_v2; legacy models require their saved code")
+        if config.get("model_version") != "facmac_dispatch_v3":
+            raise ValueError("Use facmac_dispatch_v3; legacy models require their saved code")
         self.battery_model_version = config["model_version"]
         self.render_mode = render_mode
         self.time_step_hours = float(config["time_step_hours"])
@@ -29,6 +29,16 @@ class MGEnv(ParallelEnv):
             raise ValueError("Invalid exchange efficiency or fee")
         self.observation_price_scale = float(config["observation_price_scale"])
         self.observation_power_scale = float(config["observation_power_scale"])
+        self.forecast_horizon = int(config["forecast_horizon"])
+        self.forecast_scale_bounds = np.asarray(config["forecast_scale_bounds"], dtype=float)
+        if not (
+            self.forecast_horizon == config["forecast_horizon"]
+            and 1 <= self.forecast_horizon <= 24
+            and self.forecast_scale_bounds.shape == (2,)
+            and np.isfinite(self.forecast_scale_bounds).all()
+            and 0 < self.forecast_scale_bounds[0] <= 1 <= self.forecast_scale_bounds[1]
+        ):
+            raise ValueError("Invalid causal forecast settings")
         if not (
             np.isfinite([self.time_step_hours, self.soc_min, self.soc_max,
                          self.initial_soc, self.reward_scale,
@@ -47,15 +57,15 @@ class MGEnv(ParallelEnv):
         self.action_lows = np.tile([0.0, -1.0], (self.n_agents, 1)).astype(np.float32)
         self.action_highs = np.ones((self.n_agents, 2), dtype=np.float32)
         self.n_actions = 2
-        self.obs_size = 12
+        self.obs_size = 20
+        obs_low = np.zeros(self.obs_size, dtype=np.float32)
+        obs_low[3], obs_low[4:6], obs_low[19] = self.soc_min, -1, -np.inf
+        obs_high = np.full(self.obs_size, np.inf, dtype=np.float32)
+        obs_high[3], obs_high[4:6] = self.soc_max, 1
         self.spaces = {
             agent: {
                 "observation": spaces.Box(
-                    np.array([0, 0, 0, self.soc_min, -1, -1, 0, 0, 0, 0, 0, 0],
-                             dtype=np.float32),
-                    np.array([np.inf, np.inf, np.inf, self.soc_max, 1, 1,
-                              np.inf, np.inf, np.inf, np.inf, np.inf, np.inf],
-                             dtype=np.float32),
+                    obs_low.copy(), obs_high.copy(),
                 ),
                 "action": spaces.Box(self.action_lows[i], self.action_highs[i]),
             }
@@ -97,6 +107,12 @@ class MGEnv(ParallelEnv):
         self.validation_indices, self.test_indices = np.array_split(
             np.arange(731, self.data_shape[0]), 2,
         )
+        if not np.all(self.data_dict["price"] == self.data_dict["price"][0]):
+            raise ValueError("Published tariff context requires this scenario's periodic daily tariff")
+        self.forecast_templates = {
+            key: self.agent_data[key][self.train_indices].mean(axis=0)
+            for key in ("load", "pv")
+        }
         self.seed = config.get("seed")
         self.rng = np.random.default_rng(self.seed)
         self.idx = [0, 0]
@@ -157,6 +173,19 @@ class MGEnv(ParallelEnv):
         stored = ((self.params["socs"] - self.soc_min) * self.params["battery_caps"]
                   * self.params["raw_dis"])
         phase = 2 * np.pi * self.idx[1] / 24
+        lower, upper = self.battery_power_limits(self.params["socs"])
+        hours = (self.idx[1] + np.arange(1, self.forecast_horizon + 1)) % 24
+        tariff = self.data_dict["price"][0, hours]
+        forecasts = {}
+        for key, current in (("load", load), ("pv", pv)):
+            template = self.forecast_templates[key]
+            # Nighttime PV uses train-only climatology, not tomorrow's weather.
+            ratio = np.ones(self.n_agents)
+            np.divide(current, template[self.idx[1]], out=ratio,
+                      where=template[self.idx[1]] > 1e-8)
+            ratio = np.clip(ratio, *self.forecast_scale_bounds)
+            forecasts[key] = template[hours].mean(axis=0) * ratio
+        net_forecast = forecasts["load"] - forecasts["pv"]
         return np.column_stack((
             np.full(self.n_agents, self.data_dict["price"][index] / self.observation_price_scale),
             load / self.observation_power_scale,
@@ -169,6 +198,14 @@ class MGEnv(ParallelEnv):
             self.params["dg_max"] / self.observation_power_scale,
             self.params["battery_caps"] / (4 * self.observation_power_scale),
             self.params["exchange_max"] / self.observation_power_scale,
+            -lower / self.observation_power_scale,
+            upper / self.observation_power_scale,
+            np.full(self.n_agents, tariff[0] / self.observation_price_scale),
+            np.full(self.n_agents, tariff.mean() / self.observation_price_scale),
+            np.full(self.n_agents, tariff.max() / self.observation_price_scale),
+            forecasts["load"] / self.observation_power_scale,
+            forecasts["pv"] / self.observation_power_scale,
+            (net_forecast.sum() - net_forecast) / self.observation_power_scale,
         )).astype(np.float32)
 
     def get_obs(self):
@@ -199,17 +236,36 @@ class MGEnv(ParallelEnv):
         self._stats = {}
 
     def reset(self, seed=None, options=None):
+        if options is not None:
+            if set(options) != {"row_idx", "initial_soc"}:
+                raise ValueError("Training reset requires row_idx and initial_soc")
+            row = options["row_idx"]
+            socs = np.asarray(options["initial_soc"], dtype=float)
+            if (isinstance(row, bool) or int(row) != row or row not in self.train_indices
+                    or socs.shape != (self.n_agents,) or not np.isfinite(socs).all()
+                    or not ((socs >= self.soc_min) & (socs <= self.soc_max)).all()):
+                raise ValueError("Training scenario must use training rows and feasible SOCs")
         if seed is not None:
             self.rng = np.random.default_rng(seed)
         if self._training_state is not None:
             self.idx, self.params["socs"] = self._training_state
             self._training_state = None
+        if options is not None:
+            self.idx, self.params["socs"] = [int(row), 0], socs.copy()
         self.is_testing, self.test_source = False, "train"
         self.trajectory_context = {}
         self.ep_counter += 1
         self._start_episode()
         self.state = self._observations()
         return self.get_obs()
+
+    def training_scenario(self):
+        """Capture a common EA start, including a pending evaluation restore."""
+        index, socs = (self._training_state if self._training_state is not None
+                       else (self.idx, self.params["socs"]))
+        if index[1] != 0 or index[0] not in self.train_indices:
+            raise ValueError("Capture an EA scenario at a training-day boundary")
+        return {"row_idx": int(index[0]), "initial_soc": socs.copy().tolist()}
 
     def reset_all(self, seed=None):
         rng = np.random.default_rng(seed) if seed is not None else self.rng
@@ -250,6 +306,44 @@ class MGEnv(ParallelEnv):
         self.state = self._observations()
         return self.get_obs()
 
+    def battery_power_limits(self, socs):
+        p, dt = self.params, self.time_step_hours
+        socs = np.asarray(socs, dtype=float)
+        if (socs.shape != (self.n_agents,) or not np.isfinite(socs).all()
+                or (socs < self.soc_min - 1e-10).any()
+                or (socs > self.soc_max + 1e-10).any()):
+            raise ValueError("Invalid SOCs for battery power limits")
+        upper = np.minimum(
+            p["battery_discharge_max"],
+            np.maximum(socs - self.soc_min, 0) * p["battery_caps"] * p["raw_dis"] / dt,
+        )
+        lower = -np.minimum(
+            p["battery_charge_max"],
+            np.maximum(self.soc_max - socs, 0) * p["battery_caps"] / (p["raw_ch"] * dt),
+        )
+        return lower, upper
+
+    def battery_action_from_power(self, power, socs):
+        """Encode physical schedules in the same feasible-fraction Box actions."""
+        power = np.asarray(power, dtype=float)
+        lower, upper = self.battery_power_limits(socs)
+        if (power.shape != (self.n_agents,) or not np.isfinite(power).all()
+                or (power < lower - 1e-6).any() or (power > upper + 1e-6).any()):
+            raise ValueError("Battery power is outside its feasible interval")
+        power = np.clip(power, lower, upper)
+        limits = np.where(power >= 0, upper, -lower)
+        action = np.zeros(self.n_agents)
+        np.divide(power, limits, out=action, where=limits > 0)
+        return action
+
+    def _clear_exchange(self, net):
+        supply = np.minimum(np.maximum(-net, 0), self.params["exchange_max"])
+        demand = np.minimum(np.maximum(net, 0), self.params["exchange_max"])
+        sent = min(supply.sum(), demand.sum() / self.exchange_efficiency)
+        exported = supply * (sent / supply.sum()) if supply.sum() > 0 else supply
+        imported = demand * (sent * self.exchange_efficiency / demand.sum()) if demand.sum() > 0 else demand
+        return np.maximum(net - imported, 0), np.maximum(-net - exported, 0), imported, exported
+
     def dispatch(self, actions, socs, index):
         """Pure one-step physical transition, shared by rollout and local search."""
         actions, socs = np.asarray(actions, dtype=float), np.asarray(socs, dtype=float)
@@ -267,17 +361,9 @@ class MGEnv(ParallelEnv):
         p, dt = self.params, self.time_step_hours
         cap, eta_c, eta_d = p["battery_caps"], p["raw_ch"], p["raw_dis"]
         pd = actions[:, 0] * p["dg_max"]
-        requested = actions[:, 1] * np.where(
-            actions[:, 1] >= 0, p["battery_discharge_max"], p["battery_charge_max"],
-        )
-        feasible_discharge = np.minimum(
-            p["battery_discharge_max"], (socs - self.soc_min) * cap * eta_d / dt,
-        )
-        feasible_charge = np.minimum(
-            p["battery_charge_max"], (self.soc_max - socs) * cap / (eta_c * dt),
-        )
-        pb = np.clip(requested, -np.maximum(feasible_charge, 0),
-                     np.maximum(feasible_discharge, 0))
+        lower, upper = self.battery_power_limits(socs)
+        requested = actions[:, 1] * np.where(actions[:, 1] >= 0, upper, -lower)
+        pb = requested
         next_soc = np.clip(
             socs - np.where(pb >= 0, pb / eta_d, pb * eta_c) * dt / cap,
             self.soc_min, self.soc_max,
@@ -289,14 +375,10 @@ class MGEnv(ParallelEnv):
         net_grid = load - pv - pd - pb
         # Uniform-loss community bus: route only residual surplus to deficits.
         # Pro-rata clearing has no forecast and never changes policy decisions.
-        supply = np.minimum(np.maximum(-net_grid, 0), p["exchange_max"])
-        demand = np.minimum(np.maximum(net_grid, 0), p["exchange_max"])
-        sent = min(supply.sum(), demand.sum() / self.exchange_efficiency)
-        exported = supply * (sent / supply.sum()) if supply.sum() > 0 else supply
-        imported = demand * (sent * self.exchange_efficiency / demand.sum()) if demand.sum() > 0 else demand
-        pg = np.maximum(net_grid - imported, 0)
-        spill = np.maximum(-net_grid - exported, 0)
+        pg, spill, imported, exported = self._clear_exchange(net_grid)
         price = float(self.data_dict["price"][index])
+        baseline_pg, _, _, baseline_export = self._clear_exchange(load - pv)
+        baseline_cost = (baseline_pg * price + baseline_export * self.exchange_fee + p["costc"]) * dt
         gen = (p["costa"] * pd**2 + p["costb"] * pd + p["costc"]) * dt
         bess = p["cycle_cost"] * np.abs(pb) * dt
         buy = pg * price * dt
@@ -305,7 +387,8 @@ class MGEnv(ParallelEnv):
         clip = np.abs(requested - pb)
         penalty = p["battery_punishment_params"] * clip * dt
         economic = buy + gen + bess + exchange_cost
-        reward = -(economic + emission + penalty) * self.reward_scale
+        full_cost = economic + emission + penalty
+        reward = (baseline_cost - full_cost) * self.reward_scale
         return {
             "load": load, "pv": pv, "price": price, "pd": pd, "pb": pb, "pg": pg,
             "spill": spill, "net_grid_request": net_grid, "soc": next_soc,
@@ -316,7 +399,8 @@ class MGEnv(ParallelEnv):
             "battery_action_clip": clip, "gen_cost": gen, "bess_cost": bess,
             "buy_cost": buy, "economic_cost": economic, "economic_reward": -economic,
             "eco_reward": -economic, "env_reward": -emission, "punishment": -penalty,
-            "reward": reward, "full_cost": economic + emission + penalty,
+            "reward": reward, "full_cost": full_cost, "baseline_cost": baseline_cost,
+            "cost_reward": -full_cost * self.reward_scale,
         }
 
     def step(self, actions):
@@ -350,6 +434,8 @@ class MGEnv(ParallelEnv):
             "peer_received_energy": result["peer_import"].sum() * dt,
             "exchange_loss_energy": result["exchange_loss"].sum() * dt,
             "exchange_cost": result["exchange_cost"].sum(),
+            "baseline_full_cost": result["baseline_cost"].sum(),
+            "full_cost_saving": (result["baseline_cost"] - result["full_cost"]).sum(),
         }
         for key, value in values.items():
             self._stats[key] = self._stats.get(key, 0.0) + float(value)

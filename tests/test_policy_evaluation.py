@@ -47,6 +47,18 @@ def setup_runner(directory):
 
 
 class PolicyEvaluationTest(unittest.TestCase):
+    def test_ea_rollouts_share_training_scenario_without_action_noise(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+            _, runner, mac = setup_runner(directory)
+            scenario = runner.env.training_scenario()
+            first, first_return = runner.run(mac, training_options=scenario, explore=False)
+            first_actions = first["actions"].clone()
+            second, second_return = runner.run(mac, training_options=scenario, explore=False)
+            self.assertEqual(first_return, second_return)
+            torch.testing.assert_close(first_actions, second["actions"], rtol=0, atol=0)
+            self.assertEqual(runner.t_env, 48)
+            self.assertEqual(runner.env.idx, [scenario["row_idx"] + 1, 0])
+
     def test_fixed_days_do_not_consume_training_rng_and_are_repeatable(self):
         with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
             _, runner, mac = setup_runner(directory)
@@ -57,8 +69,8 @@ class PolicyEvaluationTest(unittest.TestCase):
             self.assertEqual(first, second)
             self.assertEqual(state, runner.env.rng.bit_generator.state)
             self.assertEqual(runner.t_env, 0)
-            self.assertEqual(runner.batch["obs"].shape, (1, 25, 3, 12))
-            self.assertEqual(runner.batch["state"].shape, (1, 25, 36))
+            self.assertEqual(runner.batch["obs"].shape, (1, 25, 3, 20))
+            self.assertEqual(runner.batch["state"].shape, (1, 25, 60))
             self.assertEqual(runner.batch["actions"].shape, (1, 25, 3, 2))
             self.assertEqual(runner.batch["reward"].shape, (1, 25, 1))
             self.assertEqual(runner.batch["obs"].device.type, "cpu")
@@ -99,7 +111,7 @@ class PolicyEvaluationTest(unittest.TestCase):
                           else executed / agent["raw_dis"])
                 after = before - energy / agent["battery_cap"]
                 self.assertAlmostEqual(float(r["soc"]), after)
-                self.assertEqual(r["battery_model_version"], "heterogeneous_exchange_v2")
+                self.assertEqual(r["battery_model_version"], "facmac_dispatch_v3")
             manifest = json.loads((Path(directory) / "best/best_ea.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["checkpoint"], str(checkpoint.resolve()))
             runner.env.time_step_hours = 0.25

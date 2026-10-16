@@ -1,8 +1,8 @@
 # 原版 MG 环境的 SB3 PPO 正式训练
 
 > 此工具与既有 PPO 结果仍对应独立的 sep 原版快照，不是当前
-> `heterogeneous_exchange_v2` 环境的训练。新环境与验证见
-> `docs/heterogeneous_microgrid_validation.md`。
+> `facmac_dispatch_v3` 环境的训练。新环境与验证见
+> `docs/facmac_environment_v3.md`。
 
 独立运行，不修改现有 FACMAC 入口：
 

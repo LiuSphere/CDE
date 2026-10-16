@@ -33,8 +33,8 @@ class BatteryTest(unittest.TestCase):
                 for i, obs in enumerate(env.get_obs()):
                     self.assertTrue(env.observation_space(i + 1).contains(obs))
                 env.step(np.zeros((3, 2)))
-        self.assertEqual(env.get_env_info()["obs_shape"], 12)
-        self.assertEqual(env.get_env_info()["state_shape"], 36)
+        self.assertEqual(env.get_env_info()["obs_shape"], 20)
+        self.assertEqual(env.get_env_info()["state_shape"], 60)
         self.assertEqual(env.get_state().dtype, np.float32)
 
     def test_repeated_dispatch_matches_independent_scalar_physics(self):
@@ -47,15 +47,11 @@ class BatteryTest(unittest.TestCase):
             for i, record in enumerate(env.ep_buffer[-3:]):
                 p = env.params
                 cap, eta_c, eta_d = p["battery_caps"][i], p["raw_ch"][i], p["raw_dis"][i]
-                requested = actions[i, 1] * (
-                    p["battery_charge_max"][i] if actions[i, 1] < 0
-                    else p["battery_discharge_max"][i]
-                )
                 lower = -min(p["battery_charge_max"][i],
                              (env.soc_max - before[i]) * cap / eta_c)
                 upper = min(p["battery_discharge_max"][i],
                             (before[i] - env.soc_min) * cap * eta_d)
-                pb = np.clip(requested, lower, upper)
+                pb = actions[i, 1] * (-lower if actions[i, 1] < 0 else upper)
                 soc = before[i] - (pb * eta_c if pb < 0 else pb / eta_d) / cap
                 self.assertAlmostEqual(record["pb"], pb)
                 self.assertAlmostEqual(record["soc"], soc)
@@ -80,7 +76,7 @@ class BatteryTest(unittest.TestCase):
         for i, r in enumerate(env.ep_buffer):
             expected = -(env.soc_max - 0.79) * env.params["battery_caps"][i] / env.params["raw_ch"][i]
             self.assertAlmostEqual(r["pb"], expected)
-            self.assertLess(r["punishment"], 0)
+            self.assertEqual(r["punishment"], 0)
 
     def test_daily_reset_preserves_soc_and_next_day(self):
         env = self.make_env()

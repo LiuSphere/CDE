@@ -1,7 +1,7 @@
 # Physical Microgrid Model and Validation
 
 > Historical physical-v1 results. The active environment is now
-> `heterogeneous_exchange_v2`; see `heterogeneous_microgrid_validation.md`.
+> `facmac_dispatch_v3`; see `facmac_environment_v3.md`.
 > Commands below describe the earlier tool revision, not the current CLI.
 
 ## Provenance and Limits

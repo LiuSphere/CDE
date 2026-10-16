@@ -1,8 +1,8 @@
 # Corrected Battery Model and Fixed-Day Policy Evaluation
 
 Historical version note: this document describes `efficiency_balance_v2`.
-The active branch now uses `heterogeneous_exchange_v2`; see
-`docs/heterogeneous_microgrid_validation.md`. Statements below about "new runs"
+The active branch now uses `facmac_dispatch_v3`; see
+`docs/facmac_environment_v3.md`. Statements below about "new runs"
 apply only to that historical implementation, not the active branch.
 
 ## Scope and Version

@@ -55,17 +55,22 @@ class EpisodeRunner:
     def close_env(self):
         self.env.close()
 
-    def reset(self, test_mode=False, test_options=None):
+    def reset(self, test_mode=False, test_options=None, training_options=None):
         self.batch = self.new_batch()
         if test_mode:
+            if training_options is not None:
+                raise ValueError("Training scenarios cannot be used for evaluation")
             self.env.reset_test(**(test_options or {}))
         else:
-            self.env.reset()
+            if training_options is None:
+                self.env.reset()
+            else:
+                self.env.reset(options=training_options)
         self.t = 0
 
-    def run(self, mac, test_mode=False, test_options=None):
+    def run(self, mac, test_mode=False, test_options=None, training_options=None, explore=True):
         self.mac = mac
-        self.reset(test_mode=test_mode, test_options=test_options)
+        self.reset(test_mode=test_mode, test_options=test_options, training_options=training_options)
 
         terminated = False
         episode_return = 0
@@ -79,7 +84,7 @@ class EpisodeRunner:
 
             self.batch.update(pre_transition_data, ts=self.t)
             actions = self.mac.select_actions(
-                self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
+                self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode or not explore
             )
             reward, terminated, env_info = self.env.step(actions[0].cpu())
             episode_return += reward
@@ -103,7 +108,7 @@ class EpisodeRunner:
 
         # Select actions in the last stored state
         actions = self.mac.select_actions(
-            self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
+            self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode or not explore
         )
 
         self.batch.update({"actions": actions.cpu()}, ts=self.t)

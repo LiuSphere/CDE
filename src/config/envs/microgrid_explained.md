@@ -1,7 +1,9 @@
-# 微电网环境：heterogeneous_exchange_v2
+# 微电网环境：facmac_dispatch_v3
 
 当前分支采用异构、物理耦合的合作场景，不再复现 `maenv_sep_v1` 的数值公式。
 修改前源码由 tag `maenv-sep-v1-pre-physical-20261017` 保留。
+异构物理 v2 由 tag `microgrid-heterogeneous-exchange-v2` 保留。
+v3 不改设备容量、价格、损耗、退化费或物理可行域，改进学习接口和 EA 场景比较。
 既有结果、源 CSV 和检查点均不改写；旧策略需要重新训练。
 
 ## 数据与量纲
@@ -29,7 +31,7 @@ resource_i(day,h) = resource_total(day,h) × w_i(h) / sum_j w_j(h)
 光伏振幅为 `[0.25, 0.20, 0.25]`，权重峰时为 `[10, 12, 14]`。
 这是可复现的合成区域类型，不代表三个真实站点测量，也不改变原 CSV。
 
-每个智能体观察从 4 维增加到 12 维，顺序如下：
+每个智能体观察为 20 维，前 12 维保留 v2 的顺序：
 
 ```text
 [price/0.3, load_i/300, pv_i/300, SOC_i,
@@ -39,11 +41,28 @@ resource_i(day,h) = resource_total(day,h) × w_i(h) / sum_j w_j(h)
  local_dg_max/300, local_battery_capacity/1200, local_exchange_max/300]
 ```
 
-观察只包含当前时刻信息，没有完美预测。其他微网的可用储能为
+追加的 8 维顺序为：
+
+```text
+[available_charge_power/300, available_discharge_power/300,
+ next_hour_tariff/0.3, next_4h_mean_tariff/0.3, next_4h_max_tariff/0.3,
+ next_4h_mean_local_load_forecast/300,
+ next_4h_mean_local_pv_forecast/300, next_4h_mean_other_net_load_forecast/300]
+```
+
+购电价在现有 CSV 中每天相同，按已公布的周期分时电价处理；
+代码检查此假设，不静默把未知的未来实时价格当作已公布电价。
+负荷/PV 提示仅由行 0-730 的每小时均值模板和当前观测计算：
+`forecast(h+k) = train_mean(h+k) × clip(current/train_mean(h), 0.25, 2.0)`。
+当前 PV 模板为零时使用倍率 1，即夜间只能使用训练气候均值，不能提前知道次日天气。
+对未来四小时取均值，不读验证/测试集未来负荷或光伏实现值。
+这是粗略的因果持续性预测，不是完美预测，也没有声称预测误差已经实测标定。
+
+其他微网的可用储能为
 `sum_j≠i (SOC_j - SOC_min) × E_j × eta_dis_j`。
 这是明示的当前信息广播假设，策略不再是严格无通信的本地控制。
 固定缩放不依赖测试集统计量，不裁剪实际观察。
-全局状态是三个观察的拼接，维度为 36；每个智能体的动作仍为 2 维连续 Box。
+全局状态是三个观察的拼接，维度为 60；每个智能体的动作仍为 2 维连续 Box。
 共享 RNN 策略仍由智能体 ID 和不同观察区分角色，没有增加独立策略网络。
 `step()` 后观察推进到下一小时，避免以前的小时错位。
 
@@ -63,7 +82,7 @@ resource_i(day,h) = resource_total(day,h) × w_i(h) / sum_j w_j(h)
 | 发电线性项，CU/kWh | 0.17 | 0.15 | 0.12 |
 | 发电常数项，CU/h | 0 | 0 | 0 |
 | 发电排放成本代理，CU/kWh | 0.015 | 0.015 | 0.015 |
-| 不可行电池请求惩罚，CU/kWh | 0.5 | 0.5 | 0.5 |
+| 旧版不可行请求惩罚系数，v3 合法动作不触发 | 0.5 | 0.5 | 0.5 |
 
 SOC 范围 `[0.2, 0.8]`，训练初始 SOC 为 0.35，步长固定一小时。
 三块电池名义时长分别约为 3.14、4、5 小时，容量与负荷不再同比例。
@@ -77,18 +96,21 @@ SOC 范围 `[0.2, 0.8]`，训练初始 SOC 为 0.35，步长固定一小时。
 
 ```text
 pd = a_dg × dg_max
-pb_requested = a_batt × (discharge_rating if a_batt >= 0 else charge_rating)
 max_discharge = min(discharge_rating, (SOC - SOC_min) × E × eta_dis / dt)
 max_charge = min(charge_rating, (SOC_max - SOC) × E / (eta_ch × dt))
-pb = clip(pb_requested, -max_charge, max_discharge)
+pb = a_batt × (max_discharge if a_batt >= 0 else max_charge)
+pb_requested = pb
 
 pb >= 0: SOC_next = SOC - pb × dt / (eta_dis × E)
 pb <  0: SOC_next = SOC - eta_ch × pb × dt / E
 ```
 
-先将功率限制到真实可行范围，再更新 SOC，不再通过事后裁剪 SOC 制造或丢失电量。
-请求修正量计入惩罚，NaN、无穷和越动作边界的输入报错。
+动作直接覆盖当前完整可行功率区间，避免大量不同网络输出被硬裁剪成相同功率。
+没有扩大物理功率限制或改变能量方程；SOC 边界处不可用方向的出力仍只能为零。
+合法 Box 动作的请求修正和惩罚均为零，保留相应日志字段便于历史比较。
+NaN、无穷和越动作边界的输入仍报错。
 没有同时充放电的动作路径。
+`battery_action_from_power()` 将物理调度反编码为当前可行比例，供 MILP 回放使用。
 
 ```text
 net_i = load_i - pv_i - pd_i - pb_i
@@ -125,7 +147,9 @@ exchange = 0.003 × export_i × dt
 
 economic_cost = generation + battery + purchase + exchange
 full_cost = economic_cost + emission + request_penalty
-agent_reward = -reward_scale × full_cost
+baseline_cost = zero_generation_zero_battery_cost_with_same_peer_clearing
+cost_reward = -reward_scale × full_cost
+agent_reward = reward_scale × (baseline_cost - full_cost)
 team_reward = mean(float32(agent_reward))
 ```
 
@@ -133,6 +157,11 @@ team_reward = mean(float32(agent_reward))
 没有额外的“设备活跃奖励”、吞吐奖励、强制最低放电功率或 SOC 高位奖励。
 静置电池没有吞吐成本，循环必须承担效率损失和正的退化成本。
 发电成本也不再额外乘 0.5。
+零调度基线使用当期相同负荷/PV、电价、互济限额、损耗和输送费，不依赖动作或 SOC。
+同一外生场景中，中心化只减去一条固定费用序列；
+因此无论按未折扣或 0.99 折扣比较策略，动作造成的回报差都不变。
+不同模型版本的原始回报数值不可直接比较，应比较真实成本；
+跨 v2/v3 时还应单列旧版的不可行请求罚款。
 
 ## 日期与评估
 
@@ -140,6 +169,11 @@ team_reward = mean(float32(agent_reward))
 正常训练每 24 小时存为一段时间截断轨迹，但日期和 SOC 连续；
 `reset_all()` 才随机选训练起点并恢复初始 SOC。
 评估前保存训练日期和 SOC，结束后恢复，不消耗训练 RNG。
+同轮 EA 的五个候选复用 `training_scenario()` 捕获的日期和初始 SOC；
+候选关闭额外高斯动作噪声，策略网络差异本身提供种群多样性。
+随后 RL rollout 从同一场景开始，仍启用正常探索，并由其末尾状态推进训练日期。
+所有候选轨迹照常计入 `t_env` 和 replay，不计作验证或免费采样。
+EA 代数、更新强度、变异和交叉算法均不变。
 
 联合 MILP 使用 `tools/run_physical_microgrid_milp.py`：
 
@@ -177,4 +211,5 @@ team_reward = mean(float32(agent_reward))
   平均互济成本收益至少 1%，每天送达互济量至少为总负荷的 2%。
 - 所有联合/对照 MILP 求解成功，通过日末 SOC、回放和误差证书检查。
 
-详细结果、运行命令与限制见 `docs/heterogeneous_microgrid_validation.md`。
+上述设备校准的历史细节见 `docs/heterogeneous_microgrid_validation.md`。
+v3 的兼容性、物理等价验证和短训练限制见 `docs/facmac_environment_v3.md`。

@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import direct_main
 from ea.ssne_base import SSNEBase
 from learners.facmac_learner import FACMACLearner
+from runners.episode_runner import EpisodeRunner
 
 
 class TrainingTest(unittest.TestCase):
@@ -21,13 +22,21 @@ class TrainingTest(unittest.TestCase):
                     calls = {"learner": 0, "ea": 0}
                     train = FACMACLearner.train
                     epoch = SSNEBase.epoch
+                    rollout = EpisodeRunner.run
+                    scenario_runs = []
+
+                    def count_rollout(runner, *args, **kwargs):
+                        options = kwargs.get("training_options")
+                        if options is not None:
+                            scenario_runs.append((options, kwargs.get("explore", True)))
+                        return rollout(runner, *args, **kwargs)
 
                     def count_train(learner, batch, t_env, episode_num):
                         calls["learner"] += 1
                         self.assertGreaterEqual(t_env, 512 * 24)
                         self.assertEqual(batch.batch_size, 512)
-                        self.assertEqual(tuple(batch["obs"].shape[-2:]), (3, 12))
-                        self.assertEqual(batch["state"].shape[-1], 36)
+                        self.assertEqual(tuple(batch["obs"].shape[-2:]), (3, 20))
+                        self.assertEqual(batch["state"].shape[-1], 60)
                         self.assertEqual(tuple(batch["actions"].shape[-2:]), (3, 2))
                         self.assertEqual(batch["obs"].device.type, "cpu")
                         self.assertTrue(bool(batch["obs"].isfinite().all()))
@@ -41,6 +50,11 @@ class TrainingTest(unittest.TestCase):
 
                     def count_epoch(evolver, *args, **kwargs):
                         calls["ea"] += 1
+                        if scenario_runs:
+                            self.assertEqual(len(scenario_runs), 6)
+                            self.assertTrue(all(s[0] == scenario_runs[0][0] for s in scenario_runs))
+                            self.assertEqual([s[1] for s in scenario_runs], [False] * 5 + [True])
+                            scenario_runs.clear()
                         return epoch(evolver, *args, **kwargs)
 
                     argv = [
@@ -58,7 +72,8 @@ class TrainingTest(unittest.TestCase):
                     ]
                     with patch.object(sys, "argv", argv), \
                          patch.object(FACMACLearner, "train", count_train), \
-                         patch.object(SSNEBase, "epoch", count_epoch):
+                         patch.object(SSNEBase, "epoch", count_epoch), \
+                         patch.object(EpisodeRunner, "run", count_rollout):
                         direct_main.main()
                     self.assertGreater(calls["learner"], 0)
                     if generations:

@@ -25,7 +25,7 @@ from tools.run_current_model_milp import LinearModel, quadratic_epigraph
 from direct_main import load_yaml, recursive_dict_update
 from envs.maenv import MGEnv
 
-VERSION = "heterogeneous_exchange_v2"
+VERSION = "facmac_dispatch_v3"
 COLORS = ["#176f85", "#b33e65", "#49813e", "#8952a5", "#b77815", "#3d60b3"]
 
 
@@ -162,9 +162,10 @@ def solve_day(env, config, row, source, initial, battery_enabled=True, exchange_
         actions = np.zeros((env.n_agents, 2))
         for a, (p, s) in enumerate(zip(config["data"], solution["schedules"])):
             actions[a, 0] = s["pd"][t] / p["dg_max"] if p["dg_max"] else 0
-            pb = s["discharge"][t] - s["charge"][t]
-            rating = p["battery_discharge_max"] if pb >= 0 else p["battery_charge_max"]
-            actions[a, 1] = pb / rating if rating else 0
+        physical_pb = np.array([
+            s["discharge"][t] - s["charge"][t] for s in solution["schedules"]
+        ])
+        actions[:, 1] = env.battery_action_from_power(physical_pb, env.params["socs"])
         if np.max(np.abs(actions)) > 1 + 1e-7:
             raise RuntimeError("MILP reconstructed action outside bounds")
         env.step(np.clip(actions, env.action_lows, env.action_highs))

@@ -1,6 +1,6 @@
 env: "microgrid"
 env_args:
-  model_version: "heterogeneous_exchange_v2"
+  model_version: "facmac_dispatch_v3"
   # Scenario assumptions, not verified CSV metadata: kW, kWh, CU/kWh.
   # price_scale converts the source numeric tariff to scenario currency units.
   time_step_hours: 1.0
@@ -13,6 +13,9 @@ env_args:
   price_scale: 0.01
   observation_price_scale: 0.3
   observation_power_scale: 300.0
+  # Causal current-level adjustment of train-only hourly climatology.
+  forecast_horizon: 4
+  forecast_scale_bounds: [0.25, 2.0]
   soc_min: 0.2
   soc_max: 0.8
   initial_soc: 0.35

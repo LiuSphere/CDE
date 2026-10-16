@@ -225,12 +225,17 @@ def run_sequential(args, logger):
         if is_ea_cycle:
             ea_cycle += 1
             fitness = []
+            # Compare policies on identical exogenous data and initial energy.
+            # These remain training rollouts counted in t_env and replay.
+            scenario = runner.env.training_scenario() if args.env == "microgrid" else None
+            ea_options = ({"training_options": scenario, "explore": False}
+                          if scenario is not None else {})
             for ea_mac in pop:
-                episode_batch, episode_return = runner.run(ea_mac, test_mode=False)
+                episode_batch, episode_return = runner.run(ea_mac, test_mode=False, **ea_options)
                 fitness.append(episode_return)
                 buffer.insert_episode_batch(episode_batch)
             elite_index = np.argmax(fitness)
-            episode_batch, _ = runner.run(mac, test_mode=False)
+            episode_batch, _ = runner.run(mac, test_mode=False, training_options=scenario)
             buffer.insert_episode_batch(episode_batch)
 
             # Each generation updates the complete shared policy once.

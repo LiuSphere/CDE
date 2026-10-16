@@ -1,8 +1,12 @@
 # 异构微网与有限互济验证
 
+> 本文保存 `heterogeneous_exchange_v2` 的历史验证。
+> 当前为 `facmac_dispatch_v3`，设备与物理约束不变，学习接口改动见
+> `docs/facmac_environment_v3.md`。v2 源码由同名版本 tag 保存。
+
 ## 结论与范围
 
-当前模型为 `heterogeneous_exchange_v2`，分支为
+本文模型为 `heterogeneous_exchange_v2`，分支为
 `codex/microgrid-physical-env`。仍然是三个智能体，每个两个连续动作，
 共享一个带智能体 ID 的 RNN 策略。环境不替策略优化发电或电池动作。
 

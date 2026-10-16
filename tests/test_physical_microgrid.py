@@ -24,7 +24,7 @@ class PhysicalMicrogridTest(unittest.TestCase):
 
     def test_physical_version_and_positive_settlement_inputs(self):
         env = self.make_env()
-        self.assertEqual(env.battery_model_version, "heterogeneous_exchange_v2")
+        self.assertEqual(env.battery_model_version, "facmac_dispatch_v3")
         self.assertTrue(np.all(env.data_dict["price"] > 0))
         self.assertTrue(np.all(env.data_dict["load"] >= 0))
         self.assertTrue(np.all(env.data_dict["pv"] >= 0))
@@ -33,8 +33,12 @@ class PhysicalMicrogridTest(unittest.TestCase):
         env = self.make_env()
         env.params["socs"][:] = 0.5
         env.step(np.tile([0, 0.1], (env.n_agents, 1)))
+        available = np.minimum(
+            env.params["battery_discharge_max"],
+            (0.5 - env.soc_min) * env.params["battery_caps"] * env.params["raw_dis"],
+        )
         expected = 0.5 - (
-            0.1 * env.params["battery_discharge_max"] * env.time_step_hours
+            0.1 * available * env.time_step_hours
             / (env.params["raw_dis"] * env.params["battery_caps"])
         )
         np.testing.assert_allclose(env.params["socs"], expected, atol=1e-12)
@@ -74,7 +78,7 @@ class PhysicalMicrogridTest(unittest.TestCase):
         env.step(np.tile([0, 1], (3, 1)))
         np.testing.assert_allclose(env.params["socs"], env.soc_min)
         self.assertTrue(all(r["pb"] == 0 for r in env.ep_buffer))
-        self.assertTrue(all(r["punishment"] < 0 for r in env.ep_buffer))
+        self.assertTrue(all(r["punishment"] == 0 for r in env.ep_buffer))
         with self.assertRaises(ValueError):
             env.step(np.full((3, 2), np.nan))
         with self.assertRaises(ValueError):
