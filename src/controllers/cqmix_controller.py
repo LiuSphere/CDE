@@ -69,6 +69,7 @@ class CQMixMAC:
             self._action_bounds_cache[cache_key] = bounds
         return bounds
 
+    @th.no_grad()
     def select_actions(
         self,
         ep_batch,
@@ -77,7 +78,10 @@ class CQMixMAC:
         bs=slice(None),
         test_mode=False,
     ):
-        chosen_actions = self.forward(ep_batch[bs], t_ep, select_actions=True)[
+        selected_batch = (
+            ep_batch if isinstance(bs, slice) and bs == slice(None) else ep_batch[bs]
+        )
+        chosen_actions = self.forward(selected_batch, t_ep, select_actions=True)[
             "actions"
         ].detach()
 
@@ -116,7 +120,7 @@ class CQMixMAC:
                                         self.args.action_spaces[i].sample()
                                         for i in range(self.n_agents)
                                     ]
-                                    for _ in range(ep_batch[bs].batch_size)
+                                    for _ in range(selected_batch.batch_size)
                                 ]
                             )
                         )
@@ -150,6 +154,42 @@ class CQMixMAC:
             self.hidden_states = ret["hidden_state"]
             return ret
         return ret
+
+    def forward_sequence(self, ep_batch, end=None):
+        """Run a fresh differentiable policy history, returning B x T x N tensors."""
+        obs = ep_batch["obs"][:, :end]
+        bs, length = obs.shape[:2]
+        if length == 0:
+            raise ValueError("A policy sequence must contain at least one timestep.")
+        inputs = [obs]
+        if self.args.obs_last_action:
+            actions = ep_batch["actions"]
+            inputs.append(th.cat((
+                th.zeros_like(actions[:, :1]), actions[:, :length - 1],
+            ), dim=1))
+        if self.args.obs_agent_id:
+            inputs.append(
+                th.eye(self.n_agents, device=obs.device, dtype=obs.dtype)
+                .view(1, 1, self.n_agents, self.n_agents)
+                .expand(bs, length, -1, -1)
+            )
+        inputs = th.cat(inputs, dim=-1).permute(1, 0, 2, 3).reshape(
+            length, bs * self.n_agents, -1
+        )
+        inputs = inputs.to(next(self.agent.parameters()).device)
+        self.init_hidden(bs)
+        ret = self.agent.forward_sequence(inputs, self.hidden_states)
+        self.hidden_states = ret["hidden_state"]
+        raw_actions = ret["actions"].reshape(
+            length, bs, self.n_agents, self.args.n_actions
+        ).permute(1, 0, 2, 3)
+        return {
+            "actions": self._scale_actions_to_space(raw_actions),
+            "raw_actions": raw_actions,
+            "hidden_states": ret["hidden_states"].reshape(
+                length, bs, self.n_agents, -1
+            ).permute(1, 0, 2, 3),
+        }
 
     def _build_inputs(self, batch, t):
         # Assumes homogenous agents with flat observations.

@@ -45,12 +45,18 @@ class GINGraphConvolution(nn.Module):
             weight1 = nn.ReLU()(weight1)
             weight2 = nn.ReLU()(weight2)
         elif self.weights_operation == "sigmoid":
-            weight1 = torch.sigmoid(weight1) * self.weight_scale
-            weight2 = torch.sigmoid(weight2) * self.weight_scale
+            weight1 = torch.sigmoid(weight1)
+            weight2 = torch.sigmoid(weight2)
+        hidden = torch.matmul(aggregated, weight1)
+        if self.weights_operation == "sigmoid":
+            hidden = hidden * self.weight_scale
         hidden = torch.nn.functional.leaky_relu(
-            torch.matmul(aggregated, weight1)
-            + self.b1(states).view(batch_size, 1, -1)
+            hidden + self.b1(states).view(batch_size, 1, -1)
         )
-        return torch.matmul(hidden, weight2) + self.b2(states).view(
+        output = torch.matmul(hidden, weight2)
+        if self.weights_operation == "sigmoid":
+            # Scale the small contraction, not the per-sample weight matrix.
+            output = output * self.weight_scale
+        return output + self.b2(states).view(
             batch_size, 1, -1
         )

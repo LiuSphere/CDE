@@ -66,7 +66,8 @@ class GraphDec(nn.Module):
         ) / math.sqrt(self.obs_enc_dim)
         adjacency = F.softmax(attention - 1e10 * (1 - communication_mask), dim=2)
         local_reward_fractions, mixed_q = self.mixing_GNN(
-            agent_qs, adjacency * communication_mask, states, self.n_agents
+            agent_qs, adjacency * communication_mask, states, self.n_agents,
+            compute_local_rewards=team_rewards is not None,
         )
         total_q = (mixed_q + self.V(states).view(-1, 1, 1)).view(batch_size, -1, 1)
 

@@ -1,3 +1,4 @@
+import torch as th
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -19,3 +20,18 @@ class RNNAgent(nn.Module):
         hidden = self.rnn(x, hidden_state.reshape(-1, self.args.rnn_hidden_dim))
         actions = F.tanh(self.fc2(hidden))
         return {"actions": actions, "hidden_state": hidden}
+
+    def forward_sequence(self, inputs, hidden_state):
+        # Linear layers batch over time; the GRU still follows the full history.
+        x = F.relu(self.fc1(inputs))
+        hidden = hidden_state.reshape(-1, self.args.rnn_hidden_dim)
+        hidden_states = []
+        for step in x.unbind(0):
+            hidden = self.rnn(step, hidden)
+            hidden_states.append(hidden)
+        hidden_states = th.stack(hidden_states, dim=0)
+        return {
+            "actions": th.tanh(self.fc2(hidden_states)),
+            "hidden_states": hidden_states,
+            "hidden_state": hidden,
+        }

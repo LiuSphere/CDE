@@ -81,34 +81,19 @@ class FACMACLearner:
 
         # Train the critic batched
         with th.no_grad():
-            target_actions = []
-            target_hidden_states = []
-            self.target_mac.init_hidden(batch.batch_size)
-            for t in range(batch.max_seq_length):
-                agent_target_outs = self.target_mac.select_actions(
-                    batch,
-                    t_ep=t,
-                    t_env=None,
-                    test_mode=True,
-                )
-                target_actions.append(agent_target_outs)
-                if self.mixer is not None:
-                    target_hidden_states.append(
-                        self.target_mac.hidden_states.view(
-                            batch.batch_size, self.n_agents, -1
-                        )
-                    )
-            target_actions = th.stack(target_actions, dim=1)
-            if self.mixer is not None:
-                target_hidden_states = th.stack(target_hidden_states, dim=1)
+            target_policy = self.target_mac.forward_sequence(batch)
+            target_actions = self.target_mac._clamp_actions_to_space(
+                target_policy["actions"]
+            )
 
-        current_hidden_states = None
-        if self.mixer is not None:
-            current_hidden_states = self._collect_mac_hidden_states(batch, self.mac)
+        # Actor weights do not change during the critic update. Reuse its history,
+        # detaching only the critic's view so its loss cannot enter the actor graph.
+        actor_policy = self.mac.forward_sequence(batch, end=-1)
+        critic_inputs = self._build_inputs_sequence(batch, end=-1)
 
         self.critic.init_hidden(batch.batch_size)
         critic_out, self.critic.hidden_states = self.critic(
-            self._build_inputs_sequence(batch, end=-1),
+            critic_inputs,
             actions.detach(),
             self.critic.hidden_states,
         )
@@ -118,7 +103,7 @@ class FACMACLearner:
                 critic_out,
                 batch["state"][:, :-1],
                 agent_obs=batch["obs"][:, :-1],
-                hidden_states=current_hidden_states[:, :-1],
+                hidden_states=actor_policy["hidden_states"].detach(),
             )
         else:
             q_taken = critic_out.view(
@@ -138,7 +123,7 @@ class FACMACLearner:
                     target_critic_out,
                     batch["state"][:, 1:],
                     agent_obs=batch["obs"][:, 1:],
-                    hidden_states=target_hidden_states[:, 1:],
+                    hidden_states=target_policy["hidden_states"][:, 1:],
                 )
             else:
                 target_vals = target_critic_out.view(
@@ -161,57 +146,36 @@ class FACMACLearner:
         )
         self.critic_optimiser.step()
 
-        # Train the actor
-        # Optimize over the entire joint action space
-        mac_out = []
-        raw_mac_out = []
-        actor_hidden_states = []
-        self.mac.init_hidden(batch.batch_size)
+        # Optimize the actor against the newly updated critic.
         self.critic.init_hidden(batch.batch_size)
-        for t in range(batch.max_seq_length):
-            mac_ret = self.mac.forward(batch, t=t, select_actions=True)
-            agent_outs = mac_ret["actions"].view(
-                batch.batch_size, self.n_agents, self.n_actions
-            )
-            raw_agent_outs = mac_ret["raw_actions"].view(
-                batch.batch_size, self.n_agents, self.n_actions
+        self._set_critic_grad(False)
+        try:
+            chosen_action_qvals, self.critic.hidden_states = self.critic(
+                critic_inputs,
+                actor_policy["actions"],
+                self.critic.hidden_states,
             )
             if self.mixer is not None:
-                actor_hidden_states.append(
-                    self.mac.hidden_states.view(batch.batch_size, self.n_agents, -1)
+                chosen_action_qvals = self._mix_q_values(
+                    self.mixer,
+                    chosen_action_qvals,
+                    batch["state"][:, :-1],
+                    agent_obs=batch["obs"][:, :-1],
+                    hidden_states=actor_policy["hidden_states"],
                 )
-            mac_out.append(agent_outs)
-            raw_mac_out.append(raw_agent_outs)
-        mac_out = th.stack(mac_out[:-1], dim=1)
-        raw_mac_out = th.stack(raw_mac_out[:-1], dim=1)
-        self._set_critic_grad(False)
-        chosen_action_qvals, self.critic.hidden_states = self.critic(
-            self._build_inputs_sequence(batch, end=-1),
-            mac_out,
-            self.critic.hidden_states,
-        )
-        if self.mixer is not None:
-            actor_hidden_states = th.stack(actor_hidden_states[:-1], dim=1)
-            chosen_action_qvals = self._mix_q_values(
-                self.mixer,
-                chosen_action_qvals,
-                batch["state"][:, :-1],
-                agent_obs=batch["obs"][:, :-1],
-                hidden_states=actor_hidden_states,
+            else:
+                chosen_action_qvals = chosen_action_qvals.view(
+                    batch.batch_size, batch.max_seq_length - 1, self.n_agents
+                )
+            pg_loss = (
+                -chosen_action_qvals.mean()
+                + actor_policy["raw_actions"].square().mean() * 1e-3
             )
-        else:
-            chosen_action_qvals = chosen_action_qvals.view(
-                batch.batch_size, batch.max_seq_length - 1, self.n_agents
-            )
-        pi = raw_mac_out
 
-        # Compute the actor loss
-        pg_loss = -chosen_action_qvals.mean() + (pi**2).mean() * 1e-3
-
-        # Optimise agents
-        self.agent_optimiser.zero_grad(set_to_none=True)
-        pg_loss.backward()
-        self._set_critic_grad(True)
+            self.agent_optimiser.zero_grad(set_to_none=True)
+            pg_loss.backward()
+        finally:
+            self._set_critic_grad(True)
         th.nn.utils.clip_grad_norm_(
             self.agent_params, self.args.grad_norm_clip
         )
@@ -279,17 +243,6 @@ class FACMACLearner:
             )
             return q_tot
         return mixer(agent_qs, states)
-
-    def _collect_mac_hidden_states(self, batch, mac):
-        hidden_states = []
-        mac.init_hidden(batch.batch_size)
-        with th.no_grad():
-            for t in range(batch.max_seq_length):
-                mac.forward(batch, t=t, select_actions=True)
-                hidden_states.append(
-                    mac.hidden_states.view(batch.batch_size, self.n_agents, -1).detach()
-                )
-        return th.stack(hidden_states, dim=1)
 
     def _build_inputs(self, batch, t):
         bs = batch.batch_size

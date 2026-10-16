@@ -363,15 +363,15 @@ class ReplayBuffer(EpisodeBatch):
     def sample(self, batch_size):
         assert self.can_sample(batch_size)
         if self.episodes_in_buffer == batch_size:
-            out_batch = self[:batch_size].clone().share().to(self.out_device)
-            return out_batch.to(self.out_device)
+            # Slices alias replay storage, so a full-buffer sample needs one copy.
+            return self[:batch_size].clone().to(self.out_device)
         else:
             # Uniform sampling only atm
             ep_ids = np.random.choice(
                 self.episodes_in_buffer, batch_size, replace=False
             ).tolist()
-            out_batch = self[ep_ids].clone().share().to(self.out_device)
-            return out_batch.to(self.out_device)
+            # Advanced indexing already copies every field into independent storage.
+            return self[ep_ids].to(self.out_device)
 
     def __repr__(self):
         return f"ReplayBuffer. {self.episodes_in_buffer}/{self.buffer_size} episodes.q Keys:{self.scheme.keys()} Groups:{self.groups.keys()}"

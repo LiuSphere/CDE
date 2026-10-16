@@ -3,16 +3,21 @@
 import argparse
 import csv
 import os
+import random
 import sys
 import time
 from collections import defaultdict
 from copy import deepcopy
 from os.path import abspath, dirname
 
+import fastrand
+import numpy as np
+import torch as th
+
 PROJECT_ROOT = dirname(dirname(abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 
-from components.episode_buffer import EpisodeBatch
+from components.episode_buffer import EpisodeBatch, ReplayBuffer
 from controllers.cqmix_controller import CQMixMAC
 from direct_main import config_copy, load_yaml, normalize_scalars, recursive_dict_update
 from ea.ssne_base import SSNEBase
@@ -103,6 +108,18 @@ def main():
     parser.add_argument("--output", default="results/training_timing.csv")
     args = parser.parse_args()
 
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    th.manual_seed(args.seed)
+    fastrand.pcg32_seed(args.seed)
+    original_env_init = MGEnv.__init__
+
+    def seeded_env_init(env, *method_args, **method_kwargs):
+        original_env_init(env, *method_args, **method_kwargs)
+        for index, space in enumerate(env.get_env_info()["action_spaces"]):
+            space.seed(args.seed + index)
+
+    MGEnv.__init__ = seeded_env_init
     config = load_config(args.config)
     episode_limit = MGEnv(deepcopy(config["env_args"]), config["name"]).episode_limit
     if args.timesteps % episode_limit:
@@ -131,15 +148,39 @@ def main():
 
     timer = Timer()
     csv_log = CsvTimingLog(args.output)
+    training_steps = 0
+    training_started = None
+    first_update_started = None
+    first_update_t_env = None
+    phase_times = {}
     run_started = time.perf_counter()
 
     def report_episode(runner, method_args, method_kwargs, elapsed):
+        nonlocal training_steps, training_started
         test_mode = method_kwargs.get("test_mode", False)
         if not test_mode:
+            if training_started is None:
+                training_started = time.perf_counter() - elapsed
+            training_steps += runner.t
             csv_log.write("episode_rollout", elapsed, runner.t_env, step=runner.t)
 
     def report_update(learner, method_args, method_kwargs, elapsed):
+        nonlocal first_update_started, first_update_t_env
+        if first_update_started is None:
+            first_update_started = time.perf_counter() - elapsed
+            first_update_t_env = method_args[1]
         csv_log.write("learner_update", elapsed, method_args[1], method_args[2])
+
+    def report_training_end(runner, method_args, method_kwargs, elapsed):
+        finished = time.perf_counter()
+        if training_started is not None:
+            phase_times["training"] = (training_steps, finished - training_started)
+        if first_update_started is not None:
+            phase_times["post_warmup"] = (
+                training_steps - first_update_t_env, finished - first_update_started
+            )
+        for name, (steps, seconds) in phase_times.items():
+            csv_log.write(f"{name}_wall_clock", seconds, t_env=steps)
 
     def report_environment_step(env, method_args, method_kwargs, elapsed):
         csv_log.write("environment_step", elapsed, step=env.idx[1])
@@ -153,6 +194,9 @@ def main():
     def report_batch_update(batch, method_args, method_kwargs, elapsed):
         csv_log.write("batch_update", elapsed)
 
+    def report_replay_sample(buffer, method_args, method_kwargs, elapsed):
+        csv_log.write("replay_sample", elapsed)
+
     timed_method(
         MGEnv, "step", timer, "environment_step", report_environment_step
     )
@@ -164,7 +208,9 @@ def main():
         report_action_selection,
     )
     timed_method(EpisodeBatch, "update", timer, "batch_update", report_batch_update)
+    timed_method(ReplayBuffer, "sample", timer, "replay_sample", report_replay_sample)
     timed_method(EpisodeRunner, "run", timer, "episode_rollout", report_episode)
+    timed_method(EpisodeRunner, "close_env", timer, "environment_close", report_training_end)
     timed_method(FACMACLearner, "train", timer, "learner_update", report_update)
     timed_method(SSNEBase, "epoch", timer, "evolution", report_evolution)
 
@@ -173,16 +219,24 @@ def main():
     try:
         run(config, logger)
     finally:
+        total = time.perf_counter() - run_started
+        csv_log.write("wall_clock", total, t_env=training_steps)
         csv_log.close()
 
-    total = time.perf_counter() - run_started
     print("\nTiming summary")
     print(f"wall_clock: {total:.3f}s")
+    print(f"training_steps: {training_steps}")
+    print(f"training_steps_per_second: {training_steps / total:.3f}")
+    print(f"torch_threads: {th.get_num_threads()}")
+    for name, (steps, seconds) in phase_times.items():
+        print(f"{name}_phase_wall_clock: {seconds:.3f}s")
+        print(f"{name}_phase_steps_per_second: {steps / seconds:.3f}")
     print(f"detail_csv: {args.output}")
     for name in (
         "episode_rollout",
         "learner_update",
         "evolution",
+        "replay_sample",
         "action_selection",
         "environment_step",
         "batch_update",
