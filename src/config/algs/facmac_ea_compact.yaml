@@ -1,0 +1,7 @@
+# Compact candidate for the 3-agent, 20-observation, 2-action microgrid.
+# Inherit warmup, update counts, learning rates and EA settings unchanged.
+name: "facmac_ea_compact"
+batch_size: 128
+rnn_hidden_dim: 48
+mixing_embed_dim: 32
+test_interval: 10000

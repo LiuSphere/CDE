@@ -48,7 +48,9 @@ class GNN(nn.Module):
             nn.Linear(hidden_layers[-1], 1),
         )
 
-    def forward(self, input_features, adjacency, states, num_agents):
+    def forward(
+        self, input_features, adjacency, states, num_agents, compute_local_rewards=True
+    ):
         batch_size = input_features.size(0)
         features = input_features
         for layer in self.layers:
@@ -64,8 +66,13 @@ class GNN(nn.Module):
         elif self.weights_operation == "clamp":
             wout = nn.ReLU()(wout)
         elif self.weights_operation == "sigmoid":
-            wout = torch.sigmoid(wout) * self.weight_scale
+            wout = torch.sigmoid(wout)
         scalar_out = torch.matmul(readout.view(batch_size, 1, -1), wout)
+        if self.weights_operation == "sigmoid":
+            scalar_out = scalar_out * self.weight_scale
+
+        if not compute_local_rewards:
+            return None, scalar_out
 
         per_node_scalars = torch.matmul(
             features.view(batch_size, num_agents, -1),
