@@ -19,6 +19,30 @@ wandb_project: "gde-microgrid"
 wandb_entity: ~
 wandb_mode: "online"
 wandb_dir: "results/wandb"
+# Upload aggregate analysis metrics only; full diagnostics remain in local logs.
+wandb_metric_patterns:
+  - "eval/*"
+  - "loss/*"
+  - "*/return_mean"
+  - "*/return_std"
+  - "*/full_cost"
+  - "*/baseline_full_cost"
+  - "*/full_cost_saving"
+  - "*/battery_charge_energy"
+  - "*/battery_discharge_energy"
+  - "*/mean_soc"
+  - "*/soc_violation"
+  - "*/battery_action_clip"
+  - "*/generator_energy"
+  - "*/grid_import_energy"
+  - "*/peer_sent_energy"
+  - "*/exchange_loss_energy"
+  - "*/spill_energy"
+# Selected validation best cases are plotted only after normal training completion.
+showcase_enabled: true
+showcase_days: 2
+showcase_candidate_rows: [740, 766, 808, 862, 880, 904]
+showcase_soc_tolerance: 0.03
 save_model: true
 save_model_interval: 10000
 checkpoint_path: ""

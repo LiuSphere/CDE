@@ -145,6 +145,7 @@ def run_sequential(args, logger):
         return
 
     policy_store = None
+    showcase = None
     validation_rows = None
     if args.env == "microgrid":
         validation_rows = fixed_rows(
@@ -155,6 +156,12 @@ def run_sequential(args, logger):
                 Path(args.local_results_path) / "models" / args.unique_token / "best_policies",
                 saved_config,
             )
+            if args.showcase_enabled:
+                from utils.dispatch_showcase import DispatchShowcase
+                showcase = DispatchShowcase(
+                    Path(args.local_results_path) / "dispatch_showcases" / args.unique_token,
+                    logger, args,
+                )
     # Learner
     if args.EA:
         learner = EA_FACMACLearner(mac, buffer.scheme, logger, args)
@@ -378,6 +385,8 @@ def run_sequential(args, logger):
             logger.print_recent_stats(runner.t_env)
             last_log_T = runner.t_env
 
+    if showcase is not None:
+        showcase.publish_final(runner, mac, policy_store, runner.t_env)
     runner.close_env()
     logger.console_logger.info("Finished Training")
 
