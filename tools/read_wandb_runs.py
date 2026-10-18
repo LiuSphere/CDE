@@ -6,7 +6,7 @@ from itertools import islice
 
 import wandb
 
-DEFAULT_PROJECT = "blessingbrandro/gde-vmas"
+DEFAULT_PROJECT = "blessingbrandro/gde-microgrid"
 
 
 def json_default(value):

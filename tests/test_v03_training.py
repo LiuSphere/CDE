@@ -1,4 +1,4 @@
-"""Check compact dimensions and the real training entry point after warmup."""
+"""Check v03 dimensions and the real training entry point after warmup."""
 
 import sys
 import tempfile
@@ -29,21 +29,23 @@ def load_runtime_config(name):
     return configs[0]
 
 
-class CompactConfigTest(unittest.TestCase):
+class V03ConfigTest(unittest.TestCase):
     def test_dimensions_and_inherited_training_settings(self):
         baseline = load_runtime_config("facmac_ea")
-        config = load_runtime_config("facmac_ea_compact")
+        config = load_runtime_config("facmac_ea_tune_v03_long")
         for key in baseline:
             if key not in {
                 "name", "batch_size", "rnn_hidden_dim", "mixing_embed_dim", "test_interval",
+                "t_max", "buffer_size", "save_model_interval",
             }:
                 self.assertEqual(config[key], baseline[key], key)
         self.assertEqual(baseline["batch_size"], 512)
         self.assertEqual(baseline["rnn_hidden_dim"], 64)
         self.assertEqual(baseline["mixing_embed_dim"], 64)
         self.assertEqual(config["batch_size"], 128)
-        self.assertEqual(config["t_max"], 3000000)
-        self.assertEqual(config["t_max"], baseline["t_max"])
+        self.assertEqual(config["t_max"], 6000000)
+        self.assertEqual(config["buffer_size"], 50000)
+        self.assertEqual(config["save_model_interval"], 50000)
         self.assertFalse(config["use_cuda"])
         self.assertEqual(config["buffer_warmup"], 512)
         self.assertEqual(config["hypernet_embed"], 64)
@@ -83,26 +85,8 @@ class CompactConfigTest(unittest.TestCase):
             finally:
                 env.close()
 
-    def test_compact_training_crosses_original_warmup_and_evolution(self):
-        self._check_training("facmac_ea_compact", 100000)
-
-    def test_v2_only_changes_storage_and_checkpoint_settings(self):
-        original = load_runtime_config("facmac_ea_compact")
-        updated = load_runtime_config("facmac_ea_compact_v2")
-        expected = deepcopy(original)
-        expected.update(
-            name="facmac_ea_compact_v2", buffer_size=50000, save_model_interval=50000,
-        )
-        self.assertEqual(updated, expected)
-        self.assertEqual(original["buffer_size"], 100000)
-        self.assertEqual(original["save_model_interval"], 10000)
-        self.assertEqual(updated["t_max"], 3000000)
-        self.assertEqual(updated["batch_size"], 128)
-        self.assertEqual(updated["buffer_warmup"], 512)
-        self.assertFalse(updated["use_cuda"])
-
-    def test_v2_training_crosses_original_warmup_and_evolution(self):
-        self._check_training("facmac_ea_compact_v2", 50000)
+    def test_v03_training_crosses_original_warmup_and_evolution(self):
+        self._check_training("facmac_ea_tune_v03_long", 50000)
 
     def _check_training(self, config_name, expected_buffer_size):
         calls = {"learner": 0, "ea": 0}

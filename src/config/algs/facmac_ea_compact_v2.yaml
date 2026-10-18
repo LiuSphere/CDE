@@ -1,9 +1,0 @@
-# CPU compact variant with less replay storage and fewer periodic checkpoints.
-# The entry point merges this file with default.yaml, not another algorithm YAML.
-name: "facmac_ea_compact_v2"
-batch_size: 128
-rnn_hidden_dim: 48
-mixing_embed_dim: 32
-test_interval: 10000
-buffer_size: 50000
-save_model_interval: 50000

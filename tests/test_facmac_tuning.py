@@ -1,4 +1,4 @@
-"""Exact log analysis and horizon-only parameter isolation."""
+"""Exact log analysis and the retained v03 configuration."""
 
 import sys
 import unittest
@@ -30,9 +30,7 @@ class TuningTest(unittest.TestCase):
         self.assertEqual(default["t_max"], 6000000)
         self.assertEqual(default["lr"], 3e-4)
         self.assertEqual(default["env"], "microgrid")
-        self.assertEqual(
-            load(["--config", "facmac_ea_tune_v04_actor_lr"])["lr"], 1e-4
-        )
+        self.assertFalse(load(["--config", "facmac_no_ea"])["EA"])
         self.assertEqual(load(["--override", "t_max=24"])["t_max"], 24)
 
     def test_recovery_only_accepts_verified_post_budget_showcase_path_failure(self):
@@ -91,7 +89,7 @@ class TuningTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "distinct"):
             summarize_candidates({"checkpoint_step": 24, "candidates": [rows[0], rows[0]]})
 
-    def test_v03_changes_only_horizon_and_name_from_compact_v2(self):
+    def test_v03_retains_selected_parameters(self):
         def load(name):
             configs = []
             with patch.object(sys, "argv", ["direct_main.py", "--config", name]), \
@@ -99,17 +97,14 @@ class TuningTest(unittest.TestCase):
                 direct_main.main()
             return configs[0]
 
-        before = load("facmac_ea_compact_v2")
+        before = load("facmac_ea")
         expected = deepcopy(before)
-        expected.update(name="facmac_ea_tune_v03_long", t_max=6000000)
+        expected.update(
+            name="facmac_ea_tune_v03_long", t_max=6000000,
+            batch_size=128, rnn_hidden_dim=48, mixing_embed_dim=32,
+            test_interval=10000, buffer_size=50000, save_model_interval=50000,
+        )
         self.assertEqual(load("facmac_ea_tune_v03_long"), expected)
-        expected.update(name="facmac_ea_tune_v04_actor_lr", lr=1e-4)
-        self.assertEqual(load("facmac_ea_tune_v04_actor_lr"), expected)
-        expected.update(name="facmac_ea_tune_v05_sparse_ea", frac=0.1)
-        self.assertEqual(load("facmac_ea_tune_v05_sparse_ea"), expected)
-        expected.update(name="facmac_ea_tune_v06_gentle_reset", frac=1.0,
-                        prob_reset_and_sup=0.005)
-        self.assertEqual(load("facmac_ea_tune_v06_gentle_reset"), expected)
 
 
 if __name__ == "__main__":

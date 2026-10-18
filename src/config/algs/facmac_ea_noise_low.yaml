@@ -1,4 +1,0 @@
-# FACMAC-EA reduced exploration-noise condition.
-name: "facmac_ea_noise_low"
-use_cuda: false
-act_noise: 0.025
