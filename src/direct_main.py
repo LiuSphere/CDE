@@ -73,7 +73,7 @@ def normalize_scalars(value):
 
 def main():
     parser = argparse.ArgumentParser(description="Run FACMAC training.")
-    parser.add_argument("--config", default="facmac_ea")
+    parser.add_argument("--config", default="facmac_ea_tune_v03_long")
     parser.add_argument("--env-config", default="microgrid")
     parser.add_argument(
         "--override",

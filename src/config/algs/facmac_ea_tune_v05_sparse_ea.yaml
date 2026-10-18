@@ -1,0 +1,12 @@
+# Parent: facmac_ea_tune_v04_actor_lr. Only EA mutation fraction changes.
+# Mutate about 10% of columns per matrix row instead of every element.
+name: "facmac_ea_tune_v05_sparse_ea"
+batch_size: 128
+rnn_hidden_dim: 48
+mixing_embed_dim: 32
+test_interval: 10000
+buffer_size: 50000
+save_model_interval: 50000
+t_max: 6000000
+lr: 1e-4
+frac: 0.1
