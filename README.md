@@ -103,6 +103,23 @@ uv run python tools/freeze_paper_protocol.py --output results/protocol01/frozen.
 仅在最终评价阶段使用 `--split test --all-days --retrospective-holdout`；
 工具默认不允许无明确标记的保留评价，不在开发时查看保留结果。
 
+本轮调度使用本机1槽、`ssh 707` 的 `/home/arch707/data/CDE` 2槽。
+707先按相同提交及锁文件准备，再通过SSH标准输入同步本机W&B密钥：
+
+```powershell
+uv run python tools/sync_remote_wandb.py --host 707 --project /home/arch707/data/CDE
+uv run python tools/experiment_slot.py --slots 1 --status
+```
+
+`tools/experiment_slot.py --slots 1 --slot 0 --config gavdac_ea_main_no_ea --seed 2 --token <new-token> --detach`
+会启动本机正式训练；仅在计划前置验收后执行。
+707对应 `--slots 2 --slot 0` 或 `--slot 1`，并加
+`--credential-file /home/arch707/.config/gavdac/wandb.json`，不在命令里填写密钥。
+监督器保存PID创建标识、日志、源码哈希及退出码；`exit.json`仍需验收，不能直接当成成功。
+远端冷克隆没有旧 SB3 桌面外部夹具时，使用
+`uv run python tools/validate_experiment_host.py --without-desktop-sb3-reference --output results/<new-dir>/qualification.json`。
+它逐项列出未执行的旧参考测试，不把排除项算作通过；所有其余测试仍会执行并暴露错误。
+
 主方法移除交叉是配置选择，不是一次新的完整多种子验证。
 历史 v03、消融和0.25交叉运行保留原配置、源码快照和指标；中止运行不能计作完成。
 实际记录见 `results/facmac_tuning/`、`results/paper20261018/` 和 `results/cx25check/`。

@@ -49,6 +49,14 @@ def freeze():
                           "C4": "physical MILP, continuous boundary validation pending P1"},
         "formal_seeds": [0, 1, 2],
         "formal_training_runs": 9,
+        "execution_slots": {
+            "local": {"capacity": 1, "seeds": [2]},
+            "ssh_707": {"capacity": 2, "seeds": [0, 1],
+                        "project": "/home/arch707/data/CDE"},
+            "cpu_threads_per_run": 1,
+            "comparison": "same-seed C1/C2/C3 remain on the same host",
+            "timing": "report by host; mixed hardware does not establish algorithm speedup",
+        },
         "stage_scope": "P0 C0/C1/C2 freeze; P1/P3 need separate verified implementation records",
         "created_at": datetime.now().astimezone().isoformat(),
         "git_commit": subprocess.check_output(
@@ -66,6 +74,9 @@ def freeze():
             ROOT / "tools/freeze_paper_protocol.py",
             ROOT / "tools/evaluate_microgrid_comparison.py",
             ROOT / "tools/run_physical_microgrid_milp.py",
+            ROOT / "tools/experiment_slot.py",
+            ROOT / "tools/sync_remote_wandb.py",
+            ROOT / "tools/validate_experiment_host.py",
         ]),
         "document_sha256": hashes([
             ROOT / "docs/paper_experiment_plan.md", ROOT / "docs/paper_execution.md",
