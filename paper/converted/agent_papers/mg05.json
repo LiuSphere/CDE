@@ -1,0 +1,618 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg05",
+  "title": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+  "source_text": "05_MARLEM/paper.txt",
+  "source_text_file_sha256": "3b0fd983a34e9d41bd56fbbc661b85ca9c7ce839e6ece88022d50abc270c7a17",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+      "level": 1,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "marlem-a-multi-agent-reinforcement-learning-simulation-framework-for-implicit-cooperation-in-decentralized-local-energy-markets"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1 Introduction",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "1.1 Motivation",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "11-motivation"
+    },
+    {
+      "heading": "1.2 Problem statement",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "12-problem-statement"
+    },
+    {
+      "heading": "1.3 Research gap",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "13-research-gap"
+    },
+    {
+      "heading": "1.4 Novelty and contribution",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "14-novelty-and-contribution"
+    },
+    {
+      "heading": "1.5 Paper structure",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "15-paper-structure"
+    },
+    {
+      "heading": "2 Literature review",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "2-literature-review"
+    },
+    {
+      "heading": "2.1 Centralized and decentralized energy markets",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "21-centralized-and-decentralized-energy-markets"
+    },
+    {
+      "heading": "2.2 Multi-agent systems in energy grid management",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "22-multi-agent-systems-in-energy-grid-management"
+    },
+    {
+      "heading": "2.3 Application and limitations of MARL for DER coordination",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "23-application-and-limitations-of-marl-for-der-coordination"
+    },
+    {
+      "heading": "2.4 Simulation frameworks for LEMs and MARL",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "24-simulation-frameworks-for-lems-and-marl"
+    },
+    {
+      "heading": "• Specialized RL environments for energy:",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "specialized-rl-environments-for-energy"
+    },
+    {
+      "heading": "2.5 Research gap and contribution opportunity",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "25-research-gap-and-contribution-opportunity"
+    },
+    {
+      "heading": "3 Methodology",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "3-methodology"
+    },
+    {
+      "heading": "3.1 Simulation framework architecture",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "31-simulation-framework-architecture"
+    },
+    {
+      "heading": "3.2 Formulation of the decentralized partially observable Markov decision process",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "32-formulation-of-the-decentralized-partially-observable-markov-decision-process"
+    },
+    {
+      "heading": "3.2.1 Environment state space (S) and transition function (𝑇)",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "321-environment-state-space-s-and-transition-function-t"
+    },
+    {
+      "heading": "3.2.2 Joint observation space (Ω)",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "322-joint-observation-space"
+    },
+    {
+      "heading": "3.2.3 Action space (𝐴)",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "323-action-space-a"
+    },
+    {
+      "heading": "3.2.4 Reward function (𝑅)",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "324-reward-function-r"
+    },
+    {
+      "heading": "3.3 LEM design and trading mechanisms",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "33-lem-design-and-trading-mechanisms"
+    },
+    {
+      "heading": "3.3.1 Role of the distribution system operator",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "331-role-of-the-distribution-system-operator"
+    },
+    {
+      "heading": "3.3.2 Multi-stage order matching process",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "332-multi-stage-order-matching-process"
+    },
+    {
+      "heading": "3.3.3 Clearing mechanisms",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "333-clearing-mechanisms"
+    },
+    {
+      "heading": "3.3.4 Reputation and decentralized validation",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "334-reputation-and-decentralized-validation"
+    },
+    {
+      "heading": "3.4 Agent model and decision-making process",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "34-agent-model-and-decision-making-process"
+    },
+    {
+      "heading": "3.4.1 Agent architecture and state management",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "341-agent-architecture-and-state-management"
+    },
+    {
+      "heading": "3.4.2 Physically constrained decision-making",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "342-physically-constrained-decision-making"
+    },
+    {
+      "heading": "3.4.3 Battery storage dynamics",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "343-battery-storage-dynamics"
+    },
+    {
+      "heading": "3.4.4 Time series profiles",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "344-time-series-profiles"
+    },
+    {
+      "heading": "3.5 Physical grid model and constraints",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "35-physical-grid-model-and-constraints"
+    },
+    {
+      "heading": "3.5.1 Grid topology and agent allocation",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "351-grid-topology-and-agent-allocation"
+    },
+    {
+      "heading": "3.5.2 Modeling physical constraints",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "352-modeling-physical-constraints"
+    },
+    {
+      "heading": "3.5.3 Dynamic grid state updates and management",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "353-dynamic-grid-state-updates-and-management"
+    },
+    {
+      "heading": "3.5.4 Zonal grid structure",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "354-zonal-grid-structure"
+    },
+    {
+      "heading": "3.6 Implicit cooperation and performance measurement",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "36-implicit-cooperation-and-performance-measurement"
+    },
+    {
+      "heading": "3.6.1 The coordination feedback loop",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "361-the-coordination-feedback-loop"
+    },
+    {
+      "heading": "3.6.2 Key performance indicators",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "362-key-performance-indicators"
+    },
+    {
+      "heading": "3. Resource coordination KPIs: These metrics evaluate how effectively DERs are utilized and coordinated.",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "3-resource-coordination-kpis-these-metrics-evaluate-how-effectively-ders-are-utilized-and-coordinated"
+    },
+    {
+      "heading": "3.7 Multi-agent reinforcement learning framework",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "37-multi-agent-reinforcement-learning-framework"
+    },
+    {
+      "heading": "3.7.1 Training and execution paradigms",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "371-training-and-execution-paradigms"
+    },
+    {
+      "heading": "3.7.2 Reinforcement learning algorithms and infrastructure",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "372-reinforcement-learning-algorithms-and-infrastructure"
+    },
+    {
+      "heading": "3.8 Analytics and visualizations",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "38-analytics-and-visualizations"
+    },
+    {
+      "heading": "3.9 Complete simulation workflow",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "39-complete-simulation-workflow"
+    },
+    {
+      "heading": "4 Experimental setup",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "4-experimental-setup"
+    },
+    {
+      "heading": "4.1 Case study: battery storage coordination",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "41-case-study-battery-storage-coordination"
+    },
+    {
+      "heading": "4.2 Baseline models",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "42-baseline-models"
+    },
+    {
+      "heading": "4.3 Other implemented case studies",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "43-other-implemented-case-studies"
+    },
+    {
+      "heading": "5 Results and discussion",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "5-results-and-discussion"
+    },
+    {
+      "heading": "5.1 Framework capability demonstration",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "51-framework-capability-demonstration"
+    },
+    {
+      "heading": "5.1.1 Price volatility and market stability",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "511-price-volatility-and-market-stability"
+    },
+    {
+      "heading": "5.1.2 Grid stability and system coordination",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "512-grid-stability-and-system-coordination"
+    },
+    {
+      "heading": "5.1.3 Market structure and economic efficiency",
+      "level": 4,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "513-market-structure-and-economic-efficiency"
+    },
+    {
+      "heading": "5.2 Discussion",
+      "level": 3,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "52-discussion"
+    },
+    {
+      "heading": "6 Conclusion and future work",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "6-conclusion-and-future-work"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "05_MARLEM/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "zero-intelligence agent baseline",
+      "first_match_line": 641,
+      "candidate_chunk_ids": [
+        "mg05-c0018"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "full MARL training",
+      "first_match_line": 624,
+      "candidate_chunk_ids": [
+        "mg05-c0017"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "forthcoming",
+      "first_match_line": 562,
+      "candidate_chunk_ids": [
+        "mg05-c0014"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg05-c0001",
+      "path": "agent_chunks/mg05/mg05-c0001.json",
+      "line_start": 1,
+      "line_end": 20,
+      "char_start": 0,
+      "char_end_exclusive": 5817,
+      "characters": 5817,
+      "text_sha256_utf8": "916c99758b2be9dd4e92ddd63d952162732527de7ec4ff241403ca21063e6f15"
+    },
+    {
+      "chunk_id": "mg05-c0002",
+      "path": "agent_chunks/mg05/mg05-c0002.json",
+      "line_start": 21,
+      "line_end": 34,
+      "char_start": 5817,
+      "char_end_exclusive": 11686,
+      "characters": 5869,
+      "text_sha256_utf8": "b68f008785086cea33b0204ce6ad1e458a7431d70ba3818293b0f4f06d078add"
+    },
+    {
+      "chunk_id": "mg05-c0003",
+      "path": "agent_chunks/mg05/mg05-c0003.json",
+      "line_start": 35,
+      "line_end": 51,
+      "char_start": 11686,
+      "char_end_exclusive": 17371,
+      "characters": 5685,
+      "text_sha256_utf8": "47db67484abea0a1882289eef5054194851ebe582c63030ed679fbcd63bbe8b3"
+    },
+    {
+      "chunk_id": "mg05-c0004",
+      "path": "agent_chunks/mg05/mg05-c0004.json",
+      "line_start": 52,
+      "line_end": 61,
+      "char_start": 17371,
+      "char_end_exclusive": 22642,
+      "characters": 5271,
+      "text_sha256_utf8": "1de0b87e25580c0906fdfb8c394281150a9d2b9b1022ef7ca93d15f7556fa368"
+    },
+    {
+      "chunk_id": "mg05-c0005",
+      "path": "agent_chunks/mg05/mg05-c0005.json",
+      "line_start": 62,
+      "line_end": 79,
+      "char_start": 22642,
+      "char_end_exclusive": 28609,
+      "characters": 5967,
+      "text_sha256_utf8": "fa0015f9db1243904b3638494d7224971dc33bf58e76de07cb404ab4c9baa4c4"
+    },
+    {
+      "chunk_id": "mg05-c0006",
+      "path": "agent_chunks/mg05/mg05-c0006.json",
+      "line_start": 80,
+      "line_end": 103,
+      "char_start": 28609,
+      "char_end_exclusive": 34295,
+      "characters": 5686,
+      "text_sha256_utf8": "ee1f11ce570e68d90c52cb674ccf6770b6dfea351f26f2c3dc9799f9ad62a5c9"
+    },
+    {
+      "chunk_id": "mg05-c0007",
+      "path": "agent_chunks/mg05/mg05-c0007.json",
+      "line_start": 104,
+      "line_end": 146,
+      "char_start": 34295,
+      "char_end_exclusive": 40291,
+      "characters": 5996,
+      "text_sha256_utf8": "ccf76aa029bf14619b28498ae1330b6d63d833a3e8d863e2dbb739452e53eaf2"
+    },
+    {
+      "chunk_id": "mg05-c0008",
+      "path": "agent_chunks/mg05/mg05-c0008.json",
+      "line_start": 147,
+      "line_end": 199,
+      "char_start": 40291,
+      "char_end_exclusive": 46189,
+      "characters": 5898,
+      "text_sha256_utf8": "2cf04a32aec881074f9996c147f51c9a19b055c84e1408b6132f215d00a5fcb7"
+    },
+    {
+      "chunk_id": "mg05-c0009",
+      "path": "agent_chunks/mg05/mg05-c0009.json",
+      "line_start": 200,
+      "line_end": 277,
+      "char_start": 46189,
+      "char_end_exclusive": 52111,
+      "characters": 5922,
+      "text_sha256_utf8": "9376a10833770574ec90c2bf1430cdf86831d41952ab5655566a8dec3892f54a"
+    },
+    {
+      "chunk_id": "mg05-c0010",
+      "path": "agent_chunks/mg05/mg05-c0010.json",
+      "line_start": 278,
+      "line_end": 326,
+      "char_start": 52111,
+      "char_end_exclusive": 57908,
+      "characters": 5797,
+      "text_sha256_utf8": "8a1adb0124cf72524b05d8a51706982555c00fd335cafb2a63984b0c67c15805"
+    },
+    {
+      "chunk_id": "mg05-c0011",
+      "path": "agent_chunks/mg05/mg05-c0011.json",
+      "line_start": 327,
+      "line_end": 405,
+      "char_start": 57908,
+      "char_end_exclusive": 63879,
+      "characters": 5971,
+      "text_sha256_utf8": "92ea92646ca9295e1effcf003221a2f3d903aae9c557a6ddad8f82fac79a2cbf"
+    },
+    {
+      "chunk_id": "mg05-c0012",
+      "path": "agent_chunks/mg05/mg05-c0012.json",
+      "line_start": 406,
+      "line_end": 474,
+      "char_start": 63879,
+      "char_end_exclusive": 69840,
+      "characters": 5961,
+      "text_sha256_utf8": "0444fe653a0b8e9278c152fde3a5833c26a5094c1288eb816dd190b814d15f03"
+    },
+    {
+      "chunk_id": "mg05-c0013",
+      "path": "agent_chunks/mg05/mg05-c0013.json",
+      "line_start": 475,
+      "line_end": 528,
+      "char_start": 69840,
+      "char_end_exclusive": 75812,
+      "characters": 5972,
+      "text_sha256_utf8": "00d25cbd1404056825d68e17aebb08804757fee7466e5def1749b739a002ad33"
+    },
+    {
+      "chunk_id": "mg05-c0014",
+      "path": "agent_chunks/mg05/mg05-c0014.json",
+      "line_start": 529,
+      "line_end": 564,
+      "char_start": 75812,
+      "char_end_exclusive": 81259,
+      "characters": 5447,
+      "text_sha256_utf8": "7133a04d3f4a0037cb7fea7894323cc6e5bad3831c5d04bbfd6dcbd33b2d1900"
+    },
+    {
+      "chunk_id": "mg05-c0015",
+      "path": "agent_chunks/mg05/mg05-c0015.json",
+      "line_start": 565,
+      "line_end": 577,
+      "char_start": 81259,
+      "char_end_exclusive": 86957,
+      "characters": 5698,
+      "text_sha256_utf8": "8a9d6e1f9e176226e8ab23a11a799d7c51ceb88494a6eb056c94726260aea11b"
+    },
+    {
+      "chunk_id": "mg05-c0016",
+      "path": "agent_chunks/mg05/mg05-c0016.json",
+      "line_start": 578,
+      "line_end": 601,
+      "char_start": 86957,
+      "char_end_exclusive": 92642,
+      "characters": 5685,
+      "text_sha256_utf8": "8301eb431056790fa9a582c04875ed7d82bf74dbbb91c4618d611e4c40d8a10d"
+    },
+    {
+      "chunk_id": "mg05-c0017",
+      "path": "agent_chunks/mg05/mg05-c0017.json",
+      "line_start": 602,
+      "line_end": 634,
+      "char_start": 92642,
+      "char_end_exclusive": 98525,
+      "characters": 5883,
+      "text_sha256_utf8": "34435d315320e94d6319796d372d2b7123c5e418dc4769b9747d3b182a4b1b79"
+    },
+    {
+      "chunk_id": "mg05-c0018",
+      "path": "agent_chunks/mg05/mg05-c0018.json",
+      "line_start": 635,
+      "line_end": 657,
+      "char_start": 98525,
+      "char_end_exclusive": 104390,
+      "characters": 5865,
+      "text_sha256_utf8": "1d73a1b0de77481a17dbd1fd5d280c6233922a181bac863401522f253b413116"
+    },
+    {
+      "chunk_id": "mg05-c0019",
+      "path": "agent_chunks/mg05/mg05-c0019.json",
+      "line_start": 658,
+      "line_end": 685,
+      "char_start": 104390,
+      "char_end_exclusive": 109754,
+      "characters": 5364,
+      "text_sha256_utf8": "1054caa7bc61a34c21db85228ce1373aa808b5c101173ac993055a8aefeba732"
+    },
+    {
+      "chunk_id": "mg05-c0020",
+      "path": "agent_chunks/mg05/mg05-c0020.json",
+      "line_start": 686,
+      "line_end": 731,
+      "char_start": 109754,
+      "char_end_exclusive": 115744,
+      "characters": 5990,
+      "text_sha256_utf8": "40fb35ba6dad08f87fd40d6fd0af7b93866f49dc442af942aca43bdc78688dc8"
+    },
+    {
+      "chunk_id": "mg05-c0021",
+      "path": "agent_chunks/mg05/mg05-c0021.json",
+      "line_start": 732,
+      "line_end": 785,
+      "char_start": 115744,
+      "char_end_exclusive": 121703,
+      "characters": 5959,
+      "text_sha256_utf8": "2b2bbe025e44c1370b126da7f649b125f13ac48345d0a74ae3d2166490e2a0b4"
+    },
+    {
+      "chunk_id": "mg05-c0022",
+      "path": "agent_chunks/mg05/mg05-c0022.json",
+      "line_start": 786,
+      "line_end": 822,
+      "char_start": 121703,
+      "char_end_exclusive": 125044,
+      "characters": 3341,
+      "text_sha256_utf8": "bba7657a08c58c6dbadf08b353a03570243bf5b4d509b39290c51a87e04f4d32"
+    }
+  ]
+}

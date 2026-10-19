@@ -1,0 +1,1146 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Explainable deep reinforcement learning for resilient and battery-aware microgrid control</title><style>
+:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;color:#20252b;
+background:#f4f6f8;font:16px/1.8 "Segoe UI","Microsoft YaHei",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:36px 44px;background:white;min-height:100vh}
+h1{font-size:28px;line-height:1.4}h2{font-size:22px;border-bottom:1px solid #ddd;
+padding-bottom:8px;margin-top:36px}h3{font-size:18px}a{color:#006b78;overflow-wrap:anywhere}
+img{max-width:100%;height:auto;display:block;margin:18px auto}
+table{border-collapse:collapse;display:block;overflow:auto;max-width:100%;font-size:14px}
+th,td{border:1px solid #d7dde2;padding:8px 10px;text-align:left}
+.table-scroll{overflow-x:auto;max-width:100%}
+table.index-table{display:table;min-width:940px;width:100%}
+.index-table th{white-space:nowrap}
+.index-table td:nth-child(2){min-width:380px;max-width:450px}
+.index-table td:nth-child(3){min-width:125px}
+.index-table td:not(:nth-child(2)):not(:nth-child(3)){white-space:nowrap}
+blockquote{margin:20px 0;padding:8px 18px;border-left:4px solid #658a92;background:#f4f8f9}
+pre{overflow:auto;background:#f4f6f8;padding:16px}code{font-family:Consolas,monospace}
+math{max-width:100%;overflow-x:auto}
+math:not([display="block"]){display:inline-block;vertical-align:middle}
+math[display="block"]{display:block;margin:20px 0;padding:8px 0}
+.math-source{white-space:pre-wrap;border-left:3px solid #ad6720;padding-left:12px}
+p,li{overflow-wrap:anywhere}details{border-top:1px solid #ddd;padding:16px 0}
+.notice{color:#52616a;font-size:14px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);
+gap:16px}.gallery img{border:1px solid #ddd;max-height:330px;object-fit:contain}
+@media(max-width:650px){main{padding:20px 16px}h1{font-size:23px}
+.gallery{grid-template-columns:repeat(2,1fr)}}
+@media print{body{background:white}main{max-width:none;padding:0}.gallery{display:none}}
+</style><main><h1 id="explainable-deep-reinforcement-learning-for-resilient-and-battery-aware-microgrid-control">Explainable deep reinforcement learning for resilient and battery-aware microgrid control</h1>
+<ul>
+<li>期刊：Energy Conversion and Management</li>
+<li>DOI：10.1016/j.enconman.2026.121215</li>
+<li>版本：出版社正式版</li>
+<li>原文页数：26</li>
+<li>文本解析：MinerU 4.0.12 / basic / 全文</li>
+<li><a href="../../01_ECM_2026_Explainable_RL_battery_aware.pdf">原始 PDF</a></li>
+<li><a href="screenshots.html">逐页截图</a></li>
+</ul>
+<blockquote>
+<p>以下为机器解析的原文，未翻译、未改写。公式、表格和双栏阅读顺序可能存在识别误差，请以原始 PDF 和逐页截图为准。</p>
+</blockquote>
+<details><summary>章节目录</summary><ul><li><a href="#abstract">Abstract</a></li><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#11-deep-reinforcement-learning-for-optimal-energy-management">1.1. Deep reinforcement learning for optimal energy management</a></li><li><a href="#12-deep-reinforcement-learning-for-enhancing-microgrid-resilience">1.2. Deep reinforcement learning for enhancing microgrid resilience</a></li><li><a href="#13-integrating-battery-degradation-and-lifetime">1.3. Integrating battery degradation and lifetime</a></li><li><a href="#14-research-gaps-and-novelties">1.4. Research gaps and novelties</a></li><li><a href="#15-paper-organisation">1.5. Paper organisation</a></li><li><a href="#2-modelling-of-microgrid-control-strategy-and-explainability-techniques">2. Modelling of microgrid, control strategy, and explainability techniques</a></li><li><a href="#21-microgrid-description">2.1. Microgrid description</a></li><li><a href="#22-proximal-policy-optimisation">2.2. Proximal Policy Optimisation</a></li><li><a href="#23-deep-reinforcement-learning-environment">2.3. Deep reinforcement learning environment</a></li><li><a href="#24-curriculum-based-training-stages">2.4. Curriculum-based training stages</a></li><li><a href="#25-computational-cost-protocol">2.5. Computational-cost protocol</a></li><li><a href="#26-explainability-model">2.6. Explainability model</a></li><li><a href="#3-simulation-results-and-discussions">3. Simulation results and discussions</a></li><li><a href="#33-deep-reinforcement-learning-based-policy-evaluation">3.3. Deep reinforcement learning -based policy evaluation</a></li><li><a href="#35-explainability-analysis">3.5. Explainability analysis</a></li><li><a href="#shapley-additive-explanations-results">Shapley Additive Explanations Results:</a></li><li><a href="#local-interpretable-model-agnostic-explanations-results">Local Interpretable Model-agnostic Explanations Results:</a></li><li><a href="#4-conclusion">4. Conclusion</a></li><li><a href="#credit-authorship-contribution-statement">CRediT authorship contribution statement</a></li><li><a href="#declaration-of-competing-interest">Declaration of competing interest</a></li><li><a href="#data-availability">Data availability</a></li><li><a href="#references">References</a></li></ul></details><h2 id="_1">论文首页</h2>
+<p><img alt="论文首页" src="screenshots/page_001.png"/></p>
+<h2 id="_2">全文</h2>
+<p><img alt="" src="mineru/images/page_0_image_8.jpg"/></p>
+<p>Mohammad Hossein Nejati Amiri ∗, Florimond Guéniat</p>
+<p>College of Engineering, Birmingham City University, United Kingdom</p>
+<p>A R T I C L E I N F O</p>
+<p>Keywords: Microgrids energy management Deep reinforcement learning Explainable AI Resilience Battery degradation</p>
+<h2 id="abstract">Abstract</h2>
+<p>Microgrids support renewable integration and resilience, but operation is challenged by intermittency, forecast uncertainty, and battery-life constraints. This paper presents an eXplainable Deep Reinforcement Learning (XDRL) framework for hourly microgrid energy management under uncertainty, trained with Proximal Policy Optimisation (PPO). The reward jointly optimises a priority-weighted Resilience Index (RI) and a life-cycleaware battery term, and robustness is strengthened via curriculum learning over progressively noisier scenarios. Post-hoc explainability using Shapley Additive Explanations (SHAP) and Local Interpretable Model-agnostic Explanations (LIME) is used to interpret how charging, discharging, and load-allocation decisions depend on net-energy balance, recent state of charge, and different load demands. Simulation on a cyclone-prone coastal microgrid in Kothapatnam, India (PV–wind–battery with prioritised loads) shows that, under uncertainty, the proposed policy achieves RI = 0.9956 (0.33% below an MPC benchmark of 0.9989) while increasing expected battery life by about 5% (15.9 vs. 15.1 years) and producing smoother SOC trajectories. From a computational perspective, online inference is about 5800× cheaper than solving MPC at each step, and the 15-year lifetime compute cost (including one-off training) is approximately three times lower. A 4000-run Monte Carlo study confirms robustness (median RI 0.992, 5–95%: 0.984–0.999; median battery life ∼16 years).</p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The global drive towards decarbonisation has accelerated the deployment of Microgrids (MGs) and Renewable Energy Sources (RES), both of which enhance grid stability and energy independence [1]. Yet, the intermittency of RES, combined with variable demand and market dynamics, creates operational complexity [2]. Effective Energy Management Systems (EMS) are therefore essential for ensuring reliability and economic efficiency [3]. Beyond routine optimisation, microgrid EMS must remain resilient to High Impact, Low Probability (HILP) events by safeguarding priority loads, while preserving battery lifetime, which is sensitive to cycling depth and frequency and materially affects whole-life cost [4,5]. Traditional approaches such as Model Predictive Control (MPC) struggle with computational complexity and forecasting errors, motivating interest in Deep Reinforcement Learning (DRL) [6]. DRL enables adaptive, model-free decision-making in dynamic and stochastic environments, offering rapid inference, scalability, and the potential to manage multiple objectives simultaneously [7,8]; however, its ‘‘black-box’’ nature raises interpretability concerns for safety-critical operation [9,10].</p>
+<p>This section reviews DRL applications in microgrids across three main themes: energy management, resilience, and battery degradation, before synthesising the key research gaps.</p>
+<h3 id="11-deep-reinforcement-learning-for-optimal-energy-management">1.1. Deep reinforcement learning for optimal energy management</h3>
+<p>DRL has been widely applied to optimise EMS, particularly for battery scheduling and arbitrage. [8] employed Deep Deterministic Policy Gradient (DDPG) with transfer learning to reduce operating costs and improve comfort in islanded MGs. Battery wear was priced as a fixed cost per unit of energy, computed by dividing the battery’s purchase cost by its rated energy multiplied by the expected number of full cycles. As a result, degradation was treated as a constant perkWh charge rather than modelling the non-linear effects of partial cycling captured by Battery Life Cycle-Depth of Discharge (BLC–DoD)</p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">∗ Corresponding author.</span></small></p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">E-mail addresses: <a href="mailto:mohammadhossein.nejatiamiri@mail.bcu.ac.uk">mohammadhossein.nejatiamiri@mail.bcu.ac.uk</a> (M.H. Nejati Amiri), <a href="mailto:florimond.gueniat@bcu.ac.uk">florimond.gueniat@bcu.ac.uk</a> (F. Guéniat).</span></small></p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280"><a href="https://doi.org/10.1016/j.enconman.2026.121215">https://doi.org/10.1016/j.enconman.2026.121215</a></span></small></p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">Available online 16 February 2026</span></small></p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">Received 1 October 2025; Received in revised form 14 January 2026; Accepted 8 February 2026</span></small></p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">0196-8904/© 2026 The Authors. Published by Elsevier Ltd. This is an open access article under the CC BY license (<a href="http://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</a>).</span></small></p>
+<p>Nomenclature</p>
+<table><tr><td>Abbrev.</td><td>Definition</td><td>Abbrev.</td><td>Definition</td></tr><tr><td>A2C</td><td>Advantage Actor-Critic</td><td>MPC</td><td>Model Predictive Control</td></tr><tr><td>A3C</td><td>Asynchronous Advantage Actor-Critic</td><td>MLP</td><td>Multi-Layer Perceptron</td></tr><tr><td>BESS</td><td>Battery Energy Storage System</td><td>PV</td><td>Photovoltaic</td></tr><tr><td>BLC</td><td>Battery Life Cycles</td><td>RES</td><td>Renewable Energy Sources</td></tr><tr><td>DDPG</td><td>Deep Deterministic Policy Gradient</td><td>RI</td><td>Resilience Index</td></tr><tr><td>DDQL</td><td>Double Deep Q-Learning</td><td>MARL</td><td>Multi-Agent Reinforcement Learning</td></tr><tr><td>DoD</td><td>Depth of Discharge</td><td>SAC</td><td>Soft Actor-Critic</td></tr><tr><td>DRL</td><td>Deep Reinforcement Learning</td><td>SB3</td><td>Stable-Baselines3</td></tr><tr><td>EMS</td><td>Energy Management System</td><td>SHAP</td><td>Shapley Additive Explanations</td></tr><tr><td>EY</td><td>Expected Years (expected battery life)</td><td>SOC</td><td>State of Charge</td></tr><tr><td>FedSAC</td><td>Federated Soft Actor-Critic</td><td>TD3</td><td>Twin Delayed DDPG</td></tr><tr><td>FLOPs</td><td>Floating Point Operations</td><td>WT</td><td>Wind Turbine</td></tr><tr><td>FP32</td><td>32-bit floating point precision</td><td>XAI</td><td>Explainable Artificial Intelligence</td></tr><tr><td>LIME</td><td>Local Interpretable Model-agnostic Explanations</td><td>XDRL</td><td>eXplainable Deep Reinforcement Learning</td></tr><tr><td>HILP</td><td>High-Impact, Low-Probability</td><td>MG</td><td>Microgrid</td></tr><tr><td>LSTM</td><td>Long Short-Term Memory</td><td>MILP</td><td>Mixed-Integer Linear Programming</td></tr><tr><td>RMS</td><td>Root Mean Square</td><td>STD</td><td>Standard Deviation</td></tr><tr><td colspan="4">Symbols and Parameters</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">s</mi></mrow><mrow><mi>t</mi></mrow></msub></mrow></math>
+</td><td>Environment state at time step t</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">a</mi></mrow><mrow><mi>t</mi></mrow></msub></mrow></math>
+</td><td>Action vector at time step t</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">o</mi></mrow><mrow><mi>t</mi></mrow></msub></mrow></math>
+</td><td>Observation (stacked history window)</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>π</mi><mrow><mi>θ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">a</mi></mrow><mo>∣</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math>
+</td><td>Policy parametrised by θ</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>θ</mi></mrow></math>
+</td><td>Policy (actor) network parameters</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math>
+</td><td>Value function approximation</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>ϕ</mi></mrow></math>
+</td><td>Value (critic) network parameters</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>r</mi><mrow><mi>t</mi></mrow></msub></mrow></math>
+</td><td>Immediate reward at time step t</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>γ</mi></mrow></math>
+</td><td>Discount factor</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></math>
+</td><td>Steps per episode (= 216)</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mi>i</mi></mrow></msub></mrow></math>
+</td><td>Demand of load class i ∈ {1, 2,3} [kW]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msubsup><mi>L</mi><mrow><mi>:</mi></mrow><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msubsup></mrow></math>
+</td><td>Peak/normalisation constant for load i [kW]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>S</mi><mrow><mi>i</mi></mrow></msub></mrow></math>
+</td><td>Unmet demand for load class i [kWh]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub></mrow></math>
+</td><td>Total renewable generation (PV+WT) [kW]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>P</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msup></mrow></math>  - ren</td><td>Peak/normalisation constant for renewable</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>P</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msup></mrow></math>  net</td><td>Peak/normalisation constant for net balance</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">n</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub></mrow></math>
+</td><td>generation [kW] [kW] Net balance:  <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mtable><mtr><mtd columnalign="right"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub><mo>−</mo><msub><mo>∑</mo><mrow><mi>i</mi></mrow></msub><msub><mi>L</mi><mrow><mi>i</mi></mrow></msub></mrow></mtd></mtr></mtable></mrow></math>
+</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mi>s</mi></mrow></msub></mrow></math>
+</td><td>magnitude [kW] Available supply: [kW]  <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub><mo>+</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mo>−</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub></mrow></math>
+</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mi>s</mi><mo>,</mo><mi>i</mi></mrow></msub></mrow></math>
+</td><td>Supplied power allocated to load class i [kW]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub><mo>,</mo><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math>
+</td><td>Normalised charge/discharge commands</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub><mo>,</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math>
+</td><td>Charge/discharge power after scaling [kW]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">v</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub></mrow></math>
+</td><td>Converter rated power (scaling constant) [kW]</td></tr><tr><td></td><td>Raw allocation logits for load weights</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub></mrow></math>
+</td><td>Softmax allocation fraction for load i</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>2</mn></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>3</mn></mrow></msub></mrow></math>
+</td><td>Stage-dependent shortfall penalty factor</td><td></td><td>Weight of resilience component in reward</td></tr><tr><td></td><td>Weight of battery-life component in reward</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub></mrow></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub></mrow></math>
+</td><td>Resilience sub-reward</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub></mrow></math>
+</td><td>Battery-health sub-reward</td><td></td><td>Episode-level Resilience Index</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub></mrow></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="bold">E</mi><mi mathvariant="bold">Y</mi></mrow></mrow></math>
+</td><td>Expected battery lifetime [years]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow><mrow><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">e</mi></mrow></mrow></msub></mrow></math>
+</td><td></td></tr><tr><td></td><td></td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">f</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi></mrow></mrow></msub></mrow></math>
+</td><td>Terminal bonus reward (end of episode)</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>s</mi><mi>o</mi><mi>c</mi></mrow></math>
+</td><td>Battery state of charge [p.u.]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="normal">D</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">D</mi></mrow></mrow></math>
+</td><td>Depth of discharge [p.u.]</td></tr><tr><td>BLC(DoD)</td><td>Battery life cycles as a function of DoD</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>n</mi><mrow><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math>
+</td><td>PPO rollout length per update [steps]</td></tr><tr><td>batch size</td><td>PPO minibatch size [samples]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi></mrow></math>
+</td><td>Perturbation factor</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>n</mi></mrow></math>
+</td><td>Variants per perturbation level [integer]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>ε</mi></mrow></math>
+</td><td>Near-zero threshold (avoid perturbing idle values)</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msubsup><mi>L</mi><mrow><mi>j</mi></mrow><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msubsup></mrow></math>
+</td><td>Instantaneous cap for load j [kW]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msubsup><mi>E</mi><mrow><mi>i</mi></mrow><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msubsup></mrow></math>
+</td><td>Daily energy cap for load j [kWh/day]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>ρ</mi></mrow></math>
+</td><td>Pearson correlation with original dataset</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></math>
+</td><td>Normalised Perlin noise signal [-1 to 1]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>α</mi></mrow></math>
+</td><td>Perlin noise scaling factor (generic)</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>α</mi><mrow><mi>s</mi></mrow></msub><mo>,</mo><msub><mi>α</mi><mrow><mi>w</mi></mrow></msub></mrow></math>
+</td><td>Perlin scaling for solar/wind</td></tr><tr><td>fade(t)</td><td>Quintic fade function used in Perlin noise</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub></mrow></math>
+</td><td>Wall-clock time of step i in run r [s]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>R</mi></mrow></math>
+</td><td>Number of repeated timing runs [integer]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>t</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>σ</mi><mrow><mn>1</mn></mrow></msub></mrow></math>
+</td><td>Mean and sample std. dev. per step [s]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>T</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>Σ</mi><mrow><mn>1</mn></mrow></msub></mrow></math>
+</td><td>Mean and sample std. dev. per episode [s] Maximum reported CPU frequency [Hz]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>F</mi><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">k</mi></mrow></mrow></msub></mrow></math>
+</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">[</mo><mrow><mi mathvariant="normal">F</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">P</mi></mrow><msup><mi>s</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false">]</mo></mrow></math>  Theoretical FP32 peak throughput Number of physical CPU cores [integer]</td></tr><tr><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub></mrow></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi></mrow></math>
+</td><td>Lifetime compute budget estimate [FLOPs]</td><td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>n</mi><mrow><mrow><mi mathvariant="sans-serif">c</mi><mi mathvariant="sans-serif">o</mi><mi mathvariant="sans-serif">r</mi><mi mathvariant="sans-serif">e</mi><mi mathvariant="sans-serif">s</mi></mrow></mrow></msub></mrow></math>
+</td><td></td></tr></table>
+<p>curves. Similarly, [11] introduced DeepTwin, a digital twin with DRL agents for scheduling and load balancing, reporting revenue gains but without integrating battery life into the reward function. Other studies addressed energy arbitrage and load shifting [12,13], yet their focus remained economic rather than multi-objective.</p>
+<p>To address stochasticity, [14] developed a PPO-based dispatch strategy using a prediction–decision integrated approach for isolated microgrids, while [15] applied Bayesian DRL for resilient control in a multi-energy microgrid. Both approaches improved adaptability but did not report a formal resilience index. Only [14] priced battery wear via a simple DoD/cycle-life term rather than a detailed ageing model.</p>
+<p>Growing system complexity has also encouraged multi-agent DRL (MADRL/MARL) research. [16] developed a trading-oriented MARL framework, and [17] applied MARL for distributed energy management. Recent work has moved towards robust decentralised coordination across multiple microgrids, particularly by learning spatiotemporal patterns that preserve control performance under missing or noisy measurements [18], and by embedding graph surrogate models within distributed MADRL to coordinate coupled heat–electricity multi-microgrid systems under measurement anomalies and modelling errors [19]. Although these works advanced decentralised optimisation, they did not unify economic objectives with resilience or asset longevity. In summary, while DRL has shown strong performance in EMS, most approaches treat cost, uncertainty, or coordination in isolation, with limited consideration of resilience or long-term battery health.</p>
+<h3 id="12-deep-reinforcement-learning-for-enhancing-microgrid-resilience">1.2. Deep reinforcement learning for enhancing microgrid resilience</h3>
+<p>Resilience, defined as the capacity to withstand, adapt to, and recover from HILP events [20], is a growing application area for DRL [21,22]. Many studies focus on service restoration and microgrid formation. [23] applied Twin Delayed DDPG (TD3) for sequential restoration, while [24] used deep Q-learning for coordinating mobile emergency generators. These frameworks accelerated recovery but neglected the long-term effects of battery cycling. Similar contributions to restoration [25,26] echo this limitation.</p>
+<p>DRL has also been applied to resource allocation and post-event recovery logistics. For example, [27] proposed a hierarchical MARL framework that coordinates repair-crew routing and repair decisions across interdependent transportation and power–gas networks to accelerate load restoration after disruptions. Damaged components were modelled through discrete outage/repair states that were progressively restored by crew actions, with the objective of reducing load-shedding impacts under an operational network model. While recovery-focused research naturally prioritises restoration speed and logistics, explicit modelling of gradual asset ageing and degradation is often not incorporated in resilience-oriented DRL formulations.</p>
+<p>Cyber-resilience has received increasing attention. [28] developed a DRL framework to defend against false data injection, while [29] proposed a Federated Soft Actor–Critic (FedSAC) model for adversarial resilience in networked MGs. Other works explored distributed defence [30], resilient energy trading [31], and adaptive defence against rootkit attacks [32]. These approaches strengthened security but rarely connected cyber resilience to physical constraints such as battery life.</p>
+<p>Overall, DRL studies have advanced resilience by enabling adaptive recovery and cyber defence. Yet, integration with long-term asset management remains scarce, leaving a gap in sustainable resilience strategies.</p>
+<h3 id="13-integrating-battery-degradation-and-lifetime">1.3. Integrating battery degradation and lifetime</h3>
+<p>Battery energy storage systems (BESS) are central to microgrid operation, but their limited lifetime significantly affects system economics [4]. Degradation is driven mainly by charge–discharge cycling and Depth of Discharge (DoD) [5]. Neglecting these factors in EMS design can accelerate failure and replacement costs [4].</p>
+<p>Some studies incorporated degradation explicitly. Cycle and calendar ageing were modelled within a DRL-driven expansion-planning framework [5], enforcing resilience via planning-stage reliability limits (e.g., LOLP) rather than an operational, HILP-aware metric. Related planning-oriented DRL studies have further embedded resilience, environmental objectives, and long-term uncertainty in expansion decisions [33], and extended the planning scope to multi-energy microgrids with explicit reliability considerations [34]. At the operational level, [8] priced battery wear in the EMS reward via a fixed per-kWh degradation coefficient, and [1] assessed energy security using total unmet load with battery lifetime represented by a fixed service life and replacements. In both cases, the degradation cost is predetermined (flat per-kWh or fixed lifetime) rather than modelled via non-linear BLC– DoD ageing, and neither couples it with a formal resilience metric. Other related works (e.g., [35,36]) highlighted battery-aware control strategies but stopped short of linking degradation systematically with resilience in DRL reward design.</p>
+<h3 id="14-research-gaps-and-novelties">1.4. Research gaps and novelties</h3>
+<p>The foregoing review shows that DRL advances cost-effective EMS, outage recovery, and battery-aware operation, but these strands remain largely separated. The following four practical gaps emerge:</p>
+<ol>
+<li>Battery life jointly optimised with resilience. Ageing is frequently simplified to SOC limits or priced via flat per-kWh surrogates, while resilience is often treated implicitly through penalties rather than with an explicit operational metric; few operational DRL formulations capture non-linear BLC–DoD effects alongside a formal resilience objective.</li>
+</ol>
+<p>Contribution: a priority-weighted resilience objective is combined with a BLC–DoD-aware battery term within the PPO reward, stabilised by a staged training scheme.</p>
+<ol start="2">
+<li>Explainability for operator trust in safety-critical EMS. DRL policies generally remain opaque; integrated interpretability is uncommon, limiting trust, auditing, and troubleshooting in critical microgrid operation. As summarised in Fig. 1, post-hoc tools offer two practical advantages: first, they can be applied to already developed DRL controllers; second, they provide explanations without sacrificing control accuracy which is essential in critical infrastructure [37].</li>
+</ol>
+<p>Contribution: post-hoc SHAP is used for global explanation, aggregating feature attributions across episodes to rank which inputs most influence the learned policy, whereas LIME provides local interpretability at the decision level, revealing which features drove a specific action in a given state.</p>
+<ol start="3">
+<li>Real-world validation and HILP replay under renewable uncertainty. Studies using measured data and reproductions of actual HILP events are comparatively infrequent, with many works relying on simulated microgrids or generic uncertainty injections.</li>
+</ol>
+<p>Contribution: evaluation builds on the dataset and set-up from the authors’ prior study [4], using measured geography and demand with replayed Cyclone Laila conditions and structured perturbations, and introduces temporally coherent renewable uncertainty via Perlin-noise perturbations for realistic forecast-error stress testing..</p>
+<ol start="4">
+<li>Benchmarking against established controllers for nearoptimal, fast solutions. Direct comparisons with classical controllers (i.e., MPC) are relatively scarce, weakening claims of near-optimality and deployability.</li>
+</ol>
+<p>Contribution: a head-to-head MPC benchmark is conducted under identical data, horizons, and uncertainty settings.</p>
+<p>The main contributions of this paper are threefold. It proposes an operational XDRL controller that jointly optimises a priority-weighted resilience index and a battery-life term based on non-linear BLC–DoD behaviour. Robustness to renewable uncertainty is strengthened using temporally correlated Perlin-noise perturbations and curriculum learning over progressively more challenging scenarios, and performance is benchmarked head-to-head against MPC under matched deterministic and uncertain conditions (including computational-cost analysis). Finally, SHAP and LIME provide global and local explanations that make the learned dispatch and load-allocation behaviour auditable for safety-critical operation.</p>
+<p>Through a Scopus search using the query ‘‘TITLE-ABS-KEY ((reinforcement AND learning OR deep AND reinforcement AND learning OR DRL OR machine AND learning) AND (microgrid OR micro AND grid) AND (resilience OR resilient OR resiliency))’’, a total of 61 articles were identified, with 58 being accessible. This set includes 7 review papers, 19 conference papers, and 31 journal papers. Table 1 presents a selection of relevant studies, comparing them based on the algorithms used, rewards, scope of the resilience study, comparison with classical methods, explainability, inclusion of real-world case studies, and battery life consideration.</p>
+<h3 id="15-paper-organisation">1.5. Paper organisation</h3>
+<p>The remainder of the article is structured as follows. Section 2 describes the case study and methods: it outlines the coastal microgrid configuration and load hierarchy, details the curriculum-based</p>
+<p><img alt="" src="mineru/images/page_3_chart_2.jpg"/></p>
+<p>Fig. 1. Trade-off between accuracy and explainability in DRL-based control systems (qualitative comparison).</p>
+<p>Comparative review of DRL-based microgrid studies.</p>
+<table>
+<thead>
+<tr>
+<th>Ref.</th>
+<th>Algorithm</th>
+<th>Reward(s)</th>
+<th>Resilience Domain</th>
+<th>Comparison with Classical</th>
+<th>Explainability</th>
+<th>Real-world Case</th>
+<th>Battery degradation in reward</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This Paper</td>
+<td>PPO</td>
+<td>Priority-weighted resilience + expected</td>
+<td>EMS (HILP-aware)</td>
+<td>√(MPC)</td>
+<td>√(SHAP, LIME)</td>
+<td>√(India; Cyclone Laila)</td>
+<td>√(non-linear BLC-DoD)</td>
+</tr>
+<tr>
+<td>[23]</td>
+<td>Improved</td>
+<td>battery life Sequential service</td>
+<td>Load</td>
+<td></td>
+<td></td>
+<td>- (IEEE test</td>
+<td></td>
+</tr>
+<tr>
+<td>[28]</td>
+<td>TD3 A3C</td>
+<td>restoration; comfort DR profit; FDI detection</td>
+<td>restoration Cyber resilience/</td>
+<td></td>
+<td></td>
+<td>feeders) - (IEEE test feeders)</td>
+<td></td>
+</tr>
+<tr>
+<td>[31]</td>
+<td>LSTM-SAC</td>
+<td>Trading profit/loss; power balance;fault</td>
+<td>EMS Energy trading /resilience</td>
+<td></td>
+<td></td>
+<td>- (IEEE test</td>
+<td></td>
+</tr>
+<tr>
+<td>[16]</td>
+<td>MASAC</td>
+<td>duration Profit; energy efficiency</td>
+<td>Trading/ coordination</td>
+<td></td>
+<td></td>
+<td>feeders) – (public real data; synthesised</td>
+<td></td>
+</tr>
+<tr>
+<td>[7]</td>
+<td>PPO, DDPG</td>
+<td>Operating cost; loss/over-gen</td>
+<td>- (EMS)</td>
+<td>✓(MPC, RBC)</td>
+<td>√(permutation importance)</td>
+<td>microgrid case) – (simulated)</td>
+<td></td>
+</tr>
+<tr>
+<td>[11]</td>
+<td>PPO, SAC (DeepTwin)</td>
+<td>penalties Revenue/cost</td>
+<td>- (EMS)</td>
+<td>- (baseline</td>
+<td></td>
+<td>√(Finland</td>
+<td></td>
+</tr>
+<tr>
+<td>[24]</td>
+<td>DQN</td>
+<td>Load restoration; post-event reliability Operating cost +</td>
+<td>MG formation /restoration</td>
+<td>scheduler) √(MILP)</td>
+<td></td>
+<td>datasets) - (IEEE feeders)</td>
+<td></td>
+</tr>
+<tr>
+<td>[14]</td>
+<td>PPO (distributed)</td>
+<td>constraint penalties; flat per-kWh battery wear</td>
+<td>- (EMS)</td>
+<td>✓(MILP, PSO, DRL baselines)</td>
+<td></td>
+<td>√(island MG, China)</td>
+<td>√(flat per-kWh proxy)</td>
+</tr>
+<tr>
+<td>[5]</td>
+<td>DDQL (planning)</td>
+<td>Total cost; resilience; outages</td>
+<td>Expansion planning</td>
+<td></td>
+<td></td>
+<td>√(Atlantic City data)</td>
+<td>√(cycle &amp; calendar ageing)</td>
+</tr>
+<tr>
+<td>[18]</td>
+<td>MADRL</td>
+<td>Cost + voltage deviation</td>
+<td>- (EMS); (measurement anomalies)</td>
+<td></td>
+<td></td>
+<td>- (test systems)</td>
+<td></td>
+</tr>
+<tr>
+<td>[19]</td>
+<td>MADRL</td>
+<td>Cost + voltage deviation</td>
+<td>-(EMS); (heat- electricity)</td>
+<td></td>
+<td></td>
+<td>– (test systems)</td>
+<td></td>
+</tr>
+<tr>
+<td>[34]</td>
+<td>DoubleDQN (planning)</td>
+<td>Planning cost + reliability constraints</td>
+<td>Expansion planning (reliability)</td>
+<td>-(greedy baseline)</td>
+<td></td>
+<td>√(Westhampton, NY)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Case-study microgrid configuration and aggregated tier-load model used in the EMS.</p>
+<table><tr><td colspan="3">Microgrid components (HOMER Pro sizing)</td></tr><tr><td>PV capacity</td><td>140</td><td>kW</td></tr><tr><td>Wind capacity</td><td>80</td><td>kW</td></tr><tr><td>Li-ion storage (energy)</td><td>780</td><td>kWh</td></tr><tr><td>Bidirectional converter</td><td>52</td><td>kW</td></tr><tr><td>Control time step</td><td>1</td><td>h</td></tr><tr><td colspan="3">Aggregated load tiers (three loads in EMS)</td></tr><tr><td>Tier (priority)</td><td>Daily energy (kWh/day)</td><td>Peak power (kW)</td></tr><tr><td>Essential  <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math>
+</td><td>222</td><td>51.2</td></tr><tr><td>Business  <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math>
+</td><td>212</td><td>39.4</td></tr><tr><td>Agricultural  <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math>
+</td><td>58.6</td><td>68.6</td></tr></table>
+<p>The EMS represents demand using three aggregated priority tiers rather than individual loads. In this paper, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub></mrow></math> (agricultural) is not modelled as deferrable; it is treated as an aggregated hourly demand profile with the lowest priority weighting. The underlying tier-load profiles and their construction are reported in [4].</p>
+<p>PPO controller and reward design, and introduces the SHAP/LIME framework used for global and local explainability. Section 3 presents the numerical analysis, beginning with the Perlin-noise uncertainty model and MPC benchmark, then reporting deterministic and stochastic evaluations of the DRL policy, a 4000-run Monte Carlo robustness study, and a comprehensive interpretability assessment. Finally, Section 4 summarises the main findings, discusses practical implications for resilient microgrid operation, and highlights directions for future research.</p>
+<h2 id="2-modelling-of-microgrid-control-strategy-and-explainability-techniques">2. Modelling of microgrid, control strategy, and explainability techniques</h2>
+<p>This section begins by introducing the microgrid’s location, components, and key characteristics. In addition, the load profile and renewable generation patterns, particularly during the HILP event are examined. Subsequently, the DRL algorithm employed in the study is described, including the formulation of actions, states, and the reward structure within the environment. Finally, the explainability methods used to interpret the DRL decisions are presented, encompassing both local and global perspectives.</p>
+<h3 id="21-microgrid-description">2.1. Microgrid description</h3>
+<p>This study adopts the sizing and MPC methodology presented in our previous work [4] as a solid baseline. This provides a foundation for comparing the performance of the proposed XDRL framework.</p>
+<p>Case-study microgrid and load model. The case study represents a rural coastal village near Ongole/Kothapatnam in Andhra Pradesh, India <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>1</mn><msup><mn>5</mn><mrow><mo>∘</mo></mrow></msup><mn>2</mn><msup><mn>8</mn><mrow><mi>′</mi></mrow></msup><mn>3</mn><mn>6</mn><mo>.</mo><msup><mn>3</mn><mrow><mi>′</mi><mi>′</mi></mrow></msup><mrow><mi mathvariant="normal">N</mi></mrow><mo>,</mo><mn>8</mn><msup><mn>0</mn><mrow><mo>∘</mo></mrow></msup><mn>1</mn><msup><mn>1</mn><mrow><mi>′</mi></mrow></msup><mn>5</mn><mn>4</mn><mo>.</mo><msup><mn>0</mn><mrow><mi>′</mi><mi>′</mi></mrow></msup><mrow><mi mathvariant="normal">E</mi></mrow><mo stretchy="false">)</mo></mrow></math> , which has experienced repeated cyclone events. HOMER Pro is used to obtain a techno-economic configuration comprising 140 kW PV, 80 kW wind, a 52 kW bidirectional converter, and 780 kWh Li-ion storage. For operational control (both MPC and DRL), the demand is represented by three aggregated load tiers <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub></mrow></math> to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><msub><mo stretchy="false">)</mo><mrow><mn>3</mn></mrow></msub></mrow></math> , i.e., three loads in total in the EMS model, reflecting priority levels for resilient operation: essential, business, and agricultural demand. Essential loads have a daily energy demand of 222 kWh with a peak of 51.2 kW; business loads have a daily demand of 212 kWh with a peak of 39.4 kW; and agricultural demand has a daily consumption of 58.6 kWh. Table 2 summarises the component ratings and the tier-level load statistics used in the EMS [4].</p>
+<p>Experiments in the present paper are simulation-based. Additionally, ten days of meteorological data from Cyclone Laila (May 2010) were used to derive the PV and WT generation profiles. Irradiance, wind speed, and ambient conditions were converted offline into hourly</p>
+<p>PV and WT power using physics-informed models in Python (pvlib and windpowerlib); the resulting renewable power time series were then provided to the DRL environment as exogenous inputs for energy management [38,39]. Accordingly, the learning problem targets operational decisions (storage dispatch and load allocation) conditioned on renewable availability, rather than learning PV/WT conversion dynamics. Further dataset-generation and parameterisation details are reported in [4].</p>
+<p>For DRL, the tier-level load signals <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo lspace="0.22em" rspace="0.22em"><mrow><mrow><mtext> </mtext><mi mathvariant="normal">t</mi><mi mathvariant="normal">o</mi><mtext> </mtext></mrow></mrow></mo><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math> are normalised using fixed scaling applied consistently across training and evaluation, improving learning stability and supporting generalisation across operating conditions.</p>
+<p>The right blue box in Fig. 2 illustrates the configuration of the microgrid as implemented in the Gymnasium framework. This forms the environment used in the DRL-based control framework, which is discussed in detail in the following section.</p>
+<p>Data augmentation. To improve generalisation in DRL training, a systematic data augmentation procedure was implemented to simulate variability and uncertainty in renewable energy generation and load demand. Starting from three base datasets, representing extreme (EX), nominal variant 1 (NO_V1), and nominal variant 2 (NO_V2) conditions, multiple perturbed versions were generated by applying random scaling to solar, wind, and load signals.</p>
+<p>The procedure introduces controlled stochasticity using uniformly sampled scaling factors within a predefined range of ±5% to ±50%. For each perturbation factor, ten variants were produced. The perturbation is only applied to non-zero values above a small threshold <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mi>ε</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn><mo stretchy="false">)</mo></mrow></math> to avoid modifying idle periods, and both instantaneous power caps and daily energy limits were enforced to ensure physical feasibility. After perturbation, the total renewable generation (Sum_Extreme) is recalculated as the sum of solar and wind profiles. Each 24-hour block of load data is also rescaled if the daily energy sum exceeds the corresponding limit. Finally, each perturbed dataset is labelled with metadata indicating its scenario type, perturbation factor, variant index, and correlation coefficients with the original dataset. These variations provide the DRL agent with a wide range of realistic operating conditions, enhancing robustness under uncertainty, particularly during HILP events such as Cyclone Laila. The augmentation procedure is formally described in Algorithm 1.</p>
+<h3 id="22-proximal-policy-optimisation">2.2. Proximal Policy Optimisation</h3>
+<p>The Proximal Policy Optimisation (PPO) is a policy gradient method that optimises a policy <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>π</mi><mrow><mi>θ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">a</mi></mrow><mo stretchy="false">|</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math> parametrised by 𝜃. The action taken by the agent (𝐚) and its current state (𝐬) are denoted accordingly. Alongside the policy, a value function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mo>,</mo></mrow></math> , parametrised by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>ϕ</mi><mo>,</mo></mrow></math> is learned to estimate expected returns when following 𝜋:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>V</mi><mrow><mi>π</mi></mrow></msup><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mrow><mi mathvariant="double-struck">E</mi></mrow><mrow><mi>π</mi></mrow></msub><mrow><mo fence="true" form="prefix" stretchy="true">[</mo><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mrow><mo>∞</mo></mrow></msubsup><msup><mi>γ</mi><mrow><mi>k</mi></mrow></msup><msub><mi>r</mi><mrow><mi>t</mi><mo>+</mo><mi>k</mi></mrow></msub><mrow><mo fence="true" form="prefix" stretchy="true">|</mo><msub><mrow><mi mathvariant="bold">s</mi></mrow><mrow><mi>t</mi></mrow></msub><mo>=</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo fence="true" form="postfix" stretchy="true">]</mo></mrow><mo fence="true" form="postfix" stretchy="true"></mo></mrow><mo>.</mo><mtext>(1)</mtext></mrow></math>
+</p>
+<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math> denotes the learned approximation of the true value function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>V</mi><mrow><mi>π</mi></mrow></msup><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo><mo>,</mo></mrow></math> , which represents the expected return when following policy 𝜋 from state 𝐬. The rewards <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>r</mi><mrow><mi>t</mi></mrow></msub></mrow></math> provide an immediate signal that quantifies the desirability of action <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">a</mi></mrow><mrow><mi>t</mi></mrow></msub></mrow></math> in state <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">s</mi></mrow><mrow><mi>t</mi></mrow></msub></mrow></math> at time 𝑡. Value refers to the expected return (state-value), i.e., the discounted cumulative reward from a given state, which is approximated by the learned value function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math> . The agent aims at selecting actions to maximise long-term performance rather than optimising only the immediate reward. Typically, the objective is to maximise the expected return. PPO achieves this with a clipped surrogate objective that constrains policy updates for stability [40].</p>
+<p><img alt="" src="mineru/images/page_5_image_2.jpg"/></p>
+<p>Fig. 2. XDRL framework overview: the PPO agent (left) interacts with the simulation environment (right), which includes the microgrid schematic and returns state and reward, while SHAP/LIME provide post-hoc explanations of the learned decisions.</p>
+<div class="docvortex-algorithm" style="white-space: pre-wrap; font-family:monospace;">
+Algorithm 1 Perturb_and_Augment
+Require: Three input datasets $D = \{ \mathrm{EX}, \mathrm{NO}\_\mathrm{V1}, \mathrm{NO}\_\mathrm{V2} \}$ , perturbation
+factors $F = \{ 0 . 0 5 , 0 . 1 0 , \ldots , 0 . 5 0 \} ,$ , number of variants $n _ { \flat }$ per-row zero
+threshold 𝜀, instantaneous limits $L _ { j } ^ { \mathrm { m a x } }$ , daily energy limits $E _ { j } ^ { \mathrm { m a x } }$ for
+loads $j \in \{ 1 , 2 , 3 \}$
+Ensure: Augmented table containing every perturbed variant, meta-
+data columns, and correlations.
+1: for all $D \in D$ do ⊳ loop over scenarios
+2: for all $f \in F$ do ⊳ loop over factor levels
+3: for $v \gets 1$ to 𝑛 do ⊳ generate 𝑛 variants
+4: $P \gets \mathsf { c o p y } ( D )$
+5: for all row 𝑖 in 𝑃 do
+6: for all signal $c \in$ {Solar, Wind, Load1, Load2, Load3}
+do
+7: if $P _ { i } [ c ] &gt; \varepsilon$ then
+8: draw $r \sim \mathcal { V } ( 1 - f ,   1 + f )$
+9: $P _ { i } [ c ] \gets P _ { i } [ c ] \cdot r$
+10: if 𝑐 is a load then
+11: cap $P _ { i } [ c ] \leftarrow \operatorname* { m i n } ( P _ { i } [ c ] , L _ { c } ^ { \operatorname* { m a x } } )$
+12: recompute 𝑃 [Sum_Extreme] ← 𝑃 [Solar] + 𝑃 [Wind]
+13: for all day 𝑑 in 𝑃 do ⊳ 24 consecutive rows
+14: for all load $j \in \{ 1 , 2 , 3 \}$ do
+15: $S \leftarrow \sum _ { t \in d } \widetilde { P _ { t } [ \mathrm { L o a d } _ { j } ] }$
+16: i $\textbf { f } S &gt; \widetilde { E _ { j } ^ { \mathrm { m a x } } }$ then
+17: scale factor $\alpha \gets E _ { i } ^ { \mathrm { m a x } } / S$
+18: 𝑃𝑡[Load𝑗 ] ← 𝛼 ⋅ 𝑃𝑡[Load𝑗 ] ∀𝑡 ∈ 𝑑
+19: compute Pearson correlations 𝜌 ← cor r(𝑃 , 𝐷) on all five
+signals
+20: append 𝑃 (with columns Scenario, Perturb_Fac-
+$\mathtt { t o r } = f ,   \rho ,$ etc.) to master list
+21: concatenate all variants into one DataFrame
+22: stable-sort by desired scenario order $\tt E X \prec N O _ { - } V 1 \prec N O _ { - } V 2$
+23: write result to Augmented_data_all_factors.csv
+</div>
+<h3 id="23-deep-reinforcement-learning-environment">2.3. Deep reinforcement learning environment</h3>
+<p>For microgrids in hazard-prone regions, control policies must remain effective across the entire operating domain, from usual variability to HILP extremes such as cyclones. Accordingly, the training workflow (Sections 2.4 and 3.1) exposes the agent to a spectrum of realistic disturbances, so that robustness is learned in domain. A custom DRL environment was implemented using the Gymnasium framework, allowing simulation of microgrid operations. Episodes consist of running the environment over 9-day episodes (216 hourly steps) during which the agent must manage battery storage and load prioritisation to optimise performance.</p>
+<p>State space. Each observation includes six normalised features over a rolling history window of five time steps (history length = 5), resulting in a 30-dimensional input vector. The features at each time step include the battery SOC, load demands for three categories <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo>,</mo></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo><mo>,</mo></mrow></math> total renewable generation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub><msub><mo stretchy="false">)</mo><mrow><mrow><mi mathvariant="normal">i</mi></mrow></mrow></msub></mrow></math> and the net energy balance defined as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">n</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub><mo>−</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>−</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo>−</mo><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo>.</mo></mrow></math> All values are normalised based on their respective historical maxima. This improves learning stability by keeping state magnitudes within comparable ranges, reduces sensitivity to absolute demand levels, and supports generalisation across scenarios with different load scales and alternative microgrid configurations. The stacked observation vector is defined as:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>𝐨</mi><mrow><mi>t</mi></mrow></msub><mo>=</mo><msubsup><mrow><mo fence="true" form="prefix" stretchy="true">[</mo><mo>SOC</mo><mo>,</mo><mfrac><mrow><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub></mrow><mrow><msubsup><mi>L</mi><mrow><mn>1</mn></mrow><mrow><mo>max</mo></mrow></msubsup></mrow></mfrac><mo>,</mo><mfrac><mrow><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub></mrow><mrow><msubsup><mi>L</mi><mrow><mn>2</mn></mrow><mrow><mo>max</mo></mrow></msubsup></mrow></mfrac><mo>,</mo><mfrac><mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub></mrow><mrow><msubsup><mi>L</mi><mrow><mn>3</mn></mrow><mrow><mo>max</mo></mrow></msubsup></mrow></mfrac><mo>,</mo><mfrac><mrow><msub><mi>P</mi><mrow><mtext>ren </mtext></mrow></msub></mrow><mrow><msubsup><mi>P</mi><mrow><mtext>ren </mtext></mrow><mrow><mo>max</mo></mrow></msubsup></mrow></mfrac><mo>,</mo><mfrac><mrow><msub><mi>P</mi><mrow><mtext>net </mtext></mrow></msub></mrow><mrow><msubsup><mi>P</mi><mrow><mtext>net </mtext></mrow><mrow><mo>max</mo></mrow></msubsup></mrow></mfrac><mo fence="true" form="postfix" stretchy="true">]</mo></mrow><mrow><mi>t</mi><mo>−</mo><mn>4</mn></mrow><mrow><mi>t</mi></mrow></msubsup><mtext>(2)</mtext></mrow></math>
+</p>
+<p>Action space. The agent produces a continuous 5-dimensional action vector defined as:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">a</mi></mrow><mrow><mi>t</mi></mrow></msub><mo>=</mo><mrow><mo fence="true" form="prefix" stretchy="true">[</mo><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub><mo>,</mo><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>2</mn></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>3</mn></mrow></msub><mo fence="true" form="postfix" stretchy="true">]</mo></mrow><mo>.</mo><mtext>(3)</mtext></mrow></math>
+</p>
+<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>a</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mspace width="0.278em"></mspace><mo>∈</mo><mspace width="0.278em"></mspace><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow></math> represent the charging and discharging commands, respectively, scaled to the rated power of the converter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub><mo>=</mo><mn>52</mn><mtext> </mtext><mrow><mi mathvariant="normal">k</mi><mi mathvariant="normal">W</mi></mrow><mo stretchy="false">)</mo></mrow></math> . Only one of these actions is active at a given time. This mutual exclusivity is enforced in the environment implementation at each step, ensuring that the controller cannot charge and discharge simultaneously. The remaining components <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>w</mi><mrow><mn>2</mn></mrow></msub><mo>,</mo></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>w</mi><mrow><mn>3</mn></mrow></msub><mo>∈</mo><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo>,</mo></mrow></math> 1] are raw values that are passed through a softmax function to allocate the available power fractionally to the three load categories <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo>,</mo></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub></mrow></math>
+</p>
+<p>Battery operational model. The environment updates the battery state of charge using a standard energy-balance model with charge/discharge efficiencies and SOC bounds:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">p</mi></mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow><mrow><mi>t</mi></mrow></msub><mo>+</mo><mfrac><mrow><msub><mi>η</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow><mo>,</mo><mi>t</mi></mrow></msub><mo>−</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow><mo>,</mo><mi>t</mi></mrow></msub><mo>/</mo><msub><mi>η</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mo>max</mo></mrow></msub></mrow></mfrac><mi>Δ</mi><mi>t</mi><mo>,</mo><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow><mrow><mo>min</mo></mrow></msub><mo>,</mo><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow><mrow><mo>max</mo></mrow></msub><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>,</mo><mtext>(4)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>E</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub></mrow></math> is the useable battery energy capacity, 𝛥𝑡 is the hourly step, and 𝑃 h,𝑡 and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow><mo>,</mo><mi>t</mi></mrow></msub></mrow></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow><mo>,</mo><mi>t</mi></mrow></msub></mrow></math> are limited by the converter rating and available charge/discharge energy.</p>
+<p>Load dispatch and constraints. The available power at each time step is calculated as:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mi>s</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">n</mi></mrow></mrow></msub><mo>+</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mo>−</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub><mo>.</mo><mtext>(5)</mtext></mrow></math>
+</p>
+<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math> are control decisions produced by the agent at each time step, and are applied subject to SOC limits and the converter power constraint (thereby reflecting the remaining battery energy and maximum charge/discharge rate). Full load satisfaction is not enforced under islanded/HILP operation; instead, controlled load shedding is permitted and penalised through the priority-weighted resilience term in the reward. This power is then distributed among the loads using normalised weights derived from the softmax of the action vector:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mrow><msub><mi>w</mi><mrow><mi>i</mi></mrow></msub></mrow></msup></mrow><mrow><msubsup><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mrow><mn>3</mn></mrow></msubsup><msup><mi>e</mi><mrow><msub><mi>w</mi><mrow><mi>j</mi></mrow></msub></mrow></msup></mrow></mfrac><mo>,</mo><mspace width="1em"></mspace><mrow><mi mathvariant="normal">f</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi></mrow><mspace width="0.278em"></mspace><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>.</mo><mtext>(6)</mtext></mrow></math>
+</p>
+<p>The allocated power to each load is given by:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mi>s</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>=</mo><msub><mi>f</mi><mrow><mi>i</mi></mrow></msub><mo>·</mo><msub><mi>P</mi><mrow><mi>s</mi></mrow></msub><mo>.</mo><mtext>(7)</mtext></mrow></math>
+</p>
+<p>Power imbalances are determined as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mi>s</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>−</mo><msub><mi>L</mi><mrow><mi>i</mi></mrow></msub><mo>,</mo></mrow></math> and any shortages are penalised based on the predefined priority of each load.</p>
+<p>Reward function. The reward at each time step contributes to improving the system’s resilience. Resilience reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><mo stretchy="false">)</mo></mrow></math> is calculated based on weighted unmet demand:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><mo>=</mo><mn>1</mn><mo>−</mo><mi>λ</mi><mo>·</mo><mfrac><mrow><mn>7</mn><mo>·</mo><msub><mi>S</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><mn>2</mn><mo>·</mo><msub><mi>S</mi><mrow><mn>2</mn></mrow></msub><mo>+</mo><mn>1</mn><mo>·</mo><msub><mi>S</mi><mrow><mn>3</mn></mrow></msub></mrow><mrow><mn>7</mn><mo>·</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><mn>2</mn><mo>·</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo>+</mo><mn>1</mn><mo>·</mo><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub></mrow></mfrac><mo>,</mo><mtext>(8)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>S</mi><mrow><mi>i</mi></mrow></msub></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mi>i</mi></mrow></msub></mrow></math> represent unmet and total load for class 𝑖. A stagedependent penalty factor (𝜆) is applied to amplify the impact of shortfalls during curriculum training. The time-step reward is defined as the normalised resilience reward:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>r</mi><mrow><mi>t</mi></mrow></msub><mo>=</mo><mfrac><mrow><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub></mrow><mrow><mi>T</mi></mrow></mfrac><mo>,</mo><mtext>(9)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>T</mi></mrow></math> denotes the episode length (horizon). This normalisation ensures that the cumulative return remains comparable across episodes of different durations.</p>
+<p>This reward is adopted from the general class of weighted, priorityaware operational resilience indices that aggregate load supply (or unmet demand) across tiers and normalise by total demand; here it is tailored to the present case study with three load tiers [20]. The weights (7, 2, 1) encode the relative criticality of the three tiers (higher weight implies higher penalty for curtailment) and are chosen to match the prioritisation adopted in the MPC benchmark for a consistent comparison [4]. The normalisation by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>7</mn><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>+</mo><mn>2</mn><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mo>+</mo><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math> yields a dimensionless measure of supply adequacy that is comparable across scenarios with different load magnitudes.</p>
+<p>Battery reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo stretchy="false">)</mo></mrow></math> reflects the impact of charging and discharging actions on battery health. This is evaluated using the DoD, which significantly influences the number of achievable battery life cycles. Fig. 3 illustrates the nonlinear relationship between DoD and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="bold">B</mi></mrow><mrow><mi mathvariant="bold">L</mi></mrow><mrow><mi mathvariant="bold">C</mi></mrow><mo>,</mo></mrow></math> where deeper discharge results in substantially fewer life cycles. To prevent excessive degradation, the agent is encouraged to operate the battery within moderate DoD levels.</p>
+<p>The cycle-life degradation is quantified using Fig. 3. For an hourly control interval, the instantaneous DoD (in percent) is computed from the discharge power as</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="normal">D</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">D</mi></mrow><mrow><mi>t</mi></mrow></msub><mspace width="0.278em"></mspace><mo>=</mo><mspace width="0.278em"></mspace><mfrac><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow><mo>,</mo><mi>t</mi></mrow></msub></mrow><mrow><msub><mi>E</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub></mrow></mfrac><mo>×</mo><mn>1</mn><mn>0</mn><mn>0</mn><mo>.</mo><mtext>(10)</mtext></mrow></math>
+</p>
+<p>To aggregate variable-depth cycling over an episode, an equivalent-life measure is computed via accumulated cycle damage:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mrow><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow></mrow></msub><mo>=</mo><msup><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mo>∑</mo><mrow><mi>t</mi><mi>:</mi><msub><mrow><mi mathvariant="normal">D</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">D</mi></mrow><mrow><mi>t</mi></mrow></msub><mo>&gt;</mo><mn>0</mn></mrow></msub><mfrac><mrow><mn>1</mn></mrow><mrow><mrow><mi mathvariant="normal">B</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">C</mi></mrow><mo stretchy="false">(</mo><msub><mrow><mi mathvariant="normal">D</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">D</mi></mrow><mrow><mi>t</mi></mrow></msub><mo stretchy="false">)</mo></mrow></mfrac><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>,</mo><mtext>(11)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mrow><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow></mrow></msub></mrow></math> is the harmonic aggregator produces equivalent full cycles. With an episode spanning <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mtable><mtr><mtd columnalign="right"><mrow><mo>∞</mo></mrow></mtd></mtr><mtr><mtd columnalign="right"><mrow><msub><mi>n</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mo>=</mo><mfrac><mrow><mover><mrow><mi>T</mi></mrow><mo stretchy="false">~</mo></mover></mrow><mrow><mn>2</mn><mn>4</mn></mrow></mfrac></mrow></mtd></mtr></mtable></mrow></math> days, the expected battery lifetime in years is then</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">Y</mi></mrow><mo>=</mo><mfrac><mrow><msub><mi>C</mi><mrow><mrow><mi mathvariant="normal">h</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">m</mi></mrow></mrow></msub><msub><mi>n</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">y</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow><mrow><mn>365</mn></mrow></mfrac><mo>.</mo><mtext>(12)</mtext></mrow></math>
+</p>
+<p>Finally, the lifetime reward is defined as a normalised score</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mspace width="0.278em"></mspace><mo>=</mo><mspace width="0.278em"></mspace><mfrac><mrow><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">Y</mi></mrow></mrow><mrow><msub><mrow><mi mathvariant="normal">E</mi><mi mathvariant="normal">Y</mi></mrow><mrow><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi></mrow></mrow></msub></mrow></mfrac><mo>,</mo><mtext>(13)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="normal">E</mi><msub><mi mathvariant="normal">Y</mi><mrow><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">f</mi></mrow></msub></mrow></mrow></math> denotes the reference lifetime used for scaling (set to 16 in this work).</p>
+<p>Episode termination and final reward. At the end of each episode, two primary performance metrics are reported: the episode resilience index <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow><mrow><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">e</mi></mrow></mrow></msub><mo stretchy="false">)</mo></mrow></math> and the expected battery lifetime (EY). In addition, the episode return <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mstyle displaystyle="false" scriptlevel="0"><msubsup><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>T</mi></mrow></msubsup><msub><mi>r</mi><mrow><mi>t</mi></mrow></msub></mstyle></mrow></math> is logged as a diagnostic during training to monitor learning progress and reward scaling. To promote long-term performance, an additional bonus reward is provided at the final step, defined as:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">f</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">l</mi></mrow></mrow></msub><mo>=</mo><mrow><mfrac><mrow><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo>·</mo><msub><mi>R</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo>+</mo><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><mo>·</mo><msub><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow><mrow><mrow><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi><mi mathvariant="normal">e</mi></mrow></mrow></msub></mrow><mrow><mn>2</mn></mrow></mfrac></mrow><mo>.</mo><mtext>(14)</mtext></mrow></math>
+</p>
+<p>This formulation ensures that short-term operational decisions remain aligned with long-term system objectives.</p>
+<h3 id="24-curriculum-based-training-stages">2.4. Curriculum-based training stages</h3>
+<p>To train the DRL agent for robust microgrid control under uncertainty, the PPO algorithm is employed using the Stable-Baselines3 framework. The training followed a four-stage curriculum learning strategy, with increasing perturbation complexity and evolving reward structure. Each stage exposes the agent to scenarios of varying uncertainty levels, allowing gradual adaptation and improved policy generalisation.</p>
+<p>The training is divided into four stages:</p>
+<ol>
+<li>
+<p>Stage 1: Includes only low-perturbation scenarios <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mi>f</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>5</mn></mrow></math> or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>1</mn><mn>0</mn><mo stretchy="false">)</mo></mrow></math> , with a shortfall penalty factor of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow></math> . The reward function focuses exclusively on resilience <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><mo>=</mo><mn>1</mn><mo>.</mo><mn>0</mn><mo>,</mo><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo><mn>0</mn><mo stretchy="false">)</mo><mo>.</mo></mrow></math>
+</p>
+</li>
+<li>
+<p>Stage 2: Uses medium-perturbation scenarios <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><mi>f</mi><mspace width="1em"></mspace><mo>=</mo><mspace width="1em"></mspace><mn>0</mn><mo>.</mo><mn>2</mn><mn>0</mn><mo fence="true" form="postfix" stretchy="true"></mo></mrow></mrow></math> or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>=</mo><mn>0.30</mn><mo stretchy="false">)</mo></mrow></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi><mtext> </mtext><mo>=</mo><mtext> </mtext><mn>2</mn><mo>.</mo></mrow></math> The reward function remains purely resiliency-based.</p>
+</li>
+<li>
+<p>Stage 3: Trains the agent on high-perturbation scenarios <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mi>f</mi><mo>=</mo></mrow></math> 0.40 or <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn><mn>0</mn><mo stretchy="false">)</mo></mrow></math> , applying a stronger penalty factor of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi><mo>=</mo><mn>4</mn><mo>.</mo></mrow></math> Reward remains focused on resiliency.</p>
+</li>
+<li>
+<p>Stage 4: Combines all previous scenarios and adjusts the reward structure to consider both resilience and battery health equally <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn><mo>,</mo><msub><mi>w</mi><mrow><mrow><mi mathvariant="normal">b</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">t</mi></mrow></mrow></msub><mo>=</mo><mn>0</mn><mo>.</mo><mn>5</mn><mo stretchy="false">)</mo></mrow></math> , with the shortfall penalty factor reset to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow></math>
+</p>
+</li>
+</ol>
+<p>This progression is designed to first teach the agent to maintain load reliability and resilience under gradually increasing uncertainty and then optimise for long-term battery health once resilience is stabilised. A visual summary of the curriculum stages is provided in Fig. 4.</p>
+<p>The PPO algorithm was configured using a Multi-Layer Perceptron (MLP) architecture, consisting of two hidden layers with 256 units each for both the policy and value networks. Key hyperparameters included a batch size of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mn>1</mn><mn>6</mn><mo>×</mo><mn>1</mn><mn>2</mn><mo>=</mo><mn>2</mn><mn>5</mn><mn>9</mn><mn>2</mn><mo>,</mo></mrow></math> , a rollout length of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>n</mi><mrow><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">p</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mspace width="0.278em"></mspace><mo>=</mo><mspace width="0.278em"></mspace><mn>2</mn><mn>1</mn><mn>6</mn><mn>0</mn></mrow></math> , a discount factor of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>γ</mi><mo>=</mo><mn>0</mn><mo>.</mo><mn>9</mn><mn>9</mn><mn>5</mn><mo>,</mo></mrow></math> , and a learning rate of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>3</mn><mo>×</mo><mn>1</mn><msup><mover><mrow><mn>0</mn></mrow><mo>˙</mo></mover><mrow><mo>−</mo><mn>4</mn></mrow></msup></mrow></math> . Training proceeded in sequential stages, with the checkpoint from each stage loaded into the next to enable continued learning. The final policy obtained from Stage 4 represents a model optimised for both system resilience and battery longevity. Additionally, Fig. 5 plots the episode reward across the four curriculum stages. Stages 1 to 3 use almost the same normalised reward, whereas Stage 4 employs a different reward definition for the final phase; as a result, its curve is on a different scale and is not directly comparable to Stages 1 to 3.</p>
+<p><img alt="" src="mineru/images/page_7_chart_2.jpg"/></p>
+<p>Fig. 3. Battery life cycles as a function of Depth of Discharge (DoD) [4].</p>
+<p>Table 3</p>
+<p>Trend summary of curriculum learning performance across stages.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Noise Level</th>
+<th>Performance</th>
+<th>Stability</th>
+<th>Reward level</th>
+<th>Mean ± Std</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage 1</td>
+<td>Low (f5/f10)</td>
+<td>Rapid learning, more noise</td>
+<td>Moderate variance</td>
+<td>∼0.959</td>
+<td>0.952 ± 0.0374</td>
+</tr>
+<tr>
+<td>Stage 2</td>
+<td>Medium(f20/f30)</td>
+<td>Stable learning</td>
+<td>Lower variance</td>
+<td>∼0.965</td>
+<td>0.965 ± 0.0127</td>
+</tr>
+<tr>
+<td>Stage 3</td>
+<td>High (f40/f50)</td>
+<td>Best and most stable</td>
+<td>Very low variance</td>
+<td>∼0.965</td>
+<td>0.965 ± 0.0081</td>
+</tr>
+<tr>
+<td>Stage 4</td>
+<td>All scenarios</td>
+<td>Optimised for</td>
+<td>Low variance</td>
+<td>∼0.975</td>
+<td>0.974 ± 0.0146</td>
+</tr>
+<tr>
+<td>(not normalised)</td>
+<td></td>
+<td>resilience and battery life</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Table 3 presents a comparative trend analysis of the DRL training performance among all stages. Each stage introduces increasing levels of noise through data perturbation, progressing from low to high. In Stage 1, although rapid learning is observed, the training exhibits higher variability due to the lower penalty factor and more frequent reward fluctuations. Stage 2 demonstrates improved learning stability and reduced variance, reflecting the agent’s better adaptation to moderate noise levels. Stage 3 achieves the most stable and consistent performance, with the lowest reward variance and the highest average reward, indicating effective generalisation to challenging scenarios. Stage 4 introduces a combined reward structure by assigning equal weight to resilience and battery life. As a result, the reward scale in this stage differs from the earlier stages and cannot be directly normalised or compared. Nevertheless, it reflects the agent’s ability to balance trade-offs between resilience and battery health, offering a more realistic and holistic objective in microgrid operation. The Mean ± Std column quantitatively supports these trends, showing decreasing standard deviation and increasing average reward as the curriculum progresses.</p>
+<h3 id="25-computational-cost-protocol">2.5. Computational-cost protocol</h3>
+<p>All timing tests were carried out offline. The mixed-integer controller was executed on an Intel Core i7-6700HQ laptop (4 physical cores, 3.5 GHz max turbo).<strong><sup>1</sup></strong> The deep-learning controller was executed on an Intel Core i7-14700 desktop (16 physical cores, 5.3 GHz max turbo). Only the core decision routine was timed: the Gurobi solve() call for MPC and the neural-network forward pass model.pre-dict() for DRL. Each episode contains <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub><mo>=</mo><mn>2</mn><mn>1</mn><mn>6</mn></mrow></math> hourly steps, which represents nine days of rolling operation.</p>
+<p>Step-level statistics. Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub></mrow></math> be the wall-clock time of step 𝑖 in run 𝑟 and let 𝑅 be the number of runs. The mean and sample standard deviation per step are</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi>&amp;</mi><msub><mi>t</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>R</mi><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>R</mi></mrow></munderover><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></munderover><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>,</mo><mspace width="2em"></mspace><msub><mi>σ</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><msqrt><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>R</mi><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub><mo>−</mo><mn>1</mn></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>R</mi></mrow></msubsup><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></msubsup><mo stretchy="false">(</mo><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>−</mo><msub><mi>t</mi><mrow><mn>1</mn></mrow></msub><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup></mrow></msqrt><mo>.</mo><mspace linebreak="newline"></mspace></mrow><mtext>(15)</mtext></mrow></math>
+</p>
+<p>Episode-level statistics. The episode metrics are obtained by summing the same step times:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>T</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>R</mi></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>R</mi></mrow></munderover><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></munderover><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>,</mo><mspace width="2em"></mspace><msub><mi>𝛴</mi><mrow><mn>1</mn></mrow></msub><mo>=</mo><msqrt><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>R</mi><mo>−</mo><mn>1</mn></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>R</mi></mrow></msubsup><mo fence="true" maxsize="1.623em" minsize="1.623em" stretchy="true">(</mo><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></msubsup><msub><mi>t</mi><mrow><mi>r</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>−</mo><msub><mi>T</mi><mrow><mn>1</mn></mrow></msub><msup><mo fence="true" maxsize="1.623em" minsize="1.623em" stretchy="true">)</mo><mrow><mn>2</mn></mrow></msup></mrow></msqrt><mo>.</mo><mtext>(16)</mtext></mrow></math>
+</p>
+<p>Lifetime Floating Point Operations (FLOPs). The fifteen-year compute budget is</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi><mo>=</mo><msub><mi>T</mi><mrow><mn>1</mn></mrow></msub><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><mfrac><mrow><mn>2</mn><mn>4</mn><mo>×</mo><mn>3</mn><mn>6</mn><mn>5</mn></mrow><mrow><msub><mi>N</mi><mrow><mi>s</mi></mrow></msub></mrow></mfrac><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>×</mo><mn>1</mn><mn>5</mn><mo>×</mo><msub><mi>F</mi><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">k</mi></mrow></mrow></msub><mo>,</mo><mtext>(17)</mtext></mrow></math>
+</p>
+<p><small><span class="docvortex-page-footnote" data-block-type="page_footnote" style="color:#6b7280">1 The academic licence of Gurobi used in this study is node-locked and may be installed on only one machine, therefore a dedicated laptop was chosen as the solver host.</span></small></p>
+<p><img alt="" src="mineru/images/page_8_image_2.jpg"/></p>
+<p>Fig. 4. Curriculum learning structure used in DRL training.</p>
+<p><img alt="" src="mineru/images/page_9_chart_2.jpg"/></p>
+<p>Fig. 5. Episode-reward trajectories across the four curriculum stages. Each curve reports the stage-wise normalised reward under progressively higher scenario uncertainty; shaded bands show variability across training runs, and the solid line marks the corresponding mean reward.</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>F</mi><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">k</mi></mrow></mrow></msub></mrow></math> is the theoretical FP32 peak of the host CPU. This peak is estimated at run time by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>F</mi><mrow><mrow><mi mathvariant="normal">p</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">k</mi></mrow></mrow></msub><mo>=</mo><msub><mi>f</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub><msub><mi>n</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub><mo>×</mo><mn>1</mn><mn>6</mn><mrow><mi mathvariant="normal">F</mi><mi mathvariant="normal">L</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">P</mi></mrow><msup><mrow><mi mathvariant="normal">s</mi></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow></math> , with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mrow><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">x</mi></mrow></mrow></msub></mrow></math> the maximum reported frequency. All tests were repeated <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>R</mi><mo>=</mo><mn>5</mn></mrow></math> times; Table 5 shows the means and standard deviations.</p>
+<h3 id="26-explainability-model">2.6. Explainability model</h3>
+<p>Explainability is implemented at both global and local levels using SHAP and LIME, respectively. The aim is to increase transparency in both the policy (actor network) and value estimation (critic network).</p>
+<p>Global explanations. SHAP is a model-agnostic interpretability technique based on cooperative game theory. In the context of PPO with actor–critic architecture, SHAP helps explain both the critic’s value predictions and the actor’s action preferences [41]. Each feature’s importance <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>ϕ</mi><mrow><mi>i</mi></mrow></msub></mrow></math> is computed based on how its inclusion changes the model 𝑓 output across all feature subsets:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>ϕ</mi><mrow><mi>i</mi></mrow></msub><mo>=</mo><munder><mo>∑</mo><mrow><mi>S</mi><mo>⊆</mo><mi>F</mi><mi>⧵</mi><mo stretchy="false">{</mo><mi>i</mi><mo stretchy="false">}</mo></mrow></munder><msub><mi>w</mi><mrow><mi>S</mi></mrow></msub><mrow><mo fence="true" form="prefix" stretchy="true">[</mo><msub><mi>f</mi><mrow><mi>S</mi><mo>∪</mo><mo stretchy="false">{</mo><mi>i</mi><mo stretchy="false">}</mo></mrow></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>S</mi><mo>∪</mo><mo stretchy="false">{</mo><mi>i</mi><mo stretchy="false">}</mo></mrow></msub><mo stretchy="false">)</mo><mo>−</mo><msub><mi>f</mi><mrow><mi>S</mi></mrow></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>S</mi></mrow></msub><mo stretchy="false">)</mo><mo fence="true" form="postfix" stretchy="true">]</mo></mrow><mo>.</mo><mtext>(18)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mtable><mtr><mtd columnalign="right"><mrow><msub><mi>w</mi><mrow><mi>S</mi></mrow></msub><mspace width="0.278em"></mspace><mo>=</mo><mspace width="0.278em"></mspace><mfrac><mrow><mo stretchy="false">|</mo><mi>S</mi><mo stretchy="false">|</mo><mo>!</mo><mo stretchy="false">(</mo><mo stretchy="false">|</mo><mi>F</mi><mo stretchy="false">|</mo><mo>−</mo><mo stretchy="false">|</mo><mi>S</mi><mo stretchy="false">|</mo><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>!</mo></mrow><mrow><mo stretchy="false">|</mo><mi>F</mi><mo stretchy="false">|</mo><mo>!</mo></mrow></mfrac></mrow></mtd></mtr></mtable></mrow></math> is the weighted probability of a subset <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>S</mi><mo>,</mo></mrow></math> and the marginal contribution <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo fence="true" form="prefix" stretchy="true">[</mo><msub><mi>f</mi><mrow><mi>S</mi><mo>∪</mo><mo stretchy="false">{</mo><mi>i</mi><mo stretchy="false">}</mo></mrow></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>S</mi><mo>∪</mo><mo stretchy="false">{</mo><mi>i</mi><mo stretchy="false">}</mo></mrow></msub><mo stretchy="false">)</mo><mo>−</mo><msub><mi>f</mi><mrow><mi>S</mi></mrow></msub><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>S</mi></mrow></msub><mo stretchy="false">)</mo><mo fence="true" form="postfix" stretchy="true">]</mo></mrow></mrow></math> estimates how much adding the feature 𝑖 improves the subset 𝑆 output. Practically, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi></mrow></math> is either the actor’s prediction (e.g., action probabilities) or critic’s prediction (e.g., value estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>π</mi></mrow></msub><mo stretchy="false">)</mo><mo>.</mo></mrow></math>
+</p>
+<p>SHAP’s KernelExplainer is employed to approximate Shapley values by fitting a weighted linear regression model over locally perturbed samples. The method adheres to three key properties: local accuracy, missingness, and consistency. In this EMS setting, these properties support reliable interpretation of the learned dispatch policy. Local accuracy means that, for a given state 𝐬, the sum of the feature attributions plus a baseline equals the model output being explained (here, the critic estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math> or an actor output). This ensures that the explanation faithfully reconstructs the local prediction. Missingness means that features that are absent (or set to the baseline) receive zero attribution. Consistency guarantees that when a feature’s influence increases in the model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">e</mi><mo mathvariant="bold">.</mo><mi mathvariant="bold">g</mi><mo mathvariant="bold">.</mo></mrow><mo>,</mo></mrow></math> , under higher uncertainty), its attribution does not decrease, supporting comparisons across scenarios. In the context of PPO, SHAP facilitates global interpretation by identifying the most influential features in both the agent’s value estimation and action selection across multiple states. The following steps summarise the procedure:</p>
+<ol>
+<li>
+<p>Sample 5000 state observations from the evaluation environment; each state is a 30-dimensional vector containing SOC, three loads, total renewable generation, and net energy over a 5-step history window.</p>
+</li>
+<li>
+<p>Wrap actor and critic networks to produce outputs given a batch of observations:</p>
+</li>
+</ol>
+<p>• critic_value_model: predicts scalar value estimates.</p>
+<p>• actor_policy_model: predicts 5-dimensional action values (raw logits).</p>
+<ol start="3">
+<li>
+<p>Use SHAP’s Explainer as a model-agnostic wrapper to compute SHAP values for both the critic (producing a 30-feature explainability) and each of the five actor outputs.</p>
+</li>
+<li>
+<p>Visualise results via:</p>
+</li>
+</ol>
+<p>• SHAP summary plots (top 10 features).</p>
+<p>• Actor-specific summary plots (top 10 features per action).</p>
+<p>Fig. 6 summarises the global explainability process used in this study. In particular, Kernel SHAP (implemented via KernelExplainer) generates feature-perturbed samples around evaluation states, queries the actor/critic, and solves a weighted linear surrogate to approximate Shapley attributions for both the critic estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo></mrow></math> and each actor output dimension.</p>
+<p>These analyses reveal which historical features, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="bold">e</mi><mo mathvariant="bold">.</mo><mi mathvariant="bold">g</mi><mo mathvariant="bold">.</mo></mrow><mo>,</mo></mrow></math> recent <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mstyle displaystyle="false" scriptlevel="1"><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow></mrow><mo>,</mo></mstyle></mrow></math> renewable surplus, or specific load demands, most influence value estimation and action selection, providing insight into how the policy prioritises charging, discharging, and load dispatch.</p>
+<p>Local explanations. LIME explains individual predictions by fitting a sparse, interpretable surrogate model around the prediction of interest. In PPO, LIME is applied to both the actor and the critic.</p>
+<p>Given a state <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mrow><mi mathvariant="bold">s</mi></mrow><mrow><mi>z</mi></mrow></msub></mrow></math> LIME generates perturbed versions <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>z</mi><mo>,</mo></mrow></math> queries the model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>,</mo></mrow></math> and fits a local linear model <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>g</mi><mo stretchy="false">(</mo><msup><mi>z</mi><mrow><mi>′</mi></mrow></msup><mo stretchy="false">)</mo><mo>=</mo><mi>w</mi><mo>·</mo><msup><mi>z</mi><mrow><mi>′</mi></mrow></msup></mrow></math> using proximitybased weights [42]:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>ω</mi><mrow><mi>x</mi></mrow></msub><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo><mo>=</mo><mi>exp</mi><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><mo>−</mo><mfrac><mrow><mi>D</mi><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo>,</mo><mi>z</mi><msup><mo stretchy="false">)</mo><mrow><mn>2</mn></mrow></msup></mrow><mrow><msup><mi>σ</mi><mrow><mn>2</mn></mrow></msup></mrow></mfrac><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>.</mo><mtext>(19)</mtext></mrow></math>
+</p>
+<p>This ensures the surrogate model focuses on the behaviour of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi></mrow></math> near 𝐬. In the PPO framework, state inputs such as SOC, load demands, and net energy are standardised. LIME is applied separately to each actor output and to the critic’s value estimate, with 𝑓 representing either the actor outputs or the critic value estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">s</mi></mrow><mo stretchy="false">)</mo><mo>.</mo></mrow></math> The resulting feature attributions provide fine-grained, time-specific insights into the most influential inputs driving the agent’s decisions and value estimations.</p>
+<p><img alt="" src="mineru/images/page_10_image_2.jpg"/></p>
+<p>Fig. 6. Global explainability workflow using SHAP for the PPO actor and critic.</p>
+<p>LIME offers local, interpretable insights into individual decisions made by the DRL agent:</p>
+<ol>
+<li>
+<p>Run one full 216-step evaluation episode with a fixed initial SOC to generate a trajectory of states.</p>
+</li>
+<li>
+<p>Standardise the 30-dimensional states using StandardScaler.</p>
+</li>
+<li>
+<p>Select a single timestep (e.g., step 94) for explanation.</p>
+</li>
+<li>
+<p>Build LIME regression explainers for each actor output and the critic value:</p>
+</li>
+</ol>
+<p>• For each action (e.g., charging power, supply weights), generate 10,000 local samples and fit a linear surrogate model.</p>
+<ol start="5">
+<li>Present the following for each model:</li>
+</ol>
+<p>• The actual state (de-normalised) used for explanation.</p>
+<p>• Bars showing top contributing features and their relative weights.</p>
+<p>Fig. 7 illustrates the local explainability workflow. Starting from a selected decision point <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mrow><mi mathvariant="bold">s</mi></mrow><mrow><mo>⋆</mo></mrow></msup></mrow></math> , LIME generates a neighbourhood of perturbed samples, queries the black-box actor/critic, and fits a sparse local surrogate 𝑔 using the proximity kernel in Eq. (19) to obtain per-feature contributions for that specific decision.</p>
+<p>LIME explanations allow inspection of how small perturbations to individual features, like SOC or recent load, affect the chosen action or estimated value at a specific time step, providing insight into the agent’s local decision logic.</p>
+<p>By combining SHAP for global understanding with LIME for local interpretability, the framework ensures the DRL agent operates with both robustness and explainability in microgrid management.</p>
+<h2 id="3-simulation-results-and-discussions">3. Simulation results and discussions</h2>
+<p>This section builds upon our previous work [4], where a deterministic optimisation framework based on MPC was used to manage battery scheduling in a microgrid. In that study, different weighting factors were assigned to objectives such as battery lifetime and resilience, and the best-performing configuration was identified through extensive parametric analysis.</p>
+<p>3.1. Uncertainty modelling of renewable energy generation using Perlin noise</p>
+<p>To evaluate the robustness of the scheduling strategy under realistic forecasting errors, input uncertainty is introduced using Perlin noise. Perlin noise, a form of coherent gradient noise, is particularly suited for temporal processes due to its smooth and spatially correlated fluctuations, unlike purely random noise models.</p>
+<p>In this work, one-dimensional Perlin value noise is employed to introduce smooth, bounded fluctuations to the solar and wind generation profiles. These perturbations are applied multiplicatively to preserve the signal structure while simulating realistic variability. Fig. 8 contrasts a standard white-noise signal with a Perlin-noise signal: white noise changes abruptly because each value is drawn independently.</p>
+<p>Perlin noise, by contrast, is temporally coherent and produces gradual ramps in PV/WT power that better reflect weather-driven forecast deviations. This difference is operationally important because battery dispatch and load-shedding depend on the persistence and ramping of shortfalls and surpluses, rather than isolated pointwise errors. Accordingly, Perlin-noise perturbations provide a more realistic robustness test for microgrid EMS policies.</p>
+<p>The noise formulation is defined as follows:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="bold">f</mi><mi mathvariant="bold">a</mi><mi mathvariant="bold">d</mi><mi mathvariant="bold">e</mi></mrow><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mn>6</mn><msup><mi>t</mi><mrow><mn>5</mn></mrow></msup><mo>−</mo><mn>1</mn><mn>5</mn><msup><mi>t</mi><mrow><mn>4</mn></mrow></msup><mo>+</mo><mn>1</mn><mn>0</mn><msup><mi>t</mi><mrow><mn>3</mn></mrow></msup><mo>,</mo><mtext>(20)</mtext></mrow></math>
+</p>
+<p>where 𝑡 is the fractional distance between lattice points. This fade function ensures smooth transitions between noise values. For each signal, the perturbed time series ̃𝑥(𝑡) is computed as:</p>
+<p>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mover><mrow><mi>x</mi></mrow><mo stretchy="false">~</mo></mover><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>·</mo><mo movablelimits="true">max</mo><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>+</mo><mi>α</mi><mo>·</mo><mi>P</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>,</mo><mtext>(21)</mtext></mrow></math>
+</p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>x</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></math> is the original input (solar or wind), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>∈</mo><mo stretchy="false">[</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></mrow></math> is the normalised Perlin noise, and 𝛼 is the noise scaling factor. The Sum_Extreme feature is recomputed after perturbation. The implementation steps are detailed in Algorithm 2.</p>
+<p>The resulting dataset with perturbed solar and wind generation is then passed into the evaluation environment to assess the performance of the control strategy under uncertain conditions.</p>
+<p><img alt="" src="mineru/images/page_11_image_2.jpg"/></p>
+<p>Fig. 7. Local explainability workflow using LIME for a selected PPO decision point.</p>
+<p><img alt="" src="mineru/images/page_11_chart_4.jpg"/></p>
+<p>Fig. 8. Illustrative time–series comparison of a white-noise signal and Perlin-noise signal.</p>
+<div class="docvortex-algorithm" style="white-space: pre-wrap; font-family:monospace;">
+Algorithm 2 Data Perturbation with Perlin Noise for Uncertainty
+Modelling
+Require: Original dataset df, scaling factors $\alpha _ { s } , \alpha _ { w } ,$ and noise
+frequencies scale
+1: Generate 1D Perlin noise vectors noise_solar, noise_wind of
+same length as dataset
+2: for each time index 𝑖 do
+3: solar_nom ← df["Solar(140Kwh)_Extreme"][𝑖]
+4: wind_nom ← df["Wind(80kwh)_Extreme"][𝑖]
+5: factor_s ← max(0, 1 + 𝛼 ⋅ noise_solar[𝑖])
+6: factor_w ← max(0, 1 + 𝛼 ⋅ noise_wind[𝑖])
+7: df["Solar(140Kwh)_Extreme"][𝑖] ← solar_nom
+factor_s
+8: df["Wind(80kwh)_Extreme"][𝑖] ← wind_nom ⋅ fac-
+tor_w
+9: Recompute Sum_Extreme as sum of perturbed solar and wind
+10: return Modified df
+</div>
+<p>This perturbation process is repeated using different seeds and scaling levels for ensemble simulation and robustness evaluation. A 10-day evaluation window from the Laila cyclone event is used for all comparisons. Each test is run twice: once with the original data and once with the Perlin-perturbed version, and the results (e.g., SOC profile, load coverage, renewable utilisation) are stored and plotted for side-by-side analysis.</p>
+<p>3.2. Benchmark: model predictive control performance under deterministic and uncertain scenarios</p>
+<p>To establish a baseline, the microgrid operation is first simulated using the MPC strategy under two conditions:</p>
+<p>• Deterministic case: Inputs (solar, wind, and loads) are known in advance for the entire scheduling horizon.</p>
+<p>• Uncertain case: Input data are perturbed using the Perlin noise model to simulate realistic forecasting errors.</p>
+<p>In both scenarios, the MPC optimisation uses the previously identified optimal weighting factors to balance resilience and battery longevity. Additionally, a special case focused solely on prioritising resilience is simulated (i.e., assigning a zero weight to battery lifetime). Fig. 9 presents a comparative analysis of the MPC results under different weightings in the objective function, evaluated in both deterministic and uncertain scenarios.</p>
+<p>Table 4 summarises the quantitative results for both MPC and DRL under deterministic and uncertain scenarios, enabling a consistent, side-by-side comparison. For MPC, the best-weighted cases maintain near-unity resilience (RI ≈ 0.999) in both settings, whereas the resiliency-only case reduces EY markedly, indicating more intensive cycling. Across both controllers, the imbalance values show that most curtailment is absorbed by lower-priority tiers, consistent with the priority-weighted formulation used in the MPC benchmark and the DRL reward. Overall, Table 4 establishes the benchmark context and motivates assessing whether DRL can preserve near-benchmark RI while improving EY under uncertainty.</p>
+<p><img alt="" src="mineru/images/page_12_chart_2.jpg"/></p>
+<p>Fig. 9. Battery state of charge under MPC with different objective weightings.</p>
+<p>Table 4</p>
+<p>Comparison of DRL and MPC results under certain and uncertain scenarios.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Scenario</th>
+<th>RI</th>
+<th>EY</th>
+<th>𝑆<sub>1</sub> (kWh)</th>
+<th>𝑆<sub>2</sub> (kWh)</th>
+<th>𝑆<sub>3</sub> (kWh)</th>
+<th>Total 𝑆 (kWh)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRL</td>
+<td>Stage 3</td>
+<td>0.9986</td>
+<td>13.49</td>
+<td>2.84</td>
+<td>0.00</td>
+<td>2.20</td>
+<td>5.04</td>
+</tr>
+<tr>
+<td>DRL</td>
+<td>Stage 4 (Certain)</td>
+<td>0.9961</td>
+<td>15.90</td>
+<td>0.00</td>
+<td>31.58</td>
+<td>1.20</td>
+<td>32.78</td>
+</tr>
+<tr>
+<td>DRL</td>
+<td>Stage 4 (Uncertain)</td>
+<td>0.9956</td>
+<td>15.88</td>
+<td>0.00</td>
+<td>35.96</td>
+<td>1.59</td>
+<td>37.55</td>
+</tr>
+<tr>
+<td>MPC</td>
+<td>Certain (Best)</td>
+<td>0.9991</td>
+<td>14.44</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>14.00</td>
+<td>14.00</td>
+</tr>
+<tr>
+<td>MPC</td>
+<td>Uncertain (Best)</td>
+<td>0.9989</td>
+<td>15.06</td>
+<td>0.00</td>
+<td>0.81</td>
+<td>15.37</td>
+<td>16.18</td>
+</tr>
+<tr>
+<td>MPC</td>
+<td>Resilience Only</td>
+<td>0.9947</td>
+<td>10.78</td>
+<td>1.44</td>
+<td>23.36</td>
+<td>30.66</td>
+<td>55.46</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-deep-reinforcement-learning-based-policy-evaluation">3.3. Deep reinforcement learning -based policy evaluation</h3>
+<p>For a fair comparison across all evaluation cases, including both MPC and DRL policies under deterministic and uncertain conditions, the initial SOC is set to 0.8 in all simulations. This ensures that performance differences arise from the control strategies rather than from different initial storage levels. The same evaluation framework then tests robustness under temporally correlated renewable deviations introduced via Perlin noise, which more closely resemble practical forecast errors than time-uncorrelated perturbations.</p>
+<p>To evaluate the performance of the trained DRL agent, its operation is assessed under both deterministic and uncertain scenarios. The total renewable generation, including perturbed solar and wind data using Perlin noise, is depicted in Fig. 10(a), highlighting the impact of uncertainty on energy availability. Correspondingly, the battery’s SOC evolution for each scenario is presented in Fig. 10(b), showcasing how the agent responds to fluctuations in supply.</p>
+<p>To complement the renewable-side trajectories already reported in Figs. 10(a) and 14(b), Fig. 11 summarises the corresponding dispatch behaviour on the storage and demand sides for the same evaluation window. Fig. 11a shows that the controller charges the battery during periods of net surplus and discharges during deficits, maintaining SOC within the operational bounds while avoiding persistent deep discharge. The use of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub></mrow></math> (positive) and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>−</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math> (negative) clarifies the alternating operating modes and highlights the temporal alignment between battery actions and SOC evolution.</p>
+<p>Fig. 11b visualises how available supply is allocated across the three demand tiers. The essential tier <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math> remains prioritised, whereas mid-/lower-priority tiers <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mi>–</mi><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo></mrow></math> absorb most of the shortfall when supply is insufficient, consistent with the priority-weighted resilience formulation used in the reward.</p>
+<p>Fig. 11c reports the resulting curtailment by tier. Curtailment events are concentrated in short intervals (spikes) where renewable availability and/or stored energy are insufficient, and they predominantly occur in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>2</mn></mrow></msub><mrow><mo>−</mo></mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub></mrow></math> rather than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mo>,</mo></mrow></math> which confirms that the learned policy implements the intended prioritisation structure in operation. This dispatchlevel view also provides a behavioural explanation for the modest load-tier imbalance patterns reported in the quantitative comparison: the policy trades limited curtailment in mid-/lower-priority demand against smoother battery operation to preserve expected battery life.</p>
+<p>Fig. 12 further illustrates the difference in SOC trajectories between Stage 3 and Stage 4 of the curriculum learning. While Stage 3 focuses solely on maximising resilience, it leads to more aggressive charge and discharge patterns. In contrast, Stage 4 introduces battery life considerations into the reward function, resulting in a more moderated SOC profile with smoother transitions. This reflects the agent’s learned trade-off between maintaining resilience and preserving battery health, indicating more sustainable usage behaviour in Stage 4. This behavioural shift is consistent with the quantitative change from Stage 3 (resilience-only) to Stage 4 reported in Table 4.</p>
+<p>Fig. 13 presents a comparative analysis of the battery’s SOC dynamics and their temporal derivatives under MPC and DRL policies. As shown in Fig. 13(a), both controllers are initialised with the same SOC of 0.8 to ensure a fair comparison. The trajectories reveal that DRL exhibits smoother charging and discharging transitions over time, whereas MPC tends to perform more aggressive and binary shifts between charging and discharging, which is especially evident during solar peaks and load dips. The first derivative of SOC, illustrated in Fig. 13(b), captures the charging/discharging rates. Quantitatively, the DRL policy yields an average||𝑑𝑆𝑂𝐶∕𝑑𝑡||of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn><mn>5</mn><mn>5</mn><mrow><mtext> </mtext><msup><mi mathvariant="normal">h</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mtext> </mtext></mrow></mrow></math> (Root Mean Square <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi></mrow><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn><mo>.</mo><mn>0</mn><mn>2</mn><mn>2</mn><mn>5</mn><mtext> </mtext><msup><mrow><mi mathvariant="normal">h</mi></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false">)</mo><mo>,</mo></mrow></math> compared to 0.0177 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mrow><mi mathvariant="bold">h</mi></mrow><mrow><mo>−</mo><mn>1</mn></mrow></msup></mrow></math> (RMS = <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>0</mn><mo>.</mo><mn>0</mn><mn>2</mn><mn>7</mn><mn>7</mn><mtext> </mtext><mrow><msup><mi mathvariant="normal">h</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo stretchy="false">)</mo></mrow></mrow></math> under MPC, a reduction of about 12% in mean rate and</p>
+<p><img alt="" src="mineru/images/page_13_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_13_chart_4.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 10. Perlin noise effects on (a) renewable generation and (b) battery SOC.</p>
+<p>19% in RMS rate, showing more moderate and sustained adjustments. In contrast, MPC displays numerous abrupt and maximal changes in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mstyle displaystyle="false" scriptlevel="1"><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi><mi mathvariant="normal">C</mi></mrow></mrow><mo>,</mo></mstyle></mrow></math> reflecting its responsiveness to short-term optimisation objectives rather than long-term battery wear. Moreover, the second derivative in Fig. 13(c) quantifies the fluctuation in SOC change rates, i.e., how sharply the battery alternates between charging and discharging modes. Here again, DRL maintains a more stable profile with an average <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo fence="true" form="prefix" stretchy="true">|</mo><msup><mi>d</mi><mrow><mn>2</mn></mrow></msup><mi>S</mi><mi>O</mi><mi>C</mi><mo>/</mo><mi>d</mi><msup><mi>t</mi><mrow><mn>2</mn></mrow></msup><mo fence="true" form="postfix" stretchy="true">|</mo></mrow></mrow></math> of 0.0087 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>h</mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi></mrow><mo>=</mo><mn>0.0141</mn><msup><mi>h</mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><mo fence="true" form="postfix" stretchy="true">)</mo></mrow></mrow></math> versus <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>0</mn><mo>.</mo><mn>0</mn><mn>1</mn><mn>1</mn><mn>8</mn><mtext> </mtext><msup><mrow><mi mathvariant="normal">h</mi></mrow><mrow><mo>−</mo><mn>2</mn></mrow></msup></mrow></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">R</mi><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mo>=</mo><mn>0.0229</mn><mtext> </mtext><msup><mi mathvariant="normal">h</mi><mrow><mo>−</mo><mn>2</mn></mrow></msup><mo stretchy="false">)</mo></mrow></mrow></math> for MPC—reductions of roughly 26% in mean and 38% in RMS, suggesting improved smoothness and predictability. MPC shows higher-frequency oscillations and sharper curvatures, which may lead to higher battery stress and degradation.</p>
+<p>Overall, the visualisations affirm that DRL, despite yielding slightly lower resilience in some scenarios, provides superior battery-friendly operations, likely extending battery lifetime due to smoother control actions. These characteristics can be particularly advantageous in systems where battery longevity is as critical as energy delivery continuity.</p>
+<p>3.4. Uncertainty quantification of DRL performance via Monte Carlo analysis</p>
+<p>To evaluate the robustness and reliability of the proposed DRL policy under uncertain renewable generation, a Monte Carlo-based uncertainty quantification was performed. A total of 4000 stochastic scenarios were generated using Perlin noise to perturb the solar and wind generation profiles. This method maintains temporal coherence in the data while introducing controlled variability to simulate realworld fluctuations. Each scenario was evaluated using the trained DRL policy, and key performance metrics, RI, Expected Years (EY), average SOC, and average renewable generation, were recorded.</p>
+<p>A critical advantage of DRL emerges in the Monte Carlo study: once training is complete, each control step reduces to a lightweight neural-network inference. Consequently, the entire set of 4000 nineday scenarios finished in roughly twenty minutes on a standard laptop. In contrast, the MPC formulation must solve a constrained optimisation at every step; one episode can take several minutes and under difficult forecasts or weightings can take several hours [4].</p>
+<p><img alt="" src="mineru/images/page_14_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_14_chart_4.jpg"/></p>
+<p>(b)</p>
+<p><img alt="" src="mineru/images/page_14_chart_6.jpg"/></p>
+<p>Fig. 11. Operational dispatch overview of the DRL policy over the evaluation window. (a) Battery charging power <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">h</mi></mrow></mrow></msub></mrow></math> (positive), discharging power <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo>−</mo><msub><mi>P</mi><mrow><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">s</mi></mrow></mrow></msub></mrow></math> (negative), and SOC, (b) Total demand and total served power, with served power decomposed across prioritised tiers <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><msub><mi>L</mi><mrow><mn>1</mn></mrow></msub><mrow><mo>−</mo></mrow><msub><mi>L</mi><mrow><mn>3</mn></mrow></msub><mo stretchy="false">)</mo><mo>,</mo></mrow></math> and (c) Curtailment per tier and total curtailment.</p>
+<p><img alt="" src="mineru/images/page_14_chart_8.jpg"/></p>
+<p>Fig. 12. SOC comparison: Stage 3 prioritises resilience; Stage 4 balances resilience and battery life.</p>
+<p>Table 5 summarises the computational cost of the two controllers under the benchmarking protocol in Section 2.5, with all values normalised to peak-equivalent FP32 operations on the host CPU. On the reference laptop, MPC requires <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>7</mn><mo>.</mo><mn>5</mn><mn>9</mn><mn>4</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>1</mn></mrow></msup></mrow></math> operations per step, while the DRL policy needs only 1.318×108, making inference around 5.8×103 times lighter. At the episode scale, MPC uses <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>1</mn><mo>.</mo><mn>6</mn><mn>5</mn><mn>0</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>4</mn></mrow></msup></mrow></math> operations compared with DRL’s <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mo>.</mo><mn>8</mn><mn>4</mn><mn>6</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>0</mn></mrow></msup></mrow></math> , a reduction of approximately three orders of magnitude. For the fifteen-year lifetime estimate, DRL accounts for both the one-off training cost and the cumulative inference cost, giving a total about 2.9 times lower than MPC.</p>
+<p>Scaling MPC to thousands of trajectories would therefore require days of CPU time or a computing cluster, making routine robustness assessment impractical. This clear difference in computational scalability is the key practical advantage of DRL over MPC.</p>
+<p>The statistical summary in Table 6 shows that the DRL policy consistently performs well across all 4000 uncertain scenarios. The average RI is approximately 0.9915 with a standard deviation of only</p>
+<p><img alt="" src="mineru/images/page_15_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_15_chart_4.jpg"/></p>
+<p>(b)</p>
+<p><img alt="" src="mineru/images/page_15_chart_6.jpg"/></p>
+<p>(c)</p>
+<p>Fig. 13. Comparison of battery state of charge (SOC) under model predictive control (MPC) and deep reinforcement learning (DRL): (a) SOC, (b) first derivative, and (c) second derivative.</p>
+<p>Table 5</p>
+<p>Computation cost comparison of MPC and DRL controllers [FLOPs].</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Training time</th>
+<th>Inference per step</th>
+<th>Inference per episode</th>
+<th>Lifetime cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MPC</td>
+<td></td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>7</mn><mo>.</mo><mn>5</mn><mn>9</mn><mn>4</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>2</mn><mn>1</mn><mo>.</mo><mn>8</mn><mn>4</mn><mn>0</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>1</mn></mrow></msup></mrow></math>
+</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>.</mo><mn>6</mn><mn>5</mn><mn>0</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>0</mn><mo>.</mo><mn>0</mn><mn>4</mn><mn>8</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>4</mn></mrow></msup></mrow></math>
+</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>.</mo><mn>0</mn><mn>0</mn><mn>4</mn><mi>±</mi><mn>0</mn><mo>.</mo><mn>0</mn><mn>3</mn><mn>0</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>7</mn></mrow></msup></mrow></math>
+</td>
+</tr>
+<tr>
+<td>DRL</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>3</mn><mo>.</mo><mn>4</mn><mn>8</mn><mn>9</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>0</mn><mo>.</mo><mn>0</mn><mn>5</mn><mn>9</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>6</mn></mrow></msup></mrow></math>
+</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>.</mo><mn>3</mn><mn>1</mn><mn>8</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>0</mn><mo>.</mo><mn>0</mn><mn>4</mn><mn>7</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>8</mn></mrow></msup></mrow></math>
+</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>2</mn><mo>.</mo><mn>8</mn><mn>4</mn><mn>6</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>0</mn><mo>.</mo><mn>1</mn><mn>0</mn><mn>2</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>0</mn></mrow></msup></mrow></math>
+</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mn>3</mn><mo>.</mo><mn>4</mn><mn>9</mn><mn>1</mn><mtext> </mtext><mi>±</mi><mtext> </mtext><mn>0</mn><mo>.</mo><mn>0</mn><mn>5</mn><mn>9</mn><mo stretchy="false">)</mo><mo>×</mo><mn>1</mn><msup><mn>0</mn><mrow><mn>1</mn><mn>6</mn></mrow></msup></mrow></math>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Table 6</p>
+<p>Statistical summary of 4000 Monte Carlo runs for DRL policy performance.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>RI</th>
+<th>EY</th>
+<th>Average SOC</th>
+<th>Average renewable generation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mean</td>
+<td>0.9915</td>
+<td>15.95</td>
+<td>0.7512</td>
+<td>35.67</td>
+</tr>
+<tr>
+<td>Std. Dev.</td>
+<td>0.0047</td>
+<td>0.5165</td>
+<td>0.0233</td>
+<td>1.32</td>
+</tr>
+<tr>
+<td>Min</td>
+<td>0.9729</td>
+<td>14.37</td>
+<td>0.6593</td>
+<td>31.25</td>
+</tr>
+<tr>
+<td>5% Percentile</td>
+<td>0.9836</td>
+<td>15.14</td>
+<td>0.7090</td>
+<td>33.44</td>
+</tr>
+<tr>
+<td>25% Percentile</td>
+<td>0.9884</td>
+<td>15.59</td>
+<td>0.7359</td>
+<td>34.75</td>
+</tr>
+<tr>
+<td>Median (50%)</td>
+<td>0.9916</td>
+<td>15.93</td>
+<td>0.7540</td>
+<td>35.66</td>
+</tr>
+<tr>
+<td>75% Percentile</td>
+<td>0.9950</td>
+<td>16.28</td>
+<td>0.7688</td>
+<td>36.60</td>
+</tr>
+<tr>
+<td>95% Percentile</td>
+<td>0.9988</td>
+<td>16.83</td>
+<td>0.7849</td>
+<td>37.81</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>1.0000</td>
+<td>17.81</td>
+<td>0.8028</td>
+<td>39.84</td>
+</tr>
+</tbody>
+</table>
+<p>Table 7</p>
+<p>Performance of the DRL policy in selected extreme scenarios.</p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Resilience index (RI)</th>
+<th>Expected years (EY)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sum-Best (RI + EY)</td>
+<td>0.9995</td>
+<td>17.40</td>
+</tr>
+<tr>
+<td>Best Expected Years</td>
+<td>0.9938</td>
+<td>17.81</td>
+</tr>
+<tr>
+<td>Best Resilience Index</td>
+<td>1.0000</td>
+<td>15.41</td>
+</tr>
+<tr>
+<td>Worst Expected Years</td>
+<td>0.9862</td>
+<td>14.37</td>
+</tr>
+<tr>
+<td>Worst Resilience Index</td>
+<td>0.9729</td>
+<td>15.43</td>
+</tr>
+</tbody>
+</table>
+<p>0.0047, indicating a high level of system resilience and low variability across runs. The EY metric, reflecting battery longevity, has a mean of 15.95 years with modest variability, suggesting the policy avoids excessive cycling even under fluctuating generation.</p>
+<p>Average SOC across the scenarios centres around 0.75, which indicates a balanced use of battery storage without frequent deep discharges. Additionally, the average renewable generation falls around 35.67 kW, confirming that the policy adapts well to the given stochastic resource profiles. The interquartile range of all metrics remains tight, further highlighting the model’s robustness.</p>
+<p>Table 7 summarises the DRL policy’s behaviour under selected extreme cases. The best combined case (‘‘Sum-Best’’) achieves both high resilience <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow><mo>=</mo><mn>0.9995</mn><mo stretchy="false">)</mo></mrow></math> and long battery life (EY = 17.40 years), indicating a well-balanced operational strategy. The scenario with the maximum battery lifespan reaches 17.81 years with slightly reduced resilience <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="normal">R</mi><mi mathvariant="normal">I</mi></mrow><mo>=</mo><mn>0.9938</mn><mo stretchy="false">)</mo></mrow></math> , suggesting a conservative charging pattern. Conversely, the best resilience (RI = 1.0) is achieved at the cost of a shorter lifespan (EY = 15.41 years), likely due to more frequent charge– discharge cycles. Even in the worst-performing scenarios, the policy maintains RI above 0.97 and EY above 14.3 years, which highlights the robustness of the DRL agent under adverse and uncertain conditions.</p>
+<p>Fig. 14 illustrates the impact of uncertainty on the system’s dynamics across 4000 Monte Carlo simulations. Fig. 14(a) shows the SOC of the battery, while Fig. 14(b) presents the total renewable generation. The black curve in both plots represents the deterministic base case, and the blue shaded region captures the 5th to 95th percentile range of the ensemble runs. The SOC trajectories in 14(a) reveal a consistent charging and discharging pattern aligned with renewable availability, with most scenarios remaining within a stable band, indicating robust control behaviour. In 14(b), the renewable generation exhibits significant variability due to the applied Perlin noise, especially during peak generation hours. Despite this variation, the DRL policy demonstrates effective adaptation, maintaining the SOC within desirable limits throughout the uncertain scenarios.</p>
+<p>Fig. 15 visualises the marginal distributions of RI and EY over 4000 Monte Carlo realisations. RI is concentrated near its upper bound, indicating that the learned policy maintains high resilience for most uncertainty realisations, with only a small tail of degraded cases. EY exhibits a nearly symmetric bell-shaped distribution, suggesting consistent lifetime outcomes across scenarios. Numerical summaries (mean, percentiles, and extrema) are reported in Table 6.</p>
+<p>Fig. 16 depicts the relationship between the RI and EY. Although a slight positive trend is visually observable, the overall scatter indicates a weak linear correlation, suggesting that improvements in one metric do not necessarily lead to proportional improvements in the other. This indicates that resilience and battery longevity are somewhat decoupled in performance, motivating a deeper exploration into the underlying influencing factors.</p>
+<p>Fig. 17 presents the correlations between RI and internal variables. First, as shown in Fig. 17(a), higher average SOC correlates positively with higher RI, indicating that systems maintaining a consistently high charge state are more resilient. Fig. 17(b) reveals a negative trend between SOC standard deviation and RI. This implies that systems with more stable charge profiles (lower SOC variability) tend to be more resilient. In Fig. 17(c), average renewable generation also shows a weak but positive association with RI, suggesting that a higher availability of renewable energy slightly improves resilience. These trends reinforce the importance of stable and adequately charged battery states, as well as reliable renewable input, in enhancing system resilience.</p>
+<p>Complementarily, Fig. 18 also includes two plots focusing on EY. Fig. 18(a) demonstrates a moderate positive trend between EY and average renewable generation, confirming that higher energy availability contributes to extended battery life. Interestingly, Fig. 18(b) shows a subtle positive trend, suggesting that a small degree of SOC fluctuation might actually promote longer expected battery life, potentially due to more active cycling that avoids over-discharging. However, this relationship is relatively weak, and further investigation would be needed to determine the operational implications.</p>
+<h3 id="35-explainability-analysis">3.5. Explainability analysis</h3>
+<p>To enhance the interpretability of the DRL agent’s decision-making process, explainability methods are employed using both global and local perspectives. This two-fold approach not only ensures transparency but also provides insights into whether the agent aligns with domain knowledge and expected control behaviours in microgrid management.</p>
+<p>Explainability figure convention: SHAP summary (beeswarm) plots provide global attributions over a set of evaluation states, showing the distribution of SHAP values per feature. For the actor, SHAP explains the policy output for each action dimension (normalised charging/discharging commands and allocation logits); for the critic, SHAP explains the value estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow></math> . In contrast, LIME provides local explanations by fitting an interpretable surrogate model in a neighbourhood of selected representative states; here, LIME is reported for three operating regimes (charging, discharging, and idle) using one representative time step for each regime.</p>
+<h2 id="shapley-additive-explanations-results">Shapley Additive Explanations Results:</h2>
+<p>Fig. 19 illustrates the global feature importance using SHAP values from the critic network. The results highlight that the current and recent states of key variables, SOC, Load <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>2</mn><mo>,</mo></mrow></math> and renewable generation, play a dominant role in shaping the agent’s decisions. Higher values of SOC at t, t-2, t-3 contribute positively, indicating that a well-maintained SOC in recent steps supports better long-term outcomes. In contrast, high SOC at t-4 shows a negative impact, possibly reflecting underutilisation over time. Business loads, the second-priority load, also ranks highly in both current and past values, suggesting the agent has learned to manage high-priority loads effectively and now focuses on optimising intermediate ones. Renewable energy inputs, particularly recent net energy and past generation, further support the agent’s reliance on short-term availability trends.</p>
+<p><img alt="" src="mineru/images/page_17_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_17_chart_4.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 14. (a) Battery state of charge and (b) Renewable generation under uncertainty.</p>
+<p>To further interpret the learned policies, SHAP summary plots were generated for the actor network’s charging and discharging actions, as illustrated in Fig. 20. For discharging 20(b), the most influential features include both current and past values of the second-priority load (Load_2) and net energy. High values of Load_2 across multiple time steps (particularly <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>t</mi><mo>,</mo><mi>t</mi><mo>−</mo><mn>1</mn></mrow></math> , and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>t</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo></mrow></math> generally contribute negatively to the decision to discharge, suggesting the agent strategically avoids excessive discharging during sustained medium-priority demand, possibly to reserve energy for higher-priority loads. For charging 20(a), the most dominant features are the current net energy and renewable generation, both showing strong positive influence, as expected. High net energy availability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mo stretchy="false">(</mo><mrow><mi mathvariant="bold">i</mi><mo mathvariant="bold">.</mo><mi mathvariant="bold">e</mi><mo mathvariant="bold">.</mo></mrow><mo>,</mo></mrow></math> surplus supply) promotes battery charging. Interestingly, the current values of first-priority (Load_1) and secondpriority (Load_2) loads also appear as influential, indicating the agent considers immediate demand alongside surplus conditions.</p>
+<p>Overall, these findings highlight that the agent’s actions are highly sensitive to current system states, especially <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">E</mi><mi mathvariant="normal">n</mi><mi mathvariant="normal">_</mi><mo stretchy="false">(</mo><mi mathvariant="normal">t</mi><mo stretchy="false">)</mo></mrow><mo>,</mo></mrow></math> SumRen_(t), and load values, demonstrating context-aware behaviour that prioritises energy management based on both supply and tiered demand structure.</p>
+<p>Fig. 21 illustrates the global SHAP explanation for the weighting of supply decisions across three load types: essential (a), business (b), and agricultural (c). Across all subplots, Load_2 appears most frequently and prominently, indicating its critical influence in the agent’s allocation decisions. For essential loads (Ps1), both current and historical values of Load_1 and Load_2 significantly influence the output, highlighting the model’s ability to balance competing priorities when essential services are at stake. In the case of business loads (Ps2), the model places emphasis on recent NetEn and Load_2 states, reinforcing the importance of immediate supply–demand balance. Interestingly, for agricultural loads (Ps3), the SHAP values are more passive, and Load_3 does not prominently feature, suggesting limited influence, likely due to its lower priority during supply allocation. This aligns with the agent’s learned policy to prioritise critical and semi-critical loads under constrained resources. Across all three, the high impact of current state variables demonstrates the model’s strong reliance on present conditions when making real-time allocation decisions.</p>
+<p><img alt="" src="mineru/images/page_18_chart_2.jpg"/></p>
+<p><img alt="" src="mineru/images/page_18_chart_3.jpg"/></p>
+<p>Fig. 15. Distribution of resilience index (RI) and expected years (EY) under uncertainty.</p>
+<p><img alt="" src="mineru/images/page_18_chart_5.jpg"/></p>
+<p>Fig. 16. Relationship between resilience index (RI) and expected years (EY).</p>
+<h2 id="local-interpretable-model-agnostic-explanations-results">Local Interpretable Model-agnostic Explanations Results:</h2>
+<p>To provide interpretability for individual decisions of the DRL agent, the LIME algorithm was applied to three representative decision steps corresponding to charging, discharging, and idle actions. In this environment, the agent controls five actions: two continuous actions related to battery charging and discharging, and three scalar weights determining the distribution of power supply across essential, business, and agricultural loads. For the first instance (charging), the weighting actions are also analysed. Fig. 22 illustrates the trajectory of the SOC over time, where battery operation modes are distinguished using colour: blue for charging, red for discharging, and green for idle. Three specific time steps are highlighted in pink to indicate representative decisions corresponding to charging (hour 13), discharging (hour 94), and idle (hour 162). These instances are selected to provide insight into the local decision-making process of the DRL agent, allowing for a detailed examination of the features that contributed most significantly to each type of action.</p>
+<p>Fig. 23 presents the LIME explanation for step 13, where the agent selects a positive charging power. The charging action (Fig. 23(a)) is positively influenced by high values of current and past net energy and renewable generation (NetEn_(t), SumRen_(t), NetEn_(t-2)), suggesting that surplus renewable energy motivates battery charging. In contrast, past high loads—particularly from Load 2—discourage charging due to anticipated demand. The discharging action (Fig. 23(b)) is dominated by negative contributions, confirming that the agent finds no incentive to discharge at this step.</p>
+<p>The weighting actions for power supply are depicted in Fig. 24. Among the three, the business load (Ps_2) receives the highest weighting (0.682), followed by essential (0.209) and agricultural (0.109) loads. These choices correspond to the current system state: a relatively low demand from Load 1 (essential) and high anticipated demand from Load 2 (business) justify higher priority for business loads.</p>
+<p>In step 94, shown in Fig. 25, the agent chooses to discharge the battery. As depicted in Fig. 25(b), this decision is driven primarily by high current demand from Load 1 and low net energy availability, which indicate a supply shortage. The agent reacts to this by discharging stored energy. The corresponding charging action (Fig. 25(a)) is discouraged, mainly due to low net energy and low renewable generation, along with past high load values. These features push the decision away from charging and reinforce the discharging behaviour.</p>
+<p><img alt="" src="mineru/images/page_19_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_19_chart_4.jpg"/></p>
+<p>(b)</p>
+<p><img alt="" src="mineru/images/page_19_chart_6.jpg"/></p>
+<p>(c)</p>
+<p>Fig. 17. Resilience index vs. (a) average SOC, (b) SOC Standard Deviation (STD), (c) average renewable generation.</p>
+<p>Fig. 26 shows a decision instance where the agent refrains from both charging and discharging. As seen in Fig. 26(a), the charging action is negatively influenced by low net energy and renewable supply. Similarly, Fig. 26(b) reveals that discharging is also discouraged due to a combination of recent high loads and lack of surplus renewable energy. The simultaneous discouragement of both charging and discharging indicates an idle action, where the agent finds it optimal to maintain the current battery state without any operation.</p>
+<p>The comparison in Table 8 reveals strong alignment between SHAP and LIME in identifying key features affecting charging and discharging decisions. Both methods consistently emphasise the importance of NetEn(t), SumRen(t), and Load_2(t), underscoring the model’s responsiveness to real-time energy availability and load prioritisation. Historical patterns in NetEn and SOC contribute additional context for proactive decisions, while LIME uniquely highlights critical load triggers such as Load_1(t) in local discharging events. This agreement between global and local explanations affirms the robustness and interpretability of the learned DRL policy.</p>
+<p><img alt="" src="mineru/images/page_20_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_20_chart_4.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 18. Expected years vs. (a) average renewable generation, (b) SOC Standard Deviation.</p>
+<p><img alt="" src="mineru/images/page_20_chart_7.jpg"/></p>
+<p>Fig. 19. Global SHAP summary (beeswarm) for the critic network value estimate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>V</mi><mrow><mi>ϕ</mi></mrow></msub><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo><mo>.</mo></mrow></math>
+</p>
+<h2 id="4-conclusion">4. Conclusion</h2>
+<p>This paper developed an XDRL framework for microgrid energy management that jointly addresses operational resilience and battery longevity under uncertainty. The framework couples a PPO agent with a reward structure that penalises priority-weighted load shortfalls while moderating depth-of-discharge stress to extend battery life. Curriculum learning across escalating levels of stochastic perturbation improved policy robustness, and evaluation on a cyclone-prone coastal microgrid in India, enabled testing under realistic extreme-weather data.</p>
+<p><img alt="" src="mineru/images/page_21_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_21_chart_4.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 20. Global SHAP summary (beeswarm) for actor battery dispatch outputs (policy outputs): (a) normalised charging command, (b) normalised discharging command.</p>
+<p><img alt="" src="mineru/images/page_21_chart_7.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_21_chart_9.jpg"/></p>
+<p>(b)</p>
+<p><img alt="" src="mineru/images/page_21_chart_11.jpg"/></p>
+<p>(c)</p>
+<p>Fig. 21. Global SHAP summary (beeswarm) for actor load allocation outputs (policy logits before softmax): (a) essential load, (b) business load, (c) agricultural load.</p>
+<p>Three outcome-level observations emerge. First, the PPO agent delivered resilience performance close to that of an MPC benchmark: under uncertain forecasts, the RI was 0.9956 compared with 0.9989 for MPC (a reduction of about 0.33%). Second, the learned policy extended expected battery life by roughly 5% (15.9 vs. 15.1 years) and produced smoother charge/discharge trajectories, which are expected to reduce degradation-related costs. Third, Monte Carlo analysis (using Perlin noise) confirmed robustness, with a median RI of 0.992 (5–95%: 0.984–0.999) and a median expected battery lifetime of approximately 16 years. Extreme cases help bound performance: favourable scenarios combined near-perfect resilience (RI ≈1.0) with expected lifetimes exceeding 17 years, whereas adverse scenarios still retained RI above</p>
+<p><img alt="" src="mineru/images/page_22_chart_2.jpg"/></p>
+<p>Fig. 22. Battery state of charge trajectory used to select representative decision points for LIME: charging (hour 13), discharging (hour 94), and idle (hour 162).</p>
+<p><img alt="" src="mineru/images/page_22_chart_4.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_22_chart_6.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 23. Local LIME explanation for the actor battery dispatch outputs at the representative charging step (step 13): (a) charging action, (b) discharging action.</p>
+<p>Table 8</p>
+<p>Comparison of influential features identified by SHAP and LIME.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SHAP (Global)</th>
+<th>LIME (Local)</th>
+<th>Role in Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NetEn(t)</td>
+<td>Strong positive impact on charging</td>
+<td>Negative contribution to charging (low net energy discouraged charging, while high value encouraged it)</td>
+<td>Indicates energy surplus or deficit</td>
+</tr>
+<tr>
+<td>SumRen(t)/(t-2)</td>
+<td>Positively impacts charging decisions</td>
+<td>Strong negative in low- renewable conditions during charging steps</td>
+<td>Reflects available renewable energy</td>
+</tr>
+<tr>
+<td>Load_2(t)</td>
+<td>Influential especially for prioritisation</td>
+<td>Appears in discharging and charging (low load encouraged discharge, high load discouraged it)</td>
+<td>Determines priority- based supply need</td>
+</tr>
+<tr>
+<td>SOC(t)/(t-3)</td>
+<td>Relevant as current state memory</td>
+<td>Rarely appears in LIME but occasionally in later time steps (e.g., SOC(t-4))</td>
+<td>Captures battery capacity context</td>
+</tr>
+<tr>
+<td>Load_1(t)</td>
+<td>Not among top SHAP, but appears in some LIME steps</td>
+<td>Important in discharging decisions (e.g., step 94)</td>
+<td>Triggers discharge when essential load is high</td>
+</tr>
+<tr>
+<td>NetEn(t-2 to t-4)</td>
+<td>Captured in both explanations</td>
+<td>Appears in charging and discharging LIME explanations</td>
+<td>Reflects trend in energy availability</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="" src="mineru/images/page_23_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_23_chart_4.jpg"/></p>
+<p>(b)</p>
+<p><img alt="" src="mineru/images/page_23_chart_6.jpg"/></p>
+<p>(c)</p>
+<p>Fig. 24. Local LIME explanation for the actor load allocation outputs at the representative charging step (step 13): (a) essential load, (b) business load, (c) agricultural load.</p>
+<p><img alt="" src="mineru/images/page_23_chart_9.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_23_chart_11.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 25. Local LIME explanation for the actor battery dispatch outputs at the representative discharging step (step 94): (a) charging action, (b) discharging action.</p>
+<p>0.97 and lifetimes above 14 years, indicating acceptable performance under degradation.</p>
+<p>Dependency analyses across the Monte Carlo ensemble provided operational insight. Higher average state of charge was associated with improved resilience, while increased SOC variability tended to decrease it. Expected battery life rose with greater average renewable availability and showed only weak sensitivity to SOC variability, suggesting that moderate cycling within managed depth limits does not essentially shorten life. These trends can guide operators in setting reserve targets and dispatch priorities.</p>
+<p><img alt="" src="mineru/images/page_24_chart_2.jpg"/></p>
+<p>(a)</p>
+<p><img alt="" src="mineru/images/page_24_chart_4.jpg"/></p>
+<p>(b)</p>
+<p>Fig. 26. Local LIME explanation for the actor battery dispatch outputs at the representative idle step (step 162): (a) charging action, (b) discharging action.</p>
+<p>Results also clarify the relative strengths of DRL and MPC. When accurate 24-hour forecasts are available, MPC retains a slight resilience edge because it explicitly optimises over the full look-ahead horizon. The PPO agent, by contrast, operates with only short historical context (four past hourly observations) and no forecast, yet approaches MPC performance while offering near real-time inference once trained. This property is attractive for edge deployments and bandwidth-limited or forecast-poor settings.</p>
+<p>Explainability is critical for industrial adoption. Post-hoc SHAP and LIME analyses exposed consistent decision drivers across global and local scales, linking control actions to net-energy balance, recent state of charge, and different load priorities. Such transparency supports operator trust, model validation, and regulatory acceptance in critical infrastructure.</p>
+<p>Future work may extend the present framework in two complementary directions. First, incorporating multi-agent, multi-microgrid coordination would allow peer-to-peer energy trading and cooperative resilience services across interconnected microgrids. Second, intrinsic interpretability can be embedded directly into the learning architecture so that the controller’s logic is transparent without relying solely on post-hoc explanations.</p>
+<h2 id="credit-authorship-contribution-statement">CRediT authorship contribution statement</h2>
+<p>Mohammad Hossein Nejati Amiri: Writing – review &amp; editing, Writing – original draft, Visualization, Validation, Software, Resources, Methodology, Formal analysis, Data curation, Conceptualization. Florimond Guéniat: Writing – review &amp; editing, Writing – original draft, Visualization, Supervision, Methodology, Investigation, Formal analysis, Conceptualization.</p>
+<h2 id="declaration-of-competing-interest">Declaration of competing interest</h2>
+<p>The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.</p>
+<h2 id="data-availability">Data availability</h2>
+<p>Data will be made available on request.</p>
+<h2 id="references">References</h2>
+<p>[1] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb1">Caputo C, Cardin M-A, Ge P, Teng F, Korre A, del Rio Chanona EA. Design and planning of flexible mobile micro-grids using deep reinforcement learning. Appl Energy 2023;335:120707.</a></p>
+<p>[2] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb2">Goswami AK, Deb S, Jha N, Das N, Das BK. Machine learning based wind energy forecasting for energy mangement in microgrid system. In: 2023 IEEE 3rd international conference on smart technologies for power, energy and control. IEEE; 2023, p. 1–6.</a></p>
+<p>[3] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb3">Jones G, Li X, Sun Y. Robust energy management policies for solar microgrids via reinforcement learning. Energies 2024;17(12):2821.</a></p>
+<p>[4] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb4">Amiri MHN, Dhundhara S, Annaz F, De Oliveira M, Guéniat F. Two-stage microgrid resilience and battery life-aware planning and operation for cyclone prone areas in India. Sustain Cities Soc 2025;124:106290.</a></p>
+<p>[5] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb5">Pang K, Zhou J, Tsianikas S, Ma Y. Deep reinforcement learning for resilient microgrid expansion planning with multiple energy resource. Qual Reliab Eng Int 2024;40(1):34–56.</a></p>
+<p>[6] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb6">Mohammadi P, Darshi R, Shamaghdari S, Siano P. Comparative analysis of control strategies for microgrid energy management with a focus on reinforcement learning. IEEE Access 2024.</a></p>
+<p>[7] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb7">Halev A, Liu Y, Liu X. Microgrid control under uncertainty. Eng Appl Artif Intell 2024;138:109360.</a></p>
+<p>[8] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb8">Tightiz L, Dang LM, Yoo J. Novel deep deterministic policy gradient technique for automated micro-grid energy management in rural and islanded areas. Alex Eng J 2023;82:145–53.</a></p>
+<p>[9] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb9">Zideh MJ, Chatterjee P, Srivastava AK. Physics-informed machine learning for data anomaly detection, classification, localization, and mitigation: A review, challenges, and path forward. IEEE Access 2023;12:4597–617.</a></p>
+<p>[10] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb10">Dinata NFP, Ramli MAM, Jambak MI, Sidik MAB, Alqahtani MM. Designing an optimal microgrid control system using deep reinforcement learning: A systematic review. Eng Sci Technol Int J 2024;51:101651.</a></p>
+<p>[11] Özkan E, Kök İ, Özdemr S. DeepTwin: A deep reinforcement learning supported digital twin model for micro-grids. IEEE Access 2024;12:196432–41. <a href="http://dx.doi.org/10.1109/ACCESS.2024.3521124">http://dx.doi.org/10.1109/ACCESS.2024.3521124</a>.</p>
+<p>[12] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb12">Nakabi TA, Toivanen P. Deep reinforcement learning for energy management in a microgrid with flexible demand. Sustain Energy, Grids Netw 2021;25:100413.</a></p>
+<p>[13] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb13">Yang X, Fan L, Li X, Meng L. Day-ahead and real-time market bidding and scheduling strategy for wind power participation based on shared energy storage. Electr Power Syst Res 2023;214:108903.</a></p>
+<p>[14] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb14">Guoping S, Yece Q, Longsheng W, Yujuan L, Yufeng Z. Dispatching isolated off-grid microgrids considering uncertainty: a prediction-decision integrated approach. J Control Decis 2024;1–17.</a></p>
+<p>[15] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb15">Zhang T, Sun M, Qiu D, Zhang X, Strbac G, Kang C. A Bayesian deep reinforcement learning-based resilient control for multi-energy micro-gird. IEEE Trans Power Syst 2023;38(6):5057–72.</a></p>
+<p>[16] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb16">Ahsan SM, Gholizadeh N, Musilek P. Multi-agent systems in networked microgrids: Reinforcement learning and strategic pricing mechanisms. Renew Energy 2025;123678.</a></p>
+<p>[17] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb17">Deshpande K, Möhl P, Hämmerle A, Weichhart G, Zörrer H, Pichler A. Energy management simulation with multi-agent reinforcement learning: An approach to achieve reliability and resilience. Energies 2022;15(19):7381.</a></p>
+<p>[18] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb18">Li S, Hu W, Cao D, Hu J, Huang Q, Chen Z, Blaabjerg F. A novel MADRL with spatial-temporal pattern capturing ability for robust decentralized control of multiple microgrids under anomalous measurements. IEEE Trans Sustain Energy 2024;15(3):1872–84.</a></p>
+<p>[19] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb19">Li S, Hu W, Cao D, Hu J, Chen Z, Blaabjerg F. Coordinated operation of multiple microgrids with heat–electricity energy based on graph surrogate model-enabled robust multiagent deep reinforcement learning. IEEE Trans Ind Inform. 2024.</a></p>
+<p>[20] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb20">Amiri MHN, Guéniat F. Towards a framework for measurements of power systems resiliency: Comprehensive review and development of graph and vector-based resilience metrics. Sustain Cities Soc 2024;105517.</a></p>
+<p>[21] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb21">Zahraoui Y, Korõtko T, Rosin A, Mekhilef S, Seyedmahmoudian M, Stojcevski A, Alhamrouni I. AI applications to enhance resilience in power systems and microgrids—A review. Sustainability 2024;16(12):4959.</a></p>
+<p>[22] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb22">Kumar D, Kumar A. A reliable hybrid autoregressive integrated moving average and deep reinforcement machine learning strategy for resiliency enhancement in microgrid. Sustain Energy, Grids Netw 2024;39:101424.</a></p>
+<p>[23] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb23">Ma C, Lei S, Chen D, Wang C, Hatziargyriou ND, Song Z. Sequential service restoration with grid-interactive flexibility from building AC systems for resilient microgrids under endogenous and exogenous uncertainties. Appl Energy 2025;377:124351.</a></p>
+<p>[24] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb24">Momen H, Jadid S. Resilience enhancement of power distribution system using fixed and mobile emergency generators based on deep reinforcement learning. Eng Appl Artif Intell 2024;137:109118.</a></p>
+<p>[25] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb25">Jeyaraj PR, Asokan SP, Kathiresan AC, Nadar ERS. Deep reinforcement learningbased network for optimized power flow in islanded DC microgrid. Electr Eng 2023;105(5):2805–16.</a></p>
+<p>[26] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb26">Fan R, Sun R, Liu Y, Hassan Ru. An online decision-making method based on multi-agent interaction for coordinated load restoration. Front Energy Res 2022;10:992966.</a></p>
+<p>[27] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb27">Qiu D, Wang Y, Zhang T, Sun M, Strbac G. Hierarchical multi-agent reinforcement learning for repair crews dispatch control towards multi-energy microgrid resilience. Appl Energy 2023;336:120826.</a></p>
+<p>[28] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb28">Sinha A, Vyas R, Alasali F, Holderbaum W, Vyas O. A deep reinforcement learning-based approach for cyber resilient demand response optimization. Front Energy Res 2025;12:1494164.</a></p>
+<p>[29] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb29">Mukherjee S, Hossain RR, Liu Y, Du W, Adetola V, Mohiuddin SM, Huang Q, Yin T, Singhal A. Enhancing cyber resilience of networked microgrids using vertical federated reinforcement learning. In: 2023 IEEE power &amp; energy society general meeting. IEEE; 2023, p. 1–5.</a></p>
+<p>[30] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb30">Zhang H, Yue D, Dou C, Hancke GP. Resilient optimal defensive strategy of micro-grids system via distributed deep reinforcement learning approach against FDI attack. IEEE Trans Neural Netw Learn Syst 2022;35(1):598–608.</a></p>
+<p>[31] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb31">Sharma DD, Bansal RC. LSTM-SAC reinforcement learning based resilient energy trading for networked microgrid system. AIMS Electron Electr Eng 2025;9(2):165–91.</a></p>
+<p>[32] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb32">Rath S, Das T, Sengupta S. Improvise, adapt, overcome: Dynamic resiliency against unknown attack vectors in microgrid cybersecurity games. IEEE Trans Smart Grid 2024.</a></p>
+<p>[33] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb33">Pang K, Zhou J, Tsianikas S, Coit DW, Ma Y. Long-term microgrid expansion planning with resilience and environmental benefits using deep reinforcement learning. Renew Sustain Energy Rev 2024;191:114068.</a></p>
+<p>[34] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb34">Tsianikas S, Zhou J, Yousefi N, Rodgers MD, Coit DW. Multi-energy microgrid expansion planning with reliability consideration based on deep reinforcement learning. Comput Ind Eng 2025;111283.</a></p>
+<p>[35] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb35">Jonban MS, Romeral L, Marzband M, Abusorrah A. A reinforcement learning approach using Markov decision processes for battery energy storage control within a smart contract framework. J Energy Storage 2024;86:111342.</a></p>
+<p>[36] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb36">Panda M, Al Zaabi O, Al Jaafari K, Kumar P, Al Hosani K, Muduli UR. Stateof-charge droop control for efficient power sharing and transient response in microgrids. In: 2023 IEEE IAS global conference on emerging technologies. IEEE; 2023, p. 1–5.</a></p>
+<p>[37] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb37">Bekkemoen Y. Explainable reinforcement learning (XRL): a systematic literature review and taxonomy. Mach Learn 2024;113(1):355–441.</a></p>
+<p>[38] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb38">Anderson KS, Hansen CW, Holmgren WF, Jensen AR, Mikofski MA, Driesse A. Pvlib python: 2023 project update. J Open Source Softw 2023;8(92):5994.</a></p>
+<p>[39] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb39">WindPowerLib–Developers. WindPowerLib: A python library for wind power simulation and analysis. 2024, <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>A</mi><mi>c</mi><mi>c</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>d</mi><mn>03</mn><mi>S</mi><mi>e</mi><mi>p</mi><mi>t</mi><mi>e</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mn>2024</mn></mrow></math>.</a></p>
+<p>[40] Schulman J, Wolski F, Dhariwal P, Radford A, Klimov O. Proximal policy optimization algorithms. 2017, arXiv preprint <a href="http://arxiv.org/abs/1707.06347">arXiv:1707.06347</a>.</p>
+<p>[41] Lundberg S. A unified approach to interpreting model predictions. 2017, arXiv preprint <a href="http://arxiv.org/abs/1705.07874">arXiv:1705.07874</a>.</p>
+<p>[42] <a href="http://refhub.elsevier.com/S0196-8904%2826%2900184-6/sb42">Ribeiro MT, Singh S, Guestrin C. " why should i trust you?" explaining the predictions of any classifier. In: Proceedings of the 22nd ACM SIGKDD international conference on knowledge discovery and data mining. 2016, p. 1135–44.</a></p></main></html>

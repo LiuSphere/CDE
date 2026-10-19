@@ -1,0 +1,530 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg03",
+  "title": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+  "source_text": "03_Hierarchical_RL_railway/paper.txt",
+  "source_text_file_sha256": "ba386af80b9a5af0e20742a393b26d1809fe04ec60caa6c9b605e48d69f5201e",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+      "level": 1,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "hierarchical-reinforcement-learning-for-cost-effective-railway-microgrid-management"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "H I G H L I G H T S",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "h-i-g-h-l-i-g-h-t-s"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1 . Introduction",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "2 . Model formulation",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "2-model-formulation"
+    },
+    {
+      "heading": "2.1 . Railway microgrid configuration and energy management system modeling",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "21-railway-microgrid-configuration-and-energy-management-system-modeling"
+    },
+    {
+      "heading": "2.1.1 . Objective function",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "211-objective-function"
+    },
+    {
+      "heading": "2.1.2 . System constraints",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "212-system-constraints"
+    },
+    {
+      "heading": "2.2 . Traction network power flow model",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "22-traction-network-power-flow-model"
+    },
+    {
+      "heading": "2.2.1 . Admittance matrix formulation",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "221-admittance-matrix-formulation"
+    },
+    {
+      "heading": "2.2.2 . Power flow solution",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "222-power-flow-solution"
+    },
+    {
+      "heading": "3 . Proposed hierarchical reinforcement learning framework",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "3-proposed-hierarchical-reinforcement-learning-framework"
+    },
+    {
+      "heading": "3.1 . Rationale for reinforcement learning",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "31-rationale-for-reinforcement-learning"
+    },
+    {
+      "heading": "3.2 . Markov decision process formulation",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "32-markov-decision-process-formulation"
+    },
+    {
+      "heading": "3.3 . Introduction to SM-DSAC-T",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "33-introduction-to-sm-dsac-t"
+    },
+    {
+      "heading": "3.3.1 . Standard SAC and DSAC-T",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "331-standard-sac-and-dsac-t"
+    },
+    {
+      "heading": "3.3.2 . Introduction to DSAC-T",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "332-introduction-to-dsac-t"
+    },
+    {
+      "heading": "3.3.3 . The proposed SM-DSAC-T",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "333-the-proposed-sm-dsac-t"
+    },
+    {
+      "heading": "3.3.4 . Theoretical properties of the soft-min operator",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "334-theoretical-properties-of-the-soft-min-operator"
+    },
+    {
+      "heading": "4 . Numerical results and analysis",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "4-numerical-results-and-analysis"
+    },
+    {
+      "heading": "4.1 . Test system and experimental settings",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "41-test-system-and-experimental-settings"
+    },
+    {
+      "heading": "4.1.1 . Test system",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "411-test-system"
+    },
+    {
+      "heading": "4.1.2 . Experimental settings",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "412-experimental-settings"
+    },
+    {
+      "heading": "4.1.3 . Case study setup",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "413-case-study-setup"
+    },
+    {
+      "heading": "4.1.4 . Numerical settings and convergence of the power flow solver",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "414-numerical-settings-and-convergence-of-the-power-flow-solver"
+    },
+    {
+      "heading": "4.2 . Learning performance evaluation and learning component ablation",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "42-learning-performance-evaluation-and-learning-component-ablation"
+    },
+    {
+      "heading": "4.2.1 . Learning performance evaluation",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "421-learning-performance-evaluation"
+    },
+    {
+      "heading": "4.2.2 . Algorithmic and state-representation ablation analysis",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "422-algorithmic-and-state-representation-ablation-analysis"
+    },
+    {
+      "heading": "4.3 . Framework-level performance evaluation and ablation analysis",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "43-framework-level-performance-evaluation-and-ablation-analysis"
+    },
+    {
+      "heading": "4.4 . Comparison of the proposed framework with model-based and rule-based baselines",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "44-comparison-of-the-proposed-framework-with-model-based-and-rule-based-baselines"
+    },
+    {
+      "heading": "4.5 . Voltage regulation performance analysis",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "45-voltage-regulation-performance-analysis"
+    },
+    {
+      "heading": "4.6 . Energy scheduling performance analysis",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "46-energy-scheduling-performance-analysis"
+    },
+    {
+      "heading": "4.7 . Sensitivity analysis",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "47-sensitivity-analysis"
+    },
+    {
+      "heading": "4.7.1 . Sensitivity analysis to load and renewable variability",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "471-sensitivity-analysis-to-load-and-renewable-variability"
+    },
+    {
+      "heading": "4.7.2 . Sensitivity analysis to objective function weight settings",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "472-sensitivity-analysis-to-objective-function-weight-settings"
+    },
+    {
+      "heading": "4.7.3 . Sensitivity analysis of the smoothing parameter 𝛽",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "473-sensitivity-analysis-of-the-smoothing-parameter"
+    },
+    {
+      "heading": "4.7.4 . Sensitivity analysis under different BESS capacities and feeder impedance levels",
+      "level": 4,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "474-sensitivity-analysis-under-different-bess-capacities-and-feeder-impedance-levels"
+    },
+    {
+      "heading": "4.8 . Scalability and applicability analysis",
+      "level": 3,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "48-scalability-and-applicability-analysis"
+    },
+    {
+      "heading": "5 . Conclusion and discussion",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "5-conclusion-and-discussion"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Acknowledgements",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "acknowledgements"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "03_Hierarchical_RL_railway/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "3.6%",
+      "first_match_line": 583,
+      "candidate_chunk_ids": [
+        "mg03-c0015"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Table 6",
+      "first_match_line": 582,
+      "candidate_chunk_ids": [
+        "mg03-c0015"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "0.18%",
+      "first_match_line": 582,
+      "candidate_chunk_ids": [
+        "mg03-c0015"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg03-c0001",
+      "path": "agent_chunks/mg03/mg03-c0001.json",
+      "line_start": 1,
+      "line_end": 39,
+      "char_start": 0,
+      "char_end_exclusive": 5747,
+      "characters": 5747,
+      "text_sha256_utf8": "70803e3aba60bc25d42e91a9b90ee39f0a1907fc4fde893eb94551693bba3d9e"
+    },
+    {
+      "chunk_id": "mg03-c0002",
+      "path": "agent_chunks/mg03/mg03-c0002.json",
+      "line_start": 40,
+      "line_end": 63,
+      "char_start": 5747,
+      "char_end_exclusive": 11614,
+      "characters": 5867,
+      "text_sha256_utf8": "0c6d529a53627736a328df76e31da358f0bca898402e729d8a90810f02e747d4"
+    },
+    {
+      "chunk_id": "mg03-c0003",
+      "path": "agent_chunks/mg03/mg03-c0003.json",
+      "line_start": 64,
+      "line_end": 74,
+      "char_start": 11614,
+      "char_end_exclusive": 17098,
+      "characters": 5484,
+      "text_sha256_utf8": "acb464335d13536504b9733ef07e40027e95441c8f10e24e518fabd91aa161ca"
+    },
+    {
+      "chunk_id": "mg03-c0004",
+      "path": "agent_chunks/mg03/mg03-c0004.json",
+      "line_start": 75,
+      "line_end": 114,
+      "char_start": 17098,
+      "char_end_exclusive": 22892,
+      "characters": 5794,
+      "text_sha256_utf8": "6d8ececc6bd053b857d83b13d12e4068e538f1204b3baadc4dec223e8b97b299"
+    },
+    {
+      "chunk_id": "mg03-c0005",
+      "path": "agent_chunks/mg03/mg03-c0005.json",
+      "line_start": 115,
+      "line_end": 178,
+      "char_start": 22892,
+      "char_end_exclusive": 28531,
+      "characters": 5639,
+      "text_sha256_utf8": "e2d08b9400826967f8376884b1eff360b9497d5879bada953198766c46a03373"
+    },
+    {
+      "chunk_id": "mg03-c0006",
+      "path": "agent_chunks/mg03/mg03-c0006.json",
+      "line_start": 179,
+      "line_end": 260,
+      "char_start": 28531,
+      "char_end_exclusive": 34520,
+      "characters": 5989,
+      "text_sha256_utf8": "469a0a47aac82c993c4a9255163bee5b3ac7e4118a2aca52ec704ed7e82611b7"
+    },
+    {
+      "chunk_id": "mg03-c0007",
+      "path": "agent_chunks/mg03/mg03-c0007.json",
+      "line_start": 261,
+      "line_end": 295,
+      "char_start": 34520,
+      "char_end_exclusive": 40427,
+      "characters": 5907,
+      "text_sha256_utf8": "d0d2e9110d48ecce08e8a4eeae2b7d6847b78b0580707c7ff1f695f68a08abfa"
+    },
+    {
+      "chunk_id": "mg03-c0008",
+      "path": "agent_chunks/mg03/mg03-c0008.json",
+      "line_start": 296,
+      "line_end": 319,
+      "char_start": 40427,
+      "char_end_exclusive": 45666,
+      "characters": 5239,
+      "text_sha256_utf8": "e2a740ea414e077d740130dfe8c40fc36e0bd457db4d8fd2fe0ed5465e7d1d89"
+    },
+    {
+      "chunk_id": "mg03-c0009",
+      "path": "agent_chunks/mg03/mg03-c0009.json",
+      "line_start": 320,
+      "line_end": 350,
+      "char_start": 45666,
+      "char_end_exclusive": 51564,
+      "characters": 5898,
+      "text_sha256_utf8": "6a754500d10dd2a0c140e13d3a397e2a95fa9b8cc9c15d5548f5897b3597383a"
+    },
+    {
+      "chunk_id": "mg03-c0010",
+      "path": "agent_chunks/mg03/mg03-c0010.json",
+      "line_start": 351,
+      "line_end": 412,
+      "char_start": 51564,
+      "char_end_exclusive": 57408,
+      "characters": 5844,
+      "text_sha256_utf8": "c74d65c8b444a130c37c9ea671e3be40d6b866652ad21b4a978f1115fed2eff8"
+    },
+    {
+      "chunk_id": "mg03-c0011",
+      "path": "agent_chunks/mg03/mg03-c0011.json",
+      "line_start": 413,
+      "line_end": 455,
+      "char_start": 57408,
+      "char_end_exclusive": 63288,
+      "characters": 5880,
+      "text_sha256_utf8": "4d36185f0f6b9c60839155ee31856bdc2124ae695015cb2da861110f53fcf7a6"
+    },
+    {
+      "chunk_id": "mg03-c0012",
+      "path": "agent_chunks/mg03/mg03-c0012.json",
+      "line_start": 456,
+      "line_end": 491,
+      "char_start": 63288,
+      "char_end_exclusive": 69246,
+      "characters": 5958,
+      "text_sha256_utf8": "d4eb9241cf5bde1589026bc7dc4d915f9b3b4f90ad532190fc3f8e4ed6e6ee10"
+    },
+    {
+      "chunk_id": "mg03-c0013",
+      "path": "agent_chunks/mg03/mg03-c0013.json",
+      "line_start": 492,
+      "line_end": 539,
+      "char_start": 69246,
+      "char_end_exclusive": 75232,
+      "characters": 5986,
+      "text_sha256_utf8": "e9332ab6861e2e0c82e8e838be4c05835b448260c55224dd9c268c094ba88d30"
+    },
+    {
+      "chunk_id": "mg03-c0014",
+      "path": "agent_chunks/mg03/mg03-c0014.json",
+      "line_start": 540,
+      "line_end": 569,
+      "char_start": 75232,
+      "char_end_exclusive": 80101,
+      "characters": 4869,
+      "text_sha256_utf8": "ee88a17d248abc1b09d1a5226ee305c66a64c3be2aba9c688f848759bda1df76"
+    },
+    {
+      "chunk_id": "mg03-c0015",
+      "path": "agent_chunks/mg03/mg03-c0015.json",
+      "line_start": 570,
+      "line_end": 595,
+      "char_start": 80101,
+      "char_end_exclusive": 86050,
+      "characters": 5949,
+      "text_sha256_utf8": "e681184b131aa336b494cf88b83372adc76a6d7edf17fe6c32e5d71e8b653a06"
+    },
+    {
+      "chunk_id": "mg03-c0016",
+      "path": "agent_chunks/mg03/mg03-c0016.json",
+      "line_start": 596,
+      "line_end": 611,
+      "char_start": 86050,
+      "char_end_exclusive": 91272,
+      "characters": 5222,
+      "text_sha256_utf8": "ae33f392f82f1f55ec3021c233073ed4f19e85695f32605bbb71ea214267dd09"
+    },
+    {
+      "chunk_id": "mg03-c0017",
+      "path": "agent_chunks/mg03/mg03-c0017.json",
+      "line_start": 612,
+      "line_end": 625,
+      "char_start": 91272,
+      "char_end_exclusive": 96800,
+      "characters": 5528,
+      "text_sha256_utf8": "09216986aadc06c07e7a5e615bd9aabfd801aeed4911f76ded935850b8281668"
+    },
+    {
+      "chunk_id": "mg03-c0018",
+      "path": "agent_chunks/mg03/mg03-c0018.json",
+      "line_start": 626,
+      "line_end": 692,
+      "char_start": 96800,
+      "char_end_exclusive": 101945,
+      "characters": 5145,
+      "text_sha256_utf8": "8184422e69e7f46ad95508403ad989e7fac13fdd09a1ac5b4841c6051a3df560"
+    },
+    {
+      "chunk_id": "mg03-c0019",
+      "path": "agent_chunks/mg03/mg03-c0019.json",
+      "line_start": 693,
+      "line_end": 710,
+      "char_start": 101945,
+      "char_end_exclusive": 107874,
+      "characters": 5929,
+      "text_sha256_utf8": "c169142dbbcaecc69fbf2e5ca5cba1b02a02565ba0fc6cd0feb2b2f0d8b7163e"
+    },
+    {
+      "chunk_id": "mg03-c0020",
+      "path": "agent_chunks/mg03/mg03-c0020.json",
+      "line_start": 711,
+      "line_end": 773,
+      "char_start": 107874,
+      "char_end_exclusive": 113704,
+      "characters": 5830,
+      "text_sha256_utf8": "86fecefb1d3dfeaa3d54e6938a96309f347654e47c95c558725d01cf85c876d2"
+    },
+    {
+      "chunk_id": "mg03-c0021",
+      "path": "agent_chunks/mg03/mg03-c0021.json",
+      "line_start": 774,
+      "line_end": 793,
+      "char_start": 113704,
+      "char_end_exclusive": 115341,
+      "characters": 1637,
+      "text_sha256_utf8": "9fd6236122e0850a2810e069fcf9eea9a2b91946477199e56ad31d03dc74a178"
+    }
+  ]
+}

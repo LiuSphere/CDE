@@ -1,0 +1,102 @@
+\begin{tikzpicture}[
+ x=1cm,y=1cm,
+ font=\fontsize{8}{9}\selectfont,
+ power/.style={draw=black!85,line width=0.65pt,-{Stealth[length=1.5mm]}},
+ exchange/.style={draw=black!85,line width=0.65pt,
+   {Stealth[length=1.5mm]}-{Stealth[length=1.5mm]}},
+ signal/.style={draw=blue!55!black,line width=0.55pt,dashed,
+   -{Stealth[length=1.3mm]}},
+ equipment/.style={draw=black!80,line width=0.6pt,fill=white},
+ every node/.style={inner sep=1.5pt},
+ pics/pv/.style={code={
+   \draw[equipment,fill=blue!12] (-.35,-.13)--(.23,-.13)--(.35,.18)--(-.23,.18)--cycle;
+   \draw[black!60,line width=.35pt]
+     (-.29,.025)--(.29,.025)
+     (-.16,-.13)--(-.04,.18)
+     (.035,-.13)--(.155,.18);
+   \draw[black!80,line width=.5pt] (0,-.13)--(0,-.25) (-.19,-.25)--(.19,-.25);
+ }},
+ pics/generator/.style={code={
+   \draw[equipment,fill=orange!10] (0,0) circle[radius=.24];
+   \node at (0,0) {$G$};
+   \draw[black!80,line width=.5pt] (-.19,-.24)--(.19,-.24);
+ }},
+ pics/battery/.style={code={
+   \draw[equipment,fill=green!9] (-.32,-.17) rectangle (.32,.17);
+   \draw[equipment,fill=black!65] (-.21,.17) rectangle (-.11,.22);
+   \draw[equipment,fill=black!65] (.11,.17) rectangle (.21,.22);
+   \node at (-.16,0) {$+$};
+   \node at (.16,0) {$-$};
+ }},
+ pics/load/.style={code={
+   \draw[equipment,fill=black!6] (-.27,-.2) rectangle (.27,.12);
+   \draw[equipment,fill=black!12] (-.34,.12)--(0,.35)--(.34,.12)--cycle;
+   \draw[black!70,line width=.45pt] (-.18,-.02) rectangle (-.07,.07);
+   \draw[black!70,line width=.45pt] (.07,-.02) rectangle (.18,.07);
+   \draw[black!70,line width=.45pt] (-.055,-.2) rectangle (.055,-.06);
+ }}
+]
+ \node[draw=black!75,rounded corners=3pt,fill=black!3,
+   minimum width=2.15cm,minimum height=.46cm] (grid) at (6.4,5.47)
+   {Main grid};
+ \draw[black!85,line width=.85pt] (.32,4.88)--(12.68,4.88);
+ \draw[power] (grid.south)--(6.4,4.88);
+ \node[anchor=west,font=\fontsize{7}{8}\selectfont,fill=white]
+   at (.65,5.08) {Grid purchases only};
+
+ \foreach \offset/\agent/\role/\tint in {
+   0/1/Evening load/blue,
+   4.35/2/Daytime solar/green,
+   8.70/3/Flexible supply/orange}{
+   \begin{scope}[shift={(\offset,0)}]
+     \draw[draw=black!65,line width=.65pt,rounded corners=4pt]
+       (.12,1.18) rectangle (3.98,4.53);
+     \path[fill=\tint!9,rounded corners=3pt] (.15,4.15) rectangle (3.95,4.50);
+     \node[font=\fontsize{8}{9}\selectfont\bfseries] at (2.05,4.33)
+       {MG \agent: \role};
+
+     \pic at (.99,3.50) {pv};
+     \pic at (3.02,3.50) {generator};
+     \node[anchor=south] at (.99,3.72) {PV};
+     \node[anchor=south] at (3.02,3.75) {DG};
+     \draw[power] (.99,3.23)--(.99,3.07);
+     \draw[power] (3.02,3.25)--(3.02,3.07);
+     \draw[black!85,line width=1.1pt] (.47,3.07)--(3.48,3.07);
+     \draw[power] (.32,4.88)--(.32,3.07)--(.75,3.07);
+     \fill[black!85] (.32,4.88) circle[radius=.025];
+
+     \pic at (.99,2.46) {battery};
+     \pic at (3.02,2.41) {load};
+     \node at (.99,2.08) {BESS};
+     \node at (3.02,2.08) {Load};
+     \draw[exchange] (.99,3.07)--(.99,2.69);
+     \draw[power] (3.02,3.07)--(3.02,2.78);
+
+     \node[draw=green!35!black,fill=green!14,rounded corners=2pt,
+       minimum width=1.75cm,minimum height=.40cm] (agent\agent) at (2.05,1.49)
+       {Agent \agent};
+     \draw[signal] (2.05,3.01)--(agent\agent.north);
+     \node[text=blue!55!black,fill=white] at (2.22,2.43) {$o_{\agent,t}$};
+     \draw[signal] (agent\agent.north west)--(1.5,1.90)--(1.5,2.46)--(1.31,2.46);
+     \draw[signal] (agent\agent.east)--(3.71,1.49)--(3.71,3.50)--(3.28,3.50);
+     \draw[exchange] (.47,3.07)--(.47,.54);
+     \fill[black!85] (.47,.54) circle[radius=.025];
+     \draw[signal] (2.05,.99)--(agent\agent.south);
+   \end{scope}
+ }
+
+ \draw[blue!55!black,line width=.55pt,dashed] (2.05,.99)--(10.75,.99);
+ \node[text=blue!55!black,fill=white,font=\fontsize{7}{8}\selectfont]
+   at (6.4,.99) {Community observations};
+ \draw[black!85,line width=.85pt] (.47,.54)--(12.68,.54);
+ \node[font=\fontsize{7}{8}\selectfont] at (6.4,.29)
+   {Community bus: proportional clearing, $\eta^{\mathrm{x}}=0.98$};
+
+ \draw[power] (1.05,-.14)--(1.80,-.14);
+ \node[anchor=west,font=\fontsize{7}{8}\selectfont] at (1.88,-.14) {Power flow};
+ \draw[signal] (5.0,-.14)--(5.75,-.14);
+ \node[anchor=west,font=\fontsize{7}{8}\selectfont] at (5.83,-.14)
+   {Observations / commands};
+ \node[anchor=east,font=\fontsize{7}{8}\selectfont] at (12.65,-.14)
+   {No grid export};
+\end{tikzpicture}

@@ -1,0 +1,122 @@
+[
+  {
+    "number": "01",
+    "title": "Explainable deep reinforcement learning for resilient and battery-aware microgrid control",
+    "tier": "basic",
+    "source_sha256": "fd72c6050adcc396b665f13bb9d6235ade5f9a4f36a1bec160825e7e9e589537",
+    "pages": 26,
+    "markdown_characters": 105012,
+    "embedded_images": 45,
+    "mathml_conversion_warnings": [],
+    "screenshots": 26,
+    "folder": "01_Explainable_RL_battery_aware"
+  },
+  {
+    "number": "02",
+    "title": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+    "tier": "basic",
+    "source_sha256": "d9805c272b4b2660c4206b51b593b87dcf69408837da4554eb6cbaeb8bdc5e2b",
+    "pages": 15,
+    "markdown_characters": 100649,
+    "embedded_images": 32,
+    "mathml_conversion_warnings": [],
+    "screenshots": 15,
+    "folder": "02_Mixture_of_experts_multi_critic"
+  },
+  {
+    "number": "03",
+    "title": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+    "tier": "basic",
+    "source_sha256": "c150110ab15e0c6c2e249f57e826f732068f334bd192d756fcd051733de6cac3",
+    "pages": 18,
+    "markdown_characters": 125020,
+    "embedded_images": 22,
+    "mathml_conversion_warnings": [],
+    "screenshots": 18,
+    "folder": "03_Hierarchical_RL_railway"
+  },
+  {
+    "number": "04",
+    "title": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+    "tier": "basic",
+    "source_sha256": "f2cf539a10443415a6c5372541a16b92db197fb02966aa5c44521e5011a50525",
+    "pages": 10,
+    "markdown_characters": 60255,
+    "embedded_images": 6,
+    "mathml_conversion_warnings": [],
+    "screenshots": 10,
+    "folder": "04_MARL_P2P_market"
+  },
+  {
+    "number": "05",
+    "title": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+    "tier": "basic",
+    "source_sha256": "55cfb5b26e2c8ef6a6a6e27f98b4c79a07f18f7f2dba9259770985ad39419dc8",
+    "pages": 32,
+    "markdown_characters": 130075,
+    "embedded_images": 13,
+    "mathml_conversion_warnings": [],
+    "screenshots": 32,
+    "folder": "05_MARLEM"
+  },
+  {
+    "number": "06",
+    "title": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+    "tier": "basic",
+    "source_sha256": "ca24b3a6439e267c6c3b8fe00640246bcf5cc57a7eae56931ff26230e0de062e",
+    "pages": 31,
+    "markdown_characters": 168755,
+    "embedded_images": 71,
+    "mathml_conversion_warnings": [],
+    "screenshots": 31,
+    "folder": "06_Lean_MARL_networked_microgrids"
+  },
+  {
+    "number": "07",
+    "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+    "tier": "basic",
+    "source_sha256": "1a774ee074e0b789de2394182832038d324fb163b2c8c275ce9e830abcc13784",
+    "pages": 10,
+    "markdown_characters": 63018,
+    "embedded_images": 24,
+    "mathml_conversion_warnings": [],
+    "screenshots": 10,
+    "folder": "07_Multi_objective_EMS"
+  },
+  {
+    "number": "08",
+    "title": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+    "tier": "basic",
+    "source_sha256": "fc0dedb87f83c6db8ffae007811ad9dfefda381478dff03f5b57af0e30fc9567",
+    "pages": 22,
+    "markdown_characters": 114287,
+    "embedded_images": 33,
+    "mathml_conversion_warnings": [],
+    "screenshots": 22,
+    "folder": "08_Meta_RL_building_microgrids"
+  },
+  {
+    "number": "09",
+    "title": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+    "tier": "basic",
+    "source_sha256": "8ce330e2e4b9d2aeb65f29b625754ac909ea4f1e851552085b96a6631418ca4f",
+    "pages": 40,
+    "markdown_characters": 98545,
+    "embedded_images": 50,
+    "mathml_conversion_warnings": [],
+    "screenshots": 40,
+    "folder": "09_Perception_semantic_masking"
+  },
+  {
+    "number": "10",
+    "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+    "tier": "basic",
+    "source_sha256": "a3bc377d943ab78621f4740da62f63a75b9d181b8560895a6f8a067b6287b196",
+    "pages": 16,
+    "markdown_characters": 103024,
+    "embedded_images": 16,
+    "mathml_conversion_warnings": [],
+    "screenshots": 16,
+    "folder": "10_Safe_hierarchical_hybrid_RL"
+  }
+]

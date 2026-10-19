@@ -1,0 +1,2577 @@
+{
+  "pages": [
+    {
+      "page_idx": 0,
+      "blocks": [
+        {
+          "type": "aside_text",
+          "bbox": [
+            0.023,
+            0.28,
+            0.059,
+            0.717
+          ],
+          "content": "arXiv:2604.02728v1 [cs.MA] 3 Apr 2026"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.912,
+            0.031,
+            0.921,
+            0.042
+          ],
+          "content": "1"
+        },
+        {
+          "type": "doc_title",
+          "bbox": [
+            0.106,
+            0.071,
+            0.893,
+            0.175
+          ],
+          "level": 1,
+          "content": "Multi-agent Reinforcement Learning-based Joint Design of Low-Carbon P2P Market and Bidding Strategy in Microgrids"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.091,
+            0.184,
+            0.908,
+            0.217
+          ],
+          "content": "Junhao Ren, Honglin Gao, Sijie Wang, Lan Zhao, Qiyu Kang, Aniq Ashan, Yajuan Sun, Gaoxi, Xiao, Senior Member, IEEE"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.266,
+            0.494,
+            0.596
+          ],
+          "content": "**Abstract—The challenges of the uncertainties in renewable energy generation and the instability of the real-time market limit the effective utilization of clean energy in microgrid communities. Existing peer-to-peer (P2P) and microgrid coordination approaches typically rely on certain centralized optimization or restrictive coordination rules which are difficult to be implemented in real-life applications. To address the challenge, we propose an intraday P2P trading framework that allows self-interested microgrids to pursue their economic benefits, while allowing the market operator to maximize the social welfare, namely the low carbon emission objective, of the entire community. Specifically, the decision-making processes of the microgrids are formulated as a Decentralized Partially Observable Markov Decision Process (DEC-POMDP) and solved using a Multi-Agent Reinforcement Learning (MARL) framework. Such an approach grants each microgrid a high degree of decision-making autonomy, while a novel market clearing mechanism is introduced to provide macroregulation, incentivizing microgrids to prioritize local renewable energy consumption and hence reduce carbon emissions. Simulation results demonstrate that the combination of the self-interested bidding strategy and the P2P market design helps significantly improve renewable energy utilization and reduce reliance on external electricity with high carbon-emissions. The framework achieves a balanced integration of local autonomy, self-interest pursuit, and improved community-level economic and environmental benefits.**"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.076,
+            0.6,
+            0.493,
+            0.628
+          ],
+          "content": "**Index Terms—Multi-microgrid systems, Peer-to-peer market, multi-agent reinforcement learning, low-carbon emission.**"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.218,
+            0.647,
+            0.351,
+            0.66
+          ],
+          "level": 2,
+          "content": "I. INTRODUCTION"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.665,
+            0.494,
+            0.787
+          ],
+          "content": "Carbon emissions, the primary driver of the greenhouse effect, have severely constrained global sustainable development. To address this challenge, the Paris Agreement [1] established the critical goal of achieving net-zero emissions by 2050. Among various mitigation strategies, the large-scale integration of renewable energy sources (RES) into conventional power networks has emerged as an approach of fundamental importance [2]. It is projected that renewable sources will"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.266,
+            0.924,
+            0.327
+          ],
+          "continues_prev": true,
+          "content": "account for 25%−41% of global electricity generation by 2040 [3]. Such a transition however marks a paradigm shift from centralized generation to distributed energy resources (DERs) [4], fundamentally altering the operation of power systems."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.327,
+            0.925,
+            0.569
+          ],
+          "content": "The high penetration of renewables introduces significant operational risks due to their inherent stochasticity and intermittency. Such characteristics may lead to severe power fluctuations that challenge existing demand–response mechanisms. While Energy Storage Systems (ESS) are effective in mitigating these fluctuations [5], their high deployment costs remain a barrier. At the same time, traditional consumers are evolving into “prosumers” capable of both generation and consumption. For microgrids with limited storage or generation capacities, relying solely on the main grid often proves economically inefficient due to widening spreads between buying and selling prices. Consequently, Peer-to-Peer (P2P) energy trading has emerged as a promising solution [6], [7]. By enabling direct energy exchange between neighbors, P2P markets facilitate energy management, reduce transmission losses, and improve utilization of locally generated renewable energy [6]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.568,
+            0.925,
+            0.81
+          ],
+          "content": "Despite the benefits of P2P markets, their practical implementation faces complex challenges. The trading environment is highly dynamic, characterized by uncertainties in renewable generation and conflicting interests of different participants. A natural baseline is centralized optimization; however, centralized approaches often struggle with computational scalability and require private user data, which raises privacy and trust concerns [7], [8]. These limitations motivate distributed P2P market clearing, where participants solve local subproblems and coordinate through limited information exchange. For example, [9] formulates a stochastic cartel game and applies diagonal quadratic approximation to decompose the problem into microgrid-level local subproblems, while [10] models joint electricity–carbon trading as a Nash–Stackelberg bi-level game and uses ADMM to simplify the lower-level distributed P2P trading problem."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.809,
+            0.925,
+            0.947
+          ],
+          "content": "Several challenges need to be handled in a P2P electricity market with traditional decentralized optimization methods. First, many existing distributed optimization methods are built upon cooperative (or coalition-based) game formulations, whereas practical P2P participants are often self-interested and may behave strategically. Second, the decision space and decision process of each microgrid can be overly constrained by rigid bidding/clearing mechanisms: the bidding variables are often limited to prices, while other private information is"
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.075,
+            0.795,
+            0.493,
+            0.854
+          ],
+          "content": "Junhao Ren, Honglin Gao, Sijie Wang, Lan Zhao, Gaoxi Xiao are with the School of Electrical and Electronic Engineering, Nanyang Technological University, 639798, Singapore, E-mail: (junhao002@e.ntu.edu.sg, honglin001@e.ntu.edu.sg, wang1679@e.ntu.edu.sg, zhao0468@e.ntu.edu.sg, egxxiao@ntu.edu.sg)."
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.075,
+            0.853,
+            0.492,
+            0.888
+          ],
+          "content": "Qiyu Kang is with the School of Information Science and Technology, University of Science and Technology of China, Hefei, 230026, China, Email: qiyukang@ustc.edu.cn."
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.075,
+            0.887,
+            0.492,
+            0.911
+          ],
+          "content": "Aniq Ashan is with the MOYA Analytics, 051912, Singapore, E-mail: aniq@moya-analytics.com."
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.075,
+            0.91,
+            0.492,
+            0.945
+          ],
+          "content": "Yajuan Sun is with the Singapore Institute of Manufacturing Technology, Agency for Science, Technology and Research, 636732, Singapore, E-mail: sun yajuan@simtech.a-star.edu.sg."
+        }
+      ]
+    },
+    {
+      "page_idx": 1,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.032,
+            0.922,
+            0.042
+          ],
+          "content": "2"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.07,
+            0.494,
+            0.161
+          ],
+          "continues_prev": true,
+          "content": "treated as exogenous and truthfully reported, which restricts autonomy in local energy management and strategic trading. Third, carbon-emission considerations are often imposed as hard constraints rather than being encoded into market incentives, providing only limited economic motivation for proactive decarbonization [11]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.162,
+            0.494,
+            0.314
+          ],
+          "content": "Multi-Agent Reinforcement Learning (MARL) offers a favorable option for tackling the challenges mentioned above [12]. Specifically, MARL allows distributed energy entities to make autonomous and adaptive decisions under partial observability. By allowing microgrids to learn through continuous interactions, MARL helps pave the way toward self-organized intelligent energy systems capable of robustly mitigating the operational instability and uncertainties arising from renewable intermittency and prediction errors, and steadily achieve low carbon emission of the whole system."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.315,
+            0.494,
+            0.512
+          ],
+          "content": "In this study, we propose a decentralized market-learning framework for real-time P2P electricity trading of microgrids. The core principle of this framework is to couple an incentiveaware market clearing mechanism with decentralized sequential decision-making: the market mechanism encodes systemlevel objectives into bidding clearing mechanism, while microgrids independently adapt their strategies based on local observations and historical interactions. In this framework, coordinated system-level outcomes are not imposed explicitly but emerge from the interaction between rational agents and the designed market incentives, making it suitable for complex, partially observable P2P environments. The main contributions of this paper are summarized as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.517,
+            0.494,
+            0.637
+          ],
+          "content": "• **Non-Cooperative Game Formulation.** We explicitly model microgrids as rational and self-interested agents, departing from cooperative or truth-telling assumptions commonly adopted in existing P2P market studies. Their interactions are formulated as a DEC-POMDP (Decentralized Partially Observable Markov Decision Process) enabled, MARL-based learning of strategic behaviors under partial observability."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.638,
+            0.494,
+            0.758
+          ],
+          "content": "• **Joint Bidding and Energy Storage Decision Space.** The proposed framework endows microgrids with a coupled and flexible decision space, allowing them to jointly determine trading roles, bidding prices, traded quantities, and energy storage schedules. This design captures the intrinsic coupling between market participation and internal energy management that is overlooked by price-only or fixed-role models."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.759,
+            0.494,
+            0.88
+          ],
+          "content": "**Carbon-Aware Incentive Design.** The proposed framework incorporates carbon emission considerations into both the pricing signals and the double-auction clearing process, rather than imposing rigid emission constraints. By jointly shaping individual payoffs and trading priorities, the proposed design economically incentivizes lowcarbon, locally balanced trading behaviors while preserving decentralized decision autonomy."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.885,
+            0.494,
+            0.947
+          ],
+          "content": "The remainder of the paper is organized as follows. Section II reviews existing methods and technologies employed in the P2P market of multi-microgrid systems. Section III presents the overall system formulation, including the structure of the"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.07,
+            0.924,
+            0.147
+          ],
+          "continues_prev": true,
+          "content": "multi-microgrid systems and the electricity market framework. Section IV describes the proposed MARL-based model for the P2P market. Section V provides simulation results and discussions. Section VI concludes the paper and outlines potential directions for future research."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.637,
+            0.167,
+            0.792,
+            0.181
+          ],
+          "level": 2,
+          "content": "II. RELATED WORKS"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.189,
+            0.924,
+            0.235
+          ],
+          "content": "Existing studies on trading problems in multi-microgrid systems mainly rely on two methodological paradigms: modelbased optimization and model-free optimization (e.g., MARL)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.235,
+            0.925,
+            0.552
+          ],
+          "content": "Model-based optimization refers to frameworks in which the objective functions, constraints, and system dynamics are known or can be analytically modeled, allowing the optimal decisions to be directly derived from the model. In [13], a two-stage stochastic game model was proposed to determine the optimal energy trading strategy under supply and demand uncertainties. A distributed algorithm was further developed to obtain the stochastic Nash equilibrium using the sample average approximation technique. A stochastic cartel game was introduced in [9] to address cooperative bidding strategies among multiple microgrids in P2P energy transactions considering renewable generation and energy storage. A collaborative optimization problem for capacity planning of distributed generation units and P2P trading was investigated in [14], where a risk-averse stochastic programming framework and Nash bargaining approach were adopted to mitigate renewable energy uncertainties and ensure fairness in trading. Further, a low-carbon P2P trading model based on a master–slave nested mixed game was proposed in [15], which explicitly incorporated carbon emission flows as constraints in the game formulation."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.553,
+            0.925,
+            0.9
+          ],
+          "content": "Model-free optimization, on the other hand, enables agents to learn their individual trading strategies and energy schedules from historical data to maximize operational profitability, or optimize a certain other objective function, without requiring explicit knowledge of system dynamics. In [16], a doublesided auction-based P2P electricity market was formulated as a MARL problem, and a DA-MADDPG (Double-Side Auction Multi-Agent Deep Deterministic Policy Gradient) algorithm was proposed to maximize the profits of prosumers in a dynamic electricity market. A two-level MARL framework was developed in [17] for designing dynamic pricing policies that facilitate efficient on-site energy trading while supporting decarbonization and grid security objectives. In [18], a multi-stage dispatching method incorporating day-ahead and intraday scheduling was proposed to address uncertainties in electricity–hydrogen integrated energy systems. Moreover, [19] introduced a multi-microgrid framework combining carbon capture and utilization technologies with P2P energy trading, trained using the MAPPO algorithm to reduce both cost and carbon emissions. In addition, a recurrent neural network (RNN)-based MAPPO algorithm was presented in [20] for learning one-to-one clearing policies in the coupled energy and carbon trading markets."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.9,
+            0.925,
+            0.947
+          ],
+          "content": "In general, existing studies on multi-microgrid energy trading either rely on explicitly formulated optimization models or adopt learning-based approaches under simplified market and"
+        }
+      ]
+    },
+    {
+      "page_idx": 2,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.435,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.912,
+            0.031,
+            0.922,
+            0.041
+          ],
+          "content": "3"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.07,
+            0.494,
+            0.207
+          ],
+          "continues_prev": true,
+          "content": "decision structures. Many of these studies assume cooperative behaviors, restricting the coupling between market bidding and energy storage decisions, or incorporate carbon considerations primarily through exogenous constraints or pricing components. Instead, this paper focuses on a decentralized intraday P2P trading setting in which autonomous microgrids make strategic trading and energy storage decisions through a market mechanism that jointly shapes incentives and trading outcomes under uncertainty."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.187,
+            0.229,
+            0.382,
+            0.243
+          ],
+          "level": 2,
+          "content": "III. PROBLEM STATEMENT"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.253,
+            0.494,
+            0.45
+          ],
+          "content": "Consider a power distribution network comprising a main grid and a set $\\mathcal { N } \\; = \\; \\{ 1 , \\ldots , N \\}$ of interconnected microgrids, as illustrated in Fig. 1. These microgrids represent diverse prosumer archetypes, including residential, industrial, and commercial sectors, characterized by distinct load profiles and energy behaviors. The main grid functions as an external energy supplier, aggregating heterogeneous generation resources that range from thermal units to large-scale clean energy units. Consequently, electricity procurement from the main grid is characterized by time-varying intensities of carbon emission, necessitating a trade-off between community economic welfare (profit maximization) and societal welfare (carbon footprint reduction)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.45,
+            0.494,
+            0.632
+          ],
+          "content": "Each microgrid $i   \\in   \\mathcal { N }$ operates as an autonomous agent equipped with inflexible electrical loads, local Distributed Generation (DG) units such as Photovoltaics (PV), and ESS. These assets provide the operational flexibility required for arbitrage and resilience against supply uncertainties. To maintain tractability and prioritize the analysis of the proposed P2P market mechanism and carbon accounting framework, the validation of physical power-flow constraints (e.g., line flows and AC power-flow equations) is omitted. In this specific study, we focus on active power balance and economic transactions, while transmission line congestion and reactive power flows are not considered."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.075,
+            0.657,
+            0.222,
+            0.673
+          ],
+          "level": 2,
+          "content": "A. Microgrid System"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.678,
+            0.494,
+            0.831
+          ],
+          "content": "For each microgrid $i ,$ let $L _ { i , t }$ denote the inelastic electricity demand and $G _ { i , t }$ denote the generation of renewable power (e.g. PV output) at time slot t. The ESS serves as a critical flexibility asset, allowing the microgrid to arbitrage energy prices and maintain power balance under uncertainties. Let $E _ { i , t }$ denote the stored energy level (kWh) and $T _ { i , t } ^ { \\mathrm { E S S } }$ denote the charging or discharging rate (kW) at time t. A positive $T _ { i , t } ^ { \\mathrm { E S S } } > \\bar { 0 }$ indicates charging, while a negative value indicates discharging. The state-of-charge (SoC) evolution is governed by:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.128,
+            0.838,
+            0.491,
+            0.907
+          ],
+          "content": "E _ { i , t + 1 } =  \\begin{cases} { E _ { i , t } + \\displaystyle \\frac { \\eta _ { \\operatorname { c h } } T _ { i , t } ^ { \\operatorname { E S S } } \\Delta t } { E _ { i , \\operatorname* { m a x } } } , } & { \\operatorname { i f } T _ { i , t } ^ { \\operatorname { E S } } \\geq 0 , } \\\\ { E _ { i , t } + \\displaystyle \\frac { T _ { i , t } ^ { \\operatorname { E S S } } \\Delta t } { \\eta _ { \\operatorname { d i s } } E _ { i , \\operatorname* { m a x } } } , } & { \\operatorname { i f } T _ { i , t } ^ { { E S } } < 0 , } \\\\ \\end{cases}\\tag{1}",
+          "image_source": "images/page_2_equation_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.915,
+            0.492,
+            0.947
+          ],
+          "content": "where $\\Delta t$ represents the time interval. The parameters $\\eta _ { \\mathrm { c h } }$ and $\\eta _ { \\mathrm { d i s } }$ represent the charging and discharging rates, respectively."
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.509,
+            0.068,
+            0.918,
+            0.395
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.505,
+                0.408,
+                0.791,
+                0.422
+              ],
+              "content": "Fig. 1. Structure of the power distribution network."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_2_image_10.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.448,
+            0.922,
+            0.478
+          ],
+          "content": "To ensure safe operation, the ESS is subject to the following constraints:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.619,
+            0.475,
+            0.921,
+            0.517
+          ],
+          "content": "\\begin{aligned}\\underline{T}_{i}^{\\mathrm{ESS}} & \\leq T_{i,t}^{\\mathrm{ESS}} \\leq \\overline{T}_{i,t}^{\\mathrm{ESS}}  , \\\\E_{i,\\min} & \\leq E_{i,t} \\leq \\alpha_{i,t}^{E} E_{i,\\max}  ,\\end{aligned}\\tag{2}",
+          "image_source": "images/page_2_equation_13.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.526,
+            0.922,
+            0.593
+          ],
+          "content": "where $\\underline { { T } } _ { i } ^ { \\mathrm { E S S } }$ and $\\overline { { T } } _ { i } ^ { \\mathrm { E S S } }$ denote the maximum discharging (negative) or charging (positive) rates, and $E _ { i , \\mathrm { m i n } }$ and $E _ { i , \\mathrm { m a x } }$ denote the minimum and maximum energy capacity, respectively. $\\alpha _ { i , t } ^ { E } \\in [ 0 , 1 ]$ is a control parameter for capacity reservation."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.615,
+            0.736,
+            0.63
+          ],
+          "level": 2,
+          "content": "B. Electricity Market Framework"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.636,
+            0.924,
+            0.772
+          ],
+          "content": "In this work, we employ a two-stage electricity settlement framework comprising a Day-Ahead (DA) stage and an Intraday real-time stage. The DA stage functions as the primary scheduling phase, where microgrids secure base-load electricity requirements based on forecasts of demands and renewable generation. Subsequently, the Intraday P2P market serves as a balancing mechanism, allowing agents to trade deviations caused by uncertainties, thereby reducing imbalance penalties."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.772,
+            0.924,
+            0.864
+          ],
+          "content": "1) Day-Ahead Market Mechanism: In the DA stage, the main grid publishes three distinct price signals: the standard day-ahead buying price $p _ { \\mathrm { d a } } ^ { \\mathrm { G } }$ , the emergency (real-time) buying price $p _ { \\mathrm { e } } ^ { \\mathrm { G } }$ , and the feed-in tariff (FiT) $p _ { \\mathrm { f } } ^ { \\bar { \\mathrm { G } } }$ . To reflect the marginal cost of regulation and carbon intensity, the pricing structure follows the inequality:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.659,
+            0.872,
+            0.921,
+            0.891
+          ],
+          "content": "p _ { \\mathrm { f } } ^ { \\mathrm { G } } \\leq p _ { \\mathrm { d a } } ^ { \\mathrm { G } } \\leq p _ { \\mathrm { e } } ^ { \\mathrm { G } } .\\tag{3}",
+          "image_source": "images/page_2_equation_18.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.9,
+            0.924,
+            0.947
+          ],
+          "content": "This hierarchy is designed to penalize reliance on real-time emergency power (often supplied by carbon-intensive peaker plants) and to discourage excessive reverse power flow. In this"
+        }
+      ]
+    },
+    {
+      "page_idx": 3,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.031,
+            0.922,
+            0.041
+          ],
+          "content": "4"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.069,
+            0.492,
+            0.1
+          ],
+          "continues_prev": true,
+          "content": "work, we assume $p _ { \\mathrm { f } } ^ { \\mathrm { G } }$ is constant, while $p _ { \\mathrm { e } } ^ { \\mathrm { G } }$ varies dynamically to reflect the scenario of real-time grid in reality."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.101,
+            0.494,
+            0.194
+          ],
+          "content": "Each microgrid i estimates its hourly load $\\bar { L } _ { i , t }$ and renewable generation $\\bar { G } _ { i , t }$ for the upcoming operating day. Due to limited generation capacity and unavoidable forecast errors, microgrids implement a day-ahead procurement policy to cover expected deficits. The quantity of electricity purchased from the main grid in the DA stage, $q _ { i , t } ^ { \\mathrm { d a } }$ , is determined by:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.171,
+            0.204,
+            0.491,
+            0.224
+          ],
+          "content": "q _ { i , t } ^ { \\mathrm { d a } } = \\operatorname* { m a x } \\left\\{ 0 , \\beta _ { i } ( \\bar { L } _ { i , t } - \\bar { G } _ { i , t } ) \\right\\} ,\\tag{4}",
+          "image_source": "images/page_3_equation_4.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.234,
+            0.494,
+            0.373
+          ],
+          "content": "where $\\beta _ { i } > 0$ represents the procurement preference factor (or safety margin) for the microgrid i. The higher the value of $\\beta _ { i } ,$ the more conservative the strategy. Note that in this proposed framework, active selling to the main grid is restricted to the real-time stage, while the DA stage focuses solely on securing expected deficit coverage. Since $\\beta _ { i }$ is treated as a fixed characteristic of the microgrid, the focus of this study lies in the Intraday P2P trading strategy to manage the residual energy imbalances."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.075,
+            0.4,
+            0.329,
+            0.415
+          ],
+          "level": 2,
+          "content": "C. Intraday P2P Market Mechanism"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.423,
+            0.494,
+            0.53
+          ],
+          "content": "To mitigate real-time power imbalances caused by forecast uncertainties, we establish a community P2P market governed by a **Double Auction** clearing mechanism. While the trading decision-making is decentralized, the market clearing follows a hybrid architecture with centralized matching to improve the matching efficiency, consistent with established P2P frameworks [21], [16], [22]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.53,
+            0.494,
+            0.576
+          ],
+          "content": "At each time step t, the P2P trading process follows a sequential three-phase protocol: **Quotation Submission**, **Market Clearing**, and **Settlement and Balancing**."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.577,
+            0.494,
+            0.7
+          ],
+          "content": "1) Quotation Submission: In this framework, the trading role is encoded in the sign of the bidding price $p _ { i , t } . \\mathrm { ~ A ~ }$ non-negative value $( p _ { i , t } \\; \\geq \\; 0 )$ indicates the microgrid acts as a **buyer**, while a negative value $( p _ { i , t } < 0 )$ indicates that it acts as a **seller**. The bidding quantity $q _ { i , t } \\geq 0$ represents the magnitude of the energy to be traded. To ensure economic rationality, the absolute bidding price must fall within the main grid’s price envelope:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.222,
+            0.709,
+            0.491,
+            0.728
+          ],
+          "content": "p _ { \\mathrm { f } } ^ { \\mathrm { G } } \\leq | p _ { i , t } | \\leq p _ { \\mathrm { e } } ^ { \\mathrm { G } } .\\tag{5}",
+          "image_source": "images/page_3_equation_10.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.739,
+            0.493,
+            0.786
+          ],
+          "content": "This constraint ensures that P2P trading remains mutually beneficial compared to interacting with the main grid. The bidding quantity is bounded by"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.228,
+            0.797,
+            0.491,
+            0.815
+          ],
+          "content": "0 \\leq q _ { i , t } \\leq \\bar { Q } _ { i , t } ,\\tag{6}",
+          "image_source": "images/page_3_equation_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.826,
+            0.492,
+            0.857
+          ],
+          "content": "where $\\bar { Q } _ { i , t }$ represents the physical limit based on the agent’s role:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.098,
+            0.864,
+            0.491,
+            0.905
+          ],
+          "content": "\\bar { Q } _ { i , t } =  \\begin{cases} { \\operatorname* { m a x } \\{ 0 , L _ { i , t } - G _ { i , t } + \\overline { { T } } _ { i } ^ { \\mathsf { E S S } } \\} , } & { \\mathsf { i f } p _ { i , t } \\geq 0 , } \\\\ { \\operatorname* { m a x } \\{ 0 , G _ { i , t } - L _ { i , t } - \\underline { { T } } _ { i } ^ { \\mathsf { E S S } } \\} , } & { \\mathsf { i f } p _ { i , t } < 0 . } \\\\ \\end{cases}\\tag{7}",
+          "image_source": "images/page_3_equation_14.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.915,
+            0.493,
+            0.947
+          ],
+          "content": "This formulation allows microgrids to flexibly switch roles and optimize their quotations to maximize individual utility."
+        },
+        {
+          "type": "code",
+          "bbox": [
+            0.505,
+            0.066,
+            0.922,
+            0.679
+          ],
+          "sub_type": "algorithm",
+          "content": "Algorithm 1 Joint Price–Quantity (JPQ) Market Clearing\nMechanism\nRequire: Quotation set Q, System Imbalance $m _ { t } ,$ Emergency\nPrice $p _ { e } ^ { \\mathrm { G } }$\nEnsure: Trading Quantity Matrix Q, Trading Price Matrix Π\n1: Initialization:\n2: Partition agents into Buyers B and Sellers S\n3: Sort B and S using Algorithm 2\n4: Initialize matrices $\\mathbf { Q } \\leftarrow \\mathbf { 0 } ,   \\mathbf { \\Pi } \\leftarrow \\mathbf { 0 }$\n5: Initialize pointers: $b , s , b _ { \\mathrm { s t a r t } } , s _ { \\mathrm { s t a r t } } \\gets 1$\n6: Matching Process:\n7: while $b \\leq | \\mathcal { B } |$ and $s \\leq | \\mathcal { S } |$ do\n8: if $p _ { b , t } < | p _ { s , t } |$ then\n9: if $m _ { t } < 0$ then\n10: $b \\leftarrow b + 1 , \\quad b _ { \\mathrm { s t a r t } } \\leftarrow b _ { \\mathrm { s t a r t } } + 1$\n11: continue\n12: else if $m _ { t } > 0$ then\n13: $s \\gets s + 1 , \\quad s _ { \\mathrm { s t a r t } } \\gets s _ { \\mathrm { s t a r t } } + 1$\n14: continue\n15: else\n16: break\n17: end if\n18: end if\n19: $\\mathbf { Q } _ { b , s } \\leftarrow \\operatorname* { m i n } ( q _ { b , t } , q _ { s , t } ) ,   \\mathbf { \\Pi } _ { b , s } \\leftarrow ( p _ { b , t } + | p _ { s , t } | ) / 2$\n20: $q _ { b , t } \\leftarrow q _ { b , t } - \\mathbf { Q } _ { b , s } , \\quad q _ { s , t } \\leftarrow q _ { s , t } - \\mathbf { Q } _ { b , s }$\n21: if $q _ { b , t } = 0$ then\n22: $b _ { \\mathrm { s t a r t } } \\leftarrow b _ { \\mathrm { s t a r t } } + 1$\n23: end if\n24: if $q _ { s , t } = 0$ then\n25: $s _ { \\mathrm { s t a r t } } \\leftarrow s _ { \\mathrm { s t a r t } } + 1$\n26: end if\n27: $b \\leftarrow b + 1 , \\quad s \\leftarrow s + 1$\n28: if $b > | \\mathcal { B } |$ then\n29: $b \\gets b _ { \\mathrm { s t a r t } }$\n30: end if\n31: $\\mathbf { i f } \\; s > | \\mathcal { S } |$ then\n32: $s \\gets s _ { \\mathrm { s t a r t } }$\n33: end if\n34: end while\n35: return Q, Π",
+          "captions": [],
+          "footnotes": []
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.71,
+            0.924,
+            0.862
+          ],
+          "content": "2) Market Clearing: The operator aggregates all buy and sell orders, executes the matching algorithm, and determines the clearing price and traded quantities. To effectively balance the real-time demand/supply of the multi-microgrid systems, a new bidding matching mechanism is proposed with the midpoint pricing rule. This rule guarantees strict budget balance, ensuring that the market operator acts purely as a neutral facilitator without retaining any surplus. Such neutrality is essential for maintaining trust and sustaining long-term participation in P2P energy trading."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.863,
+            0.924,
+            0.925
+          ],
+          "content": "Building on the double-auction foundations in [21], **Algorithm 1** is designed to produce economically feasible and system-aligned trades among microgrids. The clearing process adheres to three main design principles:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.521,
+            0.93,
+            0.923,
+            0.946
+          ],
+          "content": "• **Individual Rationality** – A trade is executed only when"
+        }
+      ]
+    },
+    {
+      "page_idx": 4,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.435,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.031,
+            0.922,
+            0.041
+          ],
+          "content": "5"
+        },
+        {
+          "type": "code",
+          "bbox": [
+            0.075,
+            0.065,
+            0.491,
+            0.38
+          ],
+          "sub_type": "algorithm",
+          "content": "Algorithm 2 Market-Driven Quotation Sorting\nRequire: Sets of buyers $\\overline { { \\mathcal { B } } }$ and sellers $\\overline { { S } } ,$ Market factor $m _ { t } ,$\nEmergency Price $p _ { e } ^ { \\mathrm { G } }$\nEnsure: Sorted sets B and $\\mathcal { S }$\n1: Initialize Sorting Metrics:\n2: For each buyer $i \\in \\mathcal { B } \\colon \\kappa _ { \\underline { { 1 } } } ^ { B } \\leftarrow p _ { i , t } ,$ $\\kappa _ { 2 } ^ { B } \\gets p _ { i , t } \\cdot q _ { i , t }$\n3: For each seller $j \\in \\mathcal { S } \\colon \\kappa _ { 1 } ^ { S } \\leftarrow \\dot { | p _ { j , t } | } , \\quad \\kappa _ { 2 } ^ { S } \\leftarrow ( \\dot { p _ { e } ^ { \\mathrm { G } } } - \\dot { | p _ { j , t } | } )$\n$q _ { j , t }$\n4: Execute Sorting based on market factor $m _ { t } ;$\n5: if $m _ { t } < 0$ (Electricity Surplus) then\n6: Sort B descending by $\\kappa _ { 2 } ^ { \\overline { { B } } }$\n7: Sort S ascending by $\\kappa _ { 1 } ^ { S }$\n8: else if $m _ { t } > 0$ (Electricity Deficit) then\n9: Sort B descending by $\\bar { \\kappa } _ { 1 } ^ { B }$\n10: Sort S descending by $\\kappa _ { 2 } ^ { \\overline { { S } } ^ { \\prime } }$\n11: else\n12: Sort B descending by $\\kappa _ { 1 } ^ { B }$\n13: Sort S ascending by $\\kappa _ { 1 } ^ { S }$\n14: end if\n15: return Ordered sets B and $\\mathcal { S }$",
+          "captions": [],
+          "footnotes": []
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.108,
+            0.405,
+            0.492,
+            0.451
+          ],
+          "continues_prev": true,
+          "content": "the buyer’s bid price is no less than the seller’s ask $( p _ { b , t } \\geq | p _ { s , t } | )$ , ensuring voluntary participation and pre-venting economically inefficient exchanges."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.451,
+            0.492,
+            0.497
+          ],
+          "content": "• **System Incentives** – In sorting algorithm (**Algorithm 2**), the mechanism incorporates the real-time market factor $m _ { t }$ to prioritize trades that support system-level needs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.119,
+            0.499,
+            0.492,
+            0.56
+          ],
+          "content": "– Under a surplus $( m _ { t }   <   0 )$ , the mechanism favors buyers with greater absorption capability rather than simply selecting the highest bidders. This encourages microgrids to absorb excess renewable generation."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.12,
+            0.56,
+            0.493,
+            0.62
+          ],
+          "content": "– Under a deficit $( m _ { t } \\; > \\; 0 )$ , the mechanism prioritizes sellers capable of providing the largest welfare contribution, incentivizing energy sharing to enhance community stability."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.622,
+            0.494,
+            0.714
+          ],
+          "content": "• **Equitable Matching** – By iteratively examining feasible buyer-seller pairs, the mechanism ensures that microgrids submitting valid quotations receive fair access to trading opportunities. This prevents local matching bias and promotes a more balanced allocation of liquidity across participants."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.715,
+            0.494,
+            0.792
+          ],
+          "content": "3) Settlement and Balancing: After market clearing, the settlement phase executes both physical delivery and financial compensation. Buyers compensate sellers according to the clearing price matrix Π, and sellers inject the commitment power quantities into buyers based on $\\mathbf { Q } .$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.792,
+            0.492,
+            0.853
+          ],
+          "content": "Because P2P trades may not fully eliminate real-time imbalances (due to market frictions, renewable energy uncertainties, or physical constraints), each microgrid adopts a hierarchical recourse strategy to resolve any residual deviations:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.092,
+            0.854,
+            0.493,
+            0.9
+          ],
+          "content": "1) Self-Correction: The microgrid first uses its local ESS to supply the deficit, subject to the SoC and related constraints in (2)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.091,
+            0.9,
+            0.492,
+            0.948
+          ],
+          "content": "2) Emergency Procurement: If a deficit persists after ESS discharge, the microgrid purchases emergency energy $q _ { i , t } ^ { \\mathrm { e } }$ from the main grid at the penalty price $p _ { e } ^ { \\mathrm { G } }$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.521,
+            0.069,
+            0.924,
+            0.147
+          ],
+          "content": "3) Feed In Strategy: For microgrid i, the total export quantity $q _ { i , t } ^ { \\mathrm { f i t } }$ is compensated at the feed-in tariff $p _ { f } ^ { \\mathrm { G } }$ where $q _ { i , t } ^ { \\mathrm { f i t } }$ includes both the energy discharged to reduce over-storage and the portion of renewable surplus that cannot be accommodated by the ESS."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.506,
+            0.149,
+            0.923,
+            0.18
+          ],
+          "content": "Under this recourse structure, the real-time power balance for each microgrid i at time t satisfies:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.531,
+            0.186,
+            0.921,
+            0.205
+          ],
+          "content": "L _ { i , t } + q _ { i , t } ^ { \\mathrm { f i t } } + q _ { i , t } ^ { \\mathrm { s } } + T _ { i , t } ^ { \\mathrm { E S S } } = G _ { i , t } + q _ { i , t } ^ { \\mathrm { d a } } + q _ { i , t } ^ { \\mathrm { b } } + q _ { i , t } ^ { \\mathrm { e } } ,\\tag{8}",
+          "image_source": "images/page_4_equation_14.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.211,
+            0.923,
+            0.274
+          ],
+          "content": "where $\\begin{array} { r } { q _ { i , t } ^ { \\mathsf { b } }   =   \\sum _ { j } \\mathbf { Q } _ { ( } i , j ) } \\end{array}$ and $\\begin{array} { r } { q _ { i , t } ^ { \\mathrm { s } }   =   \\sum _ { j } \\mathbf { Q } ( j , i ) } \\end{array}$ denote the microgrid’s total P2P purchase and sale quantities derived from Q. The terms $P _ { i , t } ^ { \\mathrm { c h } }$ and $P _ { i , t } ^ { \\mathrm { d i s } }$ represent the charging and discharging power of the local ESS, respectively."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.506,
+            0.29,
+            0.922,
+            0.32
+          ],
+          "level": 2,
+          "content": "IV. MARL-BASED BIDDING STRATEGY IN INTRADAY P2P MARKET"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.325,
+            0.925,
+            0.554
+          ],
+          "content": "In this section, the Intraday P2P trading model mentioned above can be formulated as a DEC-POMDP, which is typically solved using MARL algorithms. In this work, we develop an **LSTM-MAPPO** framework to handle the highdimensional, sequential, and interactive nature of this decisionmaking task. The proposed architecture follows the CTDE paradigm. Specifically, during training, a centralized critic leverages global information to provide stable value estimation and reduce gradient variance, thereby improving learning efficiency in a competitive multi-agent environment. During execution, however, each microgrid behaves autonomously, generating its bidding and storage decisions using only its own local observation history. This ensures both data privacy and scalability, while enabling robust policy learning in the stochastic and strategically complex P2P market."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.573,
+            0.902,
+            0.588
+          ],
+          "level": 2,
+          "content": "A. Bidding and Energy Storage Strategies for Microgrid i"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.592,
+            0.924,
+            0.653
+          ],
+          "content": "In the Intraday P2P market, each microgrid i seeks to maximize its own economic benefit by optimally selecting its bidding price, bidding quantity, and ESS reservation level. The profit-maximization problem of microgrid i is formulated as:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.581,
+            0.658,
+            0.921,
+            0.701
+          ],
+          "content": "\\max_{p_{i,t},q_{i,t},\\alpha_{i,t}^{E}} \\quad \\sum_{t=1}^{T} \\left(P_{i,t}^{\\mathrm{G}} + P_{i,t}^{\\mathsf{p}2\\mathsf{p}}\\right)\\tag{9}",
+          "image_source": "images/page_4_equation_20.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.666,
+            0.702,
+            0.921,
+            0.738
+          ],
+          "content": "p ^ { \\mathsf { G } } \\mathsf { f } \\leq p _ { i , t } \\leq p ^ { \\mathsf { G } } \\mathsf { e } ,\\tag{10}",
+          "image_source": "images/page_4_equation_21.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.667,
+            0.722,
+            0.92,
+            0.758
+          ],
+          "content": "0 \\leq \\alpha _ { i , t } ^ { E } \\leq 1 ,\\tag{11}",
+          "image_source": "images/page_4_equation_22.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.667,
+            0.741,
+            0.92,
+            0.775
+          ],
+          "content": "{ \\tt C o n s t r a i n t s } ( 2 ) , ( 6 ) , ( 8 ) .\\tag{12}",
+          "image_source": "images/page_4_equation_23.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.891,
+            0.761,
+            0.92,
+            0.775
+          ],
+          "content": "(13)"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.783,
+            0.922,
+            0.863
+          ],
+          "content": "Here, $P _ { i , t } ^ { \\mathrm { G } }$ captures the net profit of microgrid i from interacting with the main grid, while $P _ { i , t } ^ { \\mathrm { p 2 p } }$ represents its profit from P2P transactions. Because the expected day-ahead purchase cost is constant when $\\beta _ { i }$ is fixed, the main-grid profit $P _ { i , t } ^ { \\mathrm { G } }$ only depends on feed-in and emergency operations:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.638,
+            0.868,
+            0.921,
+            0.889
+          ],
+          "content": "P _ { i , t } ^ { \\mathsf { G } } = p _ { \\mathrm { f } } ^ { \\mathsf { G } } q _ { i , t } ^ { \\mathrm { f i t } } - p _ { \\mathsf { e } } ^ { \\mathsf { G } } q _ { i , t } ^ { \\mathsf { e } } .\\tag{14}",
+          "image_source": "images/page_4_equation_26.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.505,
+            0.895,
+            0.881,
+            0.911
+          ],
+          "content": "Similarly, the P2P profit of microgrid i is expressed as"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.579,
+            0.915,
+            0.921,
+            0.95
+          ],
+          "content": "P _ { i , t } ^ { \\mathtt { p 2 p } } = \\sum _ { j \\in n _ { b } } p _ { i , j , t } q _ { i , j , t } - \\sum _ { j \\in n _ { s } } p _ { i , j , t } q _ { i , j , t } ,\\tag{15}",
+          "image_source": "images/page_4_equation_28.jpg"
+        }
+      ]
+    },
+    {
+      "page_idx": 5,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.031,
+            0.922,
+            0.042
+          ],
+          "content": "6"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.07,
+            0.492,
+            0.1
+          ],
+          "content": "where $n _ { b }$ and $n _ { s }$ denote the sets of matched buyers and sellers for microgrid i, with $n _ { b } + n _ { s } \\leq N$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.1,
+            0.494,
+            0.177
+          ],
+          "content": "Since the P2P clearing mechanism is strictly budgetbalanced, the total P2P profit across all microgrids is zero. Hence, the aggregate economic welfare of the community depends solely on the main-grid interactions. The system-level objective is therefore"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.222,
+            0.183,
+            0.491,
+            0.225
+          ],
+          "content": "\\operatorname* { m a x } \\sum _ { t = 1 } ^ { T } \\sum _ { i \\in \\mathcal { N } } P _ { i , t } ^ { \\mathrm { G } } .\\tag{16}",
+          "image_source": "images/page_5_equation_4.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.231,
+            0.494,
+            0.293
+          ],
+          "content": "The microgrids’ profit-maximizing bidding interactions form a decentralized and partially observable multi-agent decision process, motivating the subsequent formulation of the Intraday market as a DEC-POMDP."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.075,
+            0.315,
+            0.286,
+            0.33
+          ],
+          "level": 2,
+          "content": "B. DEC-POMDP Formulation"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.335,
+            0.493,
+            0.365
+          ],
+          "content": "The Intraday P2P trading problem can be modeled as a DEC-POMDP. A DEC-POMDP is defined by the tuple"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.197,
+            0.374,
+            0.372,
+            0.391
+          ],
+          "content": "\\left( \\mathcal { N } , \\thinspace \\mathcal { S } , \\thinspace \\mathcal { A } , \\thinspace \\mathcal { O } , \\thinspace \\mathcal { R } , \\thinspace \\mathcal { P } , \\thinspace \\gamma \\right) ,",
+          "image_source": "images/page_5_equation_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.4,
+            0.404,
+            0.415
+          ],
+          "content": "where the components are described as follows."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.415,
+            0.493,
+            0.476
+          ],
+          "content": "1) Agents: Each agent $i \\in \\mathcal { N }$ corresponds to a microgrid participating in the P2P energy market. Agents act simultaneously and interact through the market-clearing mechanism and the physical power flow balance."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.476,
+            0.492,
+            0.506
+          ],
+          "content": "2) Global State: The global environment state at time t is denoted by"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.187,
+            0.508,
+            0.379,
+            0.525
+          ],
+          "content": "\\mathcal { S } _ { t } = \\{ s _ { 1 , t } , \\thinspace s _ { 2 , t } , \\thinspace \\dots , \\thinspace s _ { N , t } \\} ,",
+          "image_source": "images/page_5_equation_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.533,
+            0.492,
+            0.579
+          ],
+          "content": "where $s _ { i , t }$ includes the internal operational variables of microgrid i and aggregated market conditions. The global state is not directly observable to any individual agent."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.579,
+            0.492,
+            0.625
+          ],
+          "content": "3) Observation: At each time step, the observation $\\mathcal { O } _ { t }$ denotes the set of all agents’ observations. For each agent $i ,$ it receives a local observation"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.201,
+            0.632,
+            0.366,
+            0.65
+          ],
+          "content": "\\mathcal { O } _ { t } ^ { i } = \\{ m _ { t } , E _ { i , t } , h _ { i , t } , t \\} ,",
+          "image_source": "images/page_5_equation_15.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.659,
+            0.492,
+            0.69
+          ],
+          "content": "where $m _ { t }$ is the market factor summarizing the supply–demand condition, $E _ { i , t }$ is the SOC of microgrid $i ,$ and"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.159,
+            0.696,
+            0.407,
+            0.718
+          ],
+          "content": "h _ { i , t } = \\{ q _ { i , z } ^ { \\mathrm { d a } } ,   \\bar { L } _ { i , z } ,   \\bar { G } _ { i , z } ,   p _ { e , z } ^ { G } \\} _ { z = t - \\delta _ { 1 } } ^ { t + \\delta _ { 2 } }",
+          "image_source": "images/page_5_equation_17.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.724,
+            0.493,
+            0.8
+          ],
+          "content": "is a noisy temporal observation window containing historical and forecasted information on day-ahead purchases, load, renewable generation, and emergency prices. This window allows agents to incorporate temporal correlations and prediction uncertainty into decision-making."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.091,
+            0.8,
+            0.462,
+            0.816
+          ],
+          "content": "4) Actions: At time t, the joint action of all agents is"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.209,
+            0.823,
+            0.358,
+            0.842
+          ],
+          "content": "\\mathcal { A } _ { t } = \\{ \\mathcal { A } _ { t } ^ { 1 } , \\ldots , \\mathcal { A } _ { t } ^ { N } \\} .",
+          "image_source": "images/page_5_equation_20.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.85,
+            0.333,
+            0.865
+          ],
+          "content": "For each agent $i ,$ it selects the action"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.206,
+            0.873,
+            0.362,
+            0.892
+          ],
+          "content": "\\mathcal { A } _ { t } ^ { i } = \\{ p _ { i , t } ,   q _ { i , t } ,   \\alpha _ { i , t } ^ { E } \\} ,",
+          "image_source": "images/page_5_equation_22.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.9,
+            0.493,
+            0.947
+          ],
+          "content": "where $p _ { i , t }$ and $q _ { i , t }$ denote the bidding price and quantity in the Intraday P2P market, and $\\alpha _ { i , t } ^ { E }$ is the ESS reservation (or emergency procurement) decision."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.07,
+            0.921,
+            0.1
+          ],
+          "content": "5) Reward Function: After executing the joint action $\\mathbf { A } _ { t } ,$ agent i receives the immediate reward"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.647,
+            0.108,
+            0.78,
+            0.129
+          ],
+          "content": "\\mathcal { R } _ { t } ^ { i } = P _ { i , t } ^ { \\mathrm { G } } + P _ { i , t } ^ { \\mathrm { p 2 p } } ,",
+          "image_source": "images/page_5_equation_25.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.138,
+            0.924,
+            0.228
+          ],
+          "content": "which reflects the microgrid’s operational economic benefit from P2P trading and interactions with the main grid. Simi larly, let $\\mathcal { R } _ { t }$ denote rewards of all agents. The reward promotes policies that efficiently utilize renewables, reduce emergency purchases, and coordinate energy exchange through the P2P market."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.23,
+            0.924,
+            0.26
+          ],
+          "content": "6) State Transition Function: The environment evolves according to the transition function"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.649,
+            0.27,
+            0.778,
+            0.288
+          ],
+          "content": "\\mathcal { P } ( \\mathcal { S } _ { t + 1 } \\mid \\mathcal { S } _ { t } , \\: \\mathbf { A } _ { t } ) ,",
+          "image_source": "images/page_5_equation_28.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.297,
+            0.924,
+            0.374
+          ],
+          "content": "which jointly captures (i) the clearing results of the P2P market, (ii) the physical power balance and ESS dynamics in (8), and (iii) exogenous uncertainties such as renewable variability and load fluctuations. This transition rules how local actions collectively shape the global system evolution."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.374,
+            0.922,
+            0.406
+          ],
+          "content": "7) Discount Factor: The discount factor $\\gamma \\in ( 0 , 1 )$ determines each agent’s preference over future rewards."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.429,
+            0.836,
+            0.445
+          ],
+          "level": 2,
+          "content": "C. LSTM-MAPPO with CTDE Training Method"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.45,
+            0.924,
+            0.542
+          ],
+          "content": "In this work, the LSTM-MAPPO algorithm is presented to address P2P trading problem among N microgrids. The LSTM-MAPPO framework consists of N decentralized policy networks, denoted by $\\{ \\pi _ { \\theta _ { i } } \\} _ { i = 1 } ^ { N }$ , and critic networks $\\{ V _ { \\phi _ { i } } \\} _ { i = 1 } ^ { N } ,$ which are used to approximate the policy and value functions of the microgrids, respectively."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.542,
+            0.924,
+            0.62
+          ],
+          "content": "Each agent i selects the action $\\mathcal { A } _ { t } ^ { i }$ based on local observation $\\mathcal { O } _ { t } ^ { i }$ and the policy $\\pi _ { \\theta _ { i } }$ to maximize the discounted cumulative reward $J ^ { i } ( \\theta _ { i } )$ and learn a value function $V _ { \\phi _ { i } }$ based on the global observation $\\mathcal { O } _ { t }$ . The policy $\\pi _ { \\theta _ { i } }$ of agent i is updated by minimizing the following loss function:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.509,
+            0.627,
+            0.921,
+            0.706
+          ],
+          "content": "\\begin{aligned} { \\mathcal { L } _ { \\sf { a c t o r } } ( \\theta _ { i } ) = } & { { } - \\frac { 1 } { B } \\sum _ { l = 1 } ^ { B } \\Big [ \\operatorname* { m i n } \\bigl ( \\rho _ { \\theta _ { i } , l } A _ { l } ^ { i } , \\: \\operatorname { c l i p } ( \\rho _ { \\theta _ { i } , l } , \\: 1 - \\epsilon , \\: 1 + \\epsilon ) , } \\\\ { } & { { } \\quad A _ { l } ^ { i } \\bigr ) \\; - \\; c \\mathcal { H } \\bigl ( \\pi _ { \\theta _ { i } } ( \\cdot \\mid \\mathcal { O } _ { l } ^ { i } ) \\bigr ) \\Big ] , \\quad \\ \\ \\ \\ \\ ( \\tt { a } ) . } \\\\ \\end{aligned}\\tag{17}",
+          "image_source": "images/page_5_equation_34.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.706,
+            0.922,
+            0.754
+          ],
+          "content": "where $B$ is the batch size, c is the entropy parameter, ϵ is the clipping threshold, and $\\mathcal { H } [ \\cdot ]$ is the entropy of the policy distribution, and $\\rho _ { \\theta _ { i } , l }$ is the importance sampling ratio"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.638,
+            0.761,
+            0.921,
+            0.799
+          ],
+          "content": "\\rho _ { \\theta _ { i } , l } = \\frac { \\pi _ { \\theta _ { i } } \\big ( \\mathcal { A } _ { t } ^ { i } | \\mathcal { O } _ { t } ^ { i } \\big ) } { \\pi _ { \\theta _ { i } ^ { \\mathsf { o l d } } } \\big ( \\mathcal { A } _ { t } ^ { i } | \\mathcal { O } _ { t } ^ { i } \\big ) } ,\\tag{18}",
+          "image_source": "images/page_5_equation_36.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.807,
+            0.922,
+            0.855
+          ],
+          "content": "where $\\pi _ { \\theta _ { i } ^ { \\mathrm { o l d } } }$ denotes the old policy of agent i used to generate the samples in the current batch. And the advantage $A _ { l } ^ { i }$ is computed by Generalized Advantage Estimation (GAE):"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.524,
+            0.861,
+            0.921,
+            0.914
+          ],
+          "content": "\\hat { A } _ { l } ^ { i } = \\sum _ { t = 0 } ^ { T - 1 } ( \\gamma \\lambda ) ^ { t } \\left( \\mathcal { R } _ { l + t } ^ { i } + \\gamma V _ { \\phi _ { i } } ( s _ { i , l + t + 1 } ) - V _ { \\phi _ { i } } ( s _ { i , l + t } ) \\right) ,\\tag{19}",
+          "image_source": "images/page_5_equation_38.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.915,
+            0.924,
+            0.947
+          ],
+          "content": "where λ denotes the GAE parameter. The critic is updated by minimizing the regression error between the predicted value"
+        }
+      ]
+    },
+    {
+      "page_idx": 6,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.032,
+            0.922,
+            0.042
+          ],
+          "content": "7"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.07,
+            0.493,
+            0.099
+          ],
+          "continues_prev": true,
+          "content": "and the GAE–based target. The critic loss for agent i is defined as"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.146,
+            0.096,
+            0.491,
+            0.137
+          ],
+          "content": "\\mathcal { L } _ { \\sf c r i t i c } ( \\phi _ { i } ) = \\frac { 1 } { B } \\sum _ { l = 1 } ^ { B } \\left( V _ { \\phi _ { i } } ( \\mathcal { O } _ { l } ^ { i } ) \\; - \\; \\hat { V } _ { l } ^ { i } \\right) ^ { 2 } ,\\tag{20}",
+          "image_source": "images/page_6_equation_3.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.144,
+            0.494,
+            0.223
+          ],
+          "content": "where $\\hat { V } _ { l } ^ { i } = A _ { l } ^ { i } + V _ { \\phi _ { i } } ^ { \\mathrm { o l d } } ( \\mathcal { O } _ { l } ^ { i } )$ is the target constructed from the GAE and the baseline value while $V _ { \\phi _ { i } } ^ { \\mathrm { o l d } }$ denotes the old critic network of agent i when the samples were collected. Given the learning rates α<sub>θ</sub> and $\\alpha _ { \\phi }$ , the parameters of policy and critic networks of agent i are updated based on gradient information:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.182,
+            0.228,
+            0.491,
+            0.265
+          ],
+          "content": "\\begin{aligned} { \\theta _ { i } } & { { } \\leftarrow \\theta _ { i } - \\alpha _ { \\theta } \\operatorname { \\nabla } _ { \\theta _ { i } } \\mathcal { L } _ { \\sf { a c t o r } } ( \\theta _ { i } ) , } \\\\ { \\phi _ { i } } & { { } \\leftarrow \\phi _ { i } - \\alpha _ { \\phi } \\operatorname { \\nabla } _ { \\phi _ { i } } \\mathcal { L } _ { \\sf { c r i t i c } } ( \\phi _ { i } ) . } \\\\ \\end{aligned}\\tag{21}",
+          "image_source": "images/page_6_equation_5.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.27,
+            0.495,
+            0.378
+          ],
+          "content": "To enhance temporal representation, an LSTM module is incorporated for sequential observation embedding, while a sinusoidal periodic encoder is employed to capture daily cyclical patterns. The overall training process of MMAPPO is summarized in Algorithm 3. For further architectural and implementation details of the policy and critic networks, readers are referred to [12]. In training process of **Algorithm 3**, it"
+        },
+        {
+          "type": "code",
+          "bbox": [
+            0.075,
+            0.386,
+            0.492,
+            0.708
+          ],
+          "sub_type": "algorithm",
+          "content": "Algorithm 3 LSTM-MAPPO for P2P Trading\n1: Initialize simulation parameters.\n2: Initialize policy networks $\\{ \\pi _ { \\theta _ { i } } \\} _ { i = 1 } ^ { N } ,$ critic networks\n$\\{ V _ { \\phi _ { i } } \\} _ { i = 1 } ^ { N } ,$ and the set of buffers $\\widetilde { \\mathcal { D } } = \\{ \\mathcal { D } _ { i } \\} _ { i = 1 } ^ { N } .$\n3: for episode = 1 to $N _ { \\mathrm { e p } }$ do\n4: Reset the environment and Clear all buffers.\n5: for t = 1 to T do\n6: Actions sampling $\\{ \\mathcal { A } _ { t } ^ { i } \\sim \\pi _ { \\theta _ { i } } ( \\cdot | \\mathcal { O } _ { t } ^ { i } ) \\} _ { i = 1 } ^ { N }$\n7: Environment steps $\\to \\mathcal { S } _ { t + 1 } ,   \\mathcal { R } _ { t } .$\n8: Store $\\{ \\mathcal { O } _ { t } , \\mathcal { A } _ { t } , \\mathcal { R } _ { t } , \\mathcal { O } _ { t + 1 } , \\mathcal { S } _ { t } , \\mathcal { S } _ { t + 1 } \\} \\to \\mathcal { D } .$\n9: end for\n10: for epoch = 1 to K do\n11: for each mini-batch B from buffers do\n12: Normalized advantages $\\{ A _ { t } ^ { i } \\} _ { i = 1 } ^ { N } \\leftarrow V _ { \\phi _ { i } } ( s _ { i , t } )$\n13: Update each $\\theta _ { i }$ via the gradient of per-agent policy\nloss.\n14: Update each $\\phi _ { i }$ via the gradient of per-agent critic\nloss.\n15: end for\n16: end for\n17: end for",
+          "captions": [],
+          "footnotes": []
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.723,
+            0.494,
+            0.815
+          ],
+          "content": "is noted that CTDE method is adopted to protect the privacy of each agent and improve the convergence performance. The training process for the multi-microgrid system is shown in Fig. 2. In addition, it requires total observations of all gents in critic training while only local information is needed in actor training."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.179,
+            0.831,
+            0.389,
+            0.845
+          ],
+          "level": 2,
+          "content": "V. NUMERICAL SIMULATION"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.075,
+            0.851,
+            0.231,
+            0.866
+          ],
+          "level": 2,
+          "content": "A. Environment Setup"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.87,
+            0.494,
+            0.947
+          ],
+          "content": "We consider an electricity market comprising four microgrids equipped with PV generation and connected to a main grid. The four microgrids serve as representative market participants—a small buyer (Grid 1), a small seller (Grid 2), a large buyer (Grid 3), and a large seller (Grid 4),—thereby capturing"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.511,
+            0.068,
+            0.91,
+            0.304
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.504,
+                0.318,
+                0.923,
+                0.344
+              ],
+              "content": "Fig. 2. The training process of LSTM-MAPPO algorithm for Intraday P2P market."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_6_image_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.365,
+            0.925,
+            0.517
+          ],
+          "continues_prev": true,
+          "content": "the diversity and heterogeneity typically observed in P2P trading environments. In addition, the bidding roles of these microgrids may shift over time due to uncertainties in demand, renewable generation, and storage conditions, reflecting the dynamic and adaptive nature of real-world P2P markets. The parameter settings of the four microgrids are summarized in Table I. In all simulations, charging and discharging processes are assumed to be lossless, i.e., $\\eta _ { \\mathrm { c h } } ~ = ~ \\eta _ { \\mathrm { d i s } } ~ = ~ 1$ . The observation window for each microgrid is configured with $\\delta _ { 1 } = 1$ and $\\delta _ { 2 } = 6 .$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.516,
+            0.925,
+            0.682
+          ],
+          "content": "The daily renewable generation and electricity demand profiles of the microgrids are derived from the normalized dataset of four Australian residential households reported in [23]. One year of real measurements is first aggregated into a representative 24-hour cycle for each household by averaging historical data at each hour of the day, followed by normalization to the interval [0, 1]. This procedure yields realistic and numerically stable demand and PV generation trajectories for the constructed simulation environment. The resulting 24-hour demand and generation profiles for the four microgrids are depicted in Fig. 3."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.682,
+            0.925,
+            0.865
+          ],
+          "content": "To emulate day-to-day variability observed in real-world operations, actual demand and generation profiles are synthesized by injecting Gaussian noise into the base profiles at each time step. The corresponding observations used by the agents are also corrupted by Gaussian noise to reflect measurement uncertainty. Moreover, for robustness evaluation, we model three types of PV generation disruptions—sudden drops, gradual declines, and complete failures—which occur independently with hourly probabilities of 85%, 10%, and 1%, respectively. As shown in Fig. 4, the FiT of the main grid is fixed at 0.2 \\$/kWh, while the emergency price varies dynamically over time within the range of [1.5, 3.5] \\$/kWh."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.881,
+            0.599,
+            0.896
+          ],
+          "level": 2,
+          "content": "B. Baselines"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.9,
+            0.924,
+            0.946
+          ],
+          "content": "In the simulation study, we evaluate the proposed framework from two perspectives: the learning algorithms and the market clearing mechanisms."
+        }
+      ]
+    },
+    {
+      "page_idx": 7,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.031,
+            0.922,
+            0.042
+          ],
+          "content": "8"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.085,
+            0.071,
+            0.485,
+            0.327
+          ],
+          "content": "",
+          "captions": [],
+          "footnotes": [],
+          "image_source": "images/page_7_chart_2.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.142,
+            0.375,
+            0.426,
+            0.533
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.075,
+                0.343,
+                0.462,
+                0.357
+              ],
+              "content": "Fig. 3. 24-hour Normalized Demand and PV Profiles of 4 microgrids."
+            },
+            {
+              "bbox": [
+                0.075,
+                0.551,
+                0.486,
+                0.566
+              ],
+              "content": "Fig. 4. 24-hour dynamical change of emergency price and FiT over times."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_7_chart_4.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.589,
+            0.493,
+            0.665
+          ],
+          "content": "For the market clearing mechanisms, we compare the proposed JPQ market clearing mechanism with the following double auction mechanisms: (1) **Greedy** used in [16]; (2) **Multi-round double auction (MRDA)** proposed in [21]; (3) **Vickrey-variant double auction (VVDA)** presented in [24]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.665,
+            0.494,
+            0.787
+          ],
+          "content": "For the learning algorithms, we compare the LSTM-MAPPO algorithm with the following MARL algorithms: (1) **MADDPG** algorithm proposed in [16], [22]; (2) **MADDPG-GCN** algorithm proposed in [25]; (3) **IPPO** algorithm proposed in [26]; (4) **MASAC** algorithm proposed in [27], [28]; (5) **MAPPO** algorithm proposed in [18], [19]. To fairly evaluate the performance of these algorithms, our proposed market clearing mechanism is used for the comparison of these"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.121,
+            0.844,
+            0.444,
+            0.934
+          ],
+          "content": "| Parameter | Grid 1 | Grid 2 | Grid 3 | Grid 4 |\n| --- | --- | --- | --- | --- |\n| L<sup>m</sup><sub>i</sub> <sup>ax</sup> (kWh) | 25 | 6 | 40 | 5 |\n| G<sup>m</sup><sub>i</sub> <sup>ax</sup> (kWh) | 5 | 7 | 10 | 15 |\n| E<sub>max</sub> (kWh) | 8 | 15 | 15 | 30 |\n| ES T<sub>i</sub> (kW) | 4 | 5 | 8 | 10 |\n| -TEiS (kW) | 4 | 5 | 8 | 10 |\n| E<sub>0</sub> (kWh) | 0 | 2 | 0 | 20 |",
+          "captions": [
+            {
+              "bbox": [
+                0.256,
+                0.812,
+                0.314,
+                0.824
+              ],
+              "content": "TABLE I"
+            },
+            {
+              "bbox": [
+                0.137,
+                0.823,
+                0.432,
+                0.837
+              ],
+              "content": "SIMULATION PARAMETERS FOR THE 4 MICROGRIDS"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_7_table_10.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.506,
+            0.07,
+            0.638,
+            0.085
+          ],
+          "content": "MARL algorithms."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.107,
+            0.767,
+            0.122
+          ],
+          "level": 2,
+          "content": "C. Parameter and Details of Training"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.125,
+            0.924,
+            0.187
+          ],
+          "content": "The experimental platform uses AMD Ryzen Threadripper PRO 3955WX 16-Cores 3.9GHz CPU with 4 NVIDIA GeForce RTX 3090 GPUs. The implementation of all MARL algorithms is based on Pytorch under Python 3.11."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.187,
+            0.924,
+            0.323
+          ],
+          "content": "For the LSTM-MAPPO algorithm, the trajectory buffer length is set to $T = 1 0 2 4$ , the mini-batch size is 512, and the number of optimization epochs is $K = 1 0$ . The actor network adopts two hidden layers of sizes (512, 512), while the critic network uses hidden dimensions of (2056, 1024). The LSTM encoder contains a single hidden layer with dimension 128. The discount factor is set to $\\gamma = 0 . 9 5$ , and the GAE parameter is also set to $\\lambda = 0 . 9 5$ . ReLU is used as the activation function throughout the model."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.323,
+            0.924,
+            0.445
+          ],
+          "content": "In the DA stage, we assume all microgrids execute the same procurement policy with $\\beta _ { i }   =   0 . 9 5$ for any i. For the JPQ market clearing mechanism, the market factor $m _ { t }$ is defined based on the global net power, i.e., the total demand $L _ { t }$ minus the total PV generation $G _ { t }$ , total day-ahead procurement $q _ { t } ^ { \\mathrm { d a } }$ and total storage amount. Specifically, $m _ { t } = 0$ if this index lies within the interval $\\left[ -20, -30 \\right]$ $m _ { t } = - 1$ if it is less than $- 3 0 .$ , and $m _ { t } = 1$ otherwise."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.505,
+            0.465,
+            0.922,
+            0.481
+          ],
+          "level": 2,
+          "content": "D. Performance Comparison of Market Clearing Mechanism"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.503,
+            0.485,
+            0.925,
+            0.729
+          ],
+          "content": "The performance comparison of the market clearing mechanisms for the multi-microgrid system with the LSTM-MAPPO algorithm is shown in Fig. 5 and Table. II. The proposed JPQ market clearing mechanism effectively promotes the community economic profit and reduce the dependencies of these microgrids on power resources with the high-carbon emission of the system. For instance, JPQ improves community profit by approximately 33%, reduces emergency electricity usage by nearly 30%, and lowers feed in power export by 15–17%. Moreover, it achieves a substantially higher storage level—more than three times that of the baseline mechanisms (but still in a rational level)—demonstrating more effective ESS utilization and enhanced operational stability. These improvements confirm that JPQ provides a more balanced, lowcarbon and economically efficient market clearing policy for multi-microgrid energy trading."
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.52,
+            0.788,
+            0.905,
+            0.87
+          ],
+          "content": "| Clearing | Reward | Emergency Bought | Feed In Sold | Storage |\n| --- | --- | --- | --- | --- |\n| Mechanism | ($) | (kWh) | (kWh) | (kWh) |\n| Greedy | -5.87 | 3.37 | 7.11 | 14.87 |\n| MRDA | -5.92 | 3.38 | 7.30 | 11.95 |\n| VVDA | -5.94 | 3.42 | 7.21 | 10.13 |\n| JPQ | -3.98 | 2.40 | 6.10 | 38.04 |",
+          "captions": [
+            {
+              "bbox": [
+                0.684,
+                0.744,
+                0.745,
+                0.756
+              ],
+              "content": "TABLE II"
+            },
+            {
+              "bbox": [
+                0.519,
+                0.755,
+                0.909,
+                0.781
+              ],
+              "content": "AVERAGE HOURLY PERFORMANCE COMPARISON UNDER DIFFERENT MARKET CLEARING MECHANISMS"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_7_table_20.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.885,
+            0.924,
+            0.947
+          ],
+          "content": "In addition, we also analyze the performance of individual microgrids under different market mechanisms based on the result shown in Table II. Table III reports the individual performance of four microgrids under different market mechanisms."
+        }
+      ]
+    },
+    {
+      "page_idx": 8,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.436,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.911,
+            0.031,
+            0.922,
+            0.041
+          ],
+          "content": "9"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.089,
+            0.07,
+            0.475,
+            0.259
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.076,
+                0.272,
+                0.493,
+                0.308
+              ],
+              "content": "Fig. 5. Training performance of four market clearing mechanism with LSTM-MAPPO algorithm over 7000 episodes. Each point denotes the hourly average across the four microgrids in a simulation trajectory."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_8_chart_2.jpg"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.077,
+            0.368,
+            0.502,
+            0.607
+          ],
+          "content": "| Grid Mechanism | Reward E($) | mergency Bough (kWh) | t Feed In Sold (kWh) | Storage (kWh) |\n| --- | --- | --- | --- | --- |\n| JPQ | -2.02 | 0.91 | 0.33 | 2.59 |\n| Greedy | -3.30 | 0.63 | 1.56 | 1.84 |\n| Grid 1 |  |  |  |  |\n| MRDA | -2.78 | 1.24 | 0.80 | 0.99 |\n| VDA | -3.28 | 1.58 | 0.74 | 0.89 |\n| JPQ | 0.45 | 0.03 | 0.89 | 8.04 |\n| Greedy | 0.37 | 0.26 | 0.61 | 5.21 |\n| Grid 2 |  |  |  |  |\n| MRDA | -0.10 | 0.17 | 1.28 | 2.01 |\n| VDA | -0.13 | 0.14 | 1.39 | 2.13 |\n| JPQ | -3.43 | 1.42 | 2.06 | 2.76 |\n| Greedy | -3.68 | 2.08 | 1.88 | 2.45 |\n| Grid 3 |  |  |  |  |\n| MRDA | -3.15 | 1.72 | 1.99 | 2.71 |\n| VDA | -2.93 | 1.65 | 1.66 | 5.30 |\n| JPQ | 1.10 | 0.01 | 2.82 | 24.52 |\n| Greedy | 0.65 | 0.461 | 3.05 | 5.36 |\n| Grid 4 |  |  |  |  |\n| MRDA | 0.31 | 0.154 | 3.22 | 6.60 |\n| VDA | -0.10 | 0.288 | 3.50 | 0.42 |",
+          "captions": [
+            {
+              "bbox": [
+                0.252,
+                0.324,
+                0.317,
+                0.335
+              ],
+              "content": "TABLE III"
+            },
+            {
+              "bbox": [
+                0.092,
+                0.335,
+                0.476,
+                0.36
+              ],
+              "content": "AVERAGE HOURLY BEHAVIOR OF INDIVIDUAL MICROGRIDS UNDER DIFFERENT MARKET CLEARING MECHANISMS"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_8_table_6.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.635,
+            0.494,
+            0.847
+          ],
+          "content": "For deficit-type microgrids, JPQ yields the lowest or nearlowest emergency purchases (e.g., 0.91 kWh for Grid 1 and 1.42 kWh for Grid 3), indicating improved intraday balance and reduced dependence on external grid support. For surplustype microgrids, JPQ promotes risk-aware energy reservation rather than aggressive export. This is reflected in substantially higher storage utilization under JPQ, most notably for Grid 4 (24.52 kWh under JPQ versus 0.42–6.60 kWh under the baselines) and Grid 2 (8.04 kWh versus 2.01–5.21 kWh). These patterns suggest that microgrids under JPQ strategically trade short-term feed-in opportunities for enhanced flexibility against future uncertainty, which not only contributes to lower emergency demand at the system level but also leads to more stable individual profit outcomes."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.075,
+            0.865,
+            0.4,
+            0.881
+          ],
+          "level": 2,
+          "content": "E. Performance Comparison of LSTM-MAPPO"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.885,
+            0.494,
+            0.946
+          ],
+          "content": "The performance comparison for the multi-microgrid system with different MARL algorithms is illustrated in Fig. 6 and Table IV. These results show that the proposed LSTM-MAPPO algorithm consistently outperforms all baseline"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.518,
+            0.07,
+            0.903,
+            0.259
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.505,
+                0.271,
+                0.922,
+                0.308
+              ],
+              "content": "Fig. 6. Training performance of six MARL algorithms over 7000 episodes. Each point denotes the hourly average across the four microgrids in a simulation trajectory."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_8_chart_10.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.505,
+            0.333,
+            0.925,
+            0.606
+          ],
+          "content": "MARL algorithms across all four metrics. LSTM-MAPPO achieves the highest total reward, lowest emergency electricity demand, lowest feed in power quantity, and significantly higher utilization of the ESS. Relative to MAPPO (outperform among baselines), LSTM-MAPPO improves economic performance by 36.7%, decreases emergency electricity usage by 31.3%, reduces feed in power export by 15.1%, and enhances ESS utilization by nearly 300%. These consistent improvements across all metrics confirm that incorporating temporal dependencies through the LSTM encoder enables more foresighted policies, leading to higher system reliability, improved environmental performance, and superior overall economic welfare. In general, policy-based MARL algorithms (LSTM-MAPPO, MAPPO, IPPO) significantly outperform value-based or mixed-strategy methods (MASAC, MADDPG, MADDPG-GCN) in the multi-agent non-stationary competitive environment, while LSTM encoder also contributes to performance improvements significantly."
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.508,
+            0.665,
+            0.915,
+            0.774
+          ],
+          "content": "| Algorithm | Reward E($) | mergency Bough (kWh) | t Feed In Sold (kWh) | Storage (kWh) |\n| --- | --- | --- | --- | --- |\n| MAPPO | -6.26 | 3.49 | 7.19 | 9.59 |\n| IPPO | -6.54 | 3.63 | 7.66 | 3.22 |\n| MASAC | -7.81 | 4.22 | 8.26 | 0.10 |\n| MADDPG | -7.73 | 4.18 | 8.09 | 1.13 |\n| MADDPG-GCN | -7.52 | 4.06 | 7.97 | 1.02 |\n| LSTM-MAPPO | -3.96 | 2.40 | 6.10 | 38.04 |",
+          "captions": [
+            {
+              "bbox": [
+                0.681,
+                0.622,
+                0.747,
+                0.633
+              ],
+              "content": "TABLE IV"
+            },
+            {
+              "bbox": [
+                0.519,
+                0.633,
+                0.908,
+                0.659
+              ],
+              "content": "AVERAGE HOURLY PERFORMANCE COMPARISON OF THE MULTI-MICROGRID SYSTEM WITH DIFFERENT MARL ALGORITHMS"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_8_table_15.jpg"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.649,
+            0.805,
+            0.781,
+            0.82
+          ],
+          "level": 2,
+          "content": "VI. CONCLUSION"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.504,
+            0.824,
+            0.925,
+            0.947
+          ],
+          "content": "This paper studied the intraday P2P electricity trading problem in multi-microgrid systems under renewable generation and demand uncertainties. To address the limitations of existing coordination approaches, we developed a decentralized market-learning framework that integrates market clearing mechanisms with sequential decision-making by self-interested microgrids operating under partial observability. The resulting problem was formulated as a DEC-POMDP, allowing"
+        }
+      ]
+    },
+    {
+      "page_idx": 9,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.076,
+            0.03,
+            0.435,
+            0.043
+          ],
+          "content": "JOURNAL OF LATEX CLASS FILES, VOL. 14, NO. 8, DECEMBER 2025"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.906,
+            0.031,
+            0.922,
+            0.041
+          ],
+          "content": "10"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.074,
+            0.07,
+            0.494,
+            0.327
+          ],
+          "continues_prev": true,
+          "content": "individual microgrids to autonomously adapt their bidding and energy storage strategies in response to evolving market conditions. A carbon-aware JPQ market clearing mechanism was further introduced to shape individual incentives and trading priorities without imposing rigid coordination or emission constraints. By jointly leveraging pricing signals and doubleauction clearing rules, the proposed mechanism encourages local energy balancing and risk-aware storage utilization, thereby reducing reliance on high-carbon emergency power. This work highlights the potential of combining incentive-aware market mechanisms with decentralized learning to support scalable, low-carbon operation in future multi-microgrid systems, and provides a flexible foundation for extending P2P market designs to more complex energy communities. Future work will extend the framework to incorporate day-ahead procurement decisions and address privacy-preserving policy learning for microgrids."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.211,
+            0.352,
+            0.359,
+            0.365
+          ],
+          "level": 2,
+          "content": "ACKNOWLEDGMENT"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.075,
+            0.375,
+            0.493,
+            0.436
+          ],
+          "content": "Parts of this article have been grammatically revised using ChatGPT [29] to improve readability. The code accompanying this paper is publicly available at https://github.com/ryan-ntu/P2P Electricity Market JPQ Auction."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.236,
+            0.46,
+            0.333,
+            0.474
+          ],
+          "level": 2,
+          "content": "REFERENCES"
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.084,
+            0.485,
+            0.491,
+            0.508
+          ],
+          "content": "[1] C. A. Horowitz, “Paris agreement,” Int. Leg. Mater., vol. 55, no. 4, pp. 740–755, 2016."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.509,
+            0.491,
+            0.543
+          ],
+          "content": "[2] G. He, J. Lin, F. Sifuentes, X. Liu, N. Abhyankar, and A. Phadke, “Rapid cost decrease of renewables and storage accelerates the decarbonization of China’s power system,” Nat Commun, vol. 11, no. 1, p. 2486, 2020."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.543,
+            0.491,
+            0.577
+          ],
+          "content": "[3] X. Deng and T. Lv, “Power system planning with increasing variable renewable energy: A review of optimization models,” J. Cleaner Prod., vol. 246, p. 118962, 2020."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.578,
+            0.492,
+            0.61
+          ],
+          "content": "[4] K. Alanne and A. Saari, “Distributed energy generation and sustainable development,” Renew. Sustain. Energy Rev., vol. 10, no. 6, pp. 539–558, 2006."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.612,
+            0.492,
+            0.646
+          ],
+          "content": "[5] S. Kwon, L. Ntaimo, and N. Gautam, “Optimal Day-Ahead Power Procurement With Renewable Energy and Demand Response,” IEEE Trans. Power Syst., vol. 32, no. 5, pp. 3924–3933, 2017."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.647,
+            0.492,
+            0.681
+          ],
+          "content": "[6] T. Morstyn, N. Farrell, S. J. Darby, and M. D. McCulloch, “Using peer-to-peer energy-trading platforms to incentivize prosumers to form federated power plants,” Nat Energy, vol. 3, no. 2, pp. 94–101, 2018."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.681,
+            0.492,
+            0.715
+          ],
+          "content": "[7] C. Liu and Z. Li, “Comparison of Centralized and Peer-to-Peer Decentralized Market Designs for Community Markets,” IEEE Trans. Smart Grid, vol. 58, no. 1, pp. 67–77, 2022."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.085,
+            0.715,
+            0.492,
+            0.76
+          ],
+          "content": "[8] X. Luo, Y. Liu, P. Feng, Y. Gao, and Z. Guo, “Optimization of a solar-based integrated energy system considering interaction between generation, network, and demand side,” Appl. Energy, vol. 294, p. 116931, 2021."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.084,
+            0.761,
+            0.492,
+            0.795
+          ],
+          "content": "[9] L. Wang, Y. Zhang, W. Song, and Q. Li, “Stochastic cooperative bidding strategy for multiple microgrids with peer-to-peer energy trading,” IEEE Trans. Ind. Informat., vol. 18, no. 3, pp. 1447–1457, 2022."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.079,
+            0.795,
+            0.492,
+            0.84
+          ],
+          "content": "[10] Z. Lu, L. Bai, J. Wang, J. Wei, Y. Xiao, and Y. Chen, “Peer-to-peer joint electricity and carbon trading based on carbon-aware distribution locational marginal pricing,” IEEE Trans. Power Syst., vol. 38, no. 1, pp. 835–852, 2023."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.079,
+            0.841,
+            0.492,
+            0.875
+          ],
+          "content": "[11] W. Xu, F. Lin, R. Jia, C. Tang, Z. Zheng, and M. Li, “Game-Based Pricing for Joint Carbon and Electricity Trading in Microgrids,” IEEE Internet of Things Journal, vol. 11, no. 16, pp. 27 732–27 743, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.079,
+            0.875,
+            0.491,
+            0.91
+          ],
+          "content": "[12] C. Yu, A. Velu, E. Vinitsky, J. Gao, Y. Wang, A. Bayen, and Y. WU, “The surprising effectiveness of PPO in cooperative multi-agent games,” in Adv. Neural Inf. Process. Syst., vol. 35, 2022, pp. 24 611–24 624."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.079,
+            0.91,
+            0.492,
+            0.945
+          ],
+          "content": "[13] C. Li, Y. Xu, X. Yu, C. Ryan, and T. Huang, “Risk-averse energy trading in multienergy microgrids: A two-stage stochastic game approach,” IEEE Trans. Ind. Informat., vol. 13, no. 5, pp. 2620–2630, 2017."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.072,
+            0.921,
+            0.128
+          ],
+          "content": "[14] Z. Wang, H. Hou, B. Zhao, L. Zhang, Y. Shi, and C. Xie, “Risk-averse stochastic capacity planning and P2P trading collaborative optimization for multi-energy microgrids considering carbon emission limitations: An asymmetric nash bargaining approach,” Appl. Energy, vol. 357, p. 122505, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.507,
+            0.129,
+            0.922,
+            0.162
+          ],
+          "content": "[15] Z. Liang and L. Mu, “Multi-agent low-carbon optimal dispatch of regional integrated energy system based on mixed game theory,” Energy, vol. 295, p. 130953, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.163,
+            0.922,
+            0.207
+          ],
+          "content": "[16] D. Qiu, J. Wang, J. Wang, and G. Strbac, “Multi-agent reinforcement learning for automated peer-to-peer energy trading in double-side auction market,” in Proc. 30th Int. Joint Conf. Artif. Intell., 2021, pp. 2913–2920."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.507,
+            0.208,
+            0.922,
+            0.242
+          ],
+          "content": "[17] R. May and P. Huang, “A multi-agent reinforcement learning approach for investigating and optimising peer-to-peer prosumer energy markets,” Appl. Energy, vol. 334, p. 120705, 2023."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.242,
+            0.922,
+            0.286
+          ],
+          "content": "[18] Z. Yang, Z. Ren, H. Li, Z. Sun, J. Feng, and W. Xia, “A multi-stage stochastic dispatching method for electricity-hydrogen integrated energy systems driven by model and data,” Appl. Energy, vol. 371, p. 123668, Oct. 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.287,
+            0.922,
+            0.332
+          ],
+          "content": "[19] M. Chen, Z. Shen, L. Wang, and G. Zhang, “Combined carbon capture and utilization with peer-to-peer energy trading for multimicrogrids using multiagent proximal policy optimization,” IEEE Trans. Control Netw. Syst., vol. 11, no. 4, pp. 2173–2186, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.333,
+            0.922,
+            0.378
+          ],
+          "content": "[20] Y. Zhou, Z. Ma, T. Wang, J. Zhang, X. Shi, and S. Zou, “Joint energy and carbon trading for multi-microgrid system based on multi-agent deep reinforcement learning,” IEEE Trans. Power Syst., vol. 39, no. 6, pp. 7376–7388, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.378,
+            0.921,
+            0.412
+          ],
+          "content": "[21] H. Haggi and W. Sun, “Multi-Round Double Auction-Enabled Peer-to-Peer Energy Exchange in Active Distribution Networks,” IEEE Trans. Smart Grid, vol. 12, no. 5, pp. 4403–4414, 2021."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.412,
+            0.922,
+            0.457
+          ],
+          "content": "[22] B. Yin, H. Weng, Y. Hu, J. Xi, P. Ding, and J. Liu, “Multi-Agent Deep Reinforcement Learning for Simulating Centralized Double-Sided Auction Electricity Market,” IEEE Trans. Power Syst., vol. 40, no. 1, pp. 518–529, 2025."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.507,
+            0.457,
+            0.922,
+            0.491
+          ],
+          "content": "[23] E. L. Ratnam, S. R. Weller, C. M. Kellett, and A. T. Murray, “Residential load and rooftop PV generation: An Australian distribution network dataset,” Int. J. Sustain. Energy, vol. 36, no. 8, pp. 787–806, Sep. 2017."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.492,
+            0.921,
+            0.525
+          ],
+          "content": "[24] Z. Zhao, C. Feng, and A. L. Liu, “Comparisons of auction designs through multiagent learning in peer-to-peer energy trading,” IEEE Trans. Smart Grid, vol. 14, no. 1, pp. 593–605, 2023."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.525,
+            0.922,
+            0.57
+          ],
+          "content": "[25] H. Weng, Y. Hu, M. Liang, J. Xi, and B. Yin, “Optimizing bidding strategy in electricity market based on graph convolutional neural network and deep reinforcement learning,” Appl. Energy, vol. 380, p. 124978, 2025."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.57,
+            0.922,
+            0.604
+          ],
+          "content": "[26] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Proximal policy optimization algorithms,” arXiv preprint arXiv:1707.06347, 2017."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.605,
+            0.922,
+            0.66
+          ],
+          "content": "[27] Y. Cui, Y. Xu, Y. Wang, Y. Zhao, H. Zhu, and D. Cheng, “Peer-to-peer energy trading with energy trading consistency in interconnected multi-energy microgrids: A multi-agent deep reinforcement learning approach,” International Journal of Electrical Power & Energy Systems, vol. 156, p. 109753, 2024."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.508,
+            0.661,
+            0.922,
+            0.705
+          ],
+          "content": "[28] Y. Wang, Y. Cui, Y. Li, and Y. Xu, “Collaborative optimization of multi-microgrids system with shared energy storage based on multi-agent stochastic game and reinforcement learning,” Energy, vol. 280, p. 128182, 2023."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.507,
+            0.706,
+            0.921,
+            0.729
+          ],
+          "content": "[29] OpenAI, “ChatGPT: [Large Language Model],” 2023, [Online], Available: https://openai.com/chat."
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "file_suffix": "pdf",
+    "producer": {
+      "name": "mineru",
+      "version": "4.0.12"
+    },
+    "document": {
+      "title": "Multi-agent Reinforcement Learning-based Joint Design of Low-Carbon P2P Market and Bidding Strategy in Microgrids",
+      "authors": [
+        "Junhao Ren; Honglin Gao; Sijie Wang; Lan Zhao; Qiyu Kang; Aniq Ashan; Yajuan Sun; Gaoxi Xiao"
+      ],
+      "identifiers": [
+        "https://arxiv.org/abs/2604.02728v1"
+      ],
+      "creator_application": "arXiv GenPDF (tex2pdf:a6404ea)",
+      "producer_application": "pikepdf 8.15.1",
+      "page_count": 10,
+      "page_count_kind": "physical"
+    }
+  },
+  "extensions": {
+    "mineru": {
+      "tier": "basic",
+      "parse_mode": "txt"
+    },
+    "docvortex_layout": {
+      "version": 1,
+      "pages": [
+        {
+          "page_idx": 0,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 1,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 2,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 3,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 4,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 5,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 6,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 7,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 8,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        },
+        {
+          "page_idx": 9,
+          "width_pt": 612.0,
+          "height_pt": 792.0
+        }
+      ]
+    }
+  },
+  "is_full_document": true
+}

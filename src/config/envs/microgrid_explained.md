@@ -194,7 +194,7 @@ EA 代数、更新强度、变异和交叉算法均不变。
 
 ## 参数迭代与验收
 
-物理 v1 的历史校准见 `docs/physical_microgrid_validation.md`。
+物理 v1 的历史校准见[历史验证](../../../docs/archive/physical_microgrid_validation.md)。
 本次先在六个验证代表日比较九组容量、联络功率、发电成本组合；
 首个通过的候选在完整验证集出现两个发电机活跃度边缘案例，
 所以转到同一预声明序列中的下一候选。全部 182 个验证日通过后才锁定参数测试。
@@ -211,5 +211,5 @@ EA 代数、更新强度、变异和交叉算法均不变。
   平均互济成本收益至少 1%，每天送达互济量至少为总负荷的 2%。
 - 所有联合/对照 MILP 求解成功，通过日末 SOC、回放和误差证书检查。
 
-上述设备校准的历史细节见 `docs/heterogeneous_microgrid_validation.md`。
-v3 的兼容性、物理等价验证和短训练限制见 `docs/gavdac_environment_v3.md`。
+上述设备校准的历史细节见[异构微网验证](../../../docs/archive/heterogeneous_microgrid_validation.md)。
+v3 的兼容性和验证边界见[环境说明](../../../docs/facmac_environment_v3.md)。

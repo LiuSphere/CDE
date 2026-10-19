@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg01",
+  "chunk_id": "mg01-c0017",
+  "path": "agent_chunks/mg01/mg01-c0017.json",
+  "line_start": 755,
+  "line_end": 775,
+  "char_start": 93780,
+  "char_end_exclusive": 95350,
+  "characters": 1570,
+  "text_sha256_utf8": "3414a2c71e702e21c4557e4b2dc880b4493ff66f466cd66005f09a0f2b428e9f",
+  "source_text": "01_Explainable_RL_battery_aware/paper.txt",
+  "content_type": "mineru_extracted_source_text",
+  "text": "Tsianikas S, Zhou J, Yousefi N, Rodgers MD, Coit DW. Multi-energy microgrid expansion planning with reliability consideration based on deep reinforcement learning. Comput Ind Eng 2025;111283.\n[35]\nJonban MS, Romeral L, Marzband M, Abusorrah A. A reinforcement learning approach using Markov decision processes for battery energy storage control within a smart contract framework. J Energy Storage 2024;86:111342.\n[36]\nPanda M, Al Zaabi O, Al Jaafari K, Kumar P, Al Hosani K, Muduli UR. Stateof-charge droop control for efficient power sharing and transient response in microgrids. In: 2023 IEEE IAS global conference on emerging technologies. IEEE; 2023, p. 1–5.\n[37]\nBekkemoen Y. Explainable reinforcement learning (XRL): a systematic literature review and taxonomy. Mach Learn 2024;113(1):355–441.\n[38]\nAnderson KS, Hansen CW, Holmgren WF, Jensen AR, Mikofski MA, Driesse A. Pvlib python: 2023 project update. J Open Source Softw 2023;8(92):5994.\n[39]\nWindPowerLib–Developers. WindPowerLib: A python library for wind power simulation and analysis. 2024,\nAccessed 03 September 2024\n.\n[40] Schulman J, Wolski F, Dhariwal P, Radford A, Klimov O. Proximal policy optimization algorithms. 2017, arXiv preprint\narXiv:1707.06347\n.\n[41] Lundberg S. A unified approach to interpreting model predictions. 2017, arXiv preprint\narXiv:1705.07874\n.\n[42]\nRibeiro MT, Singh S, Guestrin C. \" why should i trust you?\" explaining the predictions of any classifier. In: Proceedings of the 22nd ACM SIGKDD international conference on knowledge discovery and data mining. 2016, p. 1135–44.\n"
+}

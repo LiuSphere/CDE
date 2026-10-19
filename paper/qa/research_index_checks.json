@@ -1,0 +1,30 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "papers": 10,
+    "links": 414,
+    "filtering": "passed",
+    "fulltext": "passed",
+    "emptyState": "passed",
+    "anchors": "passed",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "papers": 10,
+    "links": 414,
+    "filtering": "passed",
+    "fulltext": "passed",
+    "emptyState": "passed",
+    "anchors": "passed",
+    "overflow": false,
+    "errors": []
+  }
+]

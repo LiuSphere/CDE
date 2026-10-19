@@ -1,0 +1,280 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg04",
+  "title": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+  "source_text": "04_MARL_P2P_market/paper.txt",
+  "source_text_file_sha256": "3207d9945d2647f6f905956713743d43077be010834c5fe3643f40a357d95856",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+      "level": 1,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "multi-agent-reinforcement-learning-based-joint-design-of-low-carbon-p2p-market-and-bidding-strategy-in-microgrids"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "I. INTRODUCTION",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "i-introduction"
+    },
+    {
+      "heading": "II. RELATED WORKS",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "ii-related-works"
+    },
+    {
+      "heading": "III. PROBLEM STATEMENT",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "iii-problem-statement"
+    },
+    {
+      "heading": "A. Microgrid System",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "a-microgrid-system"
+    },
+    {
+      "heading": "B. Electricity Market Framework",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "b-electricity-market-framework"
+    },
+    {
+      "heading": "C. Intraday P2P Market Mechanism",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "c-intraday-p2p-market-mechanism"
+    },
+    {
+      "heading": "IV. MARL-BASED BIDDING STRATEGY IN INTRADAY P2P MARKET",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "iv-marl-based-bidding-strategy-in-intraday-p2p-market"
+    },
+    {
+      "heading": "A. Bidding and Energy Storage Strategies for Microgrid i",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "a-bidding-and-energy-storage-strategies-for-microgrid-i"
+    },
+    {
+      "heading": "B. DEC-POMDP Formulation",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "b-dec-pomdp-formulation"
+    },
+    {
+      "heading": "C. LSTM-MAPPO with CTDE Training Method",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "c-lstm-mappo-with-ctde-training-method"
+    },
+    {
+      "heading": "V. NUMERICAL SIMULATION",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "v-numerical-simulation"
+    },
+    {
+      "heading": "A. Environment Setup",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "a-environment-setup"
+    },
+    {
+      "heading": "B. Baselines",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "b-baselines"
+    },
+    {
+      "heading": "C. Parameter and Details of Training",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "c-parameter-and-details-of-training"
+    },
+    {
+      "heading": "D. Performance Comparison of Market Clearing Mechanism",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "d-performance-comparison-of-market-clearing-mechanism"
+    },
+    {
+      "heading": "E. Performance Comparison of LSTM-MAPPO",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "e-performance-comparison-of-lstm-mappo"
+    },
+    {
+      "heading": "VI. CONCLUSION",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "vi-conclusion"
+    },
+    {
+      "heading": "ACKNOWLEDGMENT",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "acknowledgment"
+    },
+    {
+      "heading": "REFERENCES",
+      "level": 2,
+      "html_path": "04_MARL_P2P_market/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "LSTM",
+      "first_match_line": 222,
+      "candidate_chunk_ids": [
+        "mg04-c0006"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "MAPPO",
+      "first_match_line": 25,
+      "candidate_chunk_ids": [
+        "mg04-c0003"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "efficien",
+      "first_match_line": 9,
+      "candidate_chunk_ids": [
+        "mg04-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg04-c0001",
+      "path": "agent_chunks/mg04/mg04-c0001.json",
+      "line_start": 1,
+      "line_end": 13,
+      "char_start": 0,
+      "char_end_exclusive": 5939,
+      "characters": 5939,
+      "text_sha256_utf8": "4e0c5a42cd3b08e3d9dab5393d36e132830d93a5da86d9a76fdde943e7744c03"
+    },
+    {
+      "chunk_id": "mg04-c0002",
+      "path": "agent_chunks/mg04/mg04-c0002.json",
+      "line_start": 14,
+      "line_end": 24,
+      "char_start": 5939,
+      "char_end_exclusive": 10700,
+      "characters": 4761,
+      "text_sha256_utf8": "1a12c47c623fba895441cc4fe779c802cc22b5f4b50339bee70a80fddc1e969f"
+    },
+    {
+      "chunk_id": "mg04-c0003",
+      "path": "agent_chunks/mg04/mg04-c0003.json",
+      "line_start": 25,
+      "line_end": 70,
+      "char_start": 10700,
+      "char_end_exclusive": 16395,
+      "characters": 5695,
+      "text_sha256_utf8": "e841ad62068180d925476701987b13df900d24e9edf61b71e62fab34e20af982"
+    },
+    {
+      "chunk_id": "mg04-c0004",
+      "path": "agent_chunks/mg04/mg04-c0004.json",
+      "line_start": 71,
+      "line_end": 145,
+      "char_start": 16395,
+      "char_end_exclusive": 22394,
+      "characters": 5999,
+      "text_sha256_utf8": "17cda6dc23b3f2300082ded022b04e1dad5c42684bb337ed9ddec821c452a907"
+    },
+    {
+      "chunk_id": "mg04-c0005",
+      "path": "agent_chunks/mg04/mg04-c0005.json",
+      "line_start": 146,
+      "line_end": 221,
+      "char_start": 22394,
+      "char_end_exclusive": 28234,
+      "characters": 5840,
+      "text_sha256_utf8": "e70df5ffa337a70b2167abf682c32d891f6e862c8cbfc21787c306e16657c0f6"
+    },
+    {
+      "chunk_id": "mg04-c0006",
+      "path": "agent_chunks/mg04/mg04-c0006.json",
+      "line_start": 222,
+      "line_end": 297,
+      "char_start": 28234,
+      "char_end_exclusive": 34174,
+      "characters": 5940,
+      "text_sha256_utf8": "8ae9e7677e04aa1ef96f11580405cccb8622a0779ffb26262c4217f0d997bc0d"
+    },
+    {
+      "chunk_id": "mg04-c0007",
+      "path": "agent_chunks/mg04/mg04-c0007.json",
+      "line_start": 298,
+      "line_end": 372,
+      "char_start": 34174,
+      "char_end_exclusive": 40167,
+      "characters": 5993,
+      "text_sha256_utf8": "65f938ebf9d79fb2c829f84e5783768ec73103909c980a43caf4e1e8cc04c547"
+    },
+    {
+      "chunk_id": "mg04-c0008",
+      "path": "agent_chunks/mg04/mg04-c0008.json",
+      "line_start": 373,
+      "line_end": 449,
+      "char_start": 40167,
+      "char_end_exclusive": 45533,
+      "characters": 5366,
+      "text_sha256_utf8": "1c0c96029f1a69fd35333b0c8518bdd65f18ad444a63ff39da338dfa11d94fcd"
+    },
+    {
+      "chunk_id": "mg04-c0009",
+      "path": "agent_chunks/mg04/mg04-c0009.json",
+      "line_start": 450,
+      "line_end": 498,
+      "char_start": 45533,
+      "char_end_exclusive": 50433,
+      "characters": 4900,
+      "text_sha256_utf8": "00e62d6a95c04c1f88f122fb22b5867c383bff08628243d4f29c533a46001b37"
+    },
+    {
+      "chunk_id": "mg04-c0010",
+      "path": "agent_chunks/mg04/mg04-c0010.json",
+      "line_start": 499,
+      "line_end": 523,
+      "char_start": 50433,
+      "char_end_exclusive": 56392,
+      "characters": 5959,
+      "text_sha256_utf8": "d118783775efd4b2f7ffeccc942ca449646b69bd6849d8d671cb9872aaeba704"
+    },
+    {
+      "chunk_id": "mg04-c0011",
+      "path": "agent_chunks/mg04/mg04-c0011.json",
+      "line_start": 524,
+      "line_end": 531,
+      "char_start": 56392,
+      "char_end_exclusive": 58028,
+      "characters": 1636,
+      "text_sha256_utf8": "d7b2f884686be5a8a3a7c6cbdc5adbab6d51c2fe1692ed33d2026419f2c43c83"
+    }
+  ]
+}

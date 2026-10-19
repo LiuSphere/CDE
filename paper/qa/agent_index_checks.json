@@ -1,0 +1,11 @@
+{
+  "papers": 10,
+  "chunks": 177,
+  "max_chunk_characters": 6000,
+  "manifest_bytes": 24795,
+  "json_roundtrip": "passed",
+  "lossless_text_coverage": "passed",
+  "chunk_hashes": "passed",
+  "source_paths": "passed",
+  "search_locators": "passed"
+}

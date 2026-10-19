@@ -1,0 +1,262 @@
+[
+  {
+    "paper": "01",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Explainable deep reinforcement learning for resilient and battery-aware microgrid control",
+    "characters": 91869,
+    "images": 46,
+    "brokenImages": 0,
+    "mathml": 202,
+    "overflow": false
+  },
+  {
+    "paper": "02",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+    "characters": 88084,
+    "images": 33,
+    "brokenImages": 0,
+    "mathml": 214,
+    "overflow": false
+  },
+  {
+    "paper": "03",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+    "characters": 107442,
+    "images": 23,
+    "brokenImages": 0,
+    "mathml": 242,
+    "overflow": false
+  },
+  {
+    "paper": "04",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+    "characters": 53852,
+    "images": 7,
+    "brokenImages": 0,
+    "mathml": 129,
+    "overflow": false
+  },
+  {
+    "paper": "05",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+    "characters": 123666,
+    "images": 14,
+    "brokenImages": 0,
+    "mathml": 179,
+    "overflow": false
+  },
+  {
+    "paper": "06",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+    "characters": 127398,
+    "images": 72,
+    "brokenImages": 0,
+    "mathml": 406,
+    "overflow": false
+  },
+  {
+    "paper": "07",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+    "characters": 55875,
+    "images": 25,
+    "brokenImages": 0,
+    "mathml": 92,
+    "overflow": false
+  },
+  {
+    "paper": "08",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+    "characters": 99218,
+    "images": 34,
+    "brokenImages": 0,
+    "mathml": 180,
+    "overflow": false
+  },
+  {
+    "paper": "09",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+    "characters": 92743,
+    "images": 51,
+    "brokenImages": 0,
+    "mathml": 90,
+    "overflow": false
+  },
+  {
+    "paper": "10",
+    "viewport": {
+      "width": 1440,
+      "height": 1050
+    },
+    "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+    "characters": 88874,
+    "images": 17,
+    "brokenImages": 0,
+    "mathml": 225,
+    "overflow": false
+  },
+  {
+    "paper": "01",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Explainable deep reinforcement learning for resilient and battery-aware microgrid control",
+    "characters": 91869,
+    "images": 46,
+    "brokenImages": 0,
+    "mathml": 202,
+    "overflow": false
+  },
+  {
+    "paper": "02",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+    "characters": 88084,
+    "images": 33,
+    "brokenImages": 0,
+    "mathml": 214,
+    "overflow": false
+  },
+  {
+    "paper": "03",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+    "characters": 107442,
+    "images": 23,
+    "brokenImages": 0,
+    "mathml": 242,
+    "overflow": false
+  },
+  {
+    "paper": "04",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+    "characters": 53852,
+    "images": 7,
+    "brokenImages": 0,
+    "mathml": 129,
+    "overflow": false
+  },
+  {
+    "paper": "05",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+    "characters": 123666,
+    "images": 14,
+    "brokenImages": 0,
+    "mathml": 179,
+    "overflow": false
+  },
+  {
+    "paper": "06",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+    "characters": 127398,
+    "images": 72,
+    "brokenImages": 0,
+    "mathml": 406,
+    "overflow": false
+  },
+  {
+    "paper": "07",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+    "characters": 55875,
+    "images": 25,
+    "brokenImages": 0,
+    "mathml": 92,
+    "overflow": false
+  },
+  {
+    "paper": "08",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+    "characters": 99218,
+    "images": 34,
+    "brokenImages": 0,
+    "mathml": 180,
+    "overflow": false
+  },
+  {
+    "paper": "09",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+    "characters": 92743,
+    "images": 51,
+    "brokenImages": 0,
+    "mathml": 90,
+    "overflow": false
+  },
+  {
+    "paper": "10",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+    "characters": 88874,
+    "images": 17,
+    "brokenImages": 0,
+    "mathml": 225,
+    "overflow": false
+  }
+]

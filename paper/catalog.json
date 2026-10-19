@@ -1,0 +1,202 @@
+[
+  {
+    "number": "01",
+    "title": "Explainable deep reinforcement learning for resilient and battery-aware microgrid control",
+    "authors": "Mohammad Hossein Nejati Amiri; Florimond Guéniat",
+    "journal": "Energy Conversion and Management",
+    "doi": "10.1016/j.enconman.2026.121215",
+    "issue_date_parts": [
+      2026,
+      4
+    ],
+    "doi_registered_at": "2026-02-16T20:02:31Z",
+    "verified_public_date": "2026-02-16",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\01_ECM_2026_Explainable_RL_battery_aware.pdf",
+    "pages": 26,
+    "bytes": 9288872,
+    "sha256": "fd72c6050adcc396b665f13bb9d6235ade5f9a4f36a1bec160825e7e9e589537"
+  },
+  {
+    "number": "02",
+    "title": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+    "authors": "Qiong Liu; Zhanhua Pan; Ye Guo; Yue Chen; Goran Strbac; Dawei Qiu",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.127561",
+    "issue_date_parts": [
+      2026,
+      5
+    ],
+    "doi_registered_at": "2026-02-27T17:32:59Z",
+    "verified_public_date": "2026-02-27",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\02_AE_2026_Mixture_of_experts_multi_critic.pdf",
+    "pages": 15,
+    "bytes": 2931987,
+    "sha256": "d9805c272b4b2660c4206b51b593b87dcf69408837da4554eb6cbaeb8bdc5e2b"
+  },
+  {
+    "number": "03",
+    "title": "Hierarchical reinforcement learning for cost-effective railway microgrid management",
+    "authors": "Shihao Zhao; Kang Li; Brian Sweeney; Davison Ross; Jianyu Zhang; Zhengrun Zhao",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.128698",
+    "issue_date_parts": [
+      2026,
+      12
+    ],
+    "doi_registered_at": "2026-08-19T20:37:54Z",
+    "verified_public_date": "2026-08-19",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\03_AE_2026_Hierarchical_RL_railway_microgrid.pdf",
+    "pages": 18,
+    "bytes": 5336323,
+    "sha256": "c150110ab15e0c6c2e249f57e826f732068f334bd192d756fcd051733de6cac3"
+  },
+  {
+    "number": "04",
+    "title": "Multi-agent reinforcement learning-based joint design of low-carbon P2P market and bidding strategy in microgrids",
+    "authors": "Junhao Ren; Honglin Gao; Sijie Wang; Lan Zhao; Qiyu Kang; Aniq Ashan; Yajuan Sun; Gaoxi Xiao",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.128693",
+    "issue_date_parts": [
+      2026,
+      12
+    ],
+    "doi_registered_at": "2026-08-21T14:16:05Z",
+    "verified_public_date": "2026-04-03",
+    "public_date_type": "preprint_first_posted",
+    "version": "author_preprint",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\04_AE_2026_MARL_P2P_market_author_preprint.pdf",
+    "pages": 10,
+    "bytes": 2377679,
+    "sha256": "f2cf539a10443415a6c5372541a16b92db197fb02966aa5c44521e5011a50525"
+  },
+  {
+    "number": "05",
+    "title": "MARLEM: A multi-agent reinforcement learning simulation framework for implicit cooperation in decentralized local energy markets",
+    "authors": "Nelson Salazar-Peña; Alejandra Tabares; Andrés González-Mancera",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.127546",
+    "issue_date_parts": [
+      2026,
+      6
+    ],
+    "doi_registered_at": "2026-03-10T20:54:23Z",
+    "verified_public_date": "2026-02-17",
+    "public_date_type": "preprint_first_posted",
+    "version": "author_preprint",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\05_AE_2026_MARLEM_author_preprint.pdf",
+    "pages": 32,
+    "bytes": 1020618,
+    "sha256": "55cfb5b26e2c8ef6a6a6e27f98b4c79a07f18f7f2dba9259770985ad39419dc8"
+  },
+  {
+    "number": "06",
+    "title": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+    "authors": "Ayodele Benjamin Esan; Hussain Shareef; Ahmad K. ALAhmad",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.127354",
+    "issue_date_parts": [
+      2026,
+      4
+    ],
+    "doi_registered_at": "2026-01-13T20:41:28Z",
+    "verified_public_date": "2026-01-13",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\1-s2.0-S0306261926000061-main.pdf",
+    "pages": 31,
+    "bytes": 14595055,
+    "sha256": "ca24b3a6439e267c6c3b8fe00640246bcf5cc57a7eae56931ff26230e0de062e"
+  },
+  {
+    "number": "07",
+    "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+    "authors": "Jingxuan Wu; Shuting Li; Yun Yu; Yajuan Guan; Baoze Wei; Zhe Chen",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2025.127223",
+    "issue_date_parts": [
+      2026,
+      3
+    ],
+    "doi_registered_at": "2025-12-19T08:49:44Z",
+    "verified_public_date": "2025-12-19",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\1-s2.0-S0306261925019531-main.pdf",
+    "pages": 10,
+    "bytes": 7180656,
+    "sha256": "1a774ee074e0b789de2394182832038d324fb163b2c8c275ce9e830abcc13784"
+  },
+  {
+    "number": "08",
+    "title": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+    "authors": "Sai Sasidhar Punyam Rajendran; Alemayehu Gebremedhin",
+    "journal": "Energy Conversion and Management",
+    "doi": "10.1016/j.enconman.2026.121652",
+    "issue_date_parts": [
+      2026,
+      9
+    ],
+    "doi_registered_at": "2026-05-22T17:18:31Z",
+    "verified_public_date": "2026-05-22",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\1-s2.0-S0196890426006217-main.pdf",
+    "pages": 22,
+    "bytes": 5647262,
+    "sha256": "fc0dedb87f83c6db8ffae007811ad9dfefda381478dff03f5b57af0e30fc9567"
+  },
+  {
+    "number": "09",
+    "title": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+    "authors": "Ben Jiang; Chengyu Zhang; Yu Li; Yacine Rezgui; Zhiwen Luo; Ali Ghoroghi; Peng Wang; Tianyi Zhao",
+    "journal": "Energy",
+    "doi": "10.1016/j.energy.2026.140676",
+    "issue_date_parts": [
+      2026,
+      4
+    ],
+    "doi_registered_at": "2026-03-07T07:58:42Z",
+    "verified_public_date": "",
+    "public_date_type": "not_verified",
+    "version": "accepted_manuscript",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\Deep Reinforcement Learning Strategy Integrating Environmental Perception and Semantic Masking for Real-Time Operational Optimization of Building Cluster Microgrids.pdf",
+    "pages": 40,
+    "bytes": 3724883,
+    "sha256": "8ce330e2e4b9d2aeb65f29b625754ac909ea4f1e851552085b96a6631418ca4f"
+  },
+  {
+    "number": "10",
+    "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+    "authors": "Wencong Xiao; Qingquan Luo; Tao Yu; Yufeng Wu; Zhanhong Huang; Zhenning Pan",
+    "journal": "Applied Energy",
+    "doi": "10.1016/j.apenergy.2026.128001",
+    "issue_date_parts": [
+      2026,
+      8
+    ],
+    "doi_registered_at": "2026-05-09T09:57:56Z",
+    "verified_public_date": "2026-05-09",
+    "public_date_type": "pdf_available_online",
+    "version": "publisher_version",
+    "status": "downloaded_verified",
+    "pdf_path": "C:\\Users\\xyx\\Desktop\\GDE-main\\paper\\1-s2.0-S0306261926006537-main.pdf",
+    "pages": 16,
+    "bytes": 5086314,
+    "sha256": "a3bc377d943ab78621f4740da62f63a75b9d181b8560895a6f8a067b6287b196"
+  }
+]

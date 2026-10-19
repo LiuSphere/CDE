@@ -1,0 +1,5871 @@
+{
+  "metadata": {
+    "file_suffix": "pdf",
+    "producer": {
+      "name": "mineru",
+      "version": "4.0.12"
+    },
+    "document": {
+      "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+      "authors": [
+        "Jingxuan Wu"
+      ],
+      "subject": "Applied Energy, 406 (2026) 127223. doi:10.1016/j.apenergy.2025.127223",
+      "keywords": [
+        "Energy Management,Energy Storage System,Microgrid,Power Flow Control,Reinforcement Learning"
+      ],
+      "description": "Applied Energy, 406 (2026) 127223. doi:10.1016/j.apenergy.2025.127223",
+      "languages": [
+        "EN"
+      ],
+      "identifiers": [
+        "10.1016/j.apenergy.2025.127223"
+      ],
+      "publisher": "Elsevier Ltd",
+      "created_at": "2026-01-15T11:57:54Z",
+      "modified_at": "2026-01-15T12:02:02Z",
+      "creator_application": "Elsevier",
+      "producer_application": "Acrobat Distiller 8.1.0 (Windows)",
+      "page_count": 10,
+      "page_count_kind": "physical"
+    }
+  },
+  "extensions": {
+    "mineru": {
+      "tier": "basic",
+      "parse_mode": "txt"
+    },
+    "docvortex_layout": {
+      "version": 1,
+      "pages": [
+        {
+          "page_idx": 0,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 1,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 2,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 3,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 4,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 5,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 6,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 7,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 8,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 9,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "page_idx": 0,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.4,
+            0.043,
+            0.597,
+            0.057
+          ],
+          "content": [
+            {
+              "type": "hyperlink",
+              "url": "https://doi.org/10.1016/j.apenergy.2025.127223",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Applied Energy 406 (2026) 127223"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.061,
+            0.076,
+            0.164,
+            0.145
+          ],
+          "content": []
+        },
+        {
+          "type": "header",
+          "index": 2,
+          "bbox": [
+            0.382,
+            0.077,
+            0.624,
+            0.091
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Contents lists available at "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://www.sciencedirect.com/science/journal/0306-2619",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "ScienceDirect"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 3,
+          "bbox": [
+            0.062,
+            0.147,
+            0.164,
+            0.163
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "ELSEVIER"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 4,
+          "bbox": [
+            0.42,
+            0.111,
+            0.586,
+            0.133
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 5,
+          "bbox": [
+            0.327,
+            0.148,
+            0.678,
+            0.162
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "journal homepage: "
+            },
+            {
+              "type": "hyperlink",
+              "url": "https://www.elsevier.com/locate/APEN",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "www.elsevier.com/locate/apen"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 6,
+          "bbox": [
+            0.843,
+            0.069,
+            0.94,
+            0.162
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "AppliedEnergy"
+            }
+          ]
+        },
+        {
+          "type": "doc_title",
+          "index": 7,
+          "bbox": [
+            0.059,
+            0.21,
+            0.782,
+            0.254
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market"
+            }
+          ],
+          "level": 1
+        },
+        {
+          "type": "image",
+          "index": 8,
+          "bbox": [
+            0.84,
+            0.186,
+            0.889,
+            0.223
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 8,
+              "bbox": [
+                0.84,
+                0.186,
+                0.889,
+                0.223
+              ],
+              "image_path": "images/page_0_image_8.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.059,
+            0.261,
+            0.642,
+            0.278
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Jingxuan Wu"
+            },
+            {
+              "type": "text",
+              "content": "∗",
+              "styles": [
+                "superscript"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " "
+            },
+            {
+              "type": "hyperlink",
+              "url": "https://orcid.org/0000-0003-4277-8550",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "iD",
+                  "styles": [
+                    "bold"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": ", Shuting Li, Yun Yu, Yajuan Guan, Baoze Wei, Zhe Chen"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 10,
+          "bbox": [
+            0.059,
+            0.281,
+            0.383,
+            0.295
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Aalborg University, Pontoppidanstraede 111, Aalborg, 9220, Denmark"
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 11,
+          "bbox": [
+            0.059,
+            0.321,
+            0.21,
+            0.336
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "H I G H L I G H T S"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.058,
+            0.348,
+            0.542,
+            0.361
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• A novel online energy management strategy independent of massive historical datasets."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.058,
+            0.361,
+            0.593,
+            0.373
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• Multi-objective intelligent decision-making agent using a deep reinforcement-learning algorithm."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 14,
+          "bbox": [
+            0.059,
+            0.372,
+            0.623,
+            0.385
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• An online energy market evaluation method for electricity trading guidance in flexible energy markets."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.059,
+            0.385,
+            0.595,
+            0.398
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• High-resolution operations to handle transient oscillations in the power flow and energy balance."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 16,
+          "bbox": [
+            0.06,
+            0.425,
+            0.228,
+            0.439
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A R T I C L E I N F O"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.059,
+            0.453,
+            0.18,
+            0.519
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Keywords: Energy Management Energy Storage System Microgrid Power Flow Control Reinforcement Learning"
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 18,
+          "bbox": [
+            0.339,
+            0.425,
+            0.461,
+            0.439
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A B S T R A C T"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.336,
+            0.45,
+            0.942,
+            0.635
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The promotion of renewable energy in Microgrids (MGs) brings uncertainty from weather and climate change, thereby challenging the energy management systems (EMSs) in energy allocation tasks. This paper proposes a reinforcement learning (RL)-based online EMS (RLEMS) approach to solve the multi-objective optimization of power flow in an MG with a high proportion of uncertainty. A novel online energy management framework is proposed in the RLEMS, which utilizes the information extraction ability of RL algorithms to map the multi-dimensional MG states with optimal power flow operations, diluting the time sequence self-correlation in solving uncertainty. Different from conventional time series optimization methods, the proposed RLEMS can be deployed with few-shot historical datasets and operate the MG with a high resolution. The global economic horizon of the RLEMS is established through a novel energy price evaluation model (EPEM) instead of conventional prediction approaches, in which the vague evaluation of electricity price is quantified and projected to the RLEMS timescale and the MG scope. The multi-timescale uncertainty and multi-dimensional MG status are combined with distinguished priorities by the EPEM and RLEMS reward function. The performance of the proposed RLEMS is validated through realistic numerical experiments. The proposed RLEMS can maintain the stable and economical operation of the MG for over 240 hours continuously with only 24-hour training data. The comparison with cutting-edge approaches indicates that the proposed RLEMS provides promising cost-saving performance."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 20,
+          "bbox": [
+            0.06,
+            0.673,
+            0.164,
+            0.687
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "1 . Introduction"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 21,
+          "bbox": [
+            0.058,
+            0.694,
+            0.49,
+            0.815
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Renewable energy has been developing rapidly in the last decades due to public awareness of environment-friendly energy structures, leading to the growing implementation of wind and solar generation. Microgrids (MGs) are essential units to interface distributed generators into power systems and therefore the terminal system, which suffers from the uncertainty and intermittence of renewable energy [1]. To improve the power balance and power efficiency of MGs, energy storage (ES) systems and cooperated energy management systems (EMSs) are deployed to dispatch the local energy spatiotemporally."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.51,
+            0.673,
+            0.943,
+            0.82
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "An energy management system (EMS) is defined as a tertiary-level control system to monitor, dispatch, and optimize the MG system [2]. The internal power and energy balance is an important optimization target for EMSs in MGs, which affects the frequency and voltage stability of the AC bus [3]. EMSs optimize the power flow by operating the ES systems and controllable loads according to the system dynamics [4]. Many automatic control methods have been introduced into EMS applications to enhance the power balance of MG systems. In [5], fuzzy logic is deployed to switch the operation modes of an MG. The dispatched distributed generators include a fuel cell, a battery, a photovoltaic (PV) system, and the utility grid. Model predictive control (MPC)"
+            }
+          ]
+        },
+        {
+          "type": "page_footnote",
+          "index": 23,
+          "bbox": [
+            0.066,
+            0.842,
+            0.49,
+            0.868
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "∗ Corresponding author. Email addresses: "
+            },
+            {
+              "type": "hyperlink",
+              "url": "mailto:jinwu@energy.aau.dk",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "jinwu@energy.aau.dk"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " (J. Wu), "
+            },
+            {
+              "type": "hyperlink",
+              "url": "mailto:shuli@energy.aau.dk",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "shuli@energy.aau.dk"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " (S. Li)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 1,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.057,
+            0.044,
+            0.173,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.043,
+            0.941,
+            0.056
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "index": 4,
+          "bbox": [
+            0.146,
+            0.093,
+            0.852,
+            0.241
+          ],
+          "content": [
+            {
+              "type": "table_caption",
+              "index": 2,
+              "bbox": [
+                0.144,
+                0.068,
+                0.192,
+                0.08
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Table 1"
+                }
+              ]
+            },
+            {
+              "type": "table_caption",
+              "index": 3,
+              "bbox": [
+                0.144,
+                0.08,
+                0.383,
+                0.093
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Research scope of existing EMS approaches."
+                }
+              ]
+            },
+            {
+              "type": "table_body",
+              "index": 4,
+              "bbox": [
+                0.146,
+                0.093,
+                0.852,
+                0.241
+              ],
+              "image_path": "images/page_1_table_4.jpg",
+              "content": "<table><tr><td rowspan=\"2\">Approaches</td><td colspan=\"2\">Objectives</td><td colspan=\"2\">Data dependency</td><td colspan=\"3\">Uncertainty source</td><td colspan=\"2\">Uncertainty solution</td><td colspan=\"2\">Resolution</td></tr><tr><td>Stability</td><td>Economic</td><td>Little</td><td>Large</td><td>Weather</td><td>User</td><td>Market</td><td>External</td><td>Internal</td><td>Hour</td><td>Minute</td></tr><tr><td>Fuzzy logic [5]</td><td>Y</td><td></td><td></td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td></td><td></td><td>Y</td></tr><tr><td>MPC [6]</td><td>Y</td><td></td><td></td><td>Y</td><td>Y</td><td></td><td></td><td>Y</td><td></td><td></td><td>Y</td></tr><tr><td>MILP [12,13]</td><td></td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td></td></tr><tr><td>PSO [15,16]</td><td></td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td></td><td>Y</td><td></td></tr><tr><td>Q-learning [22]</td><td></td><td>Y</td><td></td><td>Y</td><td></td><td></td><td>Y</td><td>Y</td><td></td><td>Y</td><td></td></tr><tr><td>DQN [23]</td><td></td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td></td></tr><tr><td>DDPG [24]</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td></td><td></td><td>Y</td><td>Y</td><td></td></tr><tr><td>SAC [25]</td><td></td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td></td></tr><tr><td>PPO [27]</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td></td></tr><tr><td>Proposed</td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td>Y</td><td>Y</td><td></td><td>Y</td><td></td><td>Y</td></tr></table>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 5,
+          "bbox": [
+            0.055,
+            0.271,
+            0.487,
+            0.416
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "is introduced in [6,7] to realize the distributed power flow control in a multi-MG system. The robustness of the system is enhanced through this approach. Benefiting from the development of communication technology, the Internet of Things (IoT) is attracting increasing attention and bringing feasibility for centralized EMS in MGs. In [8], an IoT-based intelligent EMS is implemented in a PV-battery building to achieve the internal energy balance and net-zero emissions. However, the increasing proportion of solar or wind energy in modern power systems brings uncertainty to the energy market, long-term energy balance as well as local power flow, requiring long-term energy allocation strategies to optimize the MG from an economic aspect [9]."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 6,
+          "bbox": [
+            0.055,
+            0.416,
+            0.488,
+            0.772
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The economic operation of MG is another essential optimization target of EMSs [10]. In traditional EMSs, the dispatching tasks of MGs are reformulated as optimization problems. By employing prediction techniques to address uncertainty, mathematical optimization algorithms are introduced to determine the step-ahead schedule results for the MG [11]. Mixed-integer linear programming (MILP) is a common algorithm in EMS. In [12], the charging and discharging events of a battery are scheduled by the MILP in an MG to reduce the operation cost. In MG with discrete control objectives like electric vehicles or controllable loads, MILP demonstrates high performance in renewable energy dispatching [13]. For multi-objective optimization problems, the reformulated system incorporates additional nonlinear elements that necessitate heuristic algorithms for precise resolution [14]. Particle swarm optimization (PSO) is a typical heuristic algorithm in EMS applications [15]. In [16], PSO is deployed to realize the day-ahead EMS for a microgrid with a high proportion of PV generation. In [17], PSO is utilized to cooperate with an artificial neural network in an EMS for islanded MGs. Other algorithms, like teaching-learning, can also effectively solve the optimization problem in MG systems, and the calculation efficiency can be improved through novel quantum computation [18]. However, the uncertainty introduced by renewable energy or user actions is not solved directly in traditional optimization-based approaches. The economic performance of these methods is highly dependent on the prediction accuracy of loads and renewable generation. Even though the deep learning (DL) algorithm has significantly enhanced the forecasting precision in EMS applications, there still exists a conflict between the horizon of the EMS and the accuracy degradation of prediction methods [19]."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 7,
+          "bbox": [
+            0.055,
+            0.771,
+            0.488,
+            0.932
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Online EMS approaches enhance independence from highperformance prediction methods by treating energy management as a decision-making problem. Reinforcement learning (RL) is an effective algorithm for EMS in MGs with a high proportion of uncertainty [20]. Different from conventional offline EMS, which requires external forecasting methods, RL can solve the time series problem with internal deep neural networks [21]. Existing research has implemented plenty of RL algorithms in EMS applications, including Q-learning [22], Deep Q-network (DQN) [23], Deep Deterministic Policy Gradient (DDPG) [24], Soft Actor-Critic (SAC) [25], Proximal Policy Optimization (PPO) [26,27], etc. A comparison among RL approaches and conventional methods is presented in Table 1. RL outperforms traditional methods"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 8,
+          "bbox": [
+            0.507,
+            0.271,
+            0.941,
+            0.403
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in solving multi-objective problems and considering more complex systems. However, among all the existing methods, solutions to uncertainty always require numerous historical local databases. Time sequence problems are resolved by recurrent neural network blocks, typically long-short-term memory, in external prediction components or internal DL networks. These approaches expand input data in the time domain, on the one hand, increasing the computational burden of the training process, and on the other hand, raising the deployment cost in data preparation work and weakening the adaptability towards environmental and system configuration changes."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.507,
+            0.402,
+            0.941,
+            0.497
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "To release the historical data dependency of the EMS approaches and take the operation precision into account simultaneously. A novel RL-based EMS (RLEMS) is proposed in this paper, which on one hand, realizes the multi-objective power flow optimization in an MG with a high proportion of renewable energy, on the other hand, eliminates the computation burden caused by increased operation resolution. The contributions of this work are summarized as follows."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 10,
+          "bbox": [
+            0.527,
+            0.512,
+            0.941,
+            0.645
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "1. A novel RLEMS framework that concentrates on mapping the multi-dimensional system states and optimal power flow operations is proposed instead of the conventional time series arrangement approaches, diluting the time sequence self-correlation of uncertainty. The RLEMS utilizes the information extraction capabilities of DDPG algorithms to operate the power flow against uncertainty from weather, users, and markets without extra pre-diction components, releasing dependency on long-term historical training datasets, decreasing the deployment cost while enhancing the operation precision."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.526,
+            0.645,
+            0.94,
+            0.776
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "2. An energy price evaluation model (EPEM) is proposed to expand the dimensions and range of injected data, improving the information extraction efficiency and ensuring that the proposed RLEMS can work with limited historical data. This model-based online function projects global market uncertainty to the online RLEMS time scale according to the MG configurations. On one hand, the EPEM releases the computation burden caused by increasing resolution; on the other hand, the EPEM provides a novel evaluation method that jointly considers the uncertainty and device constraints."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.526,
+            0.776,
+            0.941,
+            0.858
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3. A resilient MG topology is designed to interface with the RLEMS, ensuring the continuous and stable operations of the RLEMS for MGs. The ultra-capacitor (UC) is utilized as an energy buffer, and the RLEMS is softly interfaced into the grid converter, avoiding the conflicts between tertiary RLEMS and primary controller, enhancing the system’s power balance with rapid power oscillation."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.508,
+            0.873,
+            0.941,
+            0.941
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The rest of the paper is organized as follows. The architecture of the MG and the topology of the RLEMS are presented in Section 2. In Section 3, the mathematical definition of the proposed EPEM is pre-sented and analyzed. The structure of the RL agent and DDPG algorithm is studied in Section 4. The numerical experiment is implemented for"
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 14,
+          "bbox": [
+            0.495,
+            0.952,
+            0.507,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 2,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.059,
+            0.044,
+            0.174,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 2,
+          "bbox": [
+            0.086,
+            0.073,
+            0.461,
+            0.459
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 2,
+              "bbox": [
+                0.086,
+                0.073,
+                0.461,
+                0.459
+              ],
+              "image_path": "images/page_2_image_2.jpg",
+              "content": ""
+            },
+            {
+              "type": "image_caption",
+              "index": 3,
+              "bbox": [
+                0.067,
+                0.471,
+                0.478,
+                0.484
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 1. Topology of the Multi-Energy Microgrid and interface of the RLEMS."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 4,
+          "bbox": [
+            0.058,
+            0.521,
+            0.488,
+            0.547
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "the proposed RLEMS, and the results are presented and analyzed in Section 5. At last, a conclusion is drawn in Section 6."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "paragraph_title",
+          "index": 5,
+          "bbox": [
+            0.059,
+            0.563,
+            0.372,
+            0.576
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "2 . The topology of the proposed RLEMS and MG"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 6,
+          "bbox": [
+            0.057,
+            0.584,
+            0.489,
+            0.769
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "MGs are essential units in modern power systems to integrate dis tributed generators. Most sustainable generation sources, for instance, PV systems, batteries, fuel cells, and UC, are naturally DC sources, while AC loads dominate the demand side. Hence, a DC bus is implemented to integrate the power suppliers as shown in Fig. 1. The utility grid, connected to the DC bus via a DC-AC converter, and the battery, interfaced through a bidirectional boost converter, are regulated by the RLEMS. The PV system is deployed via a maximum power point tracking (MPPT)-regulated boost converter. Residential loads consume power from the AC bus through an inverter. The bidirectional converter for UC maintains the DC bus voltage with a droop logic to guarantee the power balance on the DC bus. In this sense, the UC provides the dynamic energy buffer to mitigate transient power oscillations and inertia for energy dispatching, enhancing the resilience of the MG system."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 7,
+          "bbox": [
+            0.057,
+            0.769,
+            0.49,
+            0.941
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In the proposed MG architecture, the uncertainty is injected through multiple aspects. The PV system injects uncertainty from local weather. The residential loads are affected by stochastic user actions. The flexible energy price is determined by the global weather, climate, and supply–demand relationship. The renewable generation "
+            },
+            {
+              "type": "equation_inline",
+              "content": "( P _ { R E S } )"
+            },
+            {
+              "type": "text",
+              "content": " , consumption "
+            },
+            {
+              "type": "equation_inline",
+              "content": "( P _ { l o a d } ) _ { z }"
+            },
+            {
+              "type": "text",
+              "content": " state of charge of the battery "
+            },
+            {
+              "type": "equation_inline",
+              "content": "( S o C _ { B } ) _ { : }"
+            },
+            {
+              "type": "text",
+              "content": " , and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\mathrm { U C }   ( S o C _ { U C } )"
+            },
+            {
+              "type": "text",
+              "content": " are sampled by embedded smart meters or sensors and transmitted through a local IoT communication network. The proposed RLEMS collects real-time energy prices, marked as "
+            },
+            {
+              "type": "equation_inline",
+              "content": "{ P r } _ { \\flat }"
+            },
+            {
+              "type": "text",
+              "content": " from the website of the energy supplier and system data from a local network, through a Representational State Transfer (RESTful) application programming interface (API). The power flow of the MG system is regulated by the power reference matrix "
+            },
+            {
+              "type": "equation_inline",
+              "content": "( P _ { r e f } )"
+            },
+            {
+              "type": "text",
+              "content": " generated through the RLEMS."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 8,
+          "bbox": [
+            0.51,
+            0.067,
+            0.942,
+            0.146
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In this MG system, data from sensors with different collection frequencies are reorganized into several resolutions by rolling window averaging and interpolation in the IoT database. The RLEMS accesses the minute-resolution data series. The normally distributed data errors caused by communication latency or measurement issues are filtered through the data reorganization process."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.51,
+            0.146,
+            0.943,
+            0.265
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The RLEMS framework is presented in the yellow area in Fig. 1. The sampled signals are preprocessed by the EPEM, which provides a longterm assessment of the local energy system. The optimization objectives are defined, and their priorities are determined by the reward function. The DDPG algorithm is deployed to establish the RL agent, including an actor and a critic. The RL agent is updated continuously according to the online reward. In this sense, the multi-objective optimization problem of the MG system is reformulated as an online power flow control framework."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 10,
+          "bbox": [
+            0.511,
+            0.277,
+            0.822,
+            0.29
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3 . The proposed energy price evaluation model"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.51,
+            0.298,
+            0.943,
+            0.456
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Long-term optimization and real-time operation are considered separately in most existing EMS approaches, leading to information asymmetry and cooperation issues among different EMS layers. Existing research relies on prediction methods [28], stochastic models [29], or fuzzy logicbased evaluation to handle uncertainty from the weather and market sides. However, within the continuous operation in an MG, online corrections for evaluation results or thresholds are always necessary for deployment. Considering the dynamic states and flexible power operations during the continuous workflow, an EPEM is designed as a guide for economical operation to establish a long-term horizon in high-resolution online EMS. The EPEM consists of a dynamic energy price evaluation and an MG system status evaluation."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 12,
+          "bbox": [
+            0.511,
+            0.468,
+            0.73,
+            0.481
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3.1 . Dynamic energy price evaluation"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.51,
+            0.488,
+            0.942,
+            0.542
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The dynamic energy price evaluation calculates the average price of electricity stored in the battery, marked as 𝜉. During the charging process, the incoming energy comes from the PV system or the grid, and the average price can be calculated by,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 14,
+          "bbox": [
+            0.512,
+            0.552,
+            0.94,
+            0.6
+          ],
+          "image_path": "images/page_2_equation_14.jpg",
+          "content": "\\bar { P r } = \\left\\{ \\begin{array} { l r } { P r \\frac { P _ { g r i d } } { - P _ { E S S } } , } & { 0 < P _ { g r i d } < - P _ { E S S } , } \\\\ { P r , } & { 0 < - P _ { E S S } \\leq P _ { g r i d } ; } \\\\ { 0 , } & { P _ { g r i d } \\leq 0 . } \\end{array} \\right.\\tag{1}"
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.511,
+            0.611,
+            0.941,
+            0.652
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in which "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P _ { g r i d }"
+            },
+            {
+              "type": "text",
+              "content": " and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P _ { E S S }"
+            },
+            {
+              "type": "text",
+              "content": " represent the output power of the grid and the battery. "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P r"
+            },
+            {
+              "type": "text",
+              "content": " is the real-time electricity price. The average price of local energy storage in the battery can be calculated with,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 16,
+          "bbox": [
+            0.511,
+            0.662,
+            0.94,
+            0.69
+          ],
+          "image_path": "images/page_2_equation_16.jpg",
+          "content": "\\xi ( t ) = \\frac { S o C _ { B } ( t - 1 ) \\xi ( t - 1 ) + \\Delta S o C _ { B } \\cdot \\bar { P r } } { S o C _ { B } ( t ) }\\tag{2}"
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.511,
+            0.7,
+            0.941,
+            0.727
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "where the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\Delta S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " represents the battery’s SoC differential during each sample. The eq. (2) could be simplified as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 18,
+          "bbox": [
+            0.512,
+            0.737,
+            0.94,
+            0.766
+          ],
+          "image_path": "images/page_2_equation_18.jpg",
+          "content": "\\Delta \\xi = \\frac { \\Delta S o C _ { B } ( \\bar { P r } - \\xi ( t - 1 ) ) } { S o C _ { B } ( t ) }\\tag{3}"
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.531,
+            0.776,
+            0.908,
+            0.789
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "If the ESS was discharging, the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\xi"
+            },
+            {
+              "type": "text",
+              "content": " should remain constant since"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 20,
+          "bbox": [
+            0.511,
+            0.798,
+            0.94,
+            0.826
+          ],
+          "image_path": "images/page_2_equation_20.jpg",
+          "content": "\\xi ( t ) = \\frac { ( S o C _ { B } ( t - 1 ) + \\Delta S o C _ { B } ) \\cdot \\xi ( t - 1 ) } { S o C _ { B } ( t ) }\\tag{4}"
+        },
+        {
+          "type": "text",
+          "index": 21,
+          "bbox": [
+            0.512,
+            0.836,
+            0.541,
+            0.849
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "and"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 22,
+          "bbox": [
+            0.513,
+            0.862,
+            0.94,
+            0.875
+          ],
+          "image_path": "images/page_2_equation_22.jpg",
+          "content": "\\Delta \\xi = 0\\tag{5}"
+        },
+        {
+          "type": "text",
+          "index": 23,
+          "bbox": [
+            0.511,
+            0.888,
+            0.941,
+            0.914
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In summary the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\xi"
+            },
+            {
+              "type": "text",
+              "content": " could be described by the combination of Eq. (3) and (5),"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 24,
+          "bbox": [
+            0.512,
+            0.926,
+            0.94,
+            0.939
+          ],
+          "image_path": "images/page_2_equation_24.jpg",
+          "content": "\\xi ( t ) = \\xi ( t - 1 ) + \\Delta \\xi\\tag{6}"
+        },
+        {
+          "type": "page_number",
+          "index": 25,
+          "bbox": [
+            0.495,
+            0.953,
+            0.506,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 3,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.057,
+            0.044,
+            0.173,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.043,
+            0.941,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 2,
+          "bbox": [
+            0.056,
+            0.07,
+            0.485,
+            0.119
+          ],
+          "image_path": "images/page_3_equation_2.jpg",
+          "content": "\\Delta \\xi = \\left\\{ \\begin{array} { l l } { \\displaystyle \\frac { \\Delta S o C _ { B } ( \\bar { P r } - \\xi ( t - 1 ) ) } { S o C _ { B } ( t ) } , } & { 0 < \\Delta S o C , } \\\\ { 0 , } & { \\Delta S o C \\leq 0 . } \\end{array} \\right.\\tag{7}"
+        },
+        {
+          "type": "text",
+          "index": 3,
+          "bbox": [
+            0.055,
+            0.125,
+            0.487,
+            0.205
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The dynamic energy price evaluation 𝜉 is a complex inertia system involving uncertainty from the energy market. When the battery is charged with renewable energy or low-price energy, the 𝜉 decreases. A low 𝜉 indicates optimal charging operations of the battery [30]. However, optimal operations of the MG must consider global power balance and profits. Hence, the environmental evaluation is introduced into the assessment."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 4,
+          "bbox": [
+            0.057,
+            0.215,
+            0.284,
+            0.228
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3.2 . MG environment status evaluation"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 5,
+          "bbox": [
+            0.056,
+            0.235,
+            0.486,
+            0.289
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The proposed RLEMS is independent of prediction methods, which significantly provides a global horizon for the operation. Hence, the future operation margin must be reserved for the battery, the extreme "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " is restrained by a gain function for 𝜉."
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 6,
+          "bbox": [
+            0.057,
+            0.294,
+            0.485,
+            0.324
+          ],
+          "image_path": "images/page_3_equation_6.jpg",
+          "content": "K_{S}(t)=1-\\left(\\frac{SoC_{B}(t)-0.5}{MAX(|SoC_{B}-0.5|)}\\right)^{2\\sigma+1}\\tag{8}"
+        },
+        {
+          "type": "text",
+          "index": 7,
+          "bbox": [
+            0.056,
+            0.328,
+            0.487,
+            0.395
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in which "
+            },
+            {
+              "type": "equation_inline",
+              "content": "K _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " represents the state gain considering the state of charge of the battery. The 𝜎 is a non-negative integer that adjusts the sensitivity of the function. When the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " is around the center, the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "K _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " has less effect on the decision-making; on the contrary, the discharging at low "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " and the charging at high "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " can be restrained by the function."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 8,
+          "bbox": [
+            0.056,
+            0.394,
+            0.486,
+            0.435
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Apart from the local storage modification, it is essential to further take into account the broader global market environment. A rolling window mean is designed here to indicate the average energy price as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 9,
+          "bbox": [
+            0.057,
+            0.441,
+            0.485,
+            0.473
+          ],
+          "image_path": "images/page_3_equation_9.jpg",
+          "content": "P r _ { A } ( t ) = \\frac { 1 } { \\mu } \\sum _ { i = 0 } ^ { \\mu - 1 } P r ( t - \\frac { i } { f } ) .\\tag{9}"
+        },
+        {
+          "type": "equation",
+          "index": 10,
+          "bbox": [
+            0.057,
+            0.483,
+            0.484,
+            0.497
+          ],
+          "image_path": "images/page_3_equation_10.jpg",
+          "content": "\\mu = T f .\\tag{10}"
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.056,
+            0.501,
+            0.486,
+            0.529
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "where "
+            },
+            {
+              "type": "equation_inline",
+              "content": "{ P r } _ { A }"
+            },
+            {
+              "type": "text",
+              "content": " denotes the global average energy price, 𝑡 is the real time, 𝑇 represents the horizon, and 𝑓 is the operating frequency of the RLEMS."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.056,
+            0.528,
+            0.486,
+            0.555
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The gain function considering the global energy market is designed as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 13,
+          "bbox": [
+            0.057,
+            0.559,
+            0.484,
+            0.585
+          ],
+          "image_path": "images/page_3_equation_13.jpg",
+          "content": "K _ { P } ( t ) = \\frac { P r _ { A } } { P r }\\tag{11}"
+        },
+        {
+          "type": "text",
+          "index": 14,
+          "bbox": [
+            0.056,
+            0.588,
+            0.486,
+            0.628
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In summary, the proposed EPEM is composed of a basic local price evaluation and two coefficients to include local storage and global market considerations."
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 15,
+          "bbox": [
+            0.057,
+            0.635,
+            0.484,
+            0.649
+          ],
+          "image_path": "images/page_3_equation_15.jpg",
+          "content": "E P E M ( t ) = K _ { P } ( t ) \\cdot K _ { S } ( t ) \\cdot \\xi ( t )\\tag{12}"
+        },
+        {
+          "type": "text",
+          "index": 16,
+          "bbox": [
+            0.055,
+            0.655,
+            0.487,
+            0.773
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The 𝐸𝑃 𝐸𝑀(𝑡) provides a quantitative psychological price for the RLEMS to determine whether the market price is cheap or expensive, considering multiple factors. The steady-state characteristic of the EPEM against battery SoC and electricity price within the charging and discharging workflow is presented in Fig. 2. Generally, the EPEM matches the trend of the electricity price, and is suppressed or enlarged by the battery states. The deep coupling of the proposed 𝐸𝑃 𝐸𝑀 function with the system operation and market uncertainty will be addressed using the RL algorithm."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.055,
+            0.774,
+            0.487,
+            0.867
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In the RLEMS, the EPEM refines the effective information from the original sampling data to provide essential evaluation components to the reward function, improving the training and decision efficiency of the intelligent agent. Furthermore, the EPEM operates independently of the intelligent agent, thereby enhancing its adaptability to various data acquisition systems. The reward function can capture information from the EPEM according to its resolution."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 18,
+          "bbox": [
+            0.056,
+            0.877,
+            0.482,
+            0.904
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "4 . The framework of the reinforcement learning-based intelligent EMS agent"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.056,
+            0.91,
+            0.487,
+            0.937
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The intelligent operation of the MG system is realized through a DDPG-based RL algorithm. The connection between the RLEMS and the"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 20,
+          "bbox": [
+            0.564,
+            0.072,
+            0.883,
+            0.329
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 20,
+              "bbox": [
+                0.564,
+                0.072,
+                0.883,
+                0.329
+              ],
+              "image_path": "images/page_3_chart_20.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 21,
+              "bbox": [
+                0.509,
+                0.338,
+                0.938,
+                0.351
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 2. Steady-state sensitivity of the EPEM by battery SoC and electricity price."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.508,
+            0.377,
+            0.94,
+            0.418
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "MG system is presented in Fig. 1. The framework of the RLEMS includes the reformulation of the system environment, the definition of the reward function, and the design of the DDPG algorithm."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 23,
+          "bbox": [
+            0.51,
+            0.428,
+            0.696,
+            0.442
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "4.1 . Environment reformulation"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 24,
+          "bbox": [
+            0.508,
+            0.449,
+            0.94,
+            0.541
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In the MG environment, the uncertainty sources, including PV generation, the dynamic loads, and the flexible energy price, are realized through numerical models. The time series of the PV power and loads are sampled in a realistic IoT laboratory and the energy price sequence of the same duration is downloaded through a RESTful API. In this way, the uncertainty from the weather, random user actions, and the global energy market is introduced into the research."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 25,
+          "bbox": [
+            0.508,
+            0.541,
+            0.94,
+            0.634
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In this framework, the RLEMS receives online responses from the environment and adjusts the operational logic accordingly. The essential factor is that the model in the environment should match the external characteristics of the implemented system. Considering that the battery and UC have been assigned different objectives, the minor energy loss of UC and Lithium-ion batteries is not specifically modeled in the environment. Hence, the battery model is defined as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 26,
+          "bbox": [
+            0.51,
+            0.642,
+            0.938,
+            0.688
+          ],
+          "image_path": "images/page_3_equation_26.jpg",
+          "content": "\\begin{aligned} &S o C _ { B } = S o C _ { B } ^ { 0 } + \\int P _ { B } / C _ { B } d t , \\\\&S o C _ { B } ^ { M I N } < S o C _ { B } < S o C _ { B } ^ { M A X } ,\\\\ \\end{aligned}\\tag{13}"
+        },
+        {
+          "type": "text",
+          "index": 27,
+          "bbox": [
+            0.508,
+            0.695,
+            0.94,
+            0.763
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "where "
+            },
+            {
+              "type": "equation_inline",
+              "content": "{ \\cal S } o C _ { B } ^ { 0 }"
+            },
+            {
+              "type": "text",
+              "content": " represents the initial 𝑆𝑜𝐶 of the battery. The "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " is the output power of the battery, which will follow the reference from the RLEMS and be limited by the SoC. "
+            },
+            {
+              "type": "equation_inline",
+              "content": "C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " is the capacity of the battery. Constraints are set for the battery SoC to restrain the degradation. The UC model is similarly designed as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 28,
+          "bbox": [
+            0.509,
+            0.771,
+            0.938,
+            0.796
+          ],
+          "image_path": "images/page_3_equation_28.jpg",
+          "content": "SoC_{UC} = SoC^0_{UC} + \\int P_{UC}/C_{UC}dt, 0 < SoC_{UC} < 1\\tag{14}"
+        },
+        {
+          "type": "text",
+          "index": 29,
+          "bbox": [
+            0.508,
+            0.805,
+            0.94,
+            0.846
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in which the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C } ^ { 0 }"
+            },
+            {
+              "type": "text",
+              "content": " is the initial state of the UC. "
+            },
+            {
+              "type": "equation_inline",
+              "content": "C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " is the capacity of the UC. The output power of the UC, marked as "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P _ { U C } ,"
+            },
+            {
+              "type": "text",
+              "content": " compensates for the power demand in the MG system to ensure the internal power balance."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 30,
+          "bbox": [
+            0.508,
+            0.846,
+            0.94,
+            0.872
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The economic expense of the electricity is calculated through a power meter as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 31,
+          "bbox": [
+            0.509,
+            0.879,
+            0.938,
+            0.906
+          ],
+          "image_path": "images/page_3_equation_31.jpg",
+          "content": "C o s t = \\int P _ { g r i d } \\cdot P r d t , 0 < P _ { g r i d }\\tag{15}"
+        },
+        {
+          "type": "text",
+          "index": 32,
+          "bbox": [
+            0.508,
+            0.913,
+            0.94,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The data and signal exchange between the RL algorithm and the environment are the observation (𝑆) and action (𝐴). The 𝑆(𝑡) represents"
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 33,
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 4,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.059,
+            0.044,
+            0.174,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.043,
+            0.941,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 2,
+          "bbox": [
+            0.059,
+            0.068,
+            0.273,
+            0.08
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "the state space of the environment,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 3,
+          "bbox": [
+            0.059,
+            0.093,
+            0.487,
+            0.107
+          ],
+          "image_path": "images/page_4_equation_3.jpg",
+          "content": "S(t) = \\left[SoC_{B}(t),SoC_{UC}(t), EPEM(t), P_{RES}(t), P_{load}(t), Pr, \\xi(t)\\right]\\tag{16}"
+        },
+        {
+          "type": "text",
+          "index": 4,
+          "bbox": [
+            0.059,
+            0.118,
+            0.489,
+            0.158
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in which "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B } ( t ) ,   S o C _ { U C } ( t ) ,   P _ { R E S } ( t ) ,"
+            },
+            {
+              "type": "text",
+              "content": " and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P _ { l o a d } ( t )"
+            },
+            {
+              "type": "text",
+              "content": " are the real-time sampled data of the system status. The "
+            },
+            {
+              "type": "equation_inline",
+              "content": "P r"
+            },
+            {
+              "type": "text",
+              "content": " is the flexible energy price. The 𝐸𝑃 𝐸𝑀(𝑡) and 𝜉(𝑡) are evaluation parameters."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 5,
+          "bbox": [
+            0.058,
+            0.158,
+            0.489,
+            0.198
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The action space is the output of the RL algorithm, which provides the power reference value for the battery converter and grid converter. Hence the 𝐴(𝑡) can be defined as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 6,
+          "bbox": [
+            0.06,
+            0.21,
+            0.487,
+            0.226
+          ],
+          "image_path": "images/page_4_equation_6.jpg",
+          "content": "A ( t ) = [ P _ { B } ^ { * } ( t + 1 ) , P _ { g r i d } ^ { * } ( t + 1 ) ]\\tag{17}"
+        },
+        {
+          "type": "text",
+          "index": 7,
+          "bbox": [
+            0.057,
+            0.235,
+            0.489,
+            0.316
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In the environment, it is assumed that the output power of the grid converter and battery converter will quickly track the power reference when the SoC limitation of the battery is not triggered. The sampling delay is considered in the environment. The numerical models of the PV generation and loads are in minute resolution, while the price model is updated hourly according to the energy contract."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 8,
+          "bbox": [
+            0.059,
+            0.327,
+            0.187,
+            0.34
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "4.2 . Reward function"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.057,
+            0.347,
+            0.488,
+            0.4
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The reward function defines the optimization target in the RL algorithm. In the proposed RLEMS, the objectives are system power balance and minimum energy expense. The system power balance reward "
+            },
+            {
+              "type": "equation_inline",
+              "content": "R _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " is indicated by,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 10,
+          "bbox": [
+            0.059,
+            0.411,
+            0.487,
+            0.427
+          ],
+          "image_path": "images/page_4_equation_10.jpg",
+          "content": "R _ { S } ( t ) = - ( \\lambda ( S o C _ { U C } ( t ) - 0 . 5 ) ) ^ { 2 W _ { S } }\\tag{18}"
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.058,
+            0.437,
+            0.488,
+            0.463
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "where 𝜆 affects the sensitive margin of the function, "
+            },
+            {
+              "type": "equation_inline",
+              "content": "W _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " affects the weight of the component."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.058,
+            0.463,
+            0.488,
+            0.503
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The SoC of the battery is regulated by the RLEMS, and an alarm for overcharging and over-discharging is incorporated into the reward function."
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 13,
+          "bbox": [
+            0.06,
+            0.515,
+            0.486,
+            0.53
+          ],
+          "image_path": "images/page_4_equation_13.jpg",
+          "content": "R _ { A } ( t ) = - ( \\gamma ( S o C _ { B } ( t ) - 0 . 5 ) ) ^ { 2 W _ { A } }\\tag{19}"
+        },
+        {
+          "type": "text",
+          "index": 14,
+          "bbox": [
+            0.058,
+            0.541,
+            0.488,
+            0.567
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "where "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\gamma"
+            },
+            {
+              "type": "text",
+              "content": " affects the sensitive margin of the function, and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "W _ { A }"
+            },
+            {
+              "type": "text",
+              "content": " is the weight."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.078,
+            0.568,
+            0.443,
+            0.582
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The economic reward "
+            },
+            {
+              "type": "equation_inline",
+              "content": "R _ { E }"
+            },
+            {
+              "type": "text",
+              "content": " is defined by the trading profit "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\mathbf { a } \\mathbf { s } _ { z }"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 16,
+          "bbox": [
+            0.06,
+            0.593,
+            0.487,
+            0.622
+          ],
+          "image_path": "images/page_4_equation_16.jpg",
+          "content": "R _ { E } ( t ) = \\left\\{ \\begin{array} { l l } { P _ { g r i d } ( t ) ( E P E M ( t ) - P r ) , } & { 0 \\leq P _ { g r i d } , } \\\\ { P _ { g r i d } ( t ) ( E P E M ( t ) - P r _ { S } ) , } & { P _ { g r i d } < 0 . } \\end{array} \\right.\\tag{20}"
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.058,
+            0.631,
+            0.487,
+            0.658
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "in which "
+            },
+            {
+              "type": "equation_inline",
+              "content": "{ P r } _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " represents the price of selling energy back to the utility grid."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 18,
+          "bbox": [
+            0.058,
+            0.658,
+            0.488,
+            0.685
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The overall reward function is defined by the sum of the components as,"
+            }
+          ]
+        },
+        {
+          "type": "equation",
+          "index": 19,
+          "bbox": [
+            0.06,
+            0.697,
+            0.487,
+            0.711
+          ],
+          "image_path": "images/page_4_equation_19.jpg",
+          "content": "R ( t ) = R _ { S } ( t ) + R _ { E } ( t ) + R _ { A } ( t )\\tag{21}"
+        },
+        {
+          "type": "text",
+          "index": 20,
+          "bbox": [
+            0.058,
+            0.722,
+            0.489,
+            0.749
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "By adjusting the weights and margin parameters, the priorities of the optimization objectives are defined."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 21,
+          "bbox": [
+            0.059,
+            0.761,
+            0.28,
+            0.774
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "4.3 . Reinforcement learning algorithm"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.057,
+            0.781,
+            0.489,
+            0.821
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A DDPG framework with four deep neural networks—two actor and two critic networks—is used for the RL algorithm. The deep neural network structures are presented in Fig. 3."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 23,
+          "bbox": [
+            0.057,
+            0.821,
+            0.49,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The actor deep neural network takes observations as input and expands the hidden layer through two fully connected (FC) and Rectified Linear Unit (ReLU) layers. The output 𝐴(𝑡) is resized by an FC layer, and a hyperbolic tangent function scales its amplitude. The critic deep neural network has two inputs: the observation is expanded through an FC-ReLU layer and regulated to the same dimension as the expanded action by an FC layer. Then the two layers are summed to obtain a new combined layer. The criticism is further calculated by a combined ReLU-FC layer. The DL networks are trained with 24-hour data of the"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 24,
+          "bbox": [
+            0.519,
+            0.075,
+            0.938,
+            0.317
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 24,
+              "bbox": [
+                0.519,
+                0.075,
+                0.938,
+                0.317
+              ],
+              "image_path": "images/page_4_image_24.jpg",
+              "content": ""
+            },
+            {
+              "type": "image_caption",
+              "index": 25,
+              "bbox": [
+                0.55,
+                0.33,
+                0.901,
+                0.343
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 3. Deep neural network structures and internal connections."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 26,
+          "bbox": [
+            0.511,
+            0.37,
+            0.941,
+            0.396
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "MG. The optimal parameters, 𝜃, 𝜙, "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\theta _ { t } ,   \\phi _ { t } ,"
+            },
+            {
+              "type": "text",
+              "content": " , will be achieved for online implementation."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 27,
+          "bbox": [
+            0.51,
+            0.396,
+            0.943,
+            0.661
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The iterative process of the proposed RLEMS is presented in Algorithm 1. The input contains reward, LEPM, and system state space, the output is the estimated battery and grid power. After the initialization of the RLEMS algorithm, the mini-batch size is set to "
+            },
+            {
+              "type": "equation_inline",
+              "content": "T ,"
+            },
+            {
+              "type": "text",
+              "content": " and the total episodes 𝑀 can be determined according to the maximum iterations. In each episode, the value function target "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\chi"
+            },
+            {
+              "type": "text",
+              "content": " is initialized first to generate the experience. The Ornstein-Uhlenbeck model is deployed to produce a noise, which is "
+            },
+            {
+              "type": "equation_inline",
+              "content": "N ,"
+            },
+            {
+              "type": "text",
+              "content": " for the actor to explore the environment. The exploration will generate another reward 𝑅 and observation "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S ^ { \\prime } ,"
+            },
+            {
+              "type": "text",
+              "content": " which become the experience together with the original observation 𝑆 and action "
+            },
+            {
+              "type": "equation_inline",
+              "content": "A . ~ \\chi"
+            },
+            {
+              "type": "text",
+              "content": " is determined and stored in each iteration, 𝛾 is introduced as the discount factor for the weight of future rewards. Each episode will output an experience matrix for parameter optimization. The loss 𝐿 can be calculated with "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\chi"
+            },
+            {
+              "type": "text",
+              "content": " and criticism "
+            },
+            {
+              "type": "equation_inline",
+              "content": "Q ,"
+            },
+            {
+              "type": "text",
+              "content": " and the optimal "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\phi"
+            },
+            {
+              "type": "text",
+              "content": " can be achieved by minimizing the 𝐿. The optimal 𝜃 is obtained by maximizing the expected discounted reward. The action without noise is related to 𝑆 and 𝜃, hence the policy gradient can be calculated for the optimization process. The parameters for the target actor and critic are updated based on the optimal 𝜙 and 𝜃. A smooth factor is employed here to adjust the slope of "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\phi _ { t }"
+            },
+            {
+              "type": "text",
+              "content": " and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\theta _ { t }"
+            },
+            {
+              "type": "text",
+              "content": " during the iterative process [31]."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 28,
+          "bbox": [
+            0.51,
+            0.66,
+            0.942,
+            0.7
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The deep neural networks of the actors and critics are trained offline using historical data and implemented online for the real-time operation of the MG system."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 29,
+          "bbox": [
+            0.511,
+            0.711,
+            0.686,
+            0.725
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "5 . Numerical experiments"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 30,
+          "bbox": [
+            0.51,
+            0.732,
+            0.942,
+            0.773
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The proposed RLEMS is validated in the environment shown in Fig. 1. The configuration of the MG is presented in Table 2. Constraints for the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { B }"
+            },
+            {
+              "type": "text",
+              "content": " are defined to prolong the lifecycle of the battery. The residential"
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "index": 32,
+          "bbox": [
+            0.538,
+            0.827,
+            0.917,
+            0.936
+          ],
+          "content": [
+            {
+              "type": "table_caption",
+              "index": 31,
+              "bbox": [
+                0.535,
+                0.813,
+                0.801,
+                0.825
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Configuration of main devices in the MG system."
+                }
+              ]
+            },
+            {
+              "type": "table_body",
+              "index": 32,
+              "bbox": [
+                0.538,
+                0.827,
+                0.917,
+                0.936
+              ],
+              "image_path": "images/page_4_table_32.jpg",
+              "content": "<table><tbody><tr><td>Power PV rated power (1000𝑊∕𝑚<sup>2</sup>,25◦𝐶 )</td><td>3 kW</td></tr><tr><td>BESS maximum charging power</td><td>2.5 kW</td></tr><tr><td>BESS maximum discharging power</td><td>2.5 kW</td></tr><tr><td>UC maximum charging power</td><td>5 kW</td></tr><tr><td>UC maximum discharging power</td><td>5 kW</td></tr><tr><td>Energy BESS capacity</td><td>5 kWh</td></tr><tr><td>BESS maximum SoC</td><td>95 %</td></tr><tr><td>BESS minimum SoC</td><td>10 %</td></tr><tr><td>UC capacity</td><td>0.1 kWh</td></tr></tbody></table>"
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 33,
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 5,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.057,
+            0.044,
+            0.172,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "code",
+          "index": 2,
+          "bbox": [
+            0.056,
+            0.069,
+            0.487,
+            0.416
+          ],
+          "content": [
+            {
+              "type": "algorithm_body",
+              "index": 2,
+              "bbox": [
+                0.056,
+                0.069,
+                0.487,
+                0.416
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Algorithm 1 DDPG algorithm for online RLEMS.\nInput: Observation "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\overline { { ( S ( t ) ) } }"
+                },
+                {
+                  "type": "text",
+                  "content": " and Reward (𝑅(𝑡)): "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "S o C _ { B } ( t ) , S o C _ { U C } ( t ) ,"
+                },
+                {
+                  "type": "text",
+                  "content": "\n"
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "P _ { R E S } ( t ) ,   P _ { l o a d } ( t ) ,   E P E M ( t ) ,   \\xi ( t ) ,   P r ,   R ( t )"
+                },
+                {
+                  "type": "text",
+                  "content": "\nOutput:  BESS operating power: "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "P _ { B } ^ { * } , P _ { g r i d } ^ { * }"
+                },
+                {
+                  "type": "text",
+                  "content": "\n1: Initialize "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\phi"
+                },
+                {
+                  "type": "text",
+                  "content": " and "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\phi _ { t }"
+                },
+                {
+                  "type": "text",
+                  "content": " with the same random parameters;\n2: Initialize 𝜃 and "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\theta _ { t }"
+                },
+                {
+                  "type": "text",
+                  "content": " with the same random parameters;\n3: for episode "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "= 1"
+                },
+                {
+                  "type": "text",
+                  "content": " to 𝑀 do\n4: Initialize the value function target "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\chi ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n5: for train step "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "t = 1"
+                },
+                {
+                  "type": "text",
+                  "content": " to 𝑇 do\n6: Select action "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "A = \\pi ( S ; \\theta ) + N"
+                },
+                {
+                  "type": "text",
+                  "content": " according to the current observa-\ntion "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "S ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n"
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "7 ;"
+                },
+                {
+                  "type": "text",
+                  "content": " Execute action 𝐴 and obtain the reward 𝑅 and the next obser-\nvation "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "S ^ { \\prime } ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n8: Store the "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "( S , A , R , S ^ { \\prime } )"
+                },
+                {
+                  "type": "text",
+                  "content": " as experience;\n9: Calculate the "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\chi = R + \\gamma Q _ { t } ( S ^ { \\prime } , \\pi _ { t } ( S ^ { \\prime } , \\theta _ { t } ; \\phi _ { t } ) ) ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n10: end for\n11: Optimize the critic parameters by minimizing the loss: "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "L ~ ="
+                },
+                {
+                  "type": "text",
+                  "content": "\n"
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\frac { 1 } { 2 T } \\sum _ { i = 1 } ^ { T } { ( \\chi ( i ) - Q ( S ( i ) , A ( i ) ; \\phi ) ) ^ { 2 } } ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n12: Optimize the actor parameters with the sampled policy gradient\nto maximize the expected discounted reward: "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\nabla _ { \\theta } J \\approx \\frac { 1 } { T } \\sum _ { i = 1 } ^ { T } \\nabla _ { \\theta } A _ { i }"
+                },
+                {
+                  "type": "text",
+                  "content": "\n"
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\nabla _ { A } Q ( S ( i ) , A ; \\phi ) ;   A = \\pi ( S ( i ) ; \\theta ) ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n13: Update the target actor and critic parameters: "
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\phi _ { t } = \\tau \\phi + ( 1 - \\tau ) \\phi _ { t } ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n"
+                },
+                {
+                  "type": "equation_inline",
+                  "content": "\\theta _ { t } = \\tau \\theta + ( 1 - \\tau ) \\theta _ { t } ;"
+                },
+                {
+                  "type": "text",
+                  "content": "\n14: end for"
+                }
+              ]
+            }
+          ],
+          "sub_type": "algorithm"
+        },
+        {
+          "type": "chart",
+          "index": 3,
+          "bbox": [
+            0.072,
+            0.444,
+            0.284,
+            0.679
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 3,
+              "bbox": [
+                0.072,
+                0.444,
+                0.284,
+                0.679
+              ],
+              "image_path": "images/page_5_chart_3.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 4,
+          "bbox": [
+            0.291,
+            0.451,
+            0.471,
+            0.689
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 4,
+              "bbox": [
+                0.291,
+                0.451,
+                0.471,
+                0.689
+              ],
+              "image_path": "images/page_5_chart_4.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 5,
+              "bbox": [
+                0.056,
+                0.7,
+                0.485,
+                0.726
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 4. Energy price, load, and PV generation of the experimental a) winter b) summer case."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 6,
+          "bbox": [
+            0.056,
+            0.755,
+            0.486,
+            0.9
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "loads include a coffee machine, refrigerators, ovens, TVs, workstations, laptops, and some cooking staff. The appliances are used randomly by the user working in the laboratory. In this way, the uncertainty from user actions is introduced into the validation. The uncertainty from the renewable generation and energy market is introduced by the realistic data of PV power and energy prices. The experimental dataset is pre-sented in Fig. 4. The feasibility of the proposed RLEMS is verified in both winter and summer scenarios. The winter case is shown in Fig. 4(a), which indicates a high energy price and low PV generation. The summer case presented in Fig. 4(b) demonstrates low prices and high renewable energy."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 7,
+          "bbox": [
+            0.056,
+            0.9,
+            0.487,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The two scenarios include two extreme phenomena that represent the short-supply and over-supply situations. The winter case emphasizes the energy trading between the local MG and the utility grid. Since the PV"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 8,
+          "bbox": [
+            0.508,
+            0.068,
+            0.938,
+            0.107
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "generation could hardly cover the power demand. In the summer case, the RLEMS focuses on the daily renewable energy allocation, and the energy market has minimal influence on the optimal operation of the MG."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.508,
+            0.107,
+            0.94,
+            0.278
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The MG is operated by the same RLEMS in the two scenarios, and the DDPG algorithm is trained with 24-hour data and validated in 10-day scenarios. In continuous operations, the trained agent can self-adjust against seasons, weather, loads, and market changes, since these factors usually evolve gradually and smoothly at minute resolutions. The retraining process actually initializes the RLEMS agent based on the training dataset. The transferability of the proposed RLEMS is considered through improving the deployment efficiency. Compared to conventional EMS methods, the retraining and deployment work of the proposed RLEMS is efficient and timely, providing considerable transferability for the proposed RLEMS. In this sense, the DDPG agent for each season is trained independently, considering that the two scenarios are not continuous."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 10,
+          "bbox": [
+            0.509,
+            0.292,
+            0.87,
+            0.305
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "5.1 . Performance of the proposed RLEMS in different scenarios"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.508,
+            0.312,
+            0.939,
+            0.351
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The decision-making results and the response of the MG system are presented in Fig. 5. The blue area represents the input power of the grid converter, the green area shows the output power of the battery."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.508,
+            0.351,
+            0.94,
+            0.536
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In the winter scenario, the PV generation is insufficient. The RLEMS purchases energy to charge the battery when the price is low and limits the grid power when the price is high. By comparing the blue zone and red curve in Fig. 5(a), it can be found that the RLEMS can effectively detect the low-price period with the proposed EPEM. In the summer scenario, the PV energy is sufficient but unevenly distributed during each day. In this sense, the operation logic of the RLEMS is changed. The green area and power demand curve "
+            },
+            {
+              "type": "equation_inline",
+              "content": "( P _ { l o a d } - P _ { R E S } )"
+            },
+            {
+              "type": "text",
+              "content": " in Fig. 5(b) indicate that the RLEMS controls the battery converter to charge the battery when the PV power exceeds the local loads, and discharge the battery to support the demand side at night. The grid power purchasing is activated after the battery is over-discharged. It can be concluded from the SoC curve of the battery that the capacity of the ES is fully utilized for the economical operation of the MG."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.508,
+            0.536,
+            0.94,
+            0.682
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The power balance of the MG system is demonstrated by the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C }"
+            },
+            {
+              "type": "text",
+              "content": " curve. The internal power balance of the MG system will be broken when the energy buffer is overcharged or over-discharged, and the embedded droop control in the converters will be activated as secondary protection, which indicates that the power flow control is taken over by primary control, and the EMS is unstable. Hence, the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C }"
+            },
+            {
+              "type": "text",
+              "content": " should touch the upper and lower bands as little as possible. In Fig. 5, the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C }"
+            },
+            {
+              "type": "text",
+              "content": " is restrained within the stable margin in most situations. The oscillation of the power demand might lead to the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C }"
+            },
+            {
+              "type": "text",
+              "content": " reaching the upper band, and the response of the RLEMS is quick. The "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C }"
+            },
+            {
+              "type": "text",
+              "content": " never stays on the unstable band for a long duration."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 14,
+          "bbox": [
+            0.51,
+            0.695,
+            0.728,
+            0.708
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "5.2 . Ablation experimental validation"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.508,
+            0.715,
+            0.94,
+            0.873
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "To illustrate the performance of the DDPG algorithm, a PPO algorithm is also designed as a comparison. The hyperparameters of the two algorithms are presented in Table 3. The definition of empirical parameters in the reward function is further discussed in the Appendix. Both RL algorithms are implemented in the environment equipped with the proposed EPEM and the same reward function, indicating similar optimal operation logic. DDPG and PPO agents are actor-critic RL algorithms, differing primarily in their exploration strategies and output formats. DDPG explores the environment by an Ornstein-Uhlenbeck noise model and outputs a constant, and the PPO algorithm uses a Gaussian noise model and provides a random number expressed by its mean and standard deviation."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 16,
+          "bbox": [
+            0.508,
+            0.873,
+            0.94,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The training process of the DDPG and PPO agents is shown in Fig. 6. The blue curve represents the DDPG agent and the red one represents the PPO. Both agents stabilize within 200 episodes and explore the economical operation logic in the following episodes. The oscillation during the training process is affected by the exploration algorithm and DL"
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 17,
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 6,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.059,
+            0.044,
+            0.174,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.043,
+            0.941,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 2,
+          "bbox": [
+            0.14,
+            0.073,
+            0.861,
+            0.354
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 2,
+              "bbox": [
+                0.14,
+                0.073,
+                0.861,
+                0.354
+              ],
+              "image_path": "images/page_6_chart_2.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 3,
+              "bbox": [
+                0.295,
+                0.348,
+                0.38,
+                0.36
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(a) Winter case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 4,
+              "bbox": [
+                0.62,
+                0.347,
+                0.714,
+                0.359
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(b) Summer case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 5,
+              "bbox": [
+                0.195,
+                0.37,
+                0.804,
+                0.383
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 5. The decision-making results of RLEMS and response of MG system in a) Winter case and b) Summer case."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "index": 8,
+          "bbox": [
+            0.063,
+            0.436,
+            0.484,
+            0.634
+          ],
+          "content": [
+            {
+              "type": "table_caption",
+              "index": 6,
+              "bbox": [
+                0.062,
+                0.413,
+                0.111,
+                0.424
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Table 3"
+                }
+              ]
+            },
+            {
+              "type": "table_caption",
+              "index": 7,
+              "bbox": [
+                0.063,
+                0.425,
+                0.276,
+                0.437
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Hyperparameters of the RL algorithms."
+                }
+              ]
+            },
+            {
+              "type": "table_body",
+              "index": 8,
+              "bbox": [
+                0.063,
+                0.436,
+                0.484,
+                0.634
+              ],
+              "image_path": "images/page_6_table_8.jpg",
+              "content": "<table><tbody><tr><td>System parameters</td><td>EPEM parameter: 𝜎 = 1,𝑇 = 24 ∗ 60. Reward: 𝑊𝑆 = 4,𝑊<sub>𝐴</sub> = 6,𝜆 = 3,𝛾 = 3.</td></tr><tr><td>Actor network (DDPG)</td><td>FC[256] - ReLU - FC[256] - ReLU - FC[1] - scale. learning rate = 10<sup>-4</sup>.</td></tr><tr><td>Actor network (PPO)</td><td>root: FC[64] - ReLU - FC[128]; branch: FC[256] - ReLU - FC[1] - scale; branch: FC[256] - ReLU - FC[1] - scale. learning rate = 10<sup>-4</sup>.</td></tr><tr><td>Critic Network (DDPG)</td><td>branch: FC[512] - ReLU - FC[256]; branch: FC[256]; root: add - ReLU - FC[1]. learning rate = 10<sup>-3</sup>.</td></tr><tr><td>Critic Network (PPO)</td><td>FC[64] - ReLU - FC[64] - ReLU - FC[64] - ReLU - FC[1]. learning rate = 10<sup>-3</sup>.</td></tr><tr><td>Training parameters</td><td>Sample time = 1 min. Discount factor = 0.95. look ahead steps = 5.</td></tr></tbody></table>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.058,
+            0.663,
+            0.489,
+            0.755
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "network structures. The DDPG algorithm can provide a stable reward during the training, but the critic network is suffering from dramatic oscillations. Compared to the PPO algorithm, the exploration range of the DDPG algorithm is limited and might not reach an extremely high reward. However, the actor network of the DDPG agent can converge to the optimal reward more easily than the PPO algorithm in these two scenarios."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 10,
+          "bbox": [
+            0.058,
+            0.755,
+            0.489,
+            0.834
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The output actions of the two agents are presented in Fig. 7. The blue curve represents the DDPG agent and the red one represents PPO. The trend of the actions indicates similar operational logic. However, the PPO algorithm generates more oscillations in the actions, leading to frequent power direction switching of the battery and grid converter."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 11,
+          "bbox": [
+            0.058,
+            0.834,
+            0.489,
+            0.912
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The daily energy cost of the two agents is shown in Fig. 8. The blue bar represents the DDPG agent and the red one represents PPO. With similar operational logic, both algorithms yield close daily costs. The total cost of the DDPG agent is 52.49 in the winter case and 30.35 in the summer case, while the PPO algorithm brings 52.54 and 32.97, respectively."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.058,
+            0.912,
+            0.489,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The stability of the RLEMS is evaluated by the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "S o C _ { U C } ,"
+            },
+            {
+              "type": "text",
+              "content": " the distribution of which is presented in Fig. 9. The blue dots represent the DDPG"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 13,
+          "bbox": [
+            0.515,
+            0.417,
+            0.735,
+            0.576
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 13,
+              "bbox": [
+                0.515,
+                0.417,
+                0.735,
+                0.576
+              ],
+              "image_path": "images/page_6_chart_13.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 14,
+              "bbox": [
+                0.554,
+                0.576,
+                0.719,
+                0.588
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(a) Winter case convergence trend"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 15,
+          "bbox": [
+            0.731,
+            0.416,
+            0.94,
+            0.577
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 15,
+              "bbox": [
+                0.731,
+                0.416,
+                0.94,
+                0.577
+              ],
+              "image_path": "images/page_6_chart_15.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 16,
+              "bbox": [
+                0.753,
+                0.577,
+                0.927,
+                0.588
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(b) Summer case convergence trend"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 17,
+          "bbox": [
+            0.516,
+            0.597,
+            0.735,
+            0.73
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 17,
+              "bbox": [
+                0.516,
+                0.597,
+                0.735,
+                0.73
+              ],
+              "image_path": "images/page_6_chart_17.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 18,
+              "bbox": [
+                0.555,
+                0.731,
+                0.724,
+                0.741
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(c) Winter case oscillation analysis"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 19,
+          "bbox": [
+            0.729,
+            0.596,
+            0.94,
+            0.731
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 19,
+              "bbox": [
+                0.729,
+                0.596,
+                0.94,
+                0.731
+              ],
+              "image_path": "images/page_6_chart_19.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 20,
+              "bbox": [
+                0.747,
+                0.731,
+                0.923,
+                0.741
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(d) Summer case oscillation analysis"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 21,
+              "bbox": [
+                0.511,
+                0.751,
+                0.941,
+                0.787
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 6. Actor and critic network training process of the RL algorithms in a) winter convergence trend b) summer convergence trend c) winter oscillation b) summer oscillation."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.51,
+            0.821,
+            0.941,
+            0.86
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "agent, and the red for PPO. The width of the shape demonstrates the proportion. The DDPG algorithm can fully utilize the capacity of UC in the operations and achieve better stability than the PPO agent."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 23,
+          "bbox": [
+            0.51,
+            0.86,
+            0.942,
+            0.941
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "In summary, it can be concluded that the proposed EPEM can effectively evaluate the energy market and guide the decision-making process for intelligent online EMSs. The operation logic in the MG system can be solved by RL-based algorithms. Considering the output oscillation, EMS stability, and total economic profits, the DDPG algorithm is more appropriate for the RLEMS in the proposed MG environment."
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 24,
+          "bbox": [
+            0.494,
+            0.953,
+            0.506,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 7,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.057,
+            0.044,
+            0.173,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.043,
+            0.941,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 2,
+          "bbox": [
+            0.061,
+            0.071,
+            0.482,
+            0.183
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 2,
+              "bbox": [
+                0.061,
+                0.071,
+                0.482,
+                0.183
+              ],
+              "image_path": "images/page_7_chart_2.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 3,
+              "bbox": [
+                0.152,
+                0.183,
+                0.234,
+                0.194
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(a) Winter case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 4,
+              "bbox": [
+                0.34,
+                0.183,
+                0.43,
+                0.194
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(b) Summer case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 5,
+              "bbox": [
+                0.073,
+                0.205,
+                0.469,
+                0.218
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 7. Output actions of the RL algorithms in a) winter, b) summer case."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 6,
+          "bbox": [
+            0.06,
+            0.251,
+            0.28,
+            0.341
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 6,
+              "bbox": [
+                0.06,
+                0.251,
+                0.28,
+                0.341
+              ],
+              "image_path": "images/page_7_chart_6.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 7,
+              "bbox": [
+                0.137,
+                0.341,
+                0.219,
+                0.351
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(a) Winter case"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 8,
+          "bbox": [
+            0.279,
+            0.253,
+            0.483,
+            0.34
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 8,
+              "bbox": [
+                0.279,
+                0.253,
+                0.483,
+                0.34
+              ],
+              "image_path": "images/page_7_chart_8.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 9,
+              "bbox": [
+                0.34,
+                0.341,
+                0.432,
+                0.351
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(b) Summer case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 10,
+              "bbox": [
+                0.066,
+                0.363,
+                0.475,
+                0.376
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 8. Daily energy cost of the RL algorithms in a) winter, b) summer case."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 11,
+          "bbox": [
+            0.06,
+            0.408,
+            0.275,
+            0.496
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 11,
+              "bbox": [
+                0.06,
+                0.408,
+                0.275,
+                0.496
+              ],
+              "image_path": "images/page_7_chart_11.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 12,
+              "bbox": [
+                0.138,
+                0.497,
+                0.226,
+                0.509
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(a) Winter case"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 13,
+          "bbox": [
+            0.297,
+            0.411,
+            0.481,
+            0.496
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 13,
+              "bbox": [
+                0.297,
+                0.411,
+                0.481,
+                0.496
+              ],
+              "image_path": "images/page_7_chart_13.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 14,
+              "bbox": [
+                0.34,
+                0.498,
+                0.438,
+                0.509
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "(b) Summer case"
+                }
+              ]
+            },
+            {
+              "type": "chart_caption",
+              "index": 15,
+              "bbox": [
+                0.056,
+                0.518,
+                0.485,
+                0.543
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 9. The SoC distribution of UC with the RL algorithms in a) winter, b) summer case."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 16,
+          "bbox": [
+            0.057,
+            0.576,
+            0.232,
+            0.59
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "5.3 . Comparative experiments"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.056,
+            0.596,
+            0.487,
+            0.715
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The economic performance of the proposed RLEMS is further verified by comparing it with existing methods in real-world applications: PSO-based day-ahead EMS, LP-MPC online EMS, and grid-connected MG without ES. In this paper, prediction results with distinct accuracy, 100 %, and 80 %, will be fed to the PSO algorithm to consider the complete performance range of traditional EMS. LP-MPC will be fed with ideal prediction results, where the LP is applied for dayahead optimization, and MPC focuses on system stability with a 10-step look-ahead."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 18,
+          "bbox": [
+            0.056,
+            0.715,
+            0.487,
+            0.873
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The total energy expenses with different methods are shown in Fig. 10. The daily energy cost is presented in Table 4. The proposed RLEMS cannot achieve the lowest daily expense compared with existing approaches. However, the total energy expense is the lowest. The reason for this phenomenon can be explained by two perspectives: 1) The proposed RLEMS works with dynamic horizons defined by online system states. Hence, RLEMS do not outperform existing methods within each daily case. 2) The proposed RLEMS is not within the framework of traditional EMS approaches. The different decision logic leads to unique operation points, resulting in oscillations and disturbances in short-term economic evaluation. In this sense, the economic cost is evaluated by long-term expense."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.056,
+            0.873,
+            0.487,
+            0.941
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "For PSO-based day-ahead EMS, the horizon is fixed and discrete, making the EMS unable to react to system dynamics and transient uncertainty. Besides, the performance of the PSO-based approach degrades as the prediction accuracy decreases. The LP-MPC approach, as a typical multi-layer EMS framework, effectively compensates for the"
+            }
+          ]
+        },
+        {
+          "type": "chart",
+          "index": 20,
+          "bbox": [
+            0.513,
+            0.072,
+            0.936,
+            0.244
+          ],
+          "content": [
+            {
+              "type": "chart_body",
+              "index": 20,
+              "bbox": [
+                0.513,
+                0.072,
+                0.936,
+                0.244
+              ],
+              "image_path": "images/page_7_chart_20.jpg",
+              "content": ""
+            },
+            {
+              "type": "chart_caption",
+              "index": 21,
+              "bbox": [
+                0.514,
+                0.254,
+                0.933,
+                0.268
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Fig. 10. Total energy expenses of the proposed RLEMS and existing methods."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "index": 23,
+          "bbox": [
+            0.513,
+            0.311,
+            0.937,
+            0.587
+          ],
+          "content": [
+            {
+              "type": "table_caption",
+              "index": 22,
+              "bbox": [
+                0.51,
+                0.298,
+                0.75,
+                0.31
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "The electricity cost (€) of the EMS methods."
+                }
+              ]
+            },
+            {
+              "type": "table_body",
+              "index": 23,
+              "bbox": [
+                0.513,
+                0.311,
+                0.937,
+                0.587
+              ],
+              "image_path": "images/page_7_table_23.jpg",
+              "content": "<table><tbody><tr><td rowspan=\"2\">Methods</td><td rowspan=\"2\">Non-ES</td><td rowspan=\"2\">PSO(100 %)</td><td rowspan=\"2\">PSO(80 %)</td><td rowspan=\"2\">LP-MPC</td><td rowspan=\"2\">RLEMS</td></tr><tr></tr><tr><td>Winter 1</td><td>6.44</td><td>5.98</td><td>6.78</td><td>7.12</td><td>6.91</td></tr><tr><td>Winter 2</td><td>5.67</td><td>6.35</td><td>6.32</td><td>6.25</td><td>3.48</td></tr><tr><td>Winter 3</td><td>8.03</td><td>8.42</td><td>9.06</td><td>8.36</td><td>10.24</td></tr><tr><td>Winter 4</td><td>8.68</td><td>8.13</td><td>8.62</td><td>8.02</td><td>8.30</td></tr><tr><td>Winter 5</td><td>7.84</td><td>7.01</td><td>7.53</td><td>7.35</td><td>7.61</td></tr><tr><td>Winter 6</td><td>3.71</td><td>3.56</td><td>3.85</td><td>3.52</td><td>1.73</td></tr><tr><td>Winter 7</td><td>5.82</td><td>5.13</td><td>5.38</td><td>5.52</td><td>7.21</td></tr><tr><td>Winter 8</td><td>3.25</td><td>3.35</td><td>3.61</td><td>3.57</td><td>1.17</td></tr><tr><td>Winter 9</td><td>3.66</td><td>2.77</td><td>3.48</td><td>3.25</td><td>3.91</td></tr><tr><td>Winter 10</td><td>5.32</td><td>2.30</td><td>6.94</td><td>6.79</td><td>1.89</td></tr><tr><td>Total</td><td>58.46</td><td>57.41</td><td>61.57</td><td>54.16</td><td>52.49</td></tr><tr><td>Summer 1</td><td>4.78</td><td>4.33</td><td>5.09</td><td>4.40</td><td>2.76</td></tr><tr><td>Summer 2</td><td>2.15</td><td>1.26</td><td>1.31</td><td>1.18</td><td>2.50</td></tr><tr><td>Summer 3</td><td>5.11</td><td>3.91</td><td>4.23</td><td>4.02</td><td>2.85</td></tr><tr><td>Summer 4</td><td>4.85</td><td>3.41</td><td>4.08</td><td>3.34</td><td>2.89</td></tr><tr><td>Summer 5</td><td>4.53</td><td>3.81</td><td>4.06</td><td>3.67</td><td>2.84</td></tr><tr><td>Summer 6</td><td>5.22</td><td>3.90</td><td>4.32</td><td>3.90</td><td>4.34</td></tr><tr><td>Summer 7</td><td>3.68</td><td>2.97</td><td>3.11</td><td>2.96</td><td>2.01</td></tr><tr><td>Summer 8</td><td>5.93</td><td>4.84</td><td>4.91</td><td>4.74</td><td>4.31</td></tr><tr><td>Summer 9</td><td>6.28</td><td>4.73</td><td>5.14</td><td>4.68</td><td>4.75</td></tr><tr><td>Summer 10</td><td>2.70</td><td>1.87</td><td>2.14</td><td>0.95</td><td>1.05</td></tr><tr><td>Total</td><td>45.27</td><td>35.02</td><td>38.39</td><td>33.84</td><td>30.35</td></tr></tbody></table>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 24,
+          "bbox": [
+            0.508,
+            0.616,
+            0.94,
+            0.75
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "dynamic oscillations during online workflow. However, the fixed horizons of the upper layers and online controllers are still facing challenges in information updating and layer interactions. On the contrary, the proposed RLEMS is independent of the prediction methods, and the proposed EPEM provides the long-term horizon for the RLEMS, making the RLEMS intelligent and stable enough to cope with complex system status. The operation logic defined by the proposed EPEM, together with the reward function, is verified economically in Fig. 10. Compared with common real-world applications, the proposed RLEMS achieves a 10.2 % cost-saving in the winter case and 33 % in the summer case."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "paragraph_title",
+          "index": 25,
+          "bbox": [
+            0.51,
+            0.76,
+            0.612,
+            0.773
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "6 . Conclusions"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 26,
+          "bbox": [
+            0.508,
+            0.78,
+            0.94,
+            0.821
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A multi-objective RLEMS is proposed in this paper to realize the intelligent real-time power flow control in a converter-interfaced MG. The main works can be summarized as follows."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 27,
+          "bbox": [
+            0.527,
+            0.834,
+            0.94,
+            0.913
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "1. A novel online RLEMS framework is proposed to realize the multi-objective optimization of MGs with a high proportion of uncertainty. The RLEMS decouples the multi-dimensional system states with the optimal power flow operations with few-shot datasets through a DDPG algorithm, further decreasing the deployment cost and enhancing the feasibility of centralized EMS."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 28,
+          "bbox": [
+            0.527,
+            0.913,
+            0.94,
+            0.94
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "2. An innovative EPEM is designed to provide online economic evaluations, transferring global market uncertainty to the RLEMS"
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 29,
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 8,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.059,
+            0.044,
+            0.175,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 2,
+          "bbox": [
+            0.092,
+            0.067,
+            0.488,
+            0.107
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "timescale and MG scope. Based on the proposed EPEM, the uncertainty, the system power balance, and the economic cost are jointly considered in one reward function with distinguished priorities."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "text",
+          "index": 3,
+          "bbox": [
+            0.075,
+            0.107,
+            0.489,
+            0.227
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "3. Comprehensive validations are conducted to verify the performance and superiority of the proposed RLEMS. The ablation study indicates that the optimal operation logic defined by the proposed EPEM, together with the reward function, is economical and stable for the MG. The performance of the proposed RLEMS is validated by comparing it with existing methods and applications. The results demonstrate that the proposed RLEMS can ensure the stable operation of the MG system and obtain a 10.2 % to 33 % cost-saving in the economic aspect."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 4,
+          "bbox": [
+            0.057,
+            0.242,
+            0.489,
+            0.335
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The RLEMS provides a novel framework to establish low datadependency EMS systems, further promoting the potential application of cutting-edge AI models in energy technologies. In future research, the generalization of the proposed approach to different MG configurations will be explored, and forefront AI models will be deployed within this framework through transfer learning and few-shot learning technologies."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 5,
+          "bbox": [
+            0.059,
+            0.347,
+            0.337,
+            0.36
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "CRediT authorship contribution statement"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 6,
+          "bbox": [
+            0.058,
+            0.367,
+            0.489,
+            0.448
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Jingxuan Wu:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Conceptualization, Formal analysis, Data curation, Algorithm design, Software, Investigation, Validation, Writing – original draft. "
+            },
+            {
+              "type": "text",
+              "content": "Shuting Li:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Methodology, Visualization, Writing – review and editing. "
+            },
+            {
+              "type": "text",
+              "content": "Yun Yu:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Writing – review and editing. "
+            },
+            {
+              "type": "text",
+              "content": "Yajuan Guan:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Resources, Writing – review and editing. "
+            },
+            {
+              "type": "text",
+              "content": "Baoze Wei:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Resources, Writing – review and editing. "
+            },
+            {
+              "type": "text",
+              "content": "Zhe Chen:",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " Resources, Writing – review and editing."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 7,
+          "bbox": [
+            0.059,
+            0.459,
+            0.281,
+            0.473
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Declaration of competing interest"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 8,
+          "bbox": [
+            0.058,
+            0.48,
+            0.489,
+            0.52
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 9,
+          "bbox": [
+            0.059,
+            0.532,
+            0.128,
+            0.545
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Appendix"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 10,
+          "bbox": [
+            0.058,
+            0.552,
+            0.489,
+            0.672
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The empirical parameters in the reward function are further discussed to indicate the value definition in realistic applications. In the proposed reward function, "
+            },
+            {
+              "type": "equation_inline",
+              "content": "W _ { S }"
+            },
+            {
+              "type": "text",
+              "content": " and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "W _ { A }"
+            },
+            {
+              "type": "text",
+              "content": " construct the variable-sensitivity weights for the penalty components, allowing these components to be activated by specific events. The 𝜆 and 𝛾 define the width of the hidden margin. In this sense, the operation logic of the proposed RLEMS can change within the continuous workflow. In Table 5, four extra cases are provided to compare the performance of the proposed RLEMS framework with different empirical parameter sets."
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "index": 13,
+          "bbox": [
+            0.119,
+            0.729,
+            0.431,
+            0.932
+          ],
+          "content": [
+            {
+              "type": "table_caption",
+              "index": 11,
+              "bbox": [
+                0.105,
+                0.702,
+                0.154,
+                0.713
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Table 5"
+                }
+              ]
+            },
+            {
+              "type": "table_caption",
+              "index": 12,
+              "bbox": [
+                0.104,
+                0.713,
+                0.441,
+                0.726
+              ],
+              "content": [
+                {
+                  "type": "text",
+                  "content": "The effect of empirical parameters on energy cost and UC SoC."
+                }
+              ]
+            },
+            {
+              "type": "table_body",
+              "index": 13,
+              "bbox": [
+                0.119,
+                0.729,
+                0.431,
+                0.932
+              ],
+              "image_path": "images/page_8_table_13.jpg",
+              "content": "<table><tr><td>Cases</td><td colspan=\"2\">SoCvc Distribution 1 10-day Cost (€)</td></tr><tr><td rowspan=\"2\">Proposed: <eq>W_{S}=\\frac{1}{4},\\;W_{A}=6</eq> <eq>\\lambda = \\gamma = 3</eq></td><td>Winter 52.49</td><td></td></tr><tr><td>30.35 Summer</td><td></td></tr><tr><td rowspan=\"3\"><eq>Case I:</eq> <eq>W_{S}=4,\\;W_{A}=6</eq> <eq>\\lambda = \\gamma = 3 . 5</eq> <eq>Case II:</eq></td><td>Winter 59.26</td><td></td></tr><tr><td>36.51 Summer</td><td></td></tr><tr><td>Winter 49.4</td><td><img src=\"images/page_8_table_image_13_1.jpg\"/></td></tr><tr><td><eq>W_{S}=4,\\;W_{A}=6</eq> <eq>\\lambda = \\gamma = 2 . 5</eq> <eq>Case III:</eq></td><td>35.97 Summer</td><td></td></tr><tr><td rowspan=\"3\"><eq>W_{S} = 3,   W_{A} = 5</eq> <eq>\\lambda = \\gamma = 3</eq> <eq>Case IV:</eq></td><td>Winter</td><td>55.94</td></tr><tr><td>34.15 Summer</td><td></td></tr><tr><td>Winter 59.26</td><td></td></tr></table>"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 14,
+          "bbox": [
+            0.51,
+            0.068,
+            0.943,
+            0.173
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The hidden margin of the penalty components is narrowed in cases I and IV, while in cases II and III, the alarm is less sensitive. Hence, the cost in cases I and IV is increased due to less activated energy storage capacity; the UC is more likely to be overcharged or over-discharged in cases II and III. Jointly considering the economic performance and UC storage oscillations, the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "W _ { S } ,   W _ { A } ,   \\lambda ,"
+            },
+            {
+              "type": "text",
+              "content": " and "
+            },
+            {
+              "type": "equation_inline",
+              "content": "\\gamma"
+            },
+            {
+              "type": "text",
+              "content": " definitions must match the penalty components with the "
+            },
+            {
+              "type": "equation_inline",
+              "content": "R _ { E }"
+            },
+            {
+              "type": "text",
+              "content": " range. In this manuscript, the optimal value is presented in Table 3."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 15,
+          "bbox": [
+            0.512,
+            0.187,
+            0.625,
+            0.2
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Data availability"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 16,
+          "bbox": [
+            0.531,
+            0.208,
+            0.773,
+            0.221
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Data will be made available on request."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 17,
+          "bbox": [
+            0.513,
+            0.236,
+            0.588,
+            0.249
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "References"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "ref_text",
+          "index": 18,
+          "bbox": [
+            0.527,
+            0.255,
+            0.94,
+            0.285
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[1] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0005",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Li S, Wu J, Agundis-Tinajero GD, Chaudhary SK, Vasquez JC, Guerrero JM. A decomposed harmonic current suppression method for vsg-based microgrids connected to distorted grids. IEEE Trans Ind Electron Sep. 2024;71(9):10669–80."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 19,
+          "bbox": [
+            0.528,
+            0.286,
+            0.939,
+            0.306
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[2] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0010",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Saleh M, Esa Y, Mohamed AA. Communication-based control for DC microgrids. IEEE Trans Smart Grid Mar 2019;10:2180–95."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 20,
+          "bbox": [
+            0.528,
+            0.306,
+            0.94,
+            0.326
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[3] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0015",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Cordova S, Canizares CA, Lorca A, Olivares DE. Frequency-constrained energy management system for isolated microgrids. IEEE Trans Smart Grid 2022."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 21,
+          "bbox": [
+            0.528,
+            0.327,
+            0.94,
+            0.356
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[4] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0020",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Çimen H, Çetinkaya N, Vasquez JC, Guerrero JM. A microgrid energy management system based on non-intrusive load monitoring via multitask learning. IEEE Trans Smart Grid Mar 2021;12:977–87."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 22,
+          "bbox": [
+            0.528,
+            0.356,
+            0.941,
+            0.395
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[5] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0025",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Jafari M, Malekjamshidi Z, Zhu J, Khooban MH. A novel predictive fuzzy logic-based energy management system for grid-connected and off-grid operation of residential smart microgrids. IEEE J Emerg Sel Top Power Electron Jun 2020;8:1391–404."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 23,
+          "bbox": [
+            0.528,
+            0.396,
+            0.941,
+            0.435
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[6] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0030",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Zhao Z, Guo J, Luo X, Lai CS, Yang P, Lai LL, Li P, Guerrero JM, Shahidehpour M. Distributed robust model predictive control-based energy management strategy for islanded multi-microgrids considering uncertainty. IEEE Trans Smart Grid May 2022;13:2107–20."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 24,
+          "bbox": [
+            0.528,
+            0.436,
+            0.941,
+            0.466
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[7] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0035",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "van der Meer D, Wang GC, Munkhammar J. An alternative optimal strategy for stochastic model predictive control of a residential battery energy management system with solar photovoltaic. Applied Energy Feb 2021;283."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 25,
+          "bbox": [
+            0.528,
+            0.467,
+            0.94,
+            0.506
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[8] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0040",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Liang X, Chen K, Chen S, Zhu X, Jin X, Du Z. Iot-based intelligent energy management system for optimal planning of HVAC devices in net-zero emissions pv-battery building considering demand compliance. Energy Convers Manag Sep 2023; 292."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 26,
+          "bbox": [
+            0.527,
+            0.507,
+            0.94,
+            0.537
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[9] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0045",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Mohy-Ud-Din G, Muttaqi KM, Sutanto D. Adaptive and predictive energy management strategy for real-time optimal power dispatch from vpps integrated with renewable energy and energy storage. IEEE Trans Ind Appl May 2021;57:1958–72."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 27,
+          "bbox": [
+            0.523,
+            0.537,
+            0.94,
+            0.566
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[10] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0050",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Gerlach L, Bocklisch T, Verweij M. Selfish batteries VS. Benevolent optimizers: an exploratory review of agent-based energy management with distributed storage in microgrids. Renewable Sustain Energy Rev May 2023;177."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 28,
+          "bbox": [
+            0.522,
+            0.567,
+            0.94,
+            0.596
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[11] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0055",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Giraldo JS, Castrillon JA, Lopez JC, Rider MJ, Castro CA. Microgrids energy management using robust convex programming. IEEE Trans Smart Grid Jul 2019;10:4520–30."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 29,
+          "bbox": [
+            0.522,
+            0.597,
+            0.94,
+            0.627
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[12] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0060",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Xing X, Xie L, Meng H, Guo X, Yue L, Guerrero JM. Energy management strategy considering multi-time-scale operational modes of batteries for the grid-connected microgrids community. CSEE J Power Energy Syst Mar 2020;6:111–21."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 30,
+          "bbox": [
+            0.522,
+            0.628,
+            0.94,
+            0.657
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[13] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0065",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Huy THB, Dinh HT, Vo DN, Kim D. Real-time energy scheduling for home energy management systems with an energy storage system and electric vehicle based on a supervised-learning-based strategy. Energy Convers Manag Sep 2023;292."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 31,
+          "bbox": [
+            0.522,
+            0.658,
+            0.94,
+            0.697
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[14] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0070",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Heleno M, Mashayekh S, Stadler M, Cardoso G, De Luís R. Optimal sizing and placement of distributed generation: MILP VS PSO comparison in a real microgrid application. In: 19th International Conference on intelligent system application to power systems; 2017."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 32,
+          "bbox": [
+            0.522,
+            0.698,
+            0.94,
+            0.727
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[15] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0075",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Yousif M, Ai Q, Gao Y, Wattoo WA, Jiang Z, Hao R. An optimal dispatch strategy for distributed microgrids using PSO. CSEE J Power Energy Syst Sep 2020;6: 724–34."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 33,
+          "bbox": [
+            0.522,
+            0.728,
+            0.94,
+            0.748
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[16] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0080",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Zhang X, Huang C, Shen J. Energy optimal management of microgrid with high photovoltaic penetration. IEEE Trans Ind Appl 2023;59(1):128–37."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 34,
+          "bbox": [
+            0.522,
+            0.748,
+            0.94,
+            0.787
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[17] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0085",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Aguila-Leon J, Vargas-Salgado C, Chiñas-Palacios C, Díaz-Bello D. Energy management model for a standalone hybrid microgrid through a particle swarm optimization and artificial neural networks approach. Energy Convers Manag Sep 2022;267."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 35,
+          "bbox": [
+            0.522,
+            0.788,
+            0.94,
+            0.817
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[18] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0090",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Raghav LP, Kumar RS, Raju DK, Singh AR. Optimal energy management of microgrids using quantum teaching learning based algorithm. IEEE Trans Smart Grid Nov 2021;12:4834–42."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 36,
+          "bbox": [
+            0.523,
+            0.818,
+            0.94,
+            0.848
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[19] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0095",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Erdinç FG. Rolling horizon optimization based real-time energy management of a residential neighborhood considering PV and ESS usage fairness. Appl Energy Aug 2023;344."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 37,
+          "bbox": [
+            0.522,
+            0.848,
+            0.94,
+            0.878
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[20] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0100",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Zhang B, Hu W, Ghias AMYM, Xu X, Chen Z. Two-timescale autonomous energy management strategy based on multi-agent deep reinforcement learning approach for residential multicarrier energy system. Appl Energy Dec 2023;351."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 38,
+          "bbox": [
+            0.522,
+            0.879,
+            0.94,
+            0.908
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[21] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0105",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Aguilar J, Garces-Jimenez A, Rmoreno MD, García R. A systematic literature review on the use of artificial intelligence in energy self-management in smart buildings. Renewable Sustain Energy Rev Nov 2021;151."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 39,
+          "bbox": [
+            0.522,
+            0.908,
+            0.94,
+            0.937
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[22] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0110",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Lu R, Bai R, Luo Z, Jiang J, Sun M, Zhang HT. Deep reinforcement learning-based demand response for smart facilities energy management. IEEE Trans Ind Electron 2022;69(8):8554–65."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "page_number",
+          "index": 40,
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.961
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "page_idx": 9,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.058,
+            0.045,
+            0.172,
+            0.054
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "J. Wu, S. Li, Y. Yu et al."
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.054
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy 406 (2026) 127223"
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 2,
+          "bbox": [
+            0.067,
+            0.069,
+            0.485,
+            0.099
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[23] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0115",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Amer AA, Shaban K, Massoud AM. Drl-hems: deep reinforcement learning agent for demand response in home energy management systems considering customers and operators perspectives. IEEE Trans Smart Grid 2023;14(1):239–50."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 3,
+          "bbox": [
+            0.067,
+            0.1,
+            0.484,
+            0.119
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[24] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0120",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Jendoubi I, Bouffard F. Multi-agent hierarchical reinforcement learning for energy management. Appl Energy Feb 2023;332."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 4,
+          "bbox": [
+            0.067,
+            0.12,
+            0.484,
+            0.139
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[25] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0125",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Zhou Y, Ma Z, Zhang J, Zou S. Data-driven stochastic energy management of multi energy system using deep reinforcement learning. Energy Dec 2022;261."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 5,
+          "bbox": [
+            0.067,
+            0.14,
+            0.485,
+            0.169
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[26] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0130",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Lee S, Seon J, Sun YG, Kim SH, Kyeong C, Kim DI, Kim JY. Novel architecture of energy management systems based on deep reinforcement learning in microgrid. IEEE Trans Smart Grid Mar 2024;15:1646–58."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 6,
+          "bbox": [
+            0.067,
+            0.17,
+            0.485,
+            0.199
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[27] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0135",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Guo C, Wang X, Zheng Y, Zhang F. Real-time optimal energy management of microgrid with uncertainties based on deep reinforcement learning. Energy Jan 2022;238."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 7,
+          "bbox": [
+            0.067,
+            0.2,
+            0.485,
+            0.229
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[28] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0140",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Kelepouris NS, Nousdilis AI, Bouhouras AS, Christoforidis GC. An energy management-based methodology for mutually beneficial interaction between prosumers and distribution system operator. Energy Convers Manag Dec 2025;346."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 8,
+          "bbox": [
+            0.067,
+            0.23,
+            0.484,
+            0.249
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[29] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0145",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Selim A, Mo H, Pota H. Optimization framework for multi-vector energy communities with uncertainty-aware energy management. Appl Energy Oct 2025;395."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 9,
+          "bbox": [
+            0.067,
+            0.25,
+            0.484,
+            0.28
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[30] "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://refhub.elsevier.com/S0306-2619(25)01953-1/sbr0150",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Wu J, Li S, Fu A, Cvetković M, Palensky P, Vasquez JC, Guerrero JM. Hierarchical online energy management for residential microgrids with hybrid hydrogen– electricity storage system. Appl Energy 2024;363:123020."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "ref_text",
+          "index": 10,
+          "bbox": [
+            0.067,
+            0.28,
+            0.484,
+            0.309
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "[31] Lillicrap TP, Hunt JJ, Pritzel A, Heess N, Erez T, Tassa Y, Silver D, Wierstra D. Continuous control with deep reinforcement learning. Sep 2015. "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://arxiv.org/abs/1509.02971",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "arXiv:1509.02971."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 11,
+          "bbox": [
+            0.063,
+            0.324,
+            0.18,
+            0.337
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Author biography"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "image",
+          "index": 12,
+          "bbox": [
+            0.064,
+            0.343,
+            0.186,
+            0.438
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 12,
+              "bbox": [
+                0.064,
+                0.343,
+                0.186,
+                0.438
+              ],
+              "image_path": "images/page_9_image_12.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.192,
+            0.342,
+            0.487,
+            0.454
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Jingxuan Wu",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.S degree in electrical engineering and automation in 2017 from Dalian Maritime University, Dalian, P.R. CHINA and the M.S degree in electrical engineering in 2020 from Fuzhou University, Fuzhou, P.R. CHINA. He worked as an R&D engineer for sensors technology in Nari Technology CO., LTD from 2020 to 2021. He receives his Ph.D degree from AAU Energy, Aalborg University, Denmark. He is working as a Postdoc researcher in Microgrids with the Center for Research on Microgrids (CROM), Aalborg University, Aalborg, Denmark. His main research interests include energy management systems (EMS) and machine learning."
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 14,
+          "bbox": [
+            0.065,
+            0.469,
+            0.185,
+            0.562
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 14,
+              "bbox": [
+                0.065,
+                0.469,
+                0.185,
+                0.562
+              ],
+              "image_path": "images/page_9_image_14.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.192,
+            0.468,
+            0.486,
+            0.56
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Shuting Li",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.S degree in electronic information engineering in 2016 from Southwest Jiaotong University, Chengdu, P.R. CHINA and the M.S degree in electrical engineering in 2019 from Southwest Jiaotong University, Chengdu, P.R. CHINA. She receives her Ph.D degree from AAU Energy, Aalborg University, Denmark. She is working as a Postdoc researcher at AAU Energy, Aalborg University, Aalborg, Denmark. Her main research interests include distributed generation and power quality enhancement."
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 16,
+          "bbox": [
+            0.065,
+            0.58,
+            0.186,
+            0.673
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 16,
+              "bbox": [
+                0.065,
+                0.58,
+                0.186,
+                0.673
+              ],
+              "image_path": "images/page_9_image_16.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.192,
+            0.578,
+            0.487,
+            0.67
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Yun Yu",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.S. degree from China University of Mining and Technology, Xuzhou, China, in 2016, the M.S. degree from Tianjin University, Tianjin, China, in 2019, both in electrical engineering, and the Ph.D. degree in energy technology from Aalborg University, Aalborg, Denmark, in 2023. Since 2023, he has been with Aalborg University, where he is currently a Postdoctoral Researcher. His research interests include modelling, stability, and control of power electronic-based systems."
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 18,
+          "bbox": [
+            0.517,
+            0.07,
+            0.64,
+            0.165
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 18,
+              "bbox": [
+                0.517,
+                0.07,
+                0.64,
+                0.165
+              ],
+              "image_path": "images/page_9_image_18.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.645,
+            0.068,
+            0.94,
+            0.18
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Yajuan Guan",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.S. degree and M.S. degree in electrical engineering from Yanshan University, Qinhuangdao, Hebei, China, and the Ph.D. degree in power electronics from the Aalborg University (AAU), Aalborg, Denmark, in 2007, 2010 and 2016 respectively. From 2010 to 2013, she was a Research Intern and then an Assistant Researcher at the Institute of Electrical Engineering, Chinese Academy of Sciences. From 2016 to 2022, she was a post-doctoral Fellow and then an Assistant Professor at Center for Research on Microgrids (CROM), AAU. She is currently an Associate Professor at CROM, AAU. Her research interests in-"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 20,
+          "bbox": [
+            0.514,
+            0.179,
+            0.939,
+            0.21
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "clude microgrids, distributed generation systems, power converters for renewable energy generation systems, Internet of Things, grid-forming wind power systems, and maritime microgrids."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "image",
+          "index": 21,
+          "bbox": [
+            0.518,
+            0.226,
+            0.64,
+            0.32
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 21,
+              "bbox": [
+                0.518,
+                0.226,
+                0.64,
+                0.32
+              ],
+              "image_path": "images/page_9_image_21.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.646,
+            0.224,
+            0.94,
+            0.335
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Baoze Wei",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.S. degree in electrical engineering, the M.S. degree in power electronics and power drives from Yanshan University, Qinhuangdao, China, and the Ph.D. degree in power electronic systems from the AAU Energy, Aalborg University, Aalborg, Denmark, in 2010, 2014, and 2017, respectively. He is currently working with the AAU Energy as an associate professor. His research interests include power distribution system for all/more electric aircraft, reliability study of electronic based system, hydrogen/fuel cell based multi-energy system, as well as microgrids, microgrid clusters, modular power inverters for uninterruptible"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 23,
+          "bbox": [
+            0.515,
+            0.336,
+            0.938,
+            0.356
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "power system, photovoltaic generation system, paralleling power converter for renewable generation systems, power quality, as well as the applications of distributed control."
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "index": 24,
+          "bbox": [
+            0.518,
+            0.372,
+            0.639,
+            0.466
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 24,
+              "bbox": [
+                0.518,
+                0.372,
+                0.639,
+                0.466
+              ],
+              "image_path": "images/page_9_image_24.jpg",
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 25,
+          "bbox": [
+            0.645,
+            0.371,
+            0.94,
+            0.482
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Zhe Chen",
+              "styles": [
+                "bold"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " received the B.Eng. and M.Sc. degrees in electrical engineering from Northeast China Institute of Electric Power Engineering, Jilin, China, in 1982 and 1986, the M.Phil. degree in power electronic from Staffordshire University, Staffordshire, U.K., in 1993, and the Ph.D. degree in power and control from the University of Durham, Durham, U.K., in 1997. Since 2002, he has been a Full Professor with the Department of Energy Technology, Aalborg University, Aalborg, Denmark. He is the Leader of Wind Power System Research program with the Department of Energy Technology, Aalborg University. His research interests in-"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 26,
+          "bbox": [
+            0.514,
+            0.481,
+            0.94,
+            0.523
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "clude wind power, power electronics, power systems, and multi energy systems. Dr. Chen was an Associate Editor of IEEE TRANSACTIONS ON POWER ELECTRONICS, a member of Editorial Boards for many international journals, a fellow of the Institution of Engineering and Technology, and a Chartered Engineer in the U.K."
+            }
+          ],
+          "continues_prev": true
+        },
+        {
+          "type": "page_number",
+          "index": 27,
+          "bbox": [
+            0.493,
+            0.953,
+            0.509,
+            0.962
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "10"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "is_full_document": true,
+  "schema": "docvortex.middle",
+  "schema_version": "2.0"
+}

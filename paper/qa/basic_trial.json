@@ -1,0 +1,532 @@
+{
+  "metadata": {
+    "file_suffix": "pdf",
+    "producer": {
+      "name": "mineru",
+      "version": "4.0.12"
+    },
+    "document": {
+      "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+      "authors": [
+        "Jingxuan Wu"
+      ],
+      "subject": "Applied Energy, 406 (2026) 127223. doi:10.1016/j.apenergy.2025.127223",
+      "keywords": [
+        "Energy Management,Energy Storage System,Microgrid,Power Flow Control,Reinforcement Learning"
+      ],
+      "description": "Applied Energy, 406 (2026) 127223. doi:10.1016/j.apenergy.2025.127223",
+      "languages": [
+        "EN"
+      ],
+      "identifiers": [
+        "10.1016/j.apenergy.2025.127223"
+      ],
+      "publisher": "Elsevier Ltd",
+      "created_at": "2026-01-15T11:57:54Z",
+      "modified_at": "2026-01-15T12:02:02Z",
+      "creator_application": "Elsevier",
+      "producer_application": "Acrobat Distiller 8.1.0 (Windows)",
+      "page_count": 10,
+      "page_count_kind": "physical"
+    }
+  },
+  "extensions": {
+    "mineru": {
+      "tier": "basic",
+      "parse_mode": "txt"
+    },
+    "docvortex_layout": {
+      "version": 1,
+      "pages": [
+        {
+          "page_idx": 0,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        }
+      ]
+    }
+  },
+  "pages": [
+    {
+      "page_idx": 0,
+      "blocks": [
+        {
+          "type": "header",
+          "index": 0,
+          "bbox": [
+            0.4,
+            0.043,
+            0.597,
+            0.057
+          ],
+          "content": [
+            {
+              "type": "hyperlink",
+              "url": "https://doi.org/10.1016/j.apenergy.2025.127223",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "Applied Energy 406 (2026) 127223"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 1,
+          "bbox": [
+            0.061,
+            0.076,
+            0.164,
+            0.145
+          ],
+          "content": []
+        },
+        {
+          "type": "header",
+          "index": 2,
+          "bbox": [
+            0.382,
+            0.077,
+            0.624,
+            0.091
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Contents lists available at "
+            },
+            {
+              "type": "hyperlink",
+              "url": "http://www.sciencedirect.com/science/journal/0306-2619",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "ScienceDirect"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 3,
+          "bbox": [
+            0.062,
+            0.147,
+            0.164,
+            0.163
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "ELSEVIER"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 4,
+          "bbox": [
+            0.42,
+            0.111,
+            0.586,
+            0.133
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Applied Energy"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 5,
+          "bbox": [
+            0.327,
+            0.148,
+            0.678,
+            0.162
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "journal homepage: "
+            },
+            {
+              "type": "hyperlink",
+              "url": "https://www.elsevier.com/locate/APEN",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "www.elsevier.com/locate/apen"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "index": 6,
+          "bbox": [
+            0.843,
+            0.069,
+            0.94,
+            0.162
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "AppliedEnergy"
+            }
+          ]
+        },
+        {
+          "type": "doc_title",
+          "index": 7,
+          "bbox": [
+            0.059,
+            0.21,
+            0.782,
+            0.254
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market"
+            }
+          ],
+          "level": 1
+        },
+        {
+          "type": "image",
+          "index": 8,
+          "bbox": [
+            0.84,
+            0.186,
+            0.889,
+            0.223
+          ],
+          "content": [
+            {
+              "type": "image_body",
+              "index": 8,
+              "bbox": [
+                0.84,
+                0.186,
+                0.889,
+                0.223
+              ],
+              "content": ""
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 9,
+          "bbox": [
+            0.059,
+            0.261,
+            0.642,
+            0.278
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Jingxuan Wu"
+            },
+            {
+              "type": "text",
+              "content": "∗",
+              "styles": [
+                "superscript"
+              ]
+            },
+            {
+              "type": "text",
+              "content": " "
+            },
+            {
+              "type": "hyperlink",
+              "url": "https://orcid.org/0000-0003-4277-8550",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "iD",
+                  "styles": [
+                    "bold"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": ", Shuting Li, Yun Yu, Yajuan Guan, Baoze Wei, Zhe Chen"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 10,
+          "bbox": [
+            0.059,
+            0.281,
+            0.383,
+            0.295
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Aalborg University, Pontoppidanstraede 111, Aalborg, 9220, Denmark"
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 11,
+          "bbox": [
+            0.059,
+            0.321,
+            0.21,
+            0.336
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "H I G H L I G H T S"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 12,
+          "bbox": [
+            0.058,
+            0.348,
+            0.542,
+            0.361
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• A novel online energy management strategy independent of massive historical datasets."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 13,
+          "bbox": [
+            0.058,
+            0.361,
+            0.593,
+            0.373
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• Multi-objective intelligent decision-making agent using a deep reinforcement-learning algorithm."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 14,
+          "bbox": [
+            0.059,
+            0.372,
+            0.623,
+            0.385
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• An online energy market evaluation method for electricity trading guidance in flexible energy markets."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 15,
+          "bbox": [
+            0.059,
+            0.385,
+            0.595,
+            0.398
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "• High-resolution operations to handle transient oscillations in the power flow and energy balance."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 16,
+          "bbox": [
+            0.06,
+            0.425,
+            0.228,
+            0.439
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A R T I C L E I N F O"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 17,
+          "bbox": [
+            0.059,
+            0.453,
+            0.18,
+            0.519
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Keywords: Energy Management Energy Storage System Microgrid Power Flow Control Reinforcement Learning"
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 18,
+          "bbox": [
+            0.339,
+            0.425,
+            0.461,
+            0.439
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "A B S T R A C T"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 19,
+          "bbox": [
+            0.336,
+            0.45,
+            0.942,
+            0.635
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "The promotion of renewable energy in Microgrids (MGs) brings uncertainty from weather and climate change, thereby challenging the energy management systems (EMSs) in energy allocation tasks. This paper proposes a reinforcement learning (RL)-based online EMS (RLEMS) approach to solve the multi-objective optimization of power flow in an MG with a high proportion of uncertainty. A novel online energy management framework is proposed in the RLEMS, which utilizes the information extraction ability of RL algorithms to map the multi-dimensional MG states with optimal power flow operations, diluting the time sequence self-correlation in solving uncertainty. Different from conventional time series optimization methods, the proposed RLEMS can be deployed with few-shot historical datasets and operate the MG with a high resolution. The global economic horizon of the RLEMS is established through a novel energy price evaluation model (EPEM) instead of conventional prediction approaches, in which the vague evaluation of electricity price is quantified and projected to the RLEMS timescale and the MG scope. The multi-timescale uncertainty and multi-dimensional MG status are combined with distinguished priorities by the EPEM and RLEMS reward function. The performance of the proposed RLEMS is validated through realistic numerical experiments. The proposed RLEMS can maintain the stable and economical operation of the MG for over 240 hours continuously with only 24-hour training data. The comparison with cutting-edge approaches indicates that the proposed RLEMS provides promising cost-saving performance."
+            }
+          ]
+        },
+        {
+          "type": "paragraph_title",
+          "index": 20,
+          "bbox": [
+            0.06,
+            0.673,
+            0.164,
+            0.687
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "1 . Introduction"
+            }
+          ],
+          "level": 2
+        },
+        {
+          "type": "text",
+          "index": 21,
+          "bbox": [
+            0.058,
+            0.694,
+            0.49,
+            0.815
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "Renewable energy has been developing rapidly in the last decades due to public awareness of environment-friendly energy structures, leading to the growing implementation of wind and solar generation. Microgrids (MGs) are essential units to interface distributed generators into power systems and therefore the terminal system, which suffers from the uncertainty and intermittence of renewable energy [1]. To improve the power balance and power efficiency of MGs, energy storage (ES) systems and cooperated energy management systems (EMSs) are deployed to dispatch the local energy spatiotemporally."
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "index": 22,
+          "bbox": [
+            0.51,
+            0.673,
+            0.943,
+            0.82
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "An energy management system (EMS) is defined as a tertiary-level control system to monitor, dispatch, and optimize the MG system [2]. The internal power and energy balance is an important optimization target for EMSs in MGs, which affects the frequency and voltage stability of the AC bus [3]. EMSs optimize the power flow by operating the ES systems and controllable loads according to the system dynamics [4]. Many automatic control methods have been introduced into EMS applications to enhance the power balance of MG systems. In [5], fuzzy logic is deployed to switch the operation modes of an MG. The dispatched distributed generators include a fuel cell, a battery, a photovoltaic (PV) system, and the utility grid. Model predictive control (MPC)"
+            }
+          ]
+        },
+        {
+          "type": "page_footnote",
+          "index": 23,
+          "bbox": [
+            0.066,
+            0.842,
+            0.49,
+            0.868
+          ],
+          "content": [
+            {
+              "type": "text",
+              "content": "∗ Corresponding author. Email addresses: "
+            },
+            {
+              "type": "hyperlink",
+              "url": "mailto:jinwu@energy.aau.dk",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "jinwu@energy.aau.dk"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " (J. Wu), "
+            },
+            {
+              "type": "hyperlink",
+              "url": "mailto:shuli@energy.aau.dk",
+              "content": [
+                {
+                  "type": "text",
+                  "content": "shuli@energy.aau.dk"
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "content": " (S. Li)."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "is_full_document": false,
+  "schema": "docvortex.middle",
+  "schema_version": "2.0"
+}

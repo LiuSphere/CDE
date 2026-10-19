@@ -1,0 +1,163 @@
+\section{Evolution-Enhanced Graph-Attentive Cooperative Scheduling}
+\label{sec:method}
+
+\subsection{Framework and Dispatch Interface}
+\label{sec:method-framework}
+\label{sec:dispatch-interface}
+
+Battery inventory couples dispatch across hours. Community exchange
+couples microgrid costs. Graph-Attentive Value
+Decomposition Actor-Critic (GAVDAC) uses recurrent histories to condition
+community-value estimation and an evolutionary algorithm (EA) to explore
+complete dispatch policies. Its policy-gradient backbone follows Factored
+Multi-Agent Centralised Policy Gradients (FACMAC)~\cite{facmac2021};
+graph mixing builds on GraphMIX~\cite{graphmix2020}, and population
+interaction follows evolutionary reinforcement learning (ERL)~\cite{erl2018}.
+
+Figure~\ref{fig:method-framework} shows the two learning branches.
+The actor, local critic, and mixer have parameters $\theta$, $\phi$, and
+$\psi$, respectively. A population of $M$ complete shared actors supplies
+additional trajectories to replay buffer $\mathcal D$. Gradient learning
+updates $(\theta,\phi,\psi)$; selection, mutation, and actor injection
+update the population.
+
+\begin{figure}[htbp]
+ \centering
+ \input{figures/training-framework}
+ \caption{Population exploration and graph-attentive learning. Solid arrows
+ carry policies, actions, or experience; dashed arrows denote updates.}
+ \label{fig:method-framework}
+\end{figure}
+
+Each agent receives local measurements, equipment limits, community
+broadcasts, and causal forecast summaries as defined in
+Section~\ref{sec:decision}. Its generator and battery coordinates pass
+through Eq.~\eqref{eq:action-mapping}. Scaling battery actions by available
+charging/discharging power exposes the feasible flexibility as SOC changes.
+The centered reward retains the discounted-cost ranking of policies on
+a common operating sequence. Exchange clearing and grid balancing follow
+Section~\ref{sec:formulation}.
+
+\subsection{History-Conditioned Graph Value Decomposition}
+\label{sec:graph-decomposition}
+
+The shared actor receives $[o_{i,t},a_{i,t-1},e_i]$, where $e_i$ is a
+one-hot agent identifier. An input layer with a rectified linear unit (ReLU)
+and a gated recurrent unit (GRU) produce hidden state $h_{i,t}$.
+A linear output with a hyperbolic tangent gives the two-component vector
+$\nu_{i,t}\in[-1,1]^2$, affinely mapped to action bounds
+$[0,1]\times[-1,1]$. Parameters are shared, while observations,
+identifiers, and hidden states distinguish microgrid roles.
+
+A local critic gives utility $q_{i,t}=q_\phi(o_{i,t},a_{i,t})$.
+History features are $\zeta_{i,t}=\operatorname{ReLU}(W_hh_{i,t}+b_h)$.
+Attention scores are
+$u_{ij,t}=(W_Q\zeta_{i,t})^\top(W_K\zeta_{j,t})/\sqrt{d_\zeta}$.
+Here $W_h,b_h,W_Q,W_K$ are trainable projections and $d_\zeta$ is the
+query/key dimension. For binary mask $C$, normalized weights are
+\begin{equation}
+ A_{ij,t}=\frac{C_{ij}\exp(u_{ij,t})}
+                    {\sum_{k=1}^{N}C_{ik}\exp(u_{ik,t})}.
+ \label{eq:mixer-attention}
+\end{equation}
+
+The implemented mask is
+$C=\left[\begin{smallmatrix}1&1&1\\1&1&0\\1&0&1\end{smallmatrix}\right]$.
+It defines utility-aggregation connections independently of physical
+exchange links. Attention varies within this fixed mask as histories evolve.
+
+For utility vector $q_t=(q_{1,t},\ldots,q_{N,t})^\top$, the mixed team
+value is
+\begin{equation}
+ \begin{aligned}
+ f_{i,t}&=g_\psi\big((A_tq_t)_i;s_t^{\mathrm{c}}\big),\\
+ Q_{\mathrm{tot},t}
+ &=\left(\frac1N\sum_i f_{i,t}\right)
+          w_{\mathrm{out}}(s_t^{\mathrm{c}})+V(s_t^{\mathrm{c}}).
+ \end{aligned}
+ \label{eq:graph-value}
+\end{equation}
+
+The graph transformation $g_\psi$ applies two state-conditioned affine
+layers with leaky ReLU and exponential linear unit activations.
+The vector $f_{i,t}$ is the resulting node feature,
+$w_{\mathrm{out}}$ weights its mean readout, and $V$ is a scalar bias.
+These functions use the layer-normalized joint observation
+$s_t^{\mathrm{c}}$. Hypernetworks generate nonnegative weights through
+scaled sigmoids, following QMIX~\cite{qmix2018}. For fixed state and
+recurrent features, the team value is nondecreasing in local utilities.
+Actor histories thus condition both dispatch and community-value mixing.
+
+\subsection{Joint-Value Policy Learning}
+\label{sec:policy-learning}
+\label{sec:facmac-learning}
+
+Replay retains daily sequences to reconstruct recurrent histories.
+Let $\tau_t$ denote joint replayed histories,
+$\boldsymbol\mu_\theta$ the joint actor, and $\boldsymbol h_t^\theta$
+its hidden states. Superscript $-$ denotes target networks.
+For true-terminal indicator $d_t$, the bootstrap target is
+\begin{equation}
+ y_t=r_t+\gamma(1-d_t)Q_{\mathrm{tot}}^-
+ \big(s_{t+1}^{\mathrm{c}},
+      \boldsymbol\mu_{\theta^-}(\tau_{t+1}),\boldsymbol h_{t+1}^{-}\big).
+ \label{eq:td-target}
+\end{equation}
+
+The critic and mixer minimize the mean squared target error over valid
+transitions, with actor features detached. After this update, their
+parameters are fixed while the actor minimizes
+\begin{equation}
+ \mathcal L_\pi(\theta)=
+ -\left\langle Q_{\mathrm{tot}}
+ (s_t^{\mathrm{c}},\boldsymbol\mu_\theta(\tau_t),\boldsymbol h_t^\theta)
+ \right\rangle
+ +\lambda_a\left\langle\|\nu_{i,t}\|_2^2/2\right\rangle.
+ \label{eq:actor-loss}
+\end{equation}
+
+Angle brackets denote sample means, including agents for the action
+regularizer with coefficient $\lambda_a$. Gradients pass through actions
+and recurrent attention features. Target networks use soft parameter
+updates after each learner update; settings appear in
+Section~\ref{sec:experimental-setup}.
+
+Previous actions in replay reconstruct both current and target histories.
+Daily execution resets hidden states and previous actions, while SOC
+continues across days. The final bootstrap extends the preceding history,
+giving a blockwise approximation at the day boundary.
+
+\subsection{Common-Scenario Evolution and Learning Interaction}
+\label{sec:evolution}
+\label{sec:hybrid-interaction}
+\label{sec:training-procedure}
+
+At each EA cycle, all $M$ candidates use deterministic actions on the same
+training day with the same initial SOC vector. Candidate $k$ receives
+fitness $F_k=\sum_{t=0}^{T-1}r_t^{(k)}$, its undiscounted daily team return.
+Matching exogenous inputs and initial energy makes within-cycle fitness
+differences attributable to policy behavior.
+
+Rank-based tournaments select policies while protecting the elite.
+The configured crossover copies one paired complete actor into the other,
+with a randomly chosen direction. Mutation perturbs selected matrix
+weights using relative Gaussian noise, with occasional large perturbations
+or resets; bias vectors remain unchanged. One evaluated generation updates
+the complete shared actor per cycle. Operator settings are given in
+Section~\ref{sec:experimental-setup}.
+
+All population trajectories enter $\mathcal D$. The gradient actor then
+collects a trajectory from the same scenario using ordinary exploration;
+its final SOC and date advance training. After replay warmup, learner
+updates proceed in critic/mixer, actor, and target order. The updated actor
+is injected into a population slot chosen from pre-evolution fitness while
+protecting the retained elite. Population experience therefore reaches the
+learner through replay, and gradient-trained behavior reaches the population
+through injection.
+
+Every population rollout counts toward the interaction budget. Validation
+trajectories are excluded from replay, and the actor and population elite
+remain separate checkpoint candidates. Online scheduling uses only the
+selected deterministic actor, recurrent states, and prescribed
+measurements/broadcasts, followed by feasible-power mapping and exchange
+clearing. The critic, mixer, and evolution operate during training.

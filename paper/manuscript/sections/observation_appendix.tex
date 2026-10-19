@@ -1,0 +1,58 @@
+\section{Observation and Forecast Definitions}
+\label{sec:observation-appendix}
+
+For $Y_{-i,t}=\sum_{j\ne i}Y_{j,t}$, define usable AC-side battery energy
+$B_{i,t}=(z_{i,t}-\underline{z})E_i\eta_i^{\mathrm{dis}}$ and time phase
+$\theta_t=2\pi h_t/24$, where $h_t$ is the current hour.
+The 20 components of $o_{i,t}$ are listed in
+Table~\ref{tab:observation-map}. Price, power, and energy scaling constants
+are $S_\lambda=0.3$~CU/kWh, $S_P=300$~kW, and $S_E=1200$~kWh.
+Scaling affects network inputs only.
+
+\begin{table}[htbp]
+ \centering
+ \footnotesize
+ \caption{Ordered observation components for agent $i$.}
+ \label{tab:observation-map}
+ \begin{tabular}{>{\raggedright\arraybackslash}p{0.09\linewidth}
+                 >{\raggedright\arraybackslash}p{0.54\linewidth}
+                 >{\raggedright\arraybackslash}p{0.22\linewidth}}
+ \hline
+ Entries & Physical quantities & Divisor\\
+ \hline
+ 1 & Current tariff $\lambda_t$ & $S_\lambda$\\
+ 2--3 & Local load $L_{i,t}$ and PV power $V_{i,t}$ & $S_P$\\
+ 4 & SOC $z_{i,t}$ & 1\\
+ 5--6 & $\sin\theta_t,\cos\theta_t$ & 1\\
+ 7--8 & Other-agent totals $L_{-i,t},V_{-i,t}$ & $S_P$\\
+ 9 & Other-agent usable energy $B_{-i,t}$ & $S_E$\\
+ 10 & Generator rating $\overline{P}_i^{\mathrm{g}}$ & $S_P$\\
+ 11 & Battery capacity $E_i$ & $S_E$\\
+ 12 & Exchange limit $\overline{P}_i^{\mathrm{x}}$ & $S_P$\\
+ 13--14 & Available charge/discharge powers from
+          Eq.~\eqref{eq:battery-limits} & $S_P$\\
+ 15--17 & Next tariff, next-$H$ mean tariff, next-$H$ maximum tariff
+          & $S_\lambda$\\
+ 18--19 & Mean local forecasts
+          $\widehat{L}_{i,t,H},\widehat{V}_{i,t,H}$ & $S_P$\\
+ 20 & Other-agent net forecast
+          $\sum_{j\ne i}(\widehat{L}_{j,t,H}-\widehat{V}_{j,t,H})$
+          & $S_P$\\
+ \hline
+ \end{tabular}
+\end{table}
+
+For $X\in\{L,V\}$, let $\mu_i^X(h)$ be the mean profile at hour $h$
+over training days. The current-level multiplier is
+$r_{i,t}^X=\operatorname{clip}(X_{i,t}/\mu_i^X(h_t),0.25,2)$
+when $\mu_i^X(h_t)>10^{-8}$ and equals one otherwise.
+The mean forecast over $H=4$ future hours is
+\begin{equation}
+ \widehat{X}_{i,t,H}=\frac{r_{i,t}^X}{H}
+    \sum_{k=1}^{H}\mu_i^X((h_t+k)\bmod24).
+ \label{eq:causal-forecast}
+\end{equation}
+
+Tariff summaries use the same future hours of the published daily tariff.
+At midnight, template and tariff indices wrap to hour zero.
+Neither forecast reads future realized load or PV from the evaluation day.

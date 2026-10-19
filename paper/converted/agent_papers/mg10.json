@@ -1,0 +1,382 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg10",
+  "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+  "source_text": "10_Safe_hierarchical_hybrid_RL/paper.txt",
+  "source_text_file_sha256": "e70d303d0f7763c6033fe8fd05d17b31dc60c90f725558b3b298e817e6d9383d",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+      "level": 1,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "toward-resilient-distribution-system-via-microgrid-formation-a-safe-hierarchical-hybrid-reinforcement-learning-approach"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "H I G H L I G H T S",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "h-i-g-h-l-i-g-h-t-s"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1. Introduction",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "1.1. Background",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "11-background"
+    },
+    {
+      "heading": "1.2. Literature review",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "12-literature-review"
+    },
+    {
+      "heading": "1.3. Contributions and paper organization",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "13-contributions-and-paper-organization"
+    },
+    {
+      "heading": "2. Problem formulation of MGF",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "2-problem-formulation-of-mgf"
+    },
+    {
+      "heading": "2.1. Objective",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "21-objective"
+    },
+    {
+      "heading": "2.2. Constraints",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "22-constraints"
+    },
+    {
+      "heading": "3. Safe hierarchical hybrid reinforcement learning",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "3-safe-hierarchical-hybrid-reinforcement-learning"
+    },
+    {
+      "heading": "3.1. Formulate MGF as a hierarchical partially observable MDP",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "31-formulate-mgf-as-a-hierarchical-partially-observable-mdp"
+    },
+    {
+      "heading": "3.2. SHHRL-based MGF framework",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "32-shhrl-based-mgf-framework"
+    },
+    {
+      "heading": "3.3. Neural networks parameters optimization",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "33-neural-networks-parameters-optimization"
+    },
+    {
+      "heading": "3.4. Safety layer embedded with expert knowledge",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "34-safety-layer-embedded-with-expert-knowledge"
+    },
+    {
+      "heading": "3.5. MPER for stabilizing learning",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "35-mper-for-stabilizing-learning"
+    },
+    {
+      "heading": "4. Case studies",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "4-case-studies"
+    },
+    {
+      "heading": "4.1. Case settings",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "41-case-settings"
+    },
+    {
+      "heading": "4.2. The modified 123-node system",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "42-the-modified-123-node-system"
+    },
+    {
+      "heading": "4.3. The modified 356-node regional system in China",
+      "level": 3,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "43-the-modified-356-node-regional-system-in-china"
+    },
+    {
+      "heading": "5. Conclusion",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "5-conclusion"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Acknowledgment",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "acknowledgment"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "10_Safe_hierarchical_hybrid_RL/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "11.14%",
+      "first_match_line": 477,
+      "candidate_chunk_ids": [
+        "mg10-c0012"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Table 1",
+      "first_match_line": 479,
+      "candidate_chunk_ids": [
+        "mg10-c0012"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Table 3",
+      "first_match_line": 499,
+      "candidate_chunk_ids": [
+        "mg10-c0014"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg10-c0001",
+      "path": "agent_chunks/mg10/mg10-c0001.json",
+      "line_start": 1,
+      "line_end": 40,
+      "char_start": 0,
+      "char_end_exclusive": 5907,
+      "characters": 5907,
+      "text_sha256_utf8": "a1ed75dae247334da9260532f2e1e221b2ba30091e199445bb9092a0bf4f6d6e"
+    },
+    {
+      "chunk_id": "mg10-c0002",
+      "path": "agent_chunks/mg10/mg10-c0002.json",
+      "line_start": 41,
+      "line_end": 58,
+      "char_start": 5907,
+      "char_end_exclusive": 11873,
+      "characters": 5966,
+      "text_sha256_utf8": "dcdb7da270899eb9e16c00a53298a262c97d2f7b4503ca14a60a253b7c7791d4"
+    },
+    {
+      "chunk_id": "mg10-c0003",
+      "path": "agent_chunks/mg10/mg10-c0003.json",
+      "line_start": 59,
+      "line_end": 80,
+      "char_start": 11873,
+      "char_end_exclusive": 17789,
+      "characters": 5916,
+      "text_sha256_utf8": "13bba78ea343198955300e927d431ab94e74974f5ecf263f79e697a6cdfdc543"
+    },
+    {
+      "chunk_id": "mg10-c0004",
+      "path": "agent_chunks/mg10/mg10-c0004.json",
+      "line_start": 81,
+      "line_end": 111,
+      "char_start": 17789,
+      "char_end_exclusive": 23772,
+      "characters": 5983,
+      "text_sha256_utf8": "f2e9baf888a9e081630f5c4a1b05b02d090dc121f914cf3efe567cd524d22162"
+    },
+    {
+      "chunk_id": "mg10-c0005",
+      "path": "agent_chunks/mg10/mg10-c0005.json",
+      "line_start": 112,
+      "line_end": 179,
+      "char_start": 23772,
+      "char_end_exclusive": 29574,
+      "characters": 5802,
+      "text_sha256_utf8": "2d2a5e2547490eb47209c9f36b0929b9f717037f8b40bf3c27c7c7cf7513ebd4"
+    },
+    {
+      "chunk_id": "mg10-c0006",
+      "path": "agent_chunks/mg10/mg10-c0006.json",
+      "line_start": 180,
+      "line_end": 226,
+      "char_start": 29574,
+      "char_end_exclusive": 35523,
+      "characters": 5949,
+      "text_sha256_utf8": "c46adaac4c446e326486c01b2185102e6ed824a9aab8d3c615e8f01f9c1a777e"
+    },
+    {
+      "chunk_id": "mg10-c0007",
+      "path": "agent_chunks/mg10/mg10-c0007.json",
+      "line_start": 227,
+      "line_end": 289,
+      "char_start": 35523,
+      "char_end_exclusive": 41271,
+      "characters": 5748,
+      "text_sha256_utf8": "53775b6f3c6e5583915deda13e73a0f0dc05f51b673de8462d407e17478cdc39"
+    },
+    {
+      "chunk_id": "mg10-c0008",
+      "path": "agent_chunks/mg10/mg10-c0008.json",
+      "line_start": 290,
+      "line_end": 334,
+      "char_start": 41271,
+      "char_end_exclusive": 46986,
+      "characters": 5715,
+      "text_sha256_utf8": "ba0e1f11ee6e55fdd4a96b265aee68b78c5fcdae5e36bdecbc0ce239e08e6eb7"
+    },
+    {
+      "chunk_id": "mg10-c0009",
+      "path": "agent_chunks/mg10/mg10-c0009.json",
+      "line_start": 335,
+      "line_end": 366,
+      "char_start": 46986,
+      "char_end_exclusive": 52785,
+      "characters": 5799,
+      "text_sha256_utf8": "056b13ef5fb7485e0bd6d9dcaa0adf14e4ed79d5256fd2b299332f28eb6acf0b"
+    },
+    {
+      "chunk_id": "mg10-c0010",
+      "path": "agent_chunks/mg10/mg10-c0010.json",
+      "line_start": 367,
+      "line_end": 406,
+      "char_start": 52785,
+      "char_end_exclusive": 58479,
+      "characters": 5694,
+      "text_sha256_utf8": "cdbf66079e7620ca22942cca4a7e024242a9d353b9d1bbe44e68488273356810"
+    },
+    {
+      "chunk_id": "mg10-c0011",
+      "path": "agent_chunks/mg10/mg10-c0011.json",
+      "line_start": 407,
+      "line_end": 453,
+      "char_start": 58479,
+      "char_end_exclusive": 64418,
+      "characters": 5939,
+      "text_sha256_utf8": "77a661a45e1925004d6c5417fe9df90cb5603a46b658f1d4c4282e69896a002e"
+    },
+    {
+      "chunk_id": "mg10-c0012",
+      "path": "agent_chunks/mg10/mg10-c0012.json",
+      "line_start": 454,
+      "line_end": 479,
+      "char_start": 64418,
+      "char_end_exclusive": 69608,
+      "characters": 5190,
+      "text_sha256_utf8": "f2b0b845adac336bbadc20ea99f6ba9f9bb43ef3ddf8cba58edc8067aded9603"
+    },
+    {
+      "chunk_id": "mg10-c0013",
+      "path": "agent_chunks/mg10/mg10-c0013.json",
+      "line_start": 480,
+      "line_end": 497,
+      "char_start": 69608,
+      "char_end_exclusive": 74818,
+      "characters": 5210,
+      "text_sha256_utf8": "bd98b32c312d285f9a9782191977b60c1426a6a751fc760c3c7297d0a63e658f"
+    },
+    {
+      "chunk_id": "mg10-c0014",
+      "path": "agent_chunks/mg10/mg10-c0014.json",
+      "line_start": 498,
+      "line_end": 513,
+      "char_start": 74818,
+      "char_end_exclusive": 80751,
+      "characters": 5933,
+      "text_sha256_utf8": "fd11df311478b51ffe815d954ef38d118cf70ecca5911c58af336e2e4bd48632"
+    },
+    {
+      "chunk_id": "mg10-c0015",
+      "path": "agent_chunks/mg10/mg10-c0015.json",
+      "line_start": 514,
+      "line_end": 548,
+      "char_start": 80751,
+      "char_end_exclusive": 86673,
+      "characters": 5922,
+      "text_sha256_utf8": "3a346c25a821b637bcb5699c6c3a2190b19a716599a31227779c3a0c9f860b62"
+    },
+    {
+      "chunk_id": "mg10-c0016",
+      "path": "agent_chunks/mg10/mg10-c0016.json",
+      "line_start": 549,
+      "line_end": 625,
+      "char_start": 86673,
+      "char_end_exclusive": 92652,
+      "characters": 5979,
+      "text_sha256_utf8": "85f12ea5ba9c9f0b360c0f60911a2d3d7e44675762b0fab1ea142156786f046d"
+    },
+    {
+      "chunk_id": "mg10-c0017",
+      "path": "agent_chunks/mg10/mg10-c0017.json",
+      "line_start": 626,
+      "line_end": 696,
+      "char_start": 92652,
+      "char_end_exclusive": 97645,
+      "characters": 4993,
+      "text_sha256_utf8": "ef642e271aa3a3bee975cc944eca460f92672f4101b69b603d842727066d676d"
+    }
+  ]
+}

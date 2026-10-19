@@ -1,0 +1,43 @@
+The selected training configuration is
+\texttt{facmac\_ea\_tune\_v03\_long}, combined with
+\texttt{microgrid} and the shared defaults through the training entry point.
+Table~\ref{tab:training-settings} records its settings.
+
+\begin{table}[htbp]
+ \centering
+ \footnotesize
+ \caption{Selected training and validation settings.}
+ \label{tab:training-settings}
+ \begin{tabular}{>{\raggedright\arraybackslash}p{0.62\linewidth}
+                 >{\raggedright\arraybackslash}p{0.27\linewidth}}
+ \hline
+ Setting & Value\\
+ \hline
+ Training interaction budget & $6\times10^6$ steps\\
+ Minibatch / replay capacity / warmup & 128 / 50,000 / 512 episodes\\
+ Actor and local critic hidden width & 48\\
+ Mixer / hypernetwork / attention width & 32 / 64 / 16\\
+ Actor / critic learning rate & $3\times10^{-4}$ / $10^{-4}$\\
+ Optimizer / gradient norm limit & Adam / 5\\
+ Discount / soft target coefficient & 0.99 / 0.002\\
+ Action regularization coefficient & $10^{-3}$\\
+ Random-action period / Gaussian noise deviation & 1,000 steps / 0.05\\
+ Population size / elite fraction & 5 / 0.2\\
+ Mutation / copy-crossover probability & 0.9 / 1.0\\
+ Large-mutation and reset probability (each) & 0.05\\
+ Per-row mutated column fraction & 1.0\\
+ EA start threshold / trigger interval & 10,000 steps / 5 iterations\\
+ Generations / learner updates per EA cycle & 1 / 3\\
+ Ordinary learner trigger / updates per trigger & 2 iterations / 1\\
+ Validation interval / days & 10,000 steps / 8\\
+ Validation initial SOC & 0.35\\
+ Computation & CPU, float32\\
+ \hline
+ \end{tabular}
+\end{table}
+
+Validation uses the first eight validation days, with a common initial SOC
+for each day and exploration disabled. RL and population checkpoints are
+selected separately; the principal deployment policy is the
+validation-selected RL actor. These daily-reset validation scores are
+distinct from continuous-inventory operating-cost evaluation.

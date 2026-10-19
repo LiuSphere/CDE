@@ -1,0 +1,294 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg07",
+  "title": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+  "source_text": "07_Multi_objective_EMS/paper.txt",
+  "source_text_file_sha256": "d8870974ed3b993d2a682e4ab4db7279b70cf83faf316a1700d1148785700d3e",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Deep reinforcement learning-based multi-objective energy management system for microgrids under flexible energy market",
+      "level": 1,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "deep-reinforcement-learning-based-multi-objective-energy-management-system-for-microgrids-under-flexible-energy-market"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "H I G H L I G H T S",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "h-i-g-h-l-i-g-h-t-s"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1 . Introduction",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "2 . The topology of the proposed RLEMS and MG",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "2-the-topology-of-the-proposed-rlems-and-mg"
+    },
+    {
+      "heading": "3 . The proposed energy price evaluation model",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "3-the-proposed-energy-price-evaluation-model"
+    },
+    {
+      "heading": "3.1 . Dynamic energy price evaluation",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "31-dynamic-energy-price-evaluation"
+    },
+    {
+      "heading": "3.2 . MG environment status evaluation",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "32-mg-environment-status-evaluation"
+    },
+    {
+      "heading": "4 . The framework of the reinforcement learning-based intelligent EMS agent",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "4-the-framework-of-the-reinforcement-learning-based-intelligent-ems-agent"
+    },
+    {
+      "heading": "4.1 . Environment reformulation",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "41-environment-reformulation"
+    },
+    {
+      "heading": "4.2 . Reward function",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "42-reward-function"
+    },
+    {
+      "heading": "4.3 . Reinforcement learning algorithm",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "43-reinforcement-learning-algorithm"
+    },
+    {
+      "heading": "5 . Numerical experiments",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "5-numerical-experiments"
+    },
+    {
+      "heading": "5.1 . Performance of the proposed RLEMS in different scenarios",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "51-performance-of-the-proposed-rlems-in-different-scenarios"
+    },
+    {
+      "heading": "5.2 . Ablation experimental validation",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "52-ablation-experimental-validation"
+    },
+    {
+      "heading": "5.3 . Comparative experiments",
+      "level": 3,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "53-comparative-experiments"
+    },
+    {
+      "heading": "6 . Conclusions",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "6-conclusions"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Appendix",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "appendix"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "references"
+    },
+    {
+      "heading": "Author biography",
+      "level": 2,
+      "html_path": "07_Multi_objective_EMS/paper.html",
+      "html_fragment": "author-biography"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "Table 4",
+      "first_match_line": 309,
+      "candidate_chunk_ids": [
+        "mg07-c0007"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Non-ES",
+      "first_match_line": 313,
+      "candidate_chunk_ids": [
+        "mg07-c0008"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "10.2",
+      "first_match_line": 310,
+      "candidate_chunk_ids": [
+        "mg07-c0008"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg07-c0001",
+      "path": "agent_chunks/mg07/mg07-c0001.json",
+      "line_start": 1,
+      "line_end": 40,
+      "char_start": 0,
+      "char_end_exclusive": 5176,
+      "characters": 5176,
+      "text_sha256_utf8": "48a6d98346c59d942aa5f1c5cd09f4c1a2c4dfe84d1db6f81ddd48d8b87fd98c"
+    },
+    {
+      "chunk_id": "mg07-c0002",
+      "path": "agent_chunks/mg07/mg07-c0002.json",
+      "line_start": 41,
+      "line_end": 49,
+      "char_start": 5176,
+      "char_end_exclusive": 11106,
+      "characters": 5930,
+      "text_sha256_utf8": "57bf66b14cbf6924fc9f6ec177c667bdbdd484811e60e3fbbd836d2bee20c90d"
+    },
+    {
+      "chunk_id": "mg07-c0003",
+      "path": "agent_chunks/mg07/mg07-c0003.json",
+      "line_start": 50,
+      "line_end": 95,
+      "char_start": 11106,
+      "char_end_exclusive": 17045,
+      "characters": 5939,
+      "text_sha256_utf8": "f28e390fc0eadde017c764eebc19c603ad05c06cdb7d27c6275fc7bf47fd7ab3"
+    },
+    {
+      "chunk_id": "mg07-c0004",
+      "path": "agent_chunks/mg07/mg07-c0004.json",
+      "line_start": 96,
+      "line_end": 159,
+      "char_start": 17045,
+      "char_end_exclusive": 22907,
+      "characters": 5862,
+      "text_sha256_utf8": "a25677bc4cb0f55f2b79fb118fcc291e2c185ed7fae7bac861602fbdb56efec9"
+    },
+    {
+      "chunk_id": "mg07-c0005",
+      "path": "agent_chunks/mg07/mg07-c0005.json",
+      "line_start": 160,
+      "line_end": 231,
+      "char_start": 22907,
+      "char_end_exclusive": 28814,
+      "characters": 5907,
+      "text_sha256_utf8": "6d96424caaa2904c3fda9522e702d27dbe62e10e7d438865b3316ec4448392f7"
+    },
+    {
+      "chunk_id": "mg07-c0006",
+      "path": "agent_chunks/mg07/mg07-c0006.json",
+      "line_start": 232,
+      "line_end": 274,
+      "char_start": 28814,
+      "char_end_exclusive": 34474,
+      "characters": 5660,
+      "text_sha256_utf8": "05c2249d8a0d85f1a72610d00af3c50c251541b17c9d7328ecf62c0b7bdbec68"
+    },
+    {
+      "chunk_id": "mg07-c0007",
+      "path": "agent_chunks/mg07/mg07-c0007.json",
+      "line_start": 275,
+      "line_end": 309,
+      "char_start": 34474,
+      "char_end_exclusive": 39545,
+      "characters": 5071,
+      "text_sha256_utf8": "b5e0dfc70b7a475f8d83889220f017cb19e8259354d6d04f5c775d28f3a9951b"
+    },
+    {
+      "chunk_id": "mg07-c0008",
+      "path": "agent_chunks/mg07/mg07-c0008.json",
+      "line_start": 310,
+      "line_end": 368,
+      "char_start": 39545,
+      "char_end_exclusive": 45531,
+      "characters": 5986,
+      "text_sha256_utf8": "7bfcf6615e49ecd189c6bdefed2ba57ce7957b94607eaaf95002772601dbaac0"
+    },
+    {
+      "chunk_id": "mg07-c0009",
+      "path": "agent_chunks/mg07/mg07-c0009.json",
+      "line_start": 369,
+      "line_end": 431,
+      "char_start": 45531,
+      "char_end_exclusive": 51390,
+      "characters": 5859,
+      "text_sha256_utf8": "f6a7a01ed8abcd8dd578d4d35833bbc5dfd61d0fcd3e2aad0fdce6cd5585dbb3"
+    },
+    {
+      "chunk_id": "mg07-c0010",
+      "path": "agent_chunks/mg07/mg07-c0010.json",
+      "line_start": 432,
+      "line_end": 444,
+      "char_start": 51390,
+      "char_end_exclusive": 56149,
+      "characters": 4759,
+      "text_sha256_utf8": "c726e12e553ad1bc02b49bc2e8085272401b16038dd999784d1db9a30b680ac8"
+    }
+  ]
+}

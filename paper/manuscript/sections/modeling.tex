@@ -1,0 +1,175 @@
+\section{Microgrid Modeling and Cooperative Scheduling Formulation}
+\label{sec:formulation}
+
+\subsection{System Architecture and Agent Responsibilities}
+\label{sec:architecture}
+
+Community $\mathcal{N}=\{1,\ldots,N\}$ comprises heterogeneous microgrids
+with fixed loads, photovoltaic (PV) generation, a dispatchable generator (DG),
+and a battery energy storage system (BESS) (Fig.~\ref{fig:community-architecture}).
+Agents control generator/battery powers every $\Delta t=1$~h,
+with $T=24$ steps per trajectory. A capacity-limited bus exchanges surplus;
+the main grid supplies deficits. Grid export and load shedding are excluded.
+The three-agent profiles are synthetic allocations preserving aggregate
+hourly load/PV totals.
+Scenario units are kW, kWh, and currency units per kWh (CU/kWh).
+
+\begin{figure}[htbp]
+ \centering
+ \resizebox{\linewidth}{!}{\input{figures/community-architecture}}
+ \caption{Microgrid community. Solid lines denote power flows; blue dashed
+ lines denote observations and dispatch commands.}
+ \label{fig:community-architecture}
+\end{figure}
+
+\subsection{Component Models and Operational Constraints}
+\label{sec:components}
+
+Generator output $p_{i,t}^{\mathrm{g}}$ lies between zero and its rating
+$\overline{P}_i^{\mathrm{g}}$. Let $z_{i,t}$ denote battery state of charge
+(SOC), $E_i$ its rated energy, and $\eta_i^{\mathrm{ch}}$,
+$\eta_i^{\mathrm{dis}}$ its charging/discharging efficiencies.
+Battery power $p_{i,t}^{\mathrm{b}}$ is positive for discharge.
+With $[x]^+=\max(x,0)$, SOC evolves as
+\begin{equation}
+ z_{i,t+1}=z_{i,t}
+ -\frac{[p_{i,t}^{\mathrm{b}}]^+\Delta t}{\eta_i^{\mathrm{dis}}E_i}
+ +\frac{\eta_i^{\mathrm{ch}}[-p_{i,t}^{\mathrm{b}}]^+\Delta t}{E_i}.
+ \label{eq:soc-transition}
+\end{equation}
+
+For lower/upper SOC bounds $\underline{z},\overline{z}$ and rated powers
+$\overline{P}_i^{\mathrm{ch}},\overline{P}_i^{\mathrm{dis}}$,
+the available charging/discharging limits are
+\begin{equation}
+ \begin{aligned}
+ \overline{p}_{i,t}^{\mathrm{ch}}
+ &=\min\left\{\overline{P}_i^{\mathrm{ch}},
+       \frac{(\overline{z}-z_{i,t})E_i}
+            {\eta_i^{\mathrm{ch}}\Delta t}\right\},\\
+ \overline{p}_{i,t}^{\mathrm{dis}}
+ &=\min\left\{\overline{P}_i^{\mathrm{dis}},
+       \frac{(z_{i,t}-\underline{z})E_i\eta_i^{\mathrm{dis}}}
+            {\Delta t}\right\}.
+ \end{aligned}
+ \label{eq:battery-limits}
+\end{equation}
+
+Thus $-\overline{p}_{i,t}^{\mathrm{ch}}\leq p_{i,t}^{\mathrm{b}}
+\leq\overline{p}_{i,t}^{\mathrm{dis}}$. SOC continues across days.
+
+For load $L_{i,t}$, available PV power $V_{i,t}$, and exchange limit
+$\overline{P}_i^{\mathrm{x}}$, residual demand and transferable
+supply/demand are
+\begin{gather}
+ n_{i,t}=L_{i,t}-V_{i,t}-p_{i,t}^{\mathrm{g}}-p_{i,t}^{\mathrm{b}},
+ \label{eq:residual-demand}\\
+ u_{i,t}=\min\{[-n_{i,t}]^+,\overline{P}_i^{\mathrm{x}}\},\qquad
+ v_{i,t}=\min\{[n_{i,t}]^+,\overline{P}_i^{\mathrm{x}}\}.
+ \label{eq:exchange-offers}
+\end{gather}
+
+Total supply $U_t=\sum_i u_{i,t}$ and demand $D_t=\sum_i v_{i,t}$,
+with delivery efficiency $\eta^{\mathrm{x}}$, give proportional clearing:
+\begin{equation}
+ \begin{aligned}
+ F_t&=\min\{U_t,D_t/\eta^{\mathrm{x}}\},\\
+ p_{i,t}^{\mathrm{send}}&=u_{i,t}F_t/U_t,\qquad
+ p_{i,t}^{\mathrm{recv}}=v_{i,t}\eta^{\mathrm{x}}F_t/D_t .
+ \end{aligned}
+ \label{eq:proportional-exchange}
+\end{equation}
+
+Here $F_t$ is total power sent before losses;
+$p_{i,t}^{\mathrm{send}},p_{i,t}^{\mathrm{recv}}$ are local sent/received
+powers. Transfers are zero when $U_tD_t=0$ and use only residual surplus.
+
+\subsection{Scheduling Objective and Energy Balance}
+\label{sec:objective}
+
+Grid purchase power $p_{i,t}^{\mathrm{grid}}$ and unused surplus power
+$p_{i,t}^{\mathrm{spill}}$ satisfy
+\begin{equation}
+ p_{i,t}^{\mathrm{grid}}=[n_{i,t}-p_{i,t}^{\mathrm{recv}}]^+,\qquad
+ p_{i,t}^{\mathrm{spill}}=[-n_{i,t}-p_{i,t}^{\mathrm{send}}]^+.
+ \label{eq:grid-spill}
+\end{equation}
+
+The local power balance is
+\begin{equation}
+ V_{i,t}+p_{i,t}^{\mathrm{g}}+p_{i,t}^{\mathrm{b}}
+       +p_{i,t}^{\mathrm{grid}}+p_{i,t}^{\mathrm{recv}}
+ =L_{i,t}+p_{i,t}^{\mathrm{send}}+p_{i,t}^{\mathrm{spill}}.
+ \label{eq:power-balance}
+\end{equation}
+
+Surplus can include excess DG output. For purchase tariff $\lambda_t>0$,
+economic and full costs are
+\begin{align}
+ C_{i,t}^{\mathrm{econ}}&=\big[
+ \lambda_t p_{i,t}^{\mathrm{grid}}
+ +a_i(p_{i,t}^{\mathrm{g}})^2+b_i p_{i,t}^{\mathrm{g}}+c_i
+ +k_i^{\mathrm{b}}|p_{i,t}^{\mathrm{b}}|
+ +k^{\mathrm{x}}p_{i,t}^{\mathrm{send}}\big]\Delta t,
+ \label{eq:economic-cost}\\
+ C_{i,t}&=C_{i,t}^{\mathrm{econ}}
+              +\epsilon_i p_{i,t}^{\mathrm{g}}\Delta t.
+ \label{eq:full-cost}
+\end{align}
+
+Here $a_i,b_i,c_i$ are quadratic, linear, and constant generator-cost
+coefficients ($c_i=0$); $k_i^{\mathrm{b}}$ prices battery energy throughput
+and $k^{\mathrm{x}}$ prices energy sent. The coefficient $\epsilon_i$
+is the generator environmental-cost proxy in CU/kWh.
+
+Over operating horizon $\mathcal{H}$, minimize expected community cost:
+\begin{equation}
+ \min_{\boldsymbol{\pi}}\;
+ \mathbb{E}_{\boldsymbol{\pi}}
+ \left[\sum_{t\in\mathcal{H}}\sum_{i\in\mathcal{N}}C_{i,t}\right],
+ \label{eq:dispatch-objective}
+\end{equation}
+subject to the modeled constraints. Here $\boldsymbol{\pi}=(\pi_1,\ldots,\pi_N)$
+collects local dispatch policies, and $\mathbb{E}_{\boldsymbol{\pi}}$
+averages over their operating trajectories.
+
+\subsection{Cooperative Sequential Decision Formulation}
+\label{sec:decision}
+
+The partially observable state comprises SOCs and the exogenous sequence
+position. Observations $o_{i,t}\in\mathbb R^{20}$ combine local measurements,
+equipment/time features, forecasts, and community broadcasts;
+\ref{sec:observation-appendix} defines their components.
+Causal forecasts use published tariffs and
+training-only load/PV templates. Centralized training uses joint
+observations
+$s_t^{\mathrm{c}}=\operatorname{concat}(o_{1,t},\ldots,o_{N,t})
+\in\mathbb R^{20N}$.
+
+Actions $a_{i,t}=(a_{i,t}^{\mathrm{g}},a_{i,t}^{\mathrm{b}})
+\in[0,1]\times[-1,1]$ map to power as
+\begin{equation}
+ p_{i,t}^{\mathrm{g}}=a_{i,t}^{\mathrm{g}}\overline P_i^{\mathrm{g}},
+ \qquad
+ p_{i,t}^{\mathrm{b}}=[a_{i,t}^{\mathrm{b}}]^+\overline p_{i,t}^{\mathrm{dis}}
+ -[-a_{i,t}^{\mathrm{b}}]^+\overline p_{i,t}^{\mathrm{ch}}.
+ \label{eq:action-mapping}
+\end{equation}
+
+Here $a_{i,t}^{\mathrm{g}}$ is the generator loading fraction;
+$a_{i,t}^{\mathrm{b}}$ is the signed available battery-power fraction,
+positive for discharge and negative for charging.
+
+All agents receive the common reward
+\begin{equation}
+ r_t=\frac{\kappa}{N}\sum_i(C_{i,t}^{0}-C_{i,t}),\qquad
+ J_\gamma(\boldsymbol{\pi})=
+ \mathbb{E}_{\boldsymbol{\pi}}\left[\sum_{k=0}^{\infty}\gamma^k r_k\right],
+ \label{eq:team-reward}
+\end{equation}
+
+Here $\kappa=0.1$ is the reward scale, $\gamma=0.99$ the
+discount factor, $J_\gamma$ expected discounted return, and $k$ the
+time-step index. Reference $C_{i,t}^{0}$ uses zero generator and battery
+powers under identical data and clearing. The reward retains discounted-cost
+rankings; reported costs are undiscounted~\eqref{eq:dispatch-objective}.

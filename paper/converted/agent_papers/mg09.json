@@ -1,0 +1,406 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg09",
+  "title": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+  "source_text": "09_Perception_semantic_masking/paper.txt",
+  "source_text_file_sha256": "c79de510bf94eb1978289ebe3533628106925431719553aa5ecebcfb28ae4d11",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Deep reinforcement learning strategy integrating environmental perception and semantic masking for real-time operational optimization of building cluster microgrids",
+      "level": 1,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "deep-reinforcement-learning-strategy-integrating-environmental-perception-and-semantic-masking-for-real-time-operational-optimization-of-building-cluster-microgrids"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "Please note:",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "please-note"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "Keywords:",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "keywords"
+    },
+    {
+      "heading": "1.Introduction",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "1introduction"
+    },
+    {
+      "heading": "1.1 Background",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "11-background"
+    },
+    {
+      "heading": "1.2 Literature Review",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "12-literature-review"
+    },
+    {
+      "heading": "1.3 Research Objectives",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "13-research-objectives"
+    },
+    {
+      "heading": "2. Data Analysis and Modeling Process",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "2-data-analysis-and-modeling-process"
+    },
+    {
+      "heading": "2.1 Energy Consumption Data Sources and Analysis for Building Cluster Microgrids",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "21-energy-consumption-data-sources-and-analysis-for-building-cluster-microgrids"
+    },
+    {
+      "heading": "Fig.3 Number of charging piles and average cumulative energy consumption",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "fig3-number-of-charging-piles-and-average-cumulative-energy-consumption"
+    },
+    {
+      "heading": "2.2 Real-Time Data Generation Process for Charging Piles",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "22-real-time-data-generation-process-for-charging-piles"
+    },
+    {
+      "heading": "2.3 Modeling of PV Energy Storage Microgrids",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "23-modeling-of-pv-energy-storage-microgrids"
+    },
+    {
+      "heading": "3. Operation Optimization Methods",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "3-operation-optimization-methods"
+    },
+    {
+      "heading": "3.1 DRL Settings",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "31-drl-settings"
+    },
+    {
+      "heading": "(1) State observation",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "1-state-observation"
+    },
+    {
+      "heading": "(2) Action selection",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "2-action-selection"
+    },
+    {
+      "heading": "(3) Reward setting",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "3-reward-setting"
+    },
+    {
+      "heading": "3.2 Environmental Perception and Semantic Masking DQN",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "32-environmental-perception-and-semantic-masking-dqn"
+    },
+    {
+      "heading": "(1) Deep Q-networks",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "1-deep-q-networks"
+    },
+    {
+      "heading": "(2) Environmental perception and semantic masking",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "2-environmental-perception-and-semantic-masking"
+    },
+    {
+      "heading": "(3) Semantic mask DQN",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "3-semantic-mask-dqn"
+    },
+    {
+      "heading": "3.3 Experimental Setup",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "33-experimental-setup"
+    },
+    {
+      "heading": "4. Results",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "4-results"
+    },
+    {
+      "heading": "4.1 EV Electricity Consumption Data Generation Results",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "41-ev-electricity-consumption-data-generation-results"
+    },
+    {
+      "heading": "4.2 Analysis of Optimization Results",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "42-analysis-of-optimization-results"
+    },
+    {
+      "heading": "4.3 Operation Process Analysis",
+      "level": 3,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "43-operation-process-analysis"
+    },
+    {
+      "heading": "5. Discussion",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "5-discussion"
+    },
+    {
+      "heading": "6. Conclusion",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "6-conclusion"
+    },
+    {
+      "heading": "Acknowledgment",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "acknowledgment"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "09_Perception_semantic_masking/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "Table 6",
+      "first_match_line": 364,
+      "candidate_chunk_ids": [
+        "mg09-c0012"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Table 7",
+      "first_match_line": 396,
+      "candidate_chunk_ids": [
+        "mg09-c0012"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "semantic rules",
+      "first_match_line": 60,
+      "candidate_chunk_ids": [
+        "mg09-c0003"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg09-c0001",
+      "path": "agent_chunks/mg09/mg09-c0001.json",
+      "line_start": 1,
+      "line_end": 39,
+      "char_start": 0,
+      "char_end_exclusive": 4789,
+      "characters": 4789,
+      "text_sha256_utf8": "69d15b93fbd027d50ca129f0d799c2cda7667131905f72a92c56a45a0b6e3762"
+    },
+    {
+      "chunk_id": "mg09-c0002",
+      "path": "agent_chunks/mg09/mg09-c0002.json",
+      "line_start": 40,
+      "line_end": 57,
+      "char_start": 4789,
+      "char_end_exclusive": 10734,
+      "characters": 5945,
+      "text_sha256_utf8": "af74b2ddb96d0e0a49649edfb05becc910d242e69a444f160962712fde6d889a"
+    },
+    {
+      "chunk_id": "mg09-c0003",
+      "path": "agent_chunks/mg09/mg09-c0003.json",
+      "line_start": 58,
+      "line_end": 67,
+      "char_start": 10734,
+      "char_end_exclusive": 16730,
+      "characters": 5996,
+      "text_sha256_utf8": "b8441d181f45c9a963e0980d3ebcb44eb19aae2e1fe0cea0d54f569d6eac93db"
+    },
+    {
+      "chunk_id": "mg09-c0004",
+      "path": "agent_chunks/mg09/mg09-c0004.json",
+      "line_start": 68,
+      "line_end": 93,
+      "char_start": 16730,
+      "char_end_exclusive": 21990,
+      "characters": 5260,
+      "text_sha256_utf8": "d5a4bcc764f647e45cd3a409867894ef9e4c0ddf085ccbd21f3f77a86eedcba1"
+    },
+    {
+      "chunk_id": "mg09-c0005",
+      "path": "agent_chunks/mg09/mg09-c0005.json",
+      "line_start": 94,
+      "line_end": 108,
+      "char_start": 21990,
+      "char_end_exclusive": 27969,
+      "characters": 5979,
+      "text_sha256_utf8": "c9c1612b3021aa75effe5de480b5766c9f4691beb2c80e9d93c17e18f0da2180"
+    },
+    {
+      "chunk_id": "mg09-c0006",
+      "path": "agent_chunks/mg09/mg09-c0006.json",
+      "line_start": 109,
+      "line_end": 161,
+      "char_start": 27969,
+      "char_end_exclusive": 33676,
+      "characters": 5707,
+      "text_sha256_utf8": "f423e99e55d4684a381b4fd0b4164b408bcabdef4bf393c022ee67ed8db4fb3e"
+    },
+    {
+      "chunk_id": "mg09-c0007",
+      "path": "agent_chunks/mg09/mg09-c0007.json",
+      "line_start": 162,
+      "line_end": 204,
+      "char_start": 33676,
+      "char_end_exclusive": 39575,
+      "characters": 5899,
+      "text_sha256_utf8": "571bcfc8e496e7e547262d7ca3bb0d31d51736ce4f9579a5159b65de60d73db0"
+    },
+    {
+      "chunk_id": "mg09-c0008",
+      "path": "agent_chunks/mg09/mg09-c0008.json",
+      "line_start": 205,
+      "line_end": 268,
+      "char_start": 39575,
+      "char_end_exclusive": 45574,
+      "characters": 5999,
+      "text_sha256_utf8": "2c3835aadb8f488e09bcb2e249eb3a8ab05a2aa4bb6aee65b6e0f71c8297bf65"
+    },
+    {
+      "chunk_id": "mg09-c0009",
+      "path": "agent_chunks/mg09/mg09-c0009.json",
+      "line_start": 269,
+      "line_end": 304,
+      "char_start": 45574,
+      "char_end_exclusive": 51196,
+      "characters": 5622,
+      "text_sha256_utf8": "5a46aed55bc13fb62ae02f6edeebf97021afae7b01186be7d9610a78f70c7654"
+    },
+    {
+      "chunk_id": "mg09-c0010",
+      "path": "agent_chunks/mg09/mg09-c0010.json",
+      "line_start": 305,
+      "line_end": 346,
+      "char_start": 51196,
+      "char_end_exclusive": 56700,
+      "characters": 5504,
+      "text_sha256_utf8": "7a7378b5925868cc8f9427e876046c394501d878ea16714b9488c6431d7fee78"
+    },
+    {
+      "chunk_id": "mg09-c0011",
+      "path": "agent_chunks/mg09/mg09-c0011.json",
+      "line_start": 347,
+      "line_end": 363,
+      "char_start": 56700,
+      "char_end_exclusive": 62152,
+      "characters": 5452,
+      "text_sha256_utf8": "7ae74fe2f947dbdcc6d2dada2f878e5ca97f6d73e56f65465b0257bb1189e2fc"
+    },
+    {
+      "chunk_id": "mg09-c0012",
+      "path": "agent_chunks/mg09/mg09-c0012.json",
+      "line_start": 364,
+      "line_end": 402,
+      "char_start": 62152,
+      "char_end_exclusive": 67731,
+      "characters": 5579,
+      "text_sha256_utf8": "84fa7378e755b32cd3d484daa1c61a5dfe8770b43c4fbefdd0d11ce9ff321529"
+    },
+    {
+      "chunk_id": "mg09-c0013",
+      "path": "agent_chunks/mg09/mg09-c0013.json",
+      "line_start": 403,
+      "line_end": 410,
+      "char_start": 67731,
+      "char_end_exclusive": 73468,
+      "characters": 5737,
+      "text_sha256_utf8": "1ace8b69fb111545184a18c869321790e5f2c076154ece915c187ee90a000fbb"
+    },
+    {
+      "chunk_id": "mg09-c0014",
+      "path": "agent_chunks/mg09/mg09-c0014.json",
+      "line_start": 411,
+      "line_end": 425,
+      "char_start": 73468,
+      "char_end_exclusive": 78841,
+      "characters": 5373,
+      "text_sha256_utf8": "d3710a2ea73e4e3f38828df375018e14f5e8f8ef579c7a289c9fe624bebc8a2b"
+    },
+    {
+      "chunk_id": "mg09-c0015",
+      "path": "agent_chunks/mg09/mg09-c0015.json",
+      "line_start": 426,
+      "line_end": 451,
+      "char_start": 78841,
+      "char_end_exclusive": 84784,
+      "characters": 5943,
+      "text_sha256_utf8": "1fee4d4f8e95313c61f0b509eb70a49e20ff89207bc46a3861c01242aec59339"
+    },
+    {
+      "chunk_id": "mg09-c0016",
+      "path": "agent_chunks/mg09/mg09-c0016.json",
+      "line_start": 452,
+      "line_end": 479,
+      "char_start": 84784,
+      "char_end_exclusive": 90756,
+      "characters": 5972,
+      "text_sha256_utf8": "422e752b3e74e6b85a31535dde9555e8b2da7f51cbea6a53b41939abd716f37f"
+    },
+    {
+      "chunk_id": "mg09-c0017",
+      "path": "agent_chunks/mg09/mg09-c0017.json",
+      "line_start": 480,
+      "line_end": 497,
+      "char_start": 90756,
+      "char_end_exclusive": 94349,
+      "characters": 3593,
+      "text_sha256_utf8": "227291ed2d71e5619501e0c11736b15d3431958b4ffbea08813cf182718a0685"
+    }
+  ]
+}

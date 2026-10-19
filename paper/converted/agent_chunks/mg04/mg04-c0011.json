@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg04",
+  "chunk_id": "mg04-c0011",
+  "path": "agent_chunks/mg04/mg04-c0011.json",
+  "line_start": 524,
+  "line_end": 531,
+  "char_start": 56392,
+  "char_end_exclusive": 58028,
+  "characters": 1636,
+  "text_sha256_utf8": "d7b2f884686be5a8a3a7c6cbdc5adbab6d51c2fe1692ed33d2026419f2c43c83",
+  "source_text": "04_MARL_P2P_market/paper.txt",
+  "content_type": "mineru_extracted_source_text",
+  "text": "[22] B. Yin, H. Weng, Y. Hu, J. Xi, P. Ding, and J. Liu, “Multi-Agent Deep Reinforcement Learning for Simulating Centralized Double-Sided Auction Electricity Market,” IEEE Trans. Power Syst., vol. 40, no. 1, pp. 518–529, 2025.\n[23] E. L. Ratnam, S. R. Weller, C. M. Kellett, and A. T. Murray, “Residential load and rooftop PV generation: An Australian distribution network dataset,” Int. J. Sustain. Energy, vol. 36, no. 8, pp. 787–806, Sep. 2017.\n[24] Z. Zhao, C. Feng, and A. L. Liu, “Comparisons of auction designs through multiagent learning in peer-to-peer energy trading,” IEEE Trans. Smart Grid, vol. 14, no. 1, pp. 593–605, 2023.\n[25] H. Weng, Y. Hu, M. Liang, J. Xi, and B. Yin, “Optimizing bidding strategy in electricity market based on graph convolutional neural network and deep reinforcement learning,” Appl. Energy, vol. 380, p. 124978, 2025.\n[26] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov, “Proximal policy optimization algorithms,” arXiv preprint arXiv:1707.06347, 2017.\n[27] Y. Cui, Y. Xu, Y. Wang, Y. Zhao, H. Zhu, and D. Cheng, “Peer-to-peer energy trading with energy trading consistency in interconnected multi-energy microgrids: A multi-agent deep reinforcement learning approach,” International Journal of Electrical Power & Energy Systems, vol. 156, p. 109753, 2024.\n[28] Y. Wang, Y. Cui, Y. Li, and Y. Xu, “Collaborative optimization of multi-microgrids system with shared energy storage based on multi-agent stochastic game and reinforcement learning,” Energy, vol. 280, p. 128182, 2023.\n[29] OpenAI, “ChatGPT: [Large Language Model],” 2023, [Online], Available: https://openai.com/chat.\n"
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg03",
+  "chunk_id": "mg03-c0021",
+  "path": "agent_chunks/mg03/mg03-c0021.json",
+  "line_start": 774,
+  "line_end": 793,
+  "char_start": 113704,
+  "char_end_exclusive": 115341,
+  "characters": 1637,
+  "text_sha256_utf8": "9fd6236122e0850a2810e069fcf9eea9a2b91946477199e56ad31d03dc74a178",
+  "source_text": "03_Hierarchical_RL_railway/paper.txt",
+  "content_type": "mineru_extracted_source_text",
+  "text": "Chen Y, Chen M, Xu L, Liang Z. Chance-constrained optimization of storage and pfc capacity for railway electrical smart grids considering uncertain traction load. IEEE Trans Smart Grid 2023;15(1):286–98.\n[30] Duan J, Wang W, Xiao L, Gao J, Li SE. Dsac-t: distributional soft actor-critic with three refinements. arXiv preprint\narXiv:2310.05858.\n2023.\n[31]\nHaarnoja T, Zhou A, Abbeel P, Levine S. Soft actor-critic: off-policy maximum entropy deep reinforcement learning with a stochastic actor. In: International conference on machine learning, PMLR; 2018. p. 1861–70.\n[32]\nKonda V, Tsitsiklis J. Actor-critic algorithms. Adv Neural Inf Process Syst 1999;12.\n[33]\nVan Hasselt H, Guez A, Silver D. Deep reinforcement learning with double Qlearning. In: Proceedings of the AAAI conference on artificial intelligence, vol. 30; 2016.\n[34] National renewable energy laboratory: pvwatts calculator.\nhttps://pvwatts.nrel.gov/pvwatts.php.\n[35]\nTian Z, Weston P, Zhao N, Hillmansen S, Roberts C, Chen L. System energy optimisation strategies for metros with regeneration. Transp Res C Emerg Technol 2017;75:120–35.\n[36]\nScheepmaker GM, Goverde RM. Energy-efficient train control using nonlinear bounded regenerative braking. Transp Res C Emerg Technol 2020;121:102852.\n[37]\nFujimoto S, Hoof HV, Meger D. Addressing function approximation error in actorcritic methods. In: International conference on machine learning, PMLR; 2018. p. 1587–96.\n[38]\nLillicrap TP, Hunt JJ, Pritzel A, Heess N, Erez T, Tassa Y, Silver D, Wierstra D. Continuous control with deep reinforcement learning. In: International conference on learning representations; 2016.\n"
+}

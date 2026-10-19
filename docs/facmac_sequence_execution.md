@@ -1,7 +1,11 @@
-# FACMAC Sequence Execution
+# GAVDAC Sequence Execution
 
-Date: 2026-10-17
-Branch: `codex/facmac-performance-optimization`
+This file retains its historical name for existing documentation links.
+The execution design remains relevant to the current CPU implementation.
+Benchmark figures and validation counts below are historical measurements from
+2026-10-17, not current-main performance guarantees or current test-suite totals.
+Captured comparison sources and generated timing files may not be available
+in a cleaned checkout; use current-source benchmarks when those inputs are absent.
 
 ## Scope
 

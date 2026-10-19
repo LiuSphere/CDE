@@ -1,0 +1,524 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg08",
+  "title": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+  "source_text": "08_Meta_RL_building_microgrids/paper.txt",
+  "source_text_file_sha256": "b2d89bc4b942f1e168b6598eff608864b9f6c010ced7ff85d54b74bdfaa00a18",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Meta-reinforcement learning for multi-energy building microgrids: Curriculum design, rapid adaptation, and scalable deployment",
+      "level": 1,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "meta-reinforcement-learning-for-multi-energy-building-microgrids-curriculum-design-rapid-adaptation-and-scalable-deployment"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1. Introduction",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "1.1. Literature review",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "11-literature-review"
+    },
+    {
+      "heading": "1.2. Contributions",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "12-contributions"
+    },
+    {
+      "heading": "2. Methodology",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "2-methodology"
+    },
+    {
+      "heading": "2.1. Meta-reinforcement learning",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "21-meta-reinforcement-learning"
+    },
+    {
+      "heading": "3. Multi-energy building microgrid",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "3-multi-energy-building-microgrid"
+    },
+    {
+      "heading": "3.1. Multi-energy system modeling",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "31-multi-energy-system-modeling"
+    },
+    {
+      "heading": "3.1.1. Photovoltaic generation modeling",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "311-photovoltaic-generation-modeling"
+    },
+    {
+      "heading": "3.1.2. Battery energy storage systems",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "312-battery-energy-storage-systems"
+    },
+    {
+      "heading": "3.1.3. Heatpump",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "313-heatpump"
+    },
+    {
+      "heading": "3.2. State space design and observability",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "32-state-space-design-and-observability"
+    },
+    {
+      "heading": "3.2.1. Core system state variables",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "321-core-system-state-variables"
+    },
+    {
+      "heading": "3.2.2. Temporal and contextual features",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "322-temporal-and-contextual-features"
+    },
+    {
+      "heading": "3.2.3. Historical action feedback",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "323-historical-action-feedback"
+    },
+    {
+      "heading": "3.3. Action space formulation",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "33-action-space-formulation"
+    },
+    {
+      "heading": "3.4. Multi-objective reward function design",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "34-multi-objective-reward-function-design"
+    },
+    {
+      "heading": "3.4.1. Economic reward component",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "341-economic-reward-component"
+    },
+    {
+      "heading": "3.4.2. Energy balance and system stability",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "342-energy-balance-and-system-stability"
+    },
+    {
+      "heading": "3.4.3. State-of-charge maintenance reward function",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "343-state-of-charge-maintenance-reward-function"
+    },
+    {
+      "heading": "3.4.4. Renewable energy maximization reward",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "344-renewable-energy-maximization-reward"
+    },
+    {
+      "heading": "3.4.5. Action correction and constraint guidance",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "345-action-correction-and-constraint-guidance"
+    },
+    {
+      "heading": "3.4.6. Composite reward function",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "346-composite-reward-function"
+    },
+    {
+      "heading": "4. Meta-learning framework",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "4-meta-learning-framework"
+    },
+    {
+      "heading": "4.1. Data engineering for meta-learning task",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "41-data-engineering-for-meta-learning-task"
+    },
+    {
+      "heading": "4.1.1. Curriculum learning",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "411-curriculum-learning"
+    },
+    {
+      "heading": "4.2. Meta-learning training",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "42-meta-learning-training"
+    },
+    {
+      "heading": "5. Results & discussions",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "5-results-discussions"
+    },
+    {
+      "heading": "5.1. Hyperparameter tuning",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "51-hyperparameter-tuning"
+    },
+    {
+      "heading": "5.1.1. Inner-loop hyperparameters",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "511-inner-loop-hyperparameters"
+    },
+    {
+      "heading": "5.1.2. Outer-loop hyperparameters",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "512-outer-loop-hyperparameters"
+    },
+    {
+      "heading": "5.2. Model performance",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "52-model-performance"
+    },
+    {
+      "heading": "5.2.1. Curriculum performance",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "521-curriculum-performance"
+    },
+    {
+      "heading": "5.3. Model adaptation",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "53-model-adaptation"
+    },
+    {
+      "heading": "5.3.1. Deployment considerations",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "531-deployment-considerations"
+    },
+    {
+      "heading": "5.4. Limitations & future directions",
+      "level": 3,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "54-limitations-future-directions"
+    },
+    {
+      "heading": "5.4.1. Reward design",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "541-reward-design"
+    },
+    {
+      "heading": "5.4.2. Curriculum engineering",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "542-curriculum-engineering"
+    },
+    {
+      "heading": "5.4.3. Framework applicability",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "543-framework-applicability"
+    },
+    {
+      "heading": "5.4.4. Peer-to-peer energy trading",
+      "level": 4,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "544-peer-to-peer-energy-trading"
+    },
+    {
+      "heading": "6. Conclusion",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "6-conclusion"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Acknowledgments",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "acknowledgments"
+    },
+    {
+      "heading": "Appendix. Reinforcement learning",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "appendix-reinforcement-learning"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "08_Meta_RL_building_microgrids/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "12.2%",
+      "first_match_line": 11,
+      "candidate_chunk_ids": [
+        "mg08-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "five unseen",
+      "first_match_line": 11,
+      "candidate_chunk_ids": [
+        "mg08-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Wilcoxon",
+      "first_match_line": 11,
+      "candidate_chunk_ids": [
+        "mg08-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg08-c0001",
+      "path": "agent_chunks/mg08/mg08-c0001.json",
+      "line_start": 1,
+      "line_end": 64,
+      "char_start": 0,
+      "char_end_exclusive": 5994,
+      "characters": 5994,
+      "text_sha256_utf8": "cf48967b2e8dbd09534cba262352d79397bd60bb3a651e4c4ecbca764007be7c"
+    },
+    {
+      "chunk_id": "mg08-c0002",
+      "path": "agent_chunks/mg08/mg08-c0002.json",
+      "line_start": 65,
+      "line_end": 78,
+      "char_start": 5994,
+      "char_end_exclusive": 11476,
+      "characters": 5482,
+      "text_sha256_utf8": "1a6f4c601dd514f3fca54204cc63d8ce8431c998f97e0b03413d3b0c49220823"
+    },
+    {
+      "chunk_id": "mg08-c0003",
+      "path": "agent_chunks/mg08/mg08-c0003.json",
+      "line_start": 79,
+      "line_end": 103,
+      "char_start": 11476,
+      "char_end_exclusive": 17455,
+      "characters": 5979,
+      "text_sha256_utf8": "d15ad5ef50b3cbb70b19cee124b7de6bf48a399b3acc31d49c3fdb91a0cd9bd4"
+    },
+    {
+      "chunk_id": "mg08-c0004",
+      "path": "agent_chunks/mg08/mg08-c0004.json",
+      "line_start": 104,
+      "line_end": 150,
+      "char_start": 17455,
+      "char_end_exclusive": 22288,
+      "characters": 4833,
+      "text_sha256_utf8": "d6ae2e0a332e64e58f1a3d78c540daf63530fd955572919af8be7ed0f7f8f011"
+    },
+    {
+      "chunk_id": "mg08-c0005",
+      "path": "agent_chunks/mg08/mg08-c0005.json",
+      "line_start": 151,
+      "line_end": 214,
+      "char_start": 22288,
+      "char_end_exclusive": 28198,
+      "characters": 5910,
+      "text_sha256_utf8": "34d27eb72c79ae20ee7307cfb919b8bf47b5669c87b7073506ed1b256ceeab4d"
+    },
+    {
+      "chunk_id": "mg08-c0006",
+      "path": "agent_chunks/mg08/mg08-c0006.json",
+      "line_start": 215,
+      "line_end": 288,
+      "char_start": 28198,
+      "char_end_exclusive": 34000,
+      "characters": 5802,
+      "text_sha256_utf8": "add476ccd0c0e3f12d5d79c6e2f733b0869359a70384bd1af58a5e3658f1b238"
+    },
+    {
+      "chunk_id": "mg08-c0007",
+      "path": "agent_chunks/mg08/mg08-c0007.json",
+      "line_start": 289,
+      "line_end": 346,
+      "char_start": 34000,
+      "char_end_exclusive": 39958,
+      "characters": 5958,
+      "text_sha256_utf8": "5050ba254ea03cb765808b6779cd806bbe829e9dd475f1b86900c562e7f6e825"
+    },
+    {
+      "chunk_id": "mg08-c0008",
+      "path": "agent_chunks/mg08/mg08-c0008.json",
+      "line_start": 347,
+      "line_end": 376,
+      "char_start": 39958,
+      "char_end_exclusive": 45939,
+      "characters": 5981,
+      "text_sha256_utf8": "ca67dc941158b48c2305c66577f0fbeaa84dc38b63b8b316c9af752c1c3a3182"
+    },
+    {
+      "chunk_id": "mg08-c0009",
+      "path": "agent_chunks/mg08/mg08-c0009.json",
+      "line_start": 377,
+      "line_end": 433,
+      "char_start": 45939,
+      "char_end_exclusive": 51935,
+      "characters": 5996,
+      "text_sha256_utf8": "c6570e4bc83e7725a921af96911fb9c9b63f8d2ecf1964d2a90d9aafe43bfe0d"
+    },
+    {
+      "chunk_id": "mg08-c0010",
+      "path": "agent_chunks/mg08/mg08-c0010.json",
+      "line_start": 434,
+      "line_end": 497,
+      "char_start": 51935,
+      "char_end_exclusive": 57902,
+      "characters": 5967,
+      "text_sha256_utf8": "63ec3f986ec8cd7578aa8e0903969923484db676335d39863ce2cc23aa6aeff0"
+    },
+    {
+      "chunk_id": "mg08-c0011",
+      "path": "agent_chunks/mg08/mg08-c0011.json",
+      "line_start": 498,
+      "line_end": 544,
+      "char_start": 57902,
+      "char_end_exclusive": 63889,
+      "characters": 5987,
+      "text_sha256_utf8": "06af76b0332204588f4552733a8afbc47fb84af7fbf82fed49ba069bf453ae36"
+    },
+    {
+      "chunk_id": "mg08-c0012",
+      "path": "agent_chunks/mg08/mg08-c0012.json",
+      "line_start": 545,
+      "line_end": 577,
+      "char_start": 63889,
+      "char_end_exclusive": 69423,
+      "characters": 5534,
+      "text_sha256_utf8": "a7a4255730b057fd631c35b24666bbf777828c06f4ed0c6e7fb75181e78b5387"
+    },
+    {
+      "chunk_id": "mg08-c0013",
+      "path": "agent_chunks/mg08/mg08-c0013.json",
+      "line_start": 578,
+      "line_end": 593,
+      "char_start": 69423,
+      "char_end_exclusive": 74858,
+      "characters": 5435,
+      "text_sha256_utf8": "aa8bfc044f1dbc4189959dea4384799ebadf9425fc679feb2f915981d9e76cd8"
+    },
+    {
+      "chunk_id": "mg08-c0014",
+      "path": "agent_chunks/mg08/mg08-c0014.json",
+      "line_start": 594,
+      "line_end": 617,
+      "char_start": 74858,
+      "char_end_exclusive": 80720,
+      "characters": 5862,
+      "text_sha256_utf8": "cda6137a646662d7cf5d95239e1dbb9751ea8b58c170eff3860377ba8e5e6309"
+    },
+    {
+      "chunk_id": "mg08-c0015",
+      "path": "agent_chunks/mg08/mg08-c0015.json",
+      "line_start": 618,
+      "line_end": 636,
+      "char_start": 80720,
+      "char_end_exclusive": 86699,
+      "characters": 5979,
+      "text_sha256_utf8": "0f72ee8e12e826a0668d6ee4421ddfcee936a81bc1b5bc68621f73e3d2e9c977"
+    },
+    {
+      "chunk_id": "mg08-c0016",
+      "path": "agent_chunks/mg08/mg08-c0016.json",
+      "line_start": 637,
+      "line_end": 686,
+      "char_start": 86699,
+      "char_end_exclusive": 92690,
+      "characters": 5991,
+      "text_sha256_utf8": "248a3539d0fad0923f41ed5d027c4858a59eccde60892d319e84abe23a5e9afe"
+    },
+    {
+      "chunk_id": "mg08-c0017",
+      "path": "agent_chunks/mg08/mg08-c0017.json",
+      "line_start": 687,
+      "line_end": 745,
+      "char_start": 92690,
+      "char_end_exclusive": 98579,
+      "characters": 5889,
+      "text_sha256_utf8": "4cc3cf69ba6aa12ec592c4132f4a872ef8e21c49b89f82edf47b3a2dbb18acba"
+    },
+    {
+      "chunk_id": "mg08-c0018",
+      "path": "agent_chunks/mg08/mg08-c0018.json",
+      "line_start": 746,
+      "line_end": 806,
+      "char_start": 98579,
+      "char_end_exclusive": 104375,
+      "characters": 5796,
+      "text_sha256_utf8": "b24b0df3154faa0af17f2c69b5f65b30d9b0c0953a98b97d2c3eb91aa6b0754e"
+    }
+  ]
+}

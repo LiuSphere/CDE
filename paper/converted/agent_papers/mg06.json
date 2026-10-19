@@ -1,0 +1,504 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg06",
+  "title": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+  "source_text": "06_Lean_MARL_networked_microgrids/paper.txt",
+  "source_text_file_sha256": "ee28883e76f6e1e1726e444f71f0ec2cdbbc6b7cc2a8aa2dde1f7fc39817ad3c",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Lean multi-agent deep reinforcement learning for uncertainty handling in the energy management of networked microgrids",
+      "level": 1,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "lean-multi-agent-deep-reinforcement-learning-for-uncertainty-handling-in-the-energy-management-of-networked-microgrids"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "H I G H L I G H T S",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "h-i-g-h-l-i-g-h-t-s"
+    },
+    {
+      "heading": "G R A P H I C A L A B S T R A C T",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "g-r-a-p-h-i-c-a-l-a-b-s-t-r-a-c-t"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1 . Introduction",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "2 . Deep reinforcement learning (DRL)",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "2-deep-reinforcement-learning-drl"
+    },
+    {
+      "heading": "2.1 . Deep Q-networks (DQN)",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "21-deep-q-networks-dqn"
+    },
+    {
+      "heading": "3 . Problem formulation",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "3-problem-formulation"
+    },
+    {
+      "heading": "3.1 . Upper-level problem",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "31-upper-level-problem"
+    },
+    {
+      "heading": "3.2 . Lower-level problem",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "32-lower-level-problem"
+    },
+    {
+      "heading": "3.2.1 . KKT formulations of lower-level problem",
+      "level": 4,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "321-kkt-formulations-of-lower-level-problem"
+    },
+    {
+      "heading": "4 . Lean multi-agent DRL (L-MADRL framework)",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "4-lean-multi-agent-drl-l-madrl-framework"
+    },
+    {
+      "heading": "4.1 . Training process",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "41-training-process"
+    },
+    {
+      "heading": "4.1.1 . States",
+      "level": 4,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "411-states"
+    },
+    {
+      "heading": "4.1.2 . Actions",
+      "level": 4,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "412-actions"
+    },
+    {
+      "heading": "4.1.3 . Rewards",
+      "level": 4,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "413-rewards"
+    },
+    {
+      "heading": "4.2 . Testing process",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "42-testing-process"
+    },
+    {
+      "heading": "5 . Two-stage stochastic optimization",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "5-two-stage-stochastic-optimization"
+    },
+    {
+      "heading": "5.1 . Uncertainty modelling",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "51-uncertainty-modelling"
+    },
+    {
+      "heading": "5.2 . Risk-neutral stochastic optimization (RNSO)",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "52-risk-neutral-stochastic-optimization-rnso"
+    },
+    {
+      "heading": "5.3 . Risk-aware stochastic optimization (RASO)",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "53-risk-aware-stochastic-optimization-raso"
+    },
+    {
+      "heading": "6 . Case study",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "6-case-study"
+    },
+    {
+      "heading": "6.1 . Case 1: PJM 5 bus network",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "61-case-1-pjm-5-bus-network"
+    },
+    {
+      "heading": "6.2 . Case 2: IEEE 14 bus network",
+      "level": 3,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "62-case-2-ieee-14-bus-network"
+    },
+    {
+      "heading": "7 . Conclusion and future work",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "7-conclusion-and-future-work"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Funding",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "funding"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Appendix A",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "appendix-a"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "06_Lean_MARL_networked_microgrids/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "MPEC",
+      "first_match_line": 25,
+      "candidate_chunk_ids": [
+        "mg06-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "July",
+      "first_match_line": 421,
+      "candidate_chunk_ids": [
+        "mg06-c0014"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg06-c0001",
+      "path": "agent_chunks/mg06/mg06-c0001.json",
+      "line_start": 1,
+      "line_end": 53,
+      "char_start": 0,
+      "char_end_exclusive": 5976,
+      "characters": 5976,
+      "text_sha256_utf8": "08707ce87059db0ca0c39ebdcd81c29a8e15dc3fd9da0da0290eeded67512120"
+    },
+    {
+      "chunk_id": "mg06-c0002",
+      "path": "agent_chunks/mg06/mg06-c0002.json",
+      "line_start": 54,
+      "line_end": 76,
+      "char_start": 5976,
+      "char_end_exclusive": 11502,
+      "characters": 5526,
+      "text_sha256_utf8": "c58c7067c9ca1ffdb43ec9edd1a6fa1cc927732af4bba33c9f39b0446bfbcf74"
+    },
+    {
+      "chunk_id": "mg06-c0003",
+      "path": "agent_chunks/mg06/mg06-c0003.json",
+      "line_start": 77,
+      "line_end": 77,
+      "char_start": 11502,
+      "char_end_exclusive": 15681,
+      "characters": 4179,
+      "text_sha256_utf8": "20840b219b83ddb4491babd045357a6778b4cc21185044106acc44055ffc511b"
+    },
+    {
+      "chunk_id": "mg06-c0004",
+      "path": "agent_chunks/mg06/mg06-c0004.json",
+      "line_start": 78,
+      "line_end": 80,
+      "char_start": 15681,
+      "char_end_exclusive": 19055,
+      "characters": 3374,
+      "text_sha256_utf8": "75d7a92931647826b1ff4dffc58238a7ce124d58a608ac1cdb965913ded29d3a"
+    },
+    {
+      "chunk_id": "mg06-c0005",
+      "path": "agent_chunks/mg06/mg06-c0005.json",
+      "line_start": 81,
+      "line_end": 81,
+      "char_start": 19055,
+      "char_end_exclusive": 22928,
+      "characters": 3873,
+      "text_sha256_utf8": "4d275b0022e08645ee45e63d3dbd760c00073527b71ecf39b9fa6ed3bacc4683"
+    },
+    {
+      "chunk_id": "mg06-c0006",
+      "path": "agent_chunks/mg06/mg06-c0006.json",
+      "line_start": 82,
+      "line_end": 97,
+      "char_start": 22928,
+      "char_end_exclusive": 28879,
+      "characters": 5951,
+      "text_sha256_utf8": "b14790d036bddfc7284bd977751bc1457fa67e3b603e8ebd1e9118911fdf2d43"
+    },
+    {
+      "chunk_id": "mg06-c0007",
+      "path": "agent_chunks/mg06/mg06-c0007.json",
+      "line_start": 98,
+      "line_end": 138,
+      "char_start": 28879,
+      "char_end_exclusive": 34545,
+      "characters": 5666,
+      "text_sha256_utf8": "b7217a133de3f744ad8da7a5bc85d5a601b574c5c85fbb4b7b14532f8f37784f"
+    },
+    {
+      "chunk_id": "mg06-c0008",
+      "path": "agent_chunks/mg06/mg06-c0008.json",
+      "line_start": 139,
+      "line_end": 180,
+      "char_start": 34545,
+      "char_end_exclusive": 39691,
+      "characters": 5146,
+      "text_sha256_utf8": "5408ababeeed69a7221fa849bf3070a0806c270c520e0c918f885a50e028b474"
+    },
+    {
+      "chunk_id": "mg06-c0009",
+      "path": "agent_chunks/mg06/mg06-c0009.json",
+      "line_start": 181,
+      "line_end": 238,
+      "char_start": 39691,
+      "char_end_exclusive": 45627,
+      "characters": 5936,
+      "text_sha256_utf8": "61ccee260f1e64592e51c8799bed0e112b60b11ed2982d4634f8b711c8dd0997"
+    },
+    {
+      "chunk_id": "mg06-c0010",
+      "path": "agent_chunks/mg06/mg06-c0010.json",
+      "line_start": 239,
+      "line_end": 279,
+      "char_start": 45627,
+      "char_end_exclusive": 51592,
+      "characters": 5965,
+      "text_sha256_utf8": "4fa178436950b322eef61a9f2278aa3415f594de622d66730badb082c894494b"
+    },
+    {
+      "chunk_id": "mg06-c0011",
+      "path": "agent_chunks/mg06/mg06-c0011.json",
+      "line_start": 280,
+      "line_end": 313,
+      "char_start": 51592,
+      "char_end_exclusive": 57503,
+      "characters": 5911,
+      "text_sha256_utf8": "34711b878be54f36d8205469ad21f1eb38eaf008ab4db7fb4c6ae11e29e9e7cd"
+    },
+    {
+      "chunk_id": "mg06-c0012",
+      "path": "agent_chunks/mg06/mg06-c0012.json",
+      "line_start": 314,
+      "line_end": 347,
+      "char_start": 57503,
+      "char_end_exclusive": 63323,
+      "characters": 5820,
+      "text_sha256_utf8": "0358c05fef895fa00cd12d60c6e33f8d7539ba756895e5e4718ab139ffb6ea0a"
+    },
+    {
+      "chunk_id": "mg06-c0013",
+      "path": "agent_chunks/mg06/mg06-c0013.json",
+      "line_start": 348,
+      "line_end": 402,
+      "char_start": 63323,
+      "char_end_exclusive": 69231,
+      "characters": 5908,
+      "text_sha256_utf8": "695fceba30eff9689217373fc3188b9cb8e95f1b7c5504e35fd826d582730fb8"
+    },
+    {
+      "chunk_id": "mg06-c0014",
+      "path": "agent_chunks/mg06/mg06-c0014.json",
+      "line_start": 403,
+      "line_end": 422,
+      "char_start": 69231,
+      "char_end_exclusive": 75084,
+      "characters": 5853,
+      "text_sha256_utf8": "510ec25e537c9fbc80460100ec0dabdb8c2c112483c76a0cb3da73ba591197f3"
+    },
+    {
+      "chunk_id": "mg06-c0015",
+      "path": "agent_chunks/mg06/mg06-c0015.json",
+      "line_start": 423,
+      "line_end": 490,
+      "char_start": 75084,
+      "char_end_exclusive": 80814,
+      "characters": 5730,
+      "text_sha256_utf8": "31de0bfdb29e41760ec51be1922b7f8479730c07af68e40f6e87d655ddecb4c0"
+    },
+    {
+      "chunk_id": "mg06-c0016",
+      "path": "agent_chunks/mg06/mg06-c0016.json",
+      "line_start": 491,
+      "line_end": 534,
+      "char_start": 80814,
+      "char_end_exclusive": 86623,
+      "characters": 5809,
+      "text_sha256_utf8": "71b85310b3e631eb6459194f6d8713268babadf863a3f558a2180e68eaa206a9"
+    },
+    {
+      "chunk_id": "mg06-c0017",
+      "path": "agent_chunks/mg06/mg06-c0017.json",
+      "line_start": 535,
+      "line_end": 639,
+      "char_start": 86623,
+      "char_end_exclusive": 92622,
+      "characters": 5999,
+      "text_sha256_utf8": "04a2bf71f022414c62a0d5d048265a279f7ae2bdd7e543f8c6c01a494ea22843"
+    },
+    {
+      "chunk_id": "mg06-c0018",
+      "path": "agent_chunks/mg06/mg06-c0018.json",
+      "line_start": 640,
+      "line_end": 661,
+      "char_start": 92622,
+      "char_end_exclusive": 98591,
+      "characters": 5969,
+      "text_sha256_utf8": "e39daba859e9fd84e54e6d15d6e59d149c21f17b03560307569eab5716d6709f"
+    },
+    {
+      "chunk_id": "mg06-c0019",
+      "path": "agent_chunks/mg06/mg06-c0019.json",
+      "line_start": 662,
+      "line_end": 719,
+      "char_start": 98591,
+      "char_end_exclusive": 104536,
+      "characters": 5945,
+      "text_sha256_utf8": "25314c2cf0e4e2712938b72bd125974b1c56f8e5030dba925e63843f6a8ec409"
+    },
+    {
+      "chunk_id": "mg06-c0020",
+      "path": "agent_chunks/mg06/mg06-c0020.json",
+      "line_start": 720,
+      "line_end": 756,
+      "char_start": 104536,
+      "char_end_exclusive": 110193,
+      "characters": 5657,
+      "text_sha256_utf8": "84376c410163fb1bbb2e0bcb63cbc110b92d86fe71d5cfeffa0c186d8d91c0c3"
+    },
+    {
+      "chunk_id": "mg06-c0021",
+      "path": "agent_chunks/mg06/mg06-c0021.json",
+      "line_start": 757,
+      "line_end": 777,
+      "char_start": 110193,
+      "char_end_exclusive": 115998,
+      "characters": 5805,
+      "text_sha256_utf8": "494cd8bf52aa48c4bed3227a1ad987b648a1fa3d9bb42cc89814eae80c09e231"
+    },
+    {
+      "chunk_id": "mg06-c0022",
+      "path": "agent_chunks/mg06/mg06-c0022.json",
+      "line_start": 778,
+      "line_end": 790,
+      "char_start": 115998,
+      "char_end_exclusive": 120802,
+      "characters": 4804,
+      "text_sha256_utf8": "59009de6dd74178b877de90c69b9da49372a56dce20cb4a26004b9203ac4be94"
+    },
+    {
+      "chunk_id": "mg06-c0023",
+      "path": "agent_chunks/mg06/mg06-c0023.json",
+      "line_start": 791,
+      "line_end": 835,
+      "char_start": 120802,
+      "char_end_exclusive": 126267,
+      "characters": 5465,
+      "text_sha256_utf8": "9b309d4126f737989b785f9b866e18ce58929eff05f60dfdebb772f495899fcb"
+    },
+    {
+      "chunk_id": "mg06-c0024",
+      "path": "agent_chunks/mg06/mg06-c0024.json",
+      "line_start": 836,
+      "line_end": 885,
+      "char_start": 126267,
+      "char_end_exclusive": 132151,
+      "characters": 5884,
+      "text_sha256_utf8": "9954898f24b9f48357d7725cfcaf6ad4f3ed6a7422c6aa8bc338659b8002c98a"
+    },
+    {
+      "chunk_id": "mg06-c0025",
+      "path": "agent_chunks/mg06/mg06-c0025.json",
+      "line_start": 886,
+      "line_end": 971,
+      "char_start": 132151,
+      "char_end_exclusive": 138042,
+      "characters": 5891,
+      "text_sha256_utf8": "5a19e7823f461692b9abcd7c06371b8af7d1207a4a08515c11f8796644d683db"
+    },
+    {
+      "chunk_id": "mg06-c0026",
+      "path": "agent_chunks/mg06/mg06-c0026.json",
+      "line_start": 972,
+      "line_end": 1021,
+      "char_start": 138042,
+      "char_end_exclusive": 144018,
+      "characters": 5976,
+      "text_sha256_utf8": "799428e30ac1f1f7721e99db1c3208401b40094abbca52f8a9544fc006073e2f"
+    },
+    {
+      "chunk_id": "mg06-c0027",
+      "path": "agent_chunks/mg06/mg06-c0027.json",
+      "line_start": 1022,
+      "line_end": 1077,
+      "char_start": 144018,
+      "char_end_exclusive": 149166,
+      "characters": 5148,
+      "text_sha256_utf8": "c611d73be133750abb9437b220ca42678c0a7f69205272068dbcab3722d4f198"
+    }
+  ]
+}

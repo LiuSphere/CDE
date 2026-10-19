@@ -1,0 +1,460 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "mg02",
+  "title": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+  "source_text": "02_Mixture_of_experts_multi_critic/paper.txt",
+  "source_text_file_sha256": "58fd65a31c065c45c2210fd08b812c10b4858619a551037d3f5dea401ade0649",
+  "offset_convention": "Unicode 字符偏移从 0 起，结束位置不包含；行号从 1 起。按 UTF-8 读取并将 CRLF 归一化为 LF。",
+  "sections": [
+    {
+      "heading": "Mixture-of-experts based multi-critic deep reinforcement learning for sustainable management of data center microgrids",
+      "level": 1,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "mixture-of-experts-based-multi-critic-deep-reinforcement-learning-for-sustainable-management-of-data-center-microgrids"
+    },
+    {
+      "heading": "论文首页",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "_1"
+    },
+    {
+      "heading": "全文",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "_2"
+    },
+    {
+      "heading": "H I G H L I G H T S",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "h-i-g-h-l-i-g-h-t-s"
+    },
+    {
+      "heading": "A R T I C L E I N F O",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "a-r-t-i-c-l-e-i-n-f-o"
+    },
+    {
+      "heading": "Abstract",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "abstract"
+    },
+    {
+      "heading": "1 . Introduction",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "1-introduction"
+    },
+    {
+      "heading": "1.1 . Background and motivation",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "11-background-and-motivation"
+    },
+    {
+      "heading": "1.2 . Literature review",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "12-literature-review"
+    },
+    {
+      "heading": "1.3 . Research gaps and contributions",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "13-research-gaps-and-contributions"
+    },
+    {
+      "heading": "1.4 . Paper organization",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "14-paper-organization"
+    },
+    {
+      "heading": "2 . Preliminarily of the data center microgrid",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "2-preliminarily-of-the-data-center-microgrid"
+    },
+    {
+      "heading": "2.1 . Workload model",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "21-workload-model"
+    },
+    {
+      "heading": "2.2 . IT equipment model",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "22-it-equipment-model"
+    },
+    {
+      "heading": "2.3 . Cooling model",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "23-cooling-model"
+    },
+    {
+      "heading": "2.4 . Energy model",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "24-energy-model"
+    },
+    {
+      "heading": "2.5 . Sustainable management",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "25-sustainable-management"
+    },
+    {
+      "heading": "3 . Problem formulation as a multi-reward Markov decision process",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "3-problem-formulation-as-a-multi-reward-markov-decision-process"
+    },
+    {
+      "heading": "3.1 . Dynamic decision-making process",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "31-dynamic-decision-making-process"
+    },
+    {
+      "heading": "3.2 . State",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "32-state"
+    },
+    {
+      "heading": "3.3 . Action",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "33-action"
+    },
+    {
+      "heading": "3.4 . State transition",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "34-state-transition"
+    },
+    {
+      "heading": "3.5 . Reward function",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "35-reward-function"
+    },
+    {
+      "heading": "4 . Multi-critic reinforcement learning method",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "4-multi-critic-reinforcement-learning-method"
+    },
+    {
+      "heading": "4.1 . Mixture-of-experts based multi-critic soft actor-critic",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "41-mixture-of-experts-based-multi-critic-soft-actor-critic"
+    },
+    {
+      "heading": "4.2 . Mixture-of-experts with multi-head architecture for multi-critic networks",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "42-mixture-of-experts-with-multi-head-architecture-for-multi-critic-networks"
+    },
+    {
+      "heading": "4.3 . Parameter update for soft actor multi-critic",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "43-parameter-update-for-soft-actor-multi-critic"
+    },
+    {
+      "heading": "4.4 . Multi-critic SAC with MoE algorithm pseudocode",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "44-multi-critic-sac-with-moe-algorithm-pseudocode"
+    },
+    {
+      "heading": "5 . Case studies",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "5-case-studies"
+    },
+    {
+      "heading": "5.1 . Data source",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "51-data-source"
+    },
+    {
+      "heading": "5.2 . Analysis of the learning performance of the proposed SAC-MoE algorithm",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "52-analysis-of-the-learning-performance-of-the-proposed-sac-moe-algorithm"
+    },
+    {
+      "heading": "5.3 . Analysis of the control behavior of DC microgrid",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "53-analysis-of-the-control-behavior-of-dc-microgrid"
+    },
+    {
+      "heading": "5.4 . Analysis of the coupling effects of workload, cooling, and energy systems",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "54-analysis-of-the-coupling-effects-of-workload-cooling-and-energy-systems"
+    },
+    {
+      "heading": "5.5 . Sensitivity analysis of the number of experts",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "55-sensitivity-analysis-of-the-number-of-experts"
+    },
+    {
+      "heading": "5.6 . Robustness analysis under prediction errors",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "56-robustness-analysis-under-prediction-errors"
+    },
+    {
+      "heading": "5.7 . Extension to multi-objective reinforcement learning with dynamic weights",
+      "level": 3,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "57-extension-to-multi-objective-reinforcement-learning-with-dynamic-weights"
+    },
+    {
+      "heading": "6 . Conclusions and future work",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "6-conclusions-and-future-work"
+    },
+    {
+      "heading": "CRediT authorship contribution statement",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "credit-authorship-contribution-statement"
+    },
+    {
+      "heading": "Declaration of competing interest",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "declaration-of-competing-interest"
+    },
+    {
+      "heading": "Acknowledgement",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "acknowledgement"
+    },
+    {
+      "heading": "Data availability",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "data-availability"
+    },
+    {
+      "heading": "References",
+      "level": 2,
+      "html_path": "02_Mixture_of_experts_multi_critic/paper.html",
+      "html_fragment": "references"
+    }
+  ],
+  "search_locators": [
+    {
+      "search_term": "perfect",
+      "first_match_line": 333,
+      "candidate_chunk_ids": [
+        "mg02-c0008"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "experts",
+      "first_match_line": 1,
+      "candidate_chunk_ids": [
+        "mg02-c0001"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    },
+    {
+      "search_term": "Gaussian",
+      "first_match_line": 491,
+      "candidate_chunk_ids": [
+        "mg02-c0011"
+      ],
+      "meaning": "检索线索；首处命中可能是摘要或参考文献，不自动构成结论证据。"
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "mg02-c0001",
+      "path": "agent_chunks/mg02/mg02-c0001.json",
+      "line_start": 1,
+      "line_end": 43,
+      "char_start": 0,
+      "char_end_exclusive": 4455,
+      "characters": 4455,
+      "text_sha256_utf8": "10091102859cc5f5671c306ce0741e855ad4f01387f4347d693fbac1d5a21dd7"
+    },
+    {
+      "chunk_id": "mg02-c0002",
+      "path": "agent_chunks/mg02/mg02-c0002.json",
+      "line_start": 44,
+      "line_end": 46,
+      "char_start": 4455,
+      "char_end_exclusive": 8332,
+      "characters": 3877,
+      "text_sha256_utf8": "07a437155bdad615f26a4147b86cb132368719fbf4a210d7e9b85f1b748c0bea"
+    },
+    {
+      "chunk_id": "mg02-c0003",
+      "path": "agent_chunks/mg02/mg02-c0003.json",
+      "line_start": 47,
+      "line_end": 52,
+      "char_start": 8332,
+      "char_end_exclusive": 14218,
+      "characters": 5886,
+      "text_sha256_utf8": "fcf86b9907dda8749ac455581f922c98359ba09e7b3daee00dfbdfca42eee0a6"
+    },
+    {
+      "chunk_id": "mg02-c0004",
+      "path": "agent_chunks/mg02/mg02-c0004.json",
+      "line_start": 53,
+      "line_end": 84,
+      "char_start": 14218,
+      "char_end_exclusive": 20218,
+      "characters": 6000,
+      "text_sha256_utf8": "75d61c73fe121127679b662e825302a4647b31fd81620913dd9d5edd19e0ae7d"
+    },
+    {
+      "chunk_id": "mg02-c0005",
+      "path": "agent_chunks/mg02/mg02-c0005.json",
+      "line_start": 85,
+      "line_end": 161,
+      "char_start": 20218,
+      "char_end_exclusive": 26214,
+      "characters": 5996,
+      "text_sha256_utf8": "88103b3a2a4a270755414c6d06e3a98b90b587a141ca96c024ae3620d15b01b2"
+    },
+    {
+      "chunk_id": "mg02-c0006",
+      "path": "agent_chunks/mg02/mg02-c0006.json",
+      "line_start": 162,
+      "line_end": 220,
+      "char_start": 26214,
+      "char_end_exclusive": 32153,
+      "characters": 5939,
+      "text_sha256_utf8": "f1eabd895b5903e5e60b5b7780a19506231dcb2781cc6f843302c31b176d6955"
+    },
+    {
+      "chunk_id": "mg02-c0007",
+      "path": "agent_chunks/mg02/mg02-c0007.json",
+      "line_start": 221,
+      "line_end": 280,
+      "char_start": 32153,
+      "char_end_exclusive": 38130,
+      "characters": 5977,
+      "text_sha256_utf8": "b9848e90da3c0b1da43e6d2ceb89bee7a409f6cf61c0edf9a122b2047035f7be"
+    },
+    {
+      "chunk_id": "mg02-c0008",
+      "path": "agent_chunks/mg02/mg02-c0008.json",
+      "line_start": 281,
+      "line_end": 346,
+      "char_start": 38130,
+      "char_end_exclusive": 44107,
+      "characters": 5977,
+      "text_sha256_utf8": "04f431cb8f6349d9b4cdc591f942d3a3095cbec30ce12263fd3d0d43e59831fe"
+    },
+    {
+      "chunk_id": "mg02-c0009",
+      "path": "agent_chunks/mg02/mg02-c0009.json",
+      "line_start": 347,
+      "line_end": 408,
+      "char_start": 44107,
+      "char_end_exclusive": 49990,
+      "characters": 5883,
+      "text_sha256_utf8": "b6f48e6fa3ba58098cfb0bcd22c4de243b6923ec96a8d7dab69d2ec740ae9428"
+    },
+    {
+      "chunk_id": "mg02-c0010",
+      "path": "agent_chunks/mg02/mg02-c0010.json",
+      "line_start": 409,
+      "line_end": 471,
+      "char_start": 49990,
+      "char_end_exclusive": 55964,
+      "characters": 5974,
+      "text_sha256_utf8": "205ecb7550e007f3e8429cc6758d3331cd06e1cedfbf138b150b12b6c78c6e34"
+    },
+    {
+      "chunk_id": "mg02-c0011",
+      "path": "agent_chunks/mg02/mg02-c0011.json",
+      "line_start": 472,
+      "line_end": 553,
+      "char_start": 55964,
+      "char_end_exclusive": 61591,
+      "characters": 5627,
+      "text_sha256_utf8": "2ac2ba739d128b20598093d2e5fa93231dc523a3167995d31f0b19eb303c28d9"
+    },
+    {
+      "chunk_id": "mg02-c0012",
+      "path": "agent_chunks/mg02/mg02-c0012.json",
+      "line_start": 554,
+      "line_end": 586,
+      "char_start": 61591,
+      "char_end_exclusive": 67476,
+      "characters": 5885,
+      "text_sha256_utf8": "37c58a0c9f3e097742ee887f982d51ecd8d111a3a65b51f63dfc9edfc8e035b8"
+    },
+    {
+      "chunk_id": "mg02-c0013",
+      "path": "agent_chunks/mg02/mg02-c0013.json",
+      "line_start": 587,
+      "line_end": 602,
+      "char_start": 67476,
+      "char_end_exclusive": 73425,
+      "characters": 5949,
+      "text_sha256_utf8": "ce064a7429c81d48a87fb451b0e9e0e92a4a558da9e7ca96226da6dc589863dc"
+    },
+    {
+      "chunk_id": "mg02-c0014",
+      "path": "agent_chunks/mg02/mg02-c0014.json",
+      "line_start": 603,
+      "line_end": 627,
+      "char_start": 73425,
+      "char_end_exclusive": 79281,
+      "characters": 5856,
+      "text_sha256_utf8": "c14351f6f3f1faa1ea045466af9a166c0d3f6c305ddcd2803a79fea63fa75d2d"
+    },
+    {
+      "chunk_id": "mg02-c0015",
+      "path": "agent_chunks/mg02/mg02-c0015.json",
+      "line_start": 628,
+      "line_end": 648,
+      "char_start": 79281,
+      "char_end_exclusive": 84834,
+      "characters": 5553,
+      "text_sha256_utf8": "bc587d9e05f939cc1e208667efb67b8cf6a61f17f80ad7c932277ec45de29970"
+    },
+    {
+      "chunk_id": "mg02-c0016",
+      "path": "agent_chunks/mg02/mg02-c0016.json",
+      "line_start": 649,
+      "line_end": 696,
+      "char_start": 84834,
+      "char_end_exclusive": 90795,
+      "characters": 5961,
+      "text_sha256_utf8": "58abce06bf02b2288c56bd6a4e021ea11af794520d1708120a126e18b00c1cdb"
+    },
+    {
+      "chunk_id": "mg02-c0017",
+      "path": "agent_chunks/mg02/mg02-c0017.json",
+      "line_start": 697,
+      "line_end": 738,
+      "char_start": 90795,
+      "char_end_exclusive": 94707,
+      "characters": 3912,
+      "text_sha256_utf8": "5517a7369cb1b41d9bd3d995477972eccdc488dc5384ece08e2f1cbc53f5f5c5"
+    }
+  ]
+}

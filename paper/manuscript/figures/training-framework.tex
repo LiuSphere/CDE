@@ -1,0 +1,42 @@
+\begin{tikzpicture}[
+ x=1cm,y=1cm,
+ font=\footnotesize,
+ block/.style={draw=black!65,rounded corners=2pt,align=center,
+   text width=3.05cm,minimum height=1.15cm,inner sep=4pt},
+ flow/.style={-{Stealth[length=1.7mm]},line width=.65pt},
+ update/.style={flow,dashed},
+ lab/.style={font=\scriptsize,fill=white,inner sep=2pt,align=center}
+]
+ \node[block,fill=blue!7,minimum width=3.45cm] (pop) at (1.9,4.25)
+   {Policy population\\$M$ shared actors};
+ \node[block,fill=green!10,minimum width=3.45cm] (actor) at (9.5,4.25)
+   {RL actor\\Shared policy $\theta$};
+ \node[block,fill=black!3,text width=10.65cm,minimum width=10.95cm] (env) at (5.7,2.55)
+   {Microgrid scheduling environment\\
+    Common observations, feasible actions, and team reward};
+ \node[block,fill=orange!8,minimum width=3.45cm] (evo) at (1.9,.70)
+   {Evolution\\Selection, copying\\Mutation};
+ \node[block,fill=blue!5,minimum width=3.25cm] (replay) at (5.7,.70)
+   {Shared replay $\mathcal{D}$\\All trajectories};
+ \node[block,fill=green!7,minimum width=3.45cm] (learner) at (9.5,.70)
+   {GAVDAC learner\\Critic and graph mixer};
+
+ \draw[flow] (pop.south)--(env.north -| pop.south)
+   node[midway,lab] {Deterministic rollouts};
+ \draw[flow] (actor.south)--(env.north -| actor.south)
+   node[midway,lab] {Exploratory rollout};
+ \draw[flow] (env.south)--(replay.north)
+   node[midway,lab] {All training trajectories};
+ \draw[flow] (replay.east)--(learner.west);
+ \draw[flow] (env.south -| evo.north)--(evo.north)
+   node[midway,lab] {Common-scenario fitness};
+
+ \draw[update] (evo.west)--(-.10,.70)--(-.10,4.25)--(pop.west);
+ \node[lab,rotate=90] at (-.10,2.55) {Next population};
+ \draw[update] (learner.east)--(11.55,.70)--(11.55,4.25)--(actor.east);
+ \node[lab,rotate=90] at (11.55,2.55) {Policy gradient};
+ \draw[update] (actor.north)--(9.5,5.15)--(1.9,5.15)--(pop.north);
+ \node[lab] at (5.7,5.15) {Periodic actor injection; elite protected};
+ \draw[update] (learner.south)--(9.5,-.25)--(10.65,-.25)--(learner.south -| 10.65,0);
+ \node[lab] at (9.35,-.48) {Critic and target updates};
+\end{tikzpicture}

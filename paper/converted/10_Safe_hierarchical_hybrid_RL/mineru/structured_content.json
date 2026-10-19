@@ -1,0 +1,4597 @@
+{
+  "pages": [
+    {
+      "page_idx": 0,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.4,
+            0.043,
+            0.596,
+            0.057
+          ],
+          "content": "[Applied Energy 417 (2026) 128001](https://doi.org/10.1016/j.apenergy.2026.128001)"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.075,
+            0.162,
+            0.144
+          ],
+          "content": ""
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.38,
+            0.076,
+            0.623,
+            0.09
+          ],
+          "content": "Contents lists available at ScienceDirect"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.061,
+            0.147,
+            0.163,
+            0.163
+          ],
+          "content": "ELSEVIER"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.418,
+            0.106,
+            0.585,
+            0.128
+          ],
+          "content": "Applied Energy"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.325,
+            0.146,
+            0.677,
+            0.161
+          ],
+          "content": "journal homepage: [www.elsevier.com/locate/apenergy](https://www.elsevier.com/locate/apenergy)"
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.84,
+            0.069,
+            0.937,
+            0.161
+          ],
+          "content": "AppliedEnergy"
+        },
+        {
+          "type": "doc_title",
+          "bbox": [
+            0.059,
+            0.206,
+            0.756,
+            0.25
+          ],
+          "level": 1,
+          "content": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach☆"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.841,
+            0.185,
+            0.889,
+            0.223
+          ],
+          "content": "",
+          "captions": [],
+          "footnotes": [],
+          "image_source": "images/page_0_image_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.263,
+            0.758,
+            0.281
+          ],
+          "content": "Wencong Xiao , Qingquan Luo , Tao Yu , Yufeng Wu , Zhanhong Huang , Zhenning Pan"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.288,
+            0.367,
+            0.301
+          ],
+          "content": "South China University of Technology, Guangzhou 510641, China"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.328,
+            0.184,
+            0.341
+          ],
+          "level": 2,
+          "content": "H I G H L I G H T S"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.353,
+            0.498,
+            0.366
+          ],
+          "content": "• A safe hierarchical hybrid RL approach is proposed for microgrid formulation."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.366,
+            0.574,
+            0.379
+          ],
+          "content": "• The hierarchical framework can handle hybrid action space and reduce learning complexity."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.379,
+            0.537,
+            0.391
+          ],
+          "content": "• Expert knowledge is leveraged to enforce strict compliance with physical constraints."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.392,
+            0.568,
+            0.405
+          ],
+          "content": "• Multi-prioritized experience replay enhances training stability and accelerates convergence."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.405,
+            0.489,
+            0.418
+          ],
+          "content": "• The proposed method outperforms existing hybrid action space RL methods."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.447,
+            0.197,
+            0.459
+          ],
+          "level": 2,
+          "content": "A R T I C L E I N F O"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.471,
+            0.29,
+            0.538
+          ],
+          "content": "Keywords: Microgrid formation Resilience Safe hierarchical hybrid reinforcement learning Hybrid action space Safety layer"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.336,
+            0.446,
+            0.438,
+            0.459
+          ],
+          "level": 2,
+          "content": "A B S T R A C T"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.333,
+            0.471,
+            0.941,
+            0.666
+          ],
+          "content": "During utility power outages, the distribution system can be reconfigured into microgrids (MGs) to support load restoration and enhance system resilience. Microgrid formation (MGF) involves discrete topology reconfiguration via remote-controlled switches (RCSs), and continuous power dispatch via distributed energy resources (DERs), resulting in a discrete-continuous hybrid action space. However, high-dimensional hybrid action spaces and strict physical constraints bring great challenges to learn high-performance control policies for MGF. To address it, this paper develops a two-level safe hierarchical hybrid reinforcement learning (SHHRL) approach to learn MGF policy directly and effectively within the hybrid action space. The hierarchical architecture decomposes the complex MGF problem into two subproblems: the topology reconfiguration problem and the power dispatch problem. This decomposition enables each agent to learn within a reduced subspace, thereby reducing learning complexity and improving convergence performance. In addition, expert knowledge is leveraged to ensure strict compliance with physical constraints. Specifically, an invalid action masking layer is designed to filter out infeasible discrete actions, and a safety projection layer is introduced to correct unsafe continuous actions. Furthermore, to mitigate instability caused by inter-agent dependencies and enhance learning efficiency, multi-prioritized experience replay (MPER) is incorporated. Experimental results demonstrate that the proposed approach outperforms state-of-the-art hybrid action space RL methods and effectively guarantees operational safety during restoration."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.705,
+            0.167,
+            0.718
+          ],
+          "level": 2,
+          "content": "1. Introduction"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.06,
+            0.731,
+            0.164,
+            0.745
+          ],
+          "level": 2,
+          "content": "1.1. Background"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.758,
+            0.489,
+            0.812
+          ],
+          "content": "In recent years, major power outages caused by extreme events have become increasingly frequent [1,2]. As the terminal component of the power system, the distribution system is highly vulnerable to extreme events, leading to significant load loss and substantial economic"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.687,
+            0.939,
+            0.714
+          ],
+          "continues_prev": true,
+          "content": "damage. Therefore, enhancing the distribution system resilience has become an urgent necessity."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.714,
+            0.941,
+            0.809
+          ],
+          "content": "When the connection to the main grid is lost, traditional distribution system operators primarily rely on diesel generators (DGs) with stable fuel supply to restore power. With the increasing deployment of gridforming distributed energy resources (DERs), such as renewable energy sources (RESs) and energy storage systems (ESSs), along with advances in control technologies, distribution system are now capable of operating in an islanded microgrid mode during extreme events,"
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.067,
+            0.845,
+            0.21,
+            0.857
+          ],
+          "content": "\\* Corresponding author."
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.065,
+            0.831,
+            0.643,
+            0.846
+          ],
+          "content": "☆ This article is part of a Special issue entitled: ‘Trustworthy ML(Yi Wang)’ published in Applied Energy."
+        },
+        {
+          "type": "page_footnote",
+          "bbox": [
+            0.076,
+            0.856,
+            0.33,
+            0.87
+          ],
+          "content": "E-mail address: [scutpanzn@163.com](mailto:scutpanzn@163.com) (Z. Pan)."
+        },
+        {
+          "type": "footer",
+          "bbox": [
+            0.057,
+            0.878,
+            0.791,
+            0.928
+          ],
+          "content": "[https://doi.org/10.1016/j.apenergy.2026.128001](https://doi.org/10.1016/j.apenergy.2026.128001)Received 18 November 2025; Received in revised form 16 March 2026; Accepted 27 April 2026 Available online 9 May 2026 0306-2619/© 2026 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies."
+        }
+      ]
+    },
+    {
+      "page_idx": 1,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.043,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.067,
+            0.072,
+            0.936,
+            0.54
+          ],
+          "content": "<table><tr><td colspan=\"2\">Nomenclature</td><td> $r _ { i j , }   x _ { i j }$ </td><td>Resistance and reactance of line ij</td></tr><tr><td colspan=\"2\"></td><td> $\\delta _ { i }$   $\\left\\| \\cdot \\right\\|$ </td><td>Binary: 1 if node i belongs to the set  $s ; 0$  otherwise</td></tr><tr><td colspan=\"2\">Abbreviations</td><td> $M$ </td><td>Number of elements in a given set</td></tr><tr><td>MGF Microgrid formation DERs</td><td></td><td></td><td>large number</td></tr><tr><td colspan=\"2\">Distributed energy resources</td><td colspan=\"2\">Variables</td></tr><tr><td>DGs</td><td>Diesel generators</td><td></td><td>Binary: 1 if node i is energized at time step t; 0 otherwise</td></tr><tr><td>RESs</td><td>Renewable energy sources</td><td> $y _ { t , i }$ </td><td> $t ; 0$  Binary: 1 if line ij is closed at time step otherwise</td></tr><tr><td>ESSs</td><td>Energy storage systems</td><td> $z _ { t , \\dot { y } }$   $P _ { t , i } ^ { \\mathrm { L } } ,   Q _ { t , i } ^ { \\mathrm { L } }$ </td><td>Active and reactive power of the load at node i and time</td></tr><tr><td>RCSs HRL</td><td>Remote-controlled switches Hierarchical reinforcement learning</td><td></td><td>step t</td></tr><tr><td> $S e t s$ </td><td></td><td> $P _ { t , i } ^ { \\mathrm { D G } } , Q _ { t , i } ^ { \\mathrm { D G } }$ </td><td>Active and reactive power of the DG at node i and time step</td></tr><tr><td colspan=\"2\"> $T$ </td><td></td><td>t Active power of the RES and ESS at node i and time step t</td></tr><tr><td> $N _ { \\mathrm { { } ^ { , } } } \\varepsilon$ </td><td>Set of discrete time steps of the MGF process Set of nodes and lines in the network</td><td> $P _ { t , i } ^ { \\mathrm { R E S } } , P _ { t , i } ^ { \\mathrm { E S S } }$   $P _ { t , i } ^ { \\mathrm { E S S , c } } , P _ { t , i } ^ { \\mathrm { E S S , d } }$ </td><td>Charging and discharging active power of the ESS at</td></tr><tr><td colspan=\"2\"> $S ,   L ,   G ,   R ,   M ,   D$  Set of substations, loads, DGs, RESs and ESSs, DERs</td><td></td><td>node i and time step t</td></tr><tr><td colspan=\"2\">Parameters</td><td colspan=\"2\"> $Q _ { t , i } ^ { \\mathrm { E S S , c } } ,   Q _ { t , i } ^ { \\mathrm { E S S , d } }$  Charging and discharging reactive power of the ESS at</td></tr><tr><td> $P_{i}^{\\mathrm{DG},\\min},P_{i}^{\\mathrm{DG},\\max}$ </td><td>Minimum and maximum active power output of the</td><td>node i and time step t</td><td></td></tr><tr><td> $Q_{i}^{\\mathrm{DG}, \\min}, Q_{i}^{\\mathrm{DG}, \\max}$ </td><td>DG at node i Minimum and maximum reactive power output of</td><td> $E _ { t , i } ^ { \\mathrm { E S S } }$   $P _ { t , i } ,   Q _ { t , i }$ </td><td>State of charge of the ESS at node i and time step t</td></tr><tr><td></td><td>the DG at node i</td><td> $P _ { t , \\bar { y } } ,   Q _ { t , \\bar { y } }$ </td><td>Active and reactive power at node i and time step t Active and reactive power at line ij and time step t</td></tr><tr><td> $\\eta _ { i } ^ { \\mathrm { D G } }$ </td><td>Ramping capacity of the DG at node i</td><td> $V _ { t , i }$ </td><td>Voltage magnitude at node i and time step t</td></tr><tr><td> $\\widehat { \\boldsymbol { P } } _ { t , i } ^ { \\mathrm { R E S } }$ </td><td></td><td> $f _ { t , \\bar { y } } ^ { + } , f _ { t , \\bar { y } } ^ { - }$ </td><td>Non-negative continuous auxiliary variables</td></tr><tr><td></td><td>Forecasted active power output of the RES at node i and time step t</td><td>oH  $\\dot { t , o \\mathrm { L } }   t$ </td><td>Observations of the high-level and low-level agent at time</td></tr><tr><td> $P _ { i } ^ { \\mathrm { E S S , c , m a x } } , P _ { i } ^ { \\mathrm { E S S , d , m a x } }$ </td><td>Maximum active charging and discharging</td><td></td><td>step t</td></tr><tr><td></td><td>power of the ESS at node i</td><td>aH  $t , a \\mathbb { L }   t$   $r _ { \\mathrm { { H } } } t , r _ { \\mathrm { { L } } } t$ </td><td>Actions of the high-level and low-level agent at time step t Rewards of the high-level and low-level agent at time step t</td></tr><tr><td> $E _ { i } ^ { \\mathrm { E S S , m i n } } , E _ { i } ^ { \\mathrm { E S S , m a x } }$ </td><td>Minimum and maximum state of charge of the ESS at node i</td><td> $\\overline { { a } } _ { t } ^ { \\mathrm { L } }$ </td><td>Safety-projected continuous action obtained from the</td></tr><tr><td colspan=\"2\"> $\\eta _ { i } ^ { \\mathrm { E S S , c } } , \\eta _ { i } ^ { \\mathrm { E S S , d } }$  Charging and discharging efficiency of the ESS at node i</td><td> $\\overline { { P } } _ { t , i } ^ { \\mathrm { D G } } , \\overline { { P } } _ { t , i } ^ { \\mathrm { R E S } } , \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S } }$ </td><td>safety projection layer Safety-corrected active power of the DG, RES, ESS at</td></tr><tr><td> $\\widehat { \\boldsymbol { P } } _ { t , i } ^ { \\mathrm { L } } ,   \\widehat { \\boldsymbol { Q } } _ { t , i } ^ { \\mathrm { L } }$ </td><td>Forecasted active and reactive power of the load at node i</td><td></td><td>node i and time step t</td></tr><tr><td> $S _ { i j }$ </td><td>and time step t  $i j$  Capacity limit of line</td><td> $\\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , c } } , \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , d } }$ </td><td>Safety-corrected charging and discharging active power</td></tr><tr><td colspan=\"2\"> $V _ { i } ^ { \\operatorname* { m i n } } ,   V _ { i } ^ { \\operatorname* { m a x } }$  Minimum and maximum voltage magnitude of node i</td><td>of the ESS</td><td></td></tr></table>",
+          "captions": [],
+          "footnotes": [],
+          "image_source": "images/page_1_table_2.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.566,
+            0.487,
+            0.633
+          ],
+          "continues_prev": true,
+          "content": "providing a promising alternative for localized load restoration [3–6]. Specifically, when a power outage occurs in the transmission network, the distribution system can be reconfigured into multiple islanded microgrids via remote-controlled switches (RCSs), each of which is energized by local DERs [7–8]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.632,
+            0.489,
+            0.726
+          ],
+          "content": "MGF involves discrete topology reconfiguration via RCSs and continuous power dispatch via DERs. With the growing deployment of RCSs and DERs, MGF becomes a high-dimensional stochastic sequential decision-making problem characterized by a discrete-continuous hybrid action space, making it a highly challenging problem. Consequently, a safe, fast, and efficient algorithm capable of handling discretecontinuous hybrid action space is essential for MGF."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.06,
+            0.74,
+            0.192,
+            0.753
+          ],
+          "level": 2,
+          "content": "1.2. Literature review"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.766,
+            0.489,
+            0.939
+          ],
+          "content": "Traditional optimization-based methods have been widely used to solve the MGF problem. The MGF problem is essentially a mixed-integer nonlinear programming (MINLP) problem. To enhance computational efficiency, the complex MINLP model is often relaxed and reformulated as a mixed-integer linear programming (MILP) [9–11], mixed-integer second-order cone programming (MISOCP) [12–13], or mixed-integer quadratic programming (MIQP) [14] problem. Optimization-based methods provide strict optimality guarantees and offer formulation flexibility. However, they have several limitations: 1) As the system scale expands, network topology becomes more complex, and controllable resources diversify, the computational complexity of the MGF problem increases significantly, leading to a substantial rise in solution time. 2) These algorithms rely on precise mathematical models, making"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.566,
+            0.938,
+            0.58
+          ],
+          "continues_prev": true,
+          "content": "them less reliable when system parameters are inaccurate or incomplete."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.578,
+            0.941,
+            0.896
+          ],
+          "content": "In recent years, deep reinforcement learning (DRL) has been widely applied to the MGF problem due to its model-free paradigm and high decision-making efficiency [5–25]. However, most existing RL algorithms in the context of DSR typically consider only a single type of action space. For instance, studies $[5-6,15-17]$ employ deep Q-network (DQN) and its variants to solve the MGF problem with a discrete action space by controlling the RCSs. In contrast, [25] applies the soft actorcritic (SAC) algorithm to optimize the continuous power output of DERs. These classical RL algorithms can only deal with a specific type of action space. To address this, hybrid action space RL approaches have been explored, which can be broadly categorized as follows: 1) Action space transformation: This approach maps one type of action space to another to fit traditional RL frameworks, including continuous relaxation of discrete actions [20] and discretization of continuous actions [26]. 2) Parameterized action space reinforcement learning (PARL): In this approach, each discrete action is associated with a set of continuous actions that provide additional control information. These parameters are activated only when the corresponding discrete action is selected. For example, the agent may choose between two discrete actions: charging or discharging. If the charging action is selected, a continuous parameter is used to determine the charging power level. Common algorithms, such as HDQN [27,28], HSAC [29], and HPPO [30,31], extend traditional RL methods by jointly optimizing discrete decisions and their corresponding continuous parameters."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.896,
+            0.94,
+            0.937
+          ],
+          "content": "There are still some technical issues with the existing hybrid action space RL research, which are summarized as follows: 1) Action space transformation modifies the original action space structure, which may"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.494,
+            0.952,
+            0.507,
+            0.962
+          ],
+          "content": "2"
+        }
+      ]
+    },
+    {
+      "page_idx": 2,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.067,
+            0.488,
+            0.158
+          ],
+          "continues_prev": true,
+          "content": "lead to performance degradation and increased action space complexity. 2) PARL relies on the assumption that hybrid action spaces can be reformulated into a parameterized structure. However, in the MGF problem, the control of RCSs and DERs does not follow an actionparameter relationship. Due to the lack of inherent parameterized associations, PARL methods struggle to achieve effective coordination in MGF."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.158,
+            0.489,
+            0.396
+          ],
+          "content": "In practical MGF operations, dispatchers typically first control the switches and then adjust the power output of DERs based on the reconfigured network topology. This hierarchical decision-making process, where discrete actions are executed before continuous actions, motivates the adoption of hierarchical reinforcement learning (HRL) as a promising solution to the aforementioned challenges. HRL enhances conventional RL by adopting a divide-and-conquer strategy [32]. This method decomposes the complex and difficult into multiple subproblems, each of which is generally easier to solve [33]. Compared to traditional RL, HRL enables each agent to learn within a smaller and more task-specific subspace, significantly reducing problem complexity. This structure allows HRL to handle more complex and long-horizon tasks, thereby improving learning efficiency and improving convergence performance [34,35]. Recent studies have applied HRL to peer-to-peer energy trading problems [36] involving hybrid action spaces, aiming to mitigate computational burdens. However, to the best of our knowledge, HRL has not yet been explored for solving the MGF problem under a hybrid discrete-continuous action space."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.396,
+            0.489,
+            0.554
+          ],
+          "content": "Moreover, the classical DRL-based MGF strategies lack explicit consideration of system safety. As a result, the generated solutions may violate critical physical constraints of the distribution system, potentially leading to issues such as overloading or overvoltage. Existing safe reinforcement learning (SRL) approaches can be broadly classified into three categories: 1) Penalty-based reward shaping: Introducing penalty terms in the reward function to account for operational constraint violations [5,6], [37,38]. 2) Constrained policy optimization using CMDP: Leveraging constrained Markov decision process (CMDP) for policy optimization [39–41]. 3) Offline reinforcement learning: Training solely on offline datasets without interacting with the environment to completely avoid unsafe exploration [20]."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.554,
+            0.489,
+            0.714
+          ],
+          "content": "The three aforementioned methods can be categorized as experiencedriven SRL, which primarily relies on long-term interaction to learn constraint-satisfying policies. However, they fail to guarantee strict safety compliance at every time step. This limitation undermines system operator confidence in such methods and significantly hinders their deployment in real-world power systems. Unlike existing approaches, expert knowledge-embedded reinforcement learning employs a prior constraint mechanism to proactively ensure safety during decisionmaking, fundamentally preventing unsafe actions. This provides a novel perspective for addressing the existing challenges. However, embedding expert knowledge from the MGF domain into DRL remains a challenging task."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.06,
+            0.736,
+            0.307,
+            0.749
+          ],
+          "level": 2,
+          "content": "1.3. Contributions and paper organization"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.762,
+            0.489,
+            0.84
+          ],
+          "content": "This paper proposes a safe hierarchical hybrid RL (SHHRL) algorithm for MGF within a hybrid action space, while ensuring strict compliance with physical constraints. To the best of our knowledge, this is the first time a SHHRL algorithm has been developed and adopted to solve the MGF problem. The main contributions of this paper are summarized as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.841,
+            0.488,
+            0.893
+          ],
+          "content": "1) A two-level SHHRL framework is proposed for MGF to enable synchronized learning of discrete topology reconfiguration and continuous power dispatch. The hierarchical structure significantly reduces learning complexity and improves convergence performance."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.078,
+            0.893,
+            0.487,
+            0.907
+          ],
+          "content": "2) The proposed framework is adaptable and compatible with a wide"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.067,
+            0.94,
+            0.119
+          ],
+          "continues_prev": true,
+          "content": "range of DRL algorithms. In this implementation, the high-level agent utilizes double deep Q-networks (DDQN) to optimize discrete switching actions, whereas the low-level agent employs twin delayed deep deterministic policy gradient (TD3) to regulate continuous outputs of DERs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.12,
+            0.94,
+            0.198
+          ],
+          "content": "3) Expert knowledge is embedded into the proposed framework to ensure strict compliance with operational constraints. Specifically, an invalid action masking (IAM) layer is designed to filter out infeasible discrete actions, and a quadratic programming (QP)-based safety projection layer is implemented to map unsafe continuous decisions onto a feasible region."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.199,
+            0.94,
+            0.251
+          ],
+          "content": "4) To address training instability arising from inter-agent dependencies in HRL, a multi-prioritized experience replay (MPER) mechanism is introduced. This approach enhances training stability and accelerates policy convergence."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.251,
+            0.94,
+            0.304
+          ],
+          "content": "This paper is organized as follows: Section 2 introduces the problem formulation of MGF. The proposed algorithm is mainly detailed in Section 3. The case studies are presented in Section 4. Finally, we conclude in Section 5."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.51,
+            0.318,
+            0.723,
+            0.332
+          ],
+          "level": 2,
+          "content": "2. Problem formulation of MGF"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.345,
+            0.6,
+            0.358
+          ],
+          "level": 2,
+          "content": "2.1. Objective"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.371,
+            0.939,
+            0.411
+          ],
+          "content": "The goal of the MGF problem is to maximize load restoration during whole restoration period, denoted by discrete steps $\\pmb { T }   = \\{ 1 , 2 , . . . , T \\}$ using RCSs and local DERs. The objective is formulated as follows."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.417,
+            0.938,
+            0.443
+          ],
+          "content": "\\operatorname* { m a x } { \\sum _ { t \\in \\mathcal { T } } } { \\sum _ { i \\in \\mathcal { L } } } P _ { t , i } ^ { \\mathrm { L } }\\tag{1}",
+          "image_source": "images/page_2_equation_17.jpg"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.463,
+            0.612,
+            0.476
+          ],
+          "level": 2,
+          "content": "2.2. Constraints"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.488,
+            0.94,
+            0.516
+          ],
+          "content": "The physical constraints that the MGF should obey can be classified into two categories: operational constraints and topological constraints."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.516,
+            0.94,
+            0.541
+          ],
+          "content": "1) Operational constraints: The operational constraints are formulated as follows."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.541,
+            0.94,
+            0.595
+          ],
+          "content": "• DG constraints: The DGs considered in this study are controllable units, such as fossil-fuel-based generators. It is assumed that their fuels are adequate during the restoration period. Constraints (2) and (3) limits the outputs of DGs. Constraint (4) limits the ramping capability of DGs."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.6,
+            0.938,
+            0.617
+          ],
+          "content": "P _ { i } ^ { \\mathrm { D G } , \\mathrm { m i n } } \\leq P _ { t , i } ^ { \\mathrm { D G } } \\leq P _ { i } ^ { \\mathrm { D G } , \\mathrm { m a x } } , t \\in \\mathcal { T } , i \\in \\mathcal { G }\\tag{2}",
+          "image_source": "images/page_2_equation_22.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.629,
+            0.937,
+            0.645
+          ],
+          "content": "Q _ { i } ^ { \\mathrm { D G , m i n } } \\leq Q _ { t , i } ^ { \\mathrm { D G } } \\leq Q _ { i } ^ { \\mathrm { D G , m a x } } , t \\in \\mathcal { T } , i \\in \\mathcal { G }\\tag{3}",
+          "image_source": "images/page_2_equation_23.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.513,
+            0.656,
+            0.937,
+            0.673
+          ],
+          "content": "- \\eta _ { i } ^ { \\mathrm { D G } } \\leq P _ { t , i } ^ { \\mathrm { D G } } - P _ { t - 1 , i } ^ { \\mathrm { D G } } \\leq \\eta _ { i } ^ { \\mathrm { D G } } , t \\geq 1 , i \\in \\mathcal { G }\\tag{4}",
+          "image_source": "images/page_2_equation_24.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.68,
+            0.94,
+            0.733
+          ],
+          "content": "• RES constraints: The uncertainty considered in this study arises from the load demand and the renewable generation. Note $\\widehat { \\cdot }$ is the symbol for forecasted values. Constraint (5) represents the active power output limits of RESs."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.74,
+            0.938,
+            0.758
+          ],
+          "content": "0 \\leq P _ { t , i } ^ { \\mathrm { R E S } } \\leq \\widehat { P } _ { t , i } ^ { \\mathrm { R E S } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { R }\\tag{5}",
+          "image_source": "images/page_2_equation_26.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.765,
+            0.939,
+            0.791
+          ],
+          "content": "• Load constraints: All of the loads connected to the de-energized nodes will be shed, as indicated by (6) and (7)."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.799,
+            0.938,
+            0.818
+          ],
+          "content": "P _ { t , i } ^ { \\mathrm { L } } = \\widehat { P } _ { t , i } ^ { \\mathrm { L } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { L }\\tag{6}",
+          "image_source": "images/page_2_equation_28.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.829,
+            0.938,
+            0.848
+          ],
+          "content": "Q _ { t , i } ^ { \\mathrm { L } } = \\widehat { Q } _ { t , i } ^ { \\mathrm { L } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { I }\\tag{7}",
+          "image_source": "images/page_2_equation_29.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.854,
+            0.94,
+            0.908
+          ],
+          "content": "• ESS constraints: ESSs can adjust the net system load by modulating their charging and discharging power, thereby enhancing the restoration process. Constraints (8) and (9) define the upper limits for the active power during charging and discharging operations of ESSs. Constraints"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.506,
+            0.962
+          ],
+          "content": "3"
+        }
+      ]
+    },
+    {
+      "page_idx": 3,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.067,
+            0.489,
+            0.119
+          ],
+          "continues_prev": true,
+          "content": "(10) and (11) impose similar limits on the reactive power exchange of ESSs. Constraints (12)–(15) define the upper and lower bounds of the state of charge (SoC). Constraint (16) ensures that ESSs cannot charge and discharge simultaneously."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.126,
+            0.485,
+            0.142
+          ],
+          "content": "0 \\leq P _ { t , i } ^ { \\mathrm { E S S , c } } \\leq P _ { i } ^ { \\mathrm { E S S , c , m a x } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{8}",
+          "image_source": "images/page_3_equation_3.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.154,
+            0.485,
+            0.171
+          ],
+          "content": "0 \\leq P _ { t , i } ^ { \\mathrm { E S S , d } } \\leq P _ { i } ^ { \\mathrm { E S S , d , m a x } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{9}",
+          "image_source": "images/page_3_equation_4.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.182,
+            0.485,
+            0.198
+          ],
+          "content": "0 \\leq Q _ { t , i } ^ { \\mathrm { E S S , c } } \\leq Q _ { i } ^ { \\mathrm { E S S , c , m a x } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{10}",
+          "image_source": "images/page_3_equation_5.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.21,
+            0.485,
+            0.227
+          ],
+          "content": "0 \\leq Q _ { t , i } ^ { \\mathrm { E S S , d } } \\leq Q _ { i } ^ { \\mathrm { E S S , d , m a x } } y _ { t , i } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{11}",
+          "image_source": "images/page_3_equation_6.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.238,
+            0.485,
+            0.254
+          ],
+          "content": "P _ { t , i } ^ { \\mathrm { E S S } } = P _ { t , i } ^ { \\mathrm { E S S , d } } - P _ { t , i } ^ { \\mathrm { E S S , c } } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{12}",
+          "image_source": "images/page_3_equation_7.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.06,
+            0.266,
+            0.485,
+            0.283
+          ],
+          "content": "Q _ { t , i } ^ { \\mathrm { E S S } } = Q _ { t , i } ^ { \\mathrm { E S S , d } } - Q _ { t , i } ^ { \\mathrm { E S S , c } } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{13}",
+          "image_source": "images/page_3_equation_8.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.294,
+            0.485,
+            0.311
+          ],
+          "content": "E _ { i } ^ { \\mathrm { E S S , m i n } } \\leq E _ { t , i } ^ { \\mathrm { E S S } } \\leq E _ { i } ^ { \\mathrm { E S S , m a x } } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{14}",
+          "image_source": "images/page_3_equation_9.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.324,
+            0.485,
+            0.342
+          ],
+          "content": "E _ { t + 1 , i } ^ { \\mathrm { E S S } } = E _ { t , i } ^ { \\mathrm { E S S } } + P _ { t , i } ^ { \\mathrm { E S S , c } } \\eta _ { i } ^ { \\mathrm { E S S , c } } - P _ { t , i } ^ { \\mathrm { E S S , d } } / \\eta _ { i } ^ { \\mathrm { E S S , d } } , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{15}",
+          "image_source": "images/page_3_equation_10.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.355,
+            0.485,
+            0.371
+          ],
+          "content": "P _ { t , i } ^ { \\mathrm { E S S , d } } \\cdot P _ { t , i } ^ { \\mathrm { E S S , c } } = 0 , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{16}",
+          "image_source": "images/page_3_equation_11.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.379,
+            0.488,
+            0.457
+          ],
+          "content": "• Power flow constraints: Constraints (17)–(20) are the power balance limits. Constraints (21) represents the power flow equations based on the linearized DistFlow model. The power flow constraints are formulated as follows. Constraints (22) and (23) represent the voltage magnitude limits. Constraints (24) and (25) limit the capacity of the closed lines."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.463,
+            0.485,
+            0.49
+          ],
+          "content": "\\sum_{j:j \\to i} P_{t,ji} - \\sum_{k:i \\to k} P_{t,ik} - P_{t,i} = 0, t \\in \\mathcal{F}, i \\in \\mathcal{N}\\tag{17}",
+          "image_source": "images/page_3_equation_13.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.501,
+            0.485,
+            0.527
+          ],
+          "content": "\\sum_{j:j \\to i} Q_{t,ji} - \\sum_{k:i \\to k} Q_{t,ik} - Q_{t,i} = 0, t \\in \\mathcal{T}, i \\in \\mathcal{N}\\tag{18}",
+          "image_source": "images/page_3_equation_14.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.539,
+            0.485,
+            0.556
+          ],
+          "content": "P _ { t , i } = P _ { t , i } ^ { \\mathrm { D G } } + P _ { t , i } ^ { \\mathrm { R E S } } + P _ { t , i } ^ { \\mathrm { E S S } } - P _ { t , i } ^ { \\mathrm { L } } , t \\in \\mathcal { T } , i \\in \\mathcal { N }\\tag{19}",
+          "image_source": "images/page_3_equation_15.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.566,
+            0.485,
+            0.582
+          ],
+          "content": "Q _ { t , i } = Q _ { t , i } ^ { \\mathrm { D G } } + Q _ { t , i } ^ { \\mathrm { E S S } } - Q _ { t , i } ^ { \\mathrm { L } } , t \\in \\mathcal { T } , i \\in \\mathcal { N }\\tag{20}",
+          "image_source": "images/page_3_equation_16.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.073,
+            0.594,
+            0.485,
+            0.623
+          ],
+          "content": "\\begin{align*}M\\big(1 - z_{t,ij}\\big) \\leq U_{t,i} - U_{t,j} - 2\\big(r_{ij}P_{t,ij} + x_{ij}Q_{t,ij}\\big) \\leq M\\big(1 - z_{t,ij}\\big), t \\in \\mathcal{F}, ij \\in \\mathcal{E}\\end{align*}\\tag{21}",
+          "image_source": "images/page_3_equation_17.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.06,
+            0.634,
+            0.485,
+            0.65
+          ],
+          "content": "U _ { t , i } = V _ { t , i } ^ { 2 } , t \\in \\mathcal { T } , i \\in \\mathcal { N }\\tag{22}",
+          "image_source": "images/page_3_equation_18.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.06,
+            0.662,
+            0.484,
+            0.679
+          ],
+          "content": "\\left( V _ { i } ^ { \\min } \\right) ^ { 2 } \\leq U _ { t , i } \\leq \\left( V _ { i } ^ { \\max } \\right) ^ { 2 } , t \\in \\mathcal { T } , i \\in \\mathcal { N }\\tag{23}",
+          "image_source": "images/page_3_equation_19.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.062,
+            0.691,
+            0.485,
+            0.705
+          ],
+          "content": "- S _ { i j } z _ { t . i j } \\leq P _ { t . i j } \\leq S _ { i j } z _ { t . i j } , t \\in \\mathcal { T } , \\dot { y } \\in \\mathcal { E }\\tag{24}",
+          "image_source": "images/page_3_equation_20.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.073,
+            0.716,
+            0.485,
+            0.73
+          ],
+          "content": "\\cdot S _ { i j } z _ { t . i j } \\leq Q _ { t . i j } \\leq S _ { i j } z _ { t . i j } , t \\in \\mathcal { T } , i j \\in \\mathcal { E }\\tag{25}",
+          "image_source": "images/page_3_equation_21.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.737,
+            0.489,
+            0.896
+          ],
+          "content": "6) Topological constraints: Constraint (26) shows that all RCSs associated with lines are initially open. Constraint (27) ensures that all DG nodes remain energized. Constraint (28) limits that non-DG nodes can only be restored through line reconnection. Constraint (29) indicates that once a line is restored, both terminal nodes are also restored. Constraint (30) prohibits any RCS that has been closed from being opened again. Constraint (31) limits the switching actions by allowing at most one RCS to be closed at each time step. Since this study considers scenarios with main grid outages, constraints (32) prohibit the closure of lines directly connected to substation nodes. Constraint (33) requires that a line can only be restored if at least one of its terminal nodes is energized. Constraints (34) and (35) enforce the radial topology"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.067,
+            0.741,
+            0.079
+          ],
+          "continues_prev": true,
+          "content": "constraints of the distribution system."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.087,
+            0.937,
+            0.1
+          ],
+          "content": "z _ { 0 , \\vec { y } } = 0 , \\vec { y } \\in \\mathcal { E }\\tag{26}",
+          "image_source": "images/page_3_equation_24.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.112,
+            0.937,
+            0.125
+          ],
+          "content": "y _ { t , i } = 1 , t \\in \\mathcal { T } , i \\in \\mathcal { T }\\tag{27}",
+          "image_source": "images/page_3_equation_25.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.136,
+            0.937,
+            0.162
+          ],
+          "content": "y _ { t , i } \\leq \\sum _ { i j \\in \\mathcal { E } } z _ { t , i j } , t \\in \\mathcal { T } , i \\in \\mathcal { N } \\setminus \\mathcal { G }\\tag{28}",
+          "image_source": "images/page_3_equation_26.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.527,
+            0.174,
+            0.937,
+            0.19
+          ],
+          "content": "\\left( 1 - z _ { t , i j } \\right) \\leq y _ { t , i } - y _ { t , j } \\leq \\left( 1 - z _ { t , i j } \\right) , t \\in \\mathcal { T } , i j \\in \\mathcal { E }\\tag{29}",
+          "image_source": "images/page_3_equation_27.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.201,
+            0.937,
+            0.215
+          ],
+          "content": "z _ { t , i j } \\geq z _ { t - 1 , i j } , t \\geq 1 , i j \\in \\mathcal { E }\\tag{30}",
+          "image_source": "images/page_3_equation_28.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.512,
+            0.226,
+            0.937,
+            0.252
+          ],
+          "content": "\\sum _ { i j \\in \\mathcal { E } } \\left( z _ { t , i j } - z _ { t - 1 , i j } \\right) \\leq 1 , t \\geq 1\\tag{31}",
+          "image_source": "images/page_3_equation_29.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.264,
+            0.937,
+            0.278
+          ],
+          "content": "z _ { t , i j } \\leq 1 - \\delta _ { i } - \\delta _ { j } , t \\geq 1 , i j \\in \\mathcal { E }\\tag{32}",
+          "image_source": "images/page_3_equation_30.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.289,
+            0.937,
+            0.304
+          ],
+          "content": "z _ { t , i j } \\leq y _ { t - 1 , i } + y _ { t - 1 , j } , t \\geq 1 , i j \\in \\mathcal { E }\\tag{33}",
+          "image_source": "images/page_3_equation_31.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.314,
+            0.937,
+            0.33
+          ],
+          "content": "f _ { t , i j } ^ { + } + f _ { t , i j } ^ { - } = z _ { t , i j } , t \\in \\mathcal { T } , i j \\in \\mathcal { E }\\tag{34}",
+          "image_source": "images/page_3_equation_32.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.511,
+            0.341,
+            0.937,
+            0.371
+          ],
+          "content": "\\sum_{j:j \\to i} f_{t,ji}^{+} + \\sum_{k:i \\to k} f_{t,ik}^{-} \\leq \\frac{|\\mathcal{N}|}{|\\mathcal{N}| + 1}, t \\in \\mathcal{T}, i \\in \\mathcal{N}\\tag{35}",
+          "image_source": "images/page_3_equation_33.jpg"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.389,
+            0.845,
+            0.402
+          ],
+          "level": 2,
+          "content": "3. Safe hierarchical hybrid reinforcement learning"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.415,
+            0.94,
+            0.495
+          ],
+          "content": "HRL is proven to be a promising approach in extending traditional RL to handle complex problems by decomposing learning tasks, thereby reducing learning complexity and improving convergence performance. In this section, a two-level SHHRL algorithm is developed to effectively learn a control policy for MGF within a hybrid action space, while ensuring strict compliance to physical constraints."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.517,
+            0.882,
+            0.53
+          ],
+          "level": 2,
+          "content": "3.1. Formulate MGF as a hierarchical partially observable MDP"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.544,
+            0.94,
+            0.675
+          ],
+          "content": "In practice, while loads and RESs connected to energized nodes can be directly measured via intelligent grid-edge devices, the state information of loads and RESs at de-energized nodes are unobservable and must be estimated using forecasting. This partial observability motivates the adoption of a partially observable MDP framework. Note ̂⋅ is the symbol for forecasted values and ̃⋅ is the symbol for measured values. Meanwhile, the original MGF problem can be naturally decomposed into two interrelated subproblems: topology reconfiguration and power dispatch. Accordingly, this paper formulates the MGF task as a hierarchical partially observable MDP (H-POMDP)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.676,
+            0.94,
+            0.727
+          ],
+          "content": "A POMDP consists of six essential elements: state, action, observation, state transition probability, reward, and discount factor. The observation contains partial information of the state. In this paper, the MGF problem is decomposed into two levels of POMDPs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.728,
+            0.94,
+            0.767
+          ],
+          "content": "1) The high-level POMDP: At the high level, the agent selects discrete switching actions to reconfigure the distribution system topology by closing RCSs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.768,
+            0.94,
+            0.898
+          ],
+          "content": "• Observation $o _ { t } ^ { \\mathrm { H } } ;$ The high-level observation $o _ { t } ^ { \\mathrm { H } }$ at time step t consists of the following four parts (eq. (36)): a) Network topology status, including the switch state of each line $z _ { t - 1 , i j } ,$ and the energization status of each node $y _ { t - 1 , i } ;$ b) Load and RESs states $X _ { t - 1 , i } ,$ including active and reactive power loads $P _ { t - 1 , i } ^ { \\mathrm { L } } ,   Q _ { t - 1 , i } ^ { \\mathrm { L } } ,$ and the active power output of RESs $P _ { t - 1 , i } ^ { \\mathrm { R E S } }$ . For energized nodes, real-time measurements are used. For deenergized nodes, forecasted values are applied; c) DGs and ESSs states, including active and reactive power outputs of DGs $( P _ { t - 1 , i } ^ { \\mathrm { D G } } , Q _ { t - 1 , i } ^ { \\mathrm { D G } } ) ,$ , active and reactive power outputs of ESSs $( P _ { t - 1 , i } ^ { \\mathrm { E S S } } , Q _ { t - 1 , i } ^ { \\mathrm { E S S } } ) ,$ and the SoC of ESSs"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.961
+          ],
+          "content": "4"
+        }
+      ]
+    },
+    {
+      "page_idx": 4,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.07,
+            0.069,
+            0.929,
+            0.401
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.366,
+                0.411,
+                0.631,
+                0.424
+              ],
+              "content": "Fig. 1. The framework of the proposed SHHRL."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_4_image_2.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.446,
+            0.488,
+            0.475
+          ],
+          "content": "$E _ { t - 1 , i } ^ { \\mathrm { E S S } } ;   \\mathsf { d } )$ Electrical quantities, including node voltage magnitudes and both active and reactive power flows of lines."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.91,
+            0.457,
+            0.938,
+            0.47
+          ],
+          "content": "(40)"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.058,
+            0.522,
+            0.938,
+            0.543
+          ],
+          "content": "o_{t}^{\\mathrm{H}} = \\left\\{ z_{t-1,\\bar{y}}, y_{t-1,i}, X_{t-1,i}, P_{t-1,i}^{\\mathrm{DG}}, Q_{t-1,i}^{\\mathrm{DG}}, P_{t-1,i}^{\\mathrm{ESS}}, Q_{t-1,i}^{\\mathrm{ESS}}, E_{t-1,i}^{\\mathrm{ESS}}, V_{t-1,i}, P_{t-1,\\bar{y}}, Q_{t-1,\\bar{y}} | t \\in \\mathcal{T}, \\bar{y} \\in \\mathcal{E}, i \\in \\mathcal{N} \\right\\}\\tag{36}",
+          "image_source": "images/page_4_equation_6.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.058,
+            0.6,
+            0.485,
+            0.631
+          ],
+          "content": "X_{t - 1,i} = \\begin{cases} \\widetilde{X}_{t - 1,i}, & y_{t - 1,i} = 1 \\\\ \\widehat{X}_{t - 1,i}, & y_{t - 1,i} = 0 \\end{cases}, X \\in \\left\\{ P^{\\mathrm{L}}, Q^{\\mathrm{L}}, P^{\\mathrm{RES}} \\right\\}\\tag{37}",
+          "image_source": "images/page_4_equation_7.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.638,
+            0.488,
+            0.683
+          ],
+          "content": "As shown in eq. (37), the observations of loads and RESs connected to the network are represented by measured values $\\tilde { X } _ { t - 1 , i ; }$ , while those of unconnected loads and RESs are represented by forecasted values $\\widehat { X } _ { t - 1 , i } ,$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.683,
+            0.487,
+            0.712
+          ],
+          "content": "• Action $\\boldsymbol { a } _ { t } ^ { \\mathrm { H } } ;$ At each time step t, the high-level agent selects a switch to execute a closing operation $a _ { t } ^ { \\mathrm { H } }$"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.453,
+            0.688,
+            0.484
+          ],
+          "content": "\\mathbf{r}_{t}^{\\mathrm{Load}} = \\sum_{k \\in f\\left(a_{t}^{\\mathrm{d}}\\right)} P_{t, k}^{\\mathrm{L}}\\left(y_{t+1, k}-y_{t, k}\\right)",
+          "image_source": "images/page_4_equation_10.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.718,
+            0.485,
+            0.734
+          ],
+          "content": "\\boldsymbol{a}_{t}^{\\mathrm{H}} = \\boldsymbol{w}_{t}, \\boldsymbol{w}_{t} \\in \\mathcal{W}, \\boldsymbol{f}(\\boldsymbol{w}_{t}) = (\\boldsymbol{i}_{w_{t}}, \\boldsymbol{j}_{w_{t}}) \\in \\mathcal{E}\\tag{38}",
+          "image_source": "images/page_4_equation_11.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.745,
+            0.487,
+            0.784
+          ],
+          "content": "which $w _ { t }$ denotes the index of the line associated with the selected RCS at time step t. The mapping function $f _ { \\cdot } W \\to \\varepsilon$ associates each switch index with a corresponding pair of terminal nodes."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.785,
+            0.488,
+            0.883
+          ],
+          "content": "• Reward $r _ { t } ^ { \\mathrm { H } } ;$ The high-level reward $r _ { t } ^ { \\mathrm { H } }$ comprises two components: $r _ { t } ^ { \\mathrm { L } }$ and $r _ { t } ^ { \\mathrm { D E R } }$ , as shown in eq. (39). The first term $r_{t}^{\\mathrm{L}} \\left( \\mathrm{eq.} (40) \\right)$ quantifies the amount of active load restored by the switching action $a _ { t } ^ { \\mathrm { H } } ,$ , encouraging the agent to prioritize load recovery. The second term $r _ { t } ^ { \\mathrm { D E R } }$ (eq. (41)) represents the power output of newly connected DERs resulting from the switching action, promoting their effective utilization and enhancing power supply capability during the restoration process."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.888,
+            0.485,
+            0.904
+          ],
+          "content": "\\boldsymbol{r}_{t}^{\\mathrm{H}}=\\boldsymbol{r}_{t}^{\\mathrm{Load}}+\\boldsymbol{r}_{t}^{\\mathrm{DER}}\\tag{39}",
+          "image_source": "images/page_4_equation_14.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.584,
+            0.938,
+            0.619
+          ],
+          "content": "r_{t}^{\\mathrm{DER}} = \\sum_{k \\in f(w_{t})} \\left( P_{t,k}^{\\mathrm{DG}} + P_{t,k}^{\\mathrm{RES}} + \\frac{\\overline{P}_{t,k}^{\\mathrm{ESS},c} + \\overline{P}_{t,k}^{\\mathrm{ESS},d}}{2} \\right)\\tag{41}",
+          "image_source": "images/page_4_equation_15.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.626,
+            0.94,
+            0.784
+          ],
+          "content": "2) The low-level POMDP: At the low level, the agent controls the continuous outputs of DERs to perform power dispatch. Unlike singlestep dispatch, which optimizes decisions at each time step independently, the low-level agent must account for temporal coupling and future uncertainties in its decision-making. These include operational constraints such as DG ramping limits and the SoC constraint of ESSs. For instance, optimal ESS operation requires foresight. The agent should learn to charge the ESS during low-demand periods in anticipation of future high-load conditions, where discharging the stored energy can support system restoration. Such temporally coordinated behavior is essential for ensuring long-term efficiency and enhancing the resilience of the distribution system."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.785,
+            0.941,
+            0.933
+          ],
+          "content": "• Observation $o _ { t } ^ { \\mathrm { L } } ;$ After the high-level agent executes a switching action, the corresponding lines and nodes are restored, resulting in a change in the network topology. Simultaneously, the state information of loads and RESs connected to the newly energized nodes transitions from forecasted values to real measurements. Accordingly, the low-level observation $o _ { t } ^ { \\mathrm { L } }$ is derived by updating the high-level observation $o _ { t \\mathrm { ~ 2 ~ } } ^ { \\mathrm { H ~ } }$ , as defined in eq. (42). The updates consist of two parts: a) Network topology status: The switch states of each line is updated from $Z _ { t - 1 , \\bar { y } } \\mathrm { t o }   Z _ { t , \\bar { y } }$ (eq. (43)), and the energization status of each node is updated from $. y _ { t - 1 , i }$ to y<sub>ti</sub> (eq. (44)); b) Load and RES states: The load and RES information is updated from forecasted values $X _ { t - 1 , i }$ to measured values $X _ { t i } ,$ as shown in"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": "5"
+        }
+      ]
+    },
+    {
+      "page_idx": 5,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.043,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.06,
+            0.067,
+            0.114,
+            0.08
+          ],
+          "content": "eq. (45)."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.058,
+            0.126,
+            0.537,
+            0.147
+          ],
+          "content": "\\boldsymbol { o } _ { t } ^ { \\mathrm { L } } = \\left\\{ \\boldsymbol { z } _ { t , \\bar { y } } , \\mathbf { y } _ { t , i } , \\boldsymbol { X } _ { t , i } , \\boldsymbol { P } _ { t - 1 , i } ^ { \\mathrm { D G } } , \\boldsymbol { Q } _ { t - 1 , i } ^ { \\mathrm { D G } } , \\boldsymbol { P } _ { t - 1 , i } ^ { \\mathrm { E S S } } , \\boldsymbol { E } _ { t - 1 , i } ^ { \\mathrm { E S S } } , \\mathbf { V } _ { t - 1 , i } , \\boldsymbol { P } _ { t - 1 , \\bar { y } } , \\boldsymbol { Q } _ { t - 1 , \\bar { y } } | t \\in \\mathcal { F } , \\bar { y } \\in \\mathcal { E } , i \\in \\mathcal { N } \\right\\}",
+          "image_source": "images/page_5_equation_3.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.057,
+            0.216,
+            0.485,
+            0.249
+          ],
+          "content": "z_{t,ij} = \\left\\{ \\begin{aligned} 1, & \\quad  if   (i,j)   is closed by   a_t^{\\mathrm{H}} \\\\ z_{t-1,ij}, & \\quad  otherwise  \\end{aligned} \\right. , \\dot{\\boldsymbol{y}} \\in \\mathcal{E}\\tag{43}",
+          "image_source": "images/page_5_equation_4.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.057,
+            0.262,
+            0.485,
+            0.295
+          ],
+          "content": "y_{t,i} = \\left\\{ \\begin{aligned} 1, & \\quad  if   i \\in f(a_t^{ H }) \\\\ y_{t-1,i}, & \\quad  otherwise  \\end{aligned} \\right.\\tag{44}",
+          "image_source": "images/page_5_equation_5.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.307,
+            0.485,
+            0.339
+          ],
+          "content": "X_{t,i} = \\begin{cases} \\widetilde{X}_{t,i}, & y_{t,i} = 1 \\\\ \\widehat{X}_{t,i}, & y_{t,i} = 0 \\end{cases}, X \\in \\left\\{ P^{\\mathrm{L}}, Q^{\\mathrm{L}}, P^{\\mathrm{RES}} \\right\\}\\tag{45}",
+          "image_source": "images/page_5_equation_6.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.347,
+            0.488,
+            0.388
+          ],
+          "content": "• Action $a _ { t } ^ { \\mathrm { L } } ;$ Based on the updated observation, the low-level agent performs power dispatch decisions for the DERs. The action of the lowlevel agent at time step t is defined as follows:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.395,
+            0.485,
+            0.437
+          ],
+          "content": "\\begin{align*}a_{t}^{\\mathrm{L}} &= \\left\\{ a_{t,i}^{\\mathrm{DG}}, a_{t,i}^{\\mathrm{RES}}, a_{t,i}^{\\mathrm{ESS}} \\mid -1 \\right. \\\\& \\left. \\leq a_{t,i}^{\\mathrm{DG}}, a_{t,i}^{\\mathrm{RES}}, a_{t,i}^{\\mathrm{ESS}} \\leq 1, t \\in \\mathcal{F}, i \\in \\mathcal{D} = \\mathcal{G} \\cup \\mathcal{R} \\cup \\mathcal{S} \\right\\}\\end{align*}\\tag{46}",
+          "image_source": "images/page_5_equation_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.444,
+            0.487,
+            0.472
+          ],
+          "content": "The action is then converted into the actual power output of the DERs through the post-processing procedure described in eq. (47)–(49):"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.478,
+            0.485,
+            0.498
+          ],
+          "content": "P_{t,i}^{\\mathrm{DG}} = 0.5\\left(a_{t,i}^{\\mathrm{DG}} + 1\\right)\\left(P_{i}^{\\mathrm{DG},\\max} - P_{i}^{\\mathrm{DG},\\min}\\right) + P_{i}^{\\mathrm{DG},\\min}\\tag{47}",
+          "image_source": "images/page_5_equation_10.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.51,
+            0.485,
+            0.53
+          ],
+          "content": "P _ { t , i } ^ { \\mathrm { R E S } } = 0 . 5 \\left( a _ { t , i } ^ { \\mathrm { R E S } } + 1 \\right) \\widetilde { P } _ { t , i } ^ { \\mathrm { R E S } }\\tag{48}",
+          "image_source": "images/page_5_equation_11.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.543,
+            0.485,
+            0.564
+          ],
+          "content": "P_{t,i}^{ ESS } = 0.5\\left(a_{t,i}^{ ESS } + 1\\right)\\left(P_{i}^{ ESS , d , max } + P_{i}^{ ESS , c , max }\\right) - P_{i}^{ ESS , c , max }\\tag{49}",
+          "image_source": "images/page_5_equation_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.571,
+            0.488,
+            0.624
+          ],
+          "content": "• Reward $r _ { t } ^ { \\mathrm { L } } ;$ The objective of the low-level agent is to satisfy the restoration demand while ensuring compliance with critical operational constraints. The reward function of the low-level agent is defined as follows:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.632,
+            0.485,
+            0.651
+          ],
+          "content": "\\mathbf{r}_{t}^{\\mathrm{L}}=1-\\left\\|\\bar{\\mathbf{a}}_{t}^{\\mathrm{L}}-\\mathbf{a}_{t}^{\\mathrm{L}}\\right\\|_{2} / 2 \\sqrt{|\\mathcal{D}|}\\tag{50}",
+          "image_source": "images/page_5_equation_14.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.664,
+            0.488,
+            0.771
+          ],
+          "content": "where $\\overline { { a } } _ { t } ^ { \\mathrm { L } }$ denotes the safety-corrected actions obtained from the safety projection layer, which will be detailed in Section $3.4 ; \\left| D \\right|$ represents the dimensionality of $D _ { z }$ i.e., the size of the continuous action space. This reward function is designed to guide the lower-level agent toward selecting safe actions that closely approximate the original decisions while satisfying safety constraints. It also helps prevent significant deviations caused by the safety projection process, thereby maintaining policy stability."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.791,
+            0.271,
+            0.805
+          ],
+          "level": 2,
+          "content": "3.2. SHHRL-based MGF framework"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.817,
+            0.488,
+            0.897
+          ],
+          "content": "The framework of the proposed two-level SHHRL-based MGF strategy is illustrated in Fig. 1. The SHHRL framework demonstrates strong adaptability and can be seamlessly integrated with various DRL algorithms. Specifically, the high-level agent employs the DDQN, while the low-level agent adopts the TD3 algorithm. The sequence flow of SHHRL is illustrated as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.897,
+            0.488,
+            0.938
+          ],
+          "content": "Step 1: The environment provides a local observation $o _ { t } ^ { \\mathrm { H } }$ for the highlevel agent at each time step t, which includes the current status of lines and nodes, the measured values of restored loads and DERs, as well as"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.511,
+            0.066,
+            0.824,
+            0.08
+          ],
+          "continues_prev": true,
+          "content": "the forecasted values of unrestored loads and DERs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.91,
+            0.13,
+            0.938,
+            0.143
+          ],
+          "content": "(42)"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.183,
+            0.94,
+            0.239
+          ],
+          "content": "Step 2: Based on $a _ { t } ^ { \\mathrm { H } } ,$ the high-level agent computes the Q-values for all switch operations and passes them to the IAM layer. The IAM layer filters out infeasible actions and selects the safe discrete switching action $a _ { t } ^ { \\mathrm { H ^ { \\star } } }$ with the highest Q-value among the remaining valid options."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.239,
+            0.94,
+            0.333
+          ],
+          "content": "Step 3: Upon the selected action $a _ { t } ^ { \\mathrm { H ^ { \\pm } } }$ , the environment closes the corresponding switch and updates the observation, including both network topology and power-related information. Specifically, the status of the restored lines and nodes is set to 1, and the forecasted values of restored loads and RES outputs are replaced with their corresponding measured values. The updated local observation $o _ { t } ^ { \\mathrm { L } }$ is then provided to the low-level agent."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.333,
+            0.94,
+            0.389
+          ],
+          "content": "Step 4: Based on the updated observation $o _ { t } ^ { \\mathrm { L } }$ , the low-level agent determines the continuous outputs of the DERs $a _ { t } ^ { \\mathrm { L } }$ and passes them to the safety projection layer. The layer then outputs the corrected control actions $a _ { t } ^ { \\mathrm { - L } }$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.39,
+            0.939,
+            0.504
+          ],
+          "content": "Step 5: After executing the continuous action $a _ { t } ^ { \\mathrm { - L } }$ , the environment provides rewards $r _ { t } ^ { \\mathrm { H } }$ and $r _ { t } ^ { \\mathrm { L } }$ to the high-level and low-level agents, respectively, and transitions to the next observation $o _ { t + 1 } ^ { \\mathrm { H } }$ . Subsequently, step $^ 2$ and step $^ 3$ are repeated to obtain the updated observation $o _ { t + 1 } ^ { \\mathrm { L } }$ The tuple $( o _ { t } ^ { \\mathrm { H } } , a _ { t } ^ { \\mathrm { H } ^ { \\star } } , r _ { t } ^ { \\mathrm { H } } , o _ { t + 1 } ^ { \\mathrm { H } } )$ is restored in either the standard experience buffer or the high-value experience buffer of the high-level agent, which will be detailed in Section 3.5. Similarly, the tuple $( o _ { t } ^ { \\mathrm { L } } ,   a _ { t } ^ { \\mathrm { L } } ,   r _ { t } ^ { \\mathrm { L } } ,   o _ { t + 1 } ^ { \\mathrm { L } } )$ is restored in the corresponding buffer of the low-level agent."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.504,
+            0.94,
+            0.544
+          ],
+          "content": "Step 6: Mini-batches are sampled from buffers $B _ { 1 }$ and $B _ { 2 }$ using prioritized experience replay to updated the policies of the high-level and low-level agents, respectively."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.544,
+            0.941,
+            0.794
+          ],
+          "content": "During the restoration process, the observation and action spaces of the low-level agent are dynamically constructed based on the discrete topology reconfiguration decisions made by the high-level agent. Specifically, once the high-level agent executes a safe switching action, the network topology is immediately updated and transmitted to the lowlevel agent. These updates are reflected in the low-level observation space, which includes the set of newly energized lines, the activated DERs, and the restored loads. For each activated DER and restored load, the forecasted values in the observation are replaced with real-time measurements to enhance accuracy and responsiveness. In addition, the high-level decisions directly influence the feasible action space of the low-level agent. DERs that are not activated by the topology configuration are excluded from the dispatchable set, and their power outputs are constrained to zero. This mechanism ensures that the low-level agent considers only feasible control actions consistent with the current network topology. By decomposing the complex MGF problem into two sub-tasks with reduced action spaces, the proposed SHHRL architecture significantly reduces learning complexity and enhances training efficiency."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.794,
+            0.941,
+            0.927
+          ],
+          "content": "Let $A _ { \\mathrm { d } }$ denote the discrete action space corresponding to RCS operations, and $A _ { \\mathrm { c } }$ denotes the continuous action space associated with DER dispatch. In conventional PARL frameworks, the agent must perform policy optimization over the joint action space $\\mathbf { \\mathit { A } } = \\mathbf { \\mathit { A } } _ { \\mathrm { d } } \\times \\mathbf { \\mathit { A } } _ { \\mathrm { c } }$ . This results in a policy search complexity of $O ( | \\mathbf { A } _ { \\mathsf { d } } | \\bullet | \\mathbf { A } _ { \\mathsf { c } } | )$ . As the distribution system grows in size and the number of controllable assets increases, the dimensionality of the joint action space becomes large. This leads to a substantial rise in computational complexity and impedes policy convergence. In contrast, the proposed SHHRL framework decomposes the decision-making process into two sequential and conditionally"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.505,
+            0.962
+          ],
+          "content": "6"
+        }
+      ]
+    },
+    {
+      "page_idx": 6,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.066,
+            0.067,
+            0.479,
+            0.211
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.12,
+                0.221,
+                0.425,
+                0.234
+              ],
+              "content": "Fig. 2. Illustration of invalid actions in a MGF process."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_6_image_2.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.249,
+            0.489,
+            0.33
+          ],
+          "continues_prev": true,
+          "content": "independent stages. First, the high-level agent selects a discrete switching action from $A _ { \\mathrm { d } } .$ Then, conditioned on the updated topology, the low-level agent optimizes a continuous control policy over $A _ { \\mathbb { C } } .$ This hierarchical structure converts the original joint optimization into a conditional optimization. As a result, the overall policy search complexity is reduced to $O ( | \\pmb { A } _ { \\mathrm { d } } | + | \\pmb { A } _ { \\mathrm { c } } | )$ , enabling more efficient learning."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.351,
+            0.329,
+            0.364
+          ],
+          "level": 2,
+          "content": "3.3. Neural networks parameters optimization"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.376,
+            0.488,
+            0.455
+          ],
+          "content": "The proposed SHHRL framework is highly adaptable and can be seamlessly integrated with a variety of DRL algorithms. In this study, DDQN is used for the high-level agent to optimize discrete switching actions, while TD3 is adopted for the low-level agent to control continuous DER outputs. Both agents are implemented using multi-layer neural networks."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.456,
+            0.488,
+            0.523
+          ],
+          "content": "DDQN enhances the original deep Q-network (DQN) by introducing two separate networks: the online Q-network and the target Q-network. The online network is used for action selection, while the target network is used for action evaluation. The parameters of the network are updated by minimizing the following loss function:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.057,
+            0.568,
+            0.527,
+            0.603
+          ],
+          "content": "L _ { Q } ( \\theta ) = \\left( Q ^ { \\mathrm { H } } \\left( o _ { t } ^ { \\mathrm { H } } , a _ { t } ^ { \\mathrm { H } } ; \\theta ^ { 0 } \\right) - \\left( r _ { t } + \\gamma Q ^ { \\mathrm { H } } \\left( o _ { t + 1 } ^ { \\mathrm { H } } , \\underset { a _ { t + 1 } ^ { \\mathrm { H } } } { \\arg \\max } Q ^ { \\mathrm { H } } \\left( o _ { t + 1 } ^ { \\mathrm { H } } , a _ { t + 1 } ^ { \\mathrm { H } } ; \\theta ^ { 0 } \\right) ; \\theta ^ { \\mathrm { T } } \\right) \\right) \\right) ^ { 2 }",
+          "image_source": "images/page_6_equation_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.639,
+            0.487,
+            0.666
+          ],
+          "content": "where $\\theta ^ { 0 }$ and $\\theta ^ { \\mathrm { T } }$ denote the parameters of the online Q-network and the target Q-network, and $\\gamma$ is the discount factor."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.666,
+            0.488,
+            0.824
+          ],
+          "content": "The TD3 algorithm consists of an actor network and its corresponding target actor, as well as two critic networks and their respective target critics. To improve training stability, TD3 incorporates a target policy smoothing regularization mechanism. This technique mitigates overfitting by adding clipped noise to the target policy, leading to smoother updates and enhanced robustness. Compared with the widely used deep deterministic policy gradient (DDPG) algorithm, TD3 provides better convergence and improved performance stability. To further address the overestimation bias inherent in Q-value estimation, TD3 maintains twin Q-networks. The minimum value between the two critics is used during the target update, effectively preventing overestimation of action values."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.824,
+            0.487,
+            0.85
+          ],
+          "content": "The critic networks are optimized by minimizing the following loss function:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.858,
+            0.485,
+            0.896
+          ],
+          "content": "\\begin{aligned}L_{\\mathrm{critic}} &= \\left( Q^{\\mathrm{L}} \\left( \\boldsymbol{o}_t^{\\mathrm{L}}, \\boldsymbol{a}_t^{\\mathrm{H}}, \\boldsymbol{a}_t^{\\mathrm{L}} | \\boldsymbol{\\theta}_i^0 \\right) - y_t \\right), i \\in \\{1, 2\\}, \\mathrm{where} y_t \\\\&= r_t + \\gamma \\min_{j=1,2} Q^{\\mathrm{L}} \\left( \\boldsymbol{o}_{t+1}^{\\mathrm{L}}, \\pi^{\\mathrm{L}} \\left( \\boldsymbol{o}_{t+1}^{\\mathrm{L}}, \\boldsymbol{a}_{t+1}^{\\mathrm{H}} | \\boldsymbol{\\omega}^{\\mathrm{T}} \\right) | \\boldsymbol{\\theta}_j^{\\mathrm{T}} \\right)\\end{aligned}\\tag{52}",
+          "image_source": "images/page_6_equation_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.909,
+            0.487,
+            0.925
+          ],
+          "content": "where $\\pi ^ { \\mathrm { L } } \\big ( \\boldsymbol { o } _ { t + 1 } ^ { \\mathrm { L } } , \\boldsymbol { a } _ { t + 1 } ^ { \\mathrm { H } } | \\boldsymbol { \\omega } ^ { \\mathrm { T } } \\big )$ denotes the smoothed target action generated by"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.517,
+            0.067,
+            0.933,
+            0.16
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.562,
+                0.17,
+                0.887,
+                0.183
+              ],
+              "content": "Fig. 3. Union-find-based cycle detection in a MGF process."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_6_image_14.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.198,
+            0.939,
+            0.238
+          ],
+          "continues_prev": true,
+          "content": "the target actor network with parameters $\\omega ^ { T } ;$ θ<sup>O</sup><sub>i</sub> and $\\theta _ { i } ^ { \\mathrm { T } }$ represent the parameters of the i-th critic and its corresponding target critic network, respectively."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.239,
+            0.939,
+            0.266
+          ],
+          "content": "The actor network $\\pi$ is updated less frequently than the critic and aims to maximize the estimated Q-value:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.272,
+            0.938,
+            0.288
+          ],
+          "content": "L _ { \\mathrm { a c t o r } } = - Q \\left( o _ { t } ^ { \\mathrm { L } } , a _ { t } ^ { \\mathrm { H } } , \\pi \\left( o _ { t } ^ { \\mathrm { L } } , a _ { t } ^ { \\mathrm { H } } | \\omega ^ { 0 } \\right) | \\theta _ { 1 } ^ { 0 } \\right)\\tag{53}",
+          "image_source": "images/page_6_equation_18.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.298,
+            0.86,
+            0.312
+          ],
+          "content": "where $\\omega ^ { 0 }$ represents the parameters of the actor network."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.51,
+            0.337,
+            0.806,
+            0.351
+          ],
+          "level": 2,
+          "content": "3.4. Safety layer embedded with expert knowledge"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.364,
+            0.94,
+            0.456
+          ],
+          "content": "Existing SRL methods cannot guarantee that the agent satisfies safety constraints at every timestep during exploration and deployment. To address this limitation, power system expert knowledge is embedded into the proposed HRL framework. Before executing decisions, pre-defined expert knowledge is used to proactively filter out unsafe actions or project them onto a safe action space. This ensures that the agent executes only decisions that comply with operational constraints."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.456,
+            0.94,
+            0.536
+          ],
+          "content": "The constraints in the MGF problem (2)–(35) are categorized into two types: those related to continuous actions (2)–(25) and those related to discrete actions (26)–(35). For discrete-action constraints, an IAM layer is designed to eliminate infeasible discrete actions. For continuousaction constraints, a safety projection layer is introduced to map unsafe continuous actions onto a feasible region."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.91,
+            0.58,
+            0.938,
+            0.593
+          ],
+          "content": "(51)"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.53,
+            0.639,
+            0.778,
+            0.653
+          ],
+          "content": "1) IAM layer for discrete switching actions."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.653,
+            0.94,
+            0.732
+          ],
+          "content": "In the MGF problem, actions that violate operational constraints are defined as invalid actions, which not only degrade learning efficiency but also compromise the safety of the distribution system. To address this issue, an expert-knowledge-based IAM layer is designed to dynamically filter out infeasible actions before they are considered by the agent."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.732,
+            0.941,
+            0.864
+          ],
+          "content": "The implementation process of the IAM layer consists of the following steps: i) At each time step t, a Boolean invalid action mask vector is initialized: $\\mathbf { m } _ { t } = [ m _ { 1 } , m _ { 2 } , . . . , m _ { | \\varepsilon | } ]$ . The vector is initialized to zero, with each element corresponding to a switch action. If an action a is invalid, its corresponding mask value is updated to $m _ { a } = 1 . \\mathrm { i i ) }$ Based on expert knowledge, invalid actions at the current time step are identified, and the corresponding entries in the invalid action mask are updated accordingly. iii) The action selection rule is modified to incorporate the invalid action mask, ensuring that infeasible actions are excluded from decision-making:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.87,
+            0.938,
+            0.892
+          ],
+          "content": "a_{t}^{\\mathrm{H}^*} = \\operatorname{argmax}_{a_{t}^{\\mathrm{H}}} \\left( Q\\left( s, a_{a_{t}^{\\mathrm{H}}} \\right) - \\lambda m_{a_{t}^{\\mathrm{H}}} \\right)\\tag{54}",
+          "image_source": "images/page_6_equation_27.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.903,
+            0.94,
+            0.932
+          ],
+          "content": "where $a _ { t } ^ { \\mathrm { H ^ { \\star } } }$ represents the optimal discrete action. λ is a large positive constant used to penalize invalid actions, ensuring they are not selected."
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.506,
+            0.962
+          ],
+          "content": "7"
+        }
+      ]
+    },
+    {
+      "page_idx": 7,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.067,
+            0.489,
+            0.212
+          ],
+          "content": "The key aspect of the IAM layer is how to identify invalid actions at each time step based on expert knowledge. As analyzed earlier, the constraints associated with discrete actions are defined by constraints (26)–(35), which can be further categorized as follows: Constraints (26) and (27) define the initial states of variables. Constraints (28)–(29) govern the state transition process of nodes and lines. Constraints (30)– (31) are implicitly satisfied during the construction of the discrete action space. Therefore, the topological constraints that must be explicitly enforced during the agent's decision-making process are constraints (32)–(35). Based on the analysis, the invalid actions in the MGF process and their filtering methods are as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.212,
+            0.488,
+            0.291
+          ],
+          "content": "a) Substation-connecting actions: These actions violate constraints (32), which prohibit connecting any line directly to substation nodes under main grid outage scenarios, as illustrated in Fig. 2(a). The filtering method is as follows: For any line ${ i j } ,$ if either terminal node belongs to the substation node set $S , \\mathrm { i . e . , } i \\in S \\mathrm { o r } j \\in S ,$ , then closing the switch on line ij is classified as an invalid action."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.291,
+            0.488,
+            0.41
+          ],
+          "content": "b) Island-inducing actions: Such actions violate constraint (33), and may lead to two distinct types of network islands. The first type refers to isolated load islands that lack power supply, which hinders restoration efficiency, as illustrated in Fig. 2(b1). The second type involves isolated RES or ESS islands, which compromise the overall reliability of supply, as shown in Fig. 2(b2). The filtering method is as follows: For a given line ij, if both terminal nodes i and j are de-energized at time t, i.e. $y _ { t , i }   =$ 0 and $y _ { t , j } = 1$ ,then closing the switch on line ij is classified as an invalid action."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.41,
+            0.489,
+            0.49
+          ],
+          "content": "c) Radiality-violating actions: To ensure the radial topology of a distribution system, the following conditions must be satisfied: (i) The network graph must be acyclic; (ii) There is at most one substation node in each connected component of the graph. Since this study focuses on MGF under the assumption that the utility power from main grid is lost, condition (ii) is not applicable. Thus, it is only necessary to ensure"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.058,
+            0.527,
+            0.528,
+            0.557
+          ],
+          "content": "\\min \\sum_{i \\in \\mathcal{I}} \\left[ \\left( \\bar{P}_{t,i}^{\\mathrm{DG}} - P_{t,i}^{\\mathrm{DG}} \\right)^2 + \\left( \\bar{P}_{t,i}^{\\mathrm{RES}} - P_{t,i}^{\\mathrm{RES}} \\right)^2 + \\left( \\bar{P}_{t,i}^{\\mathrm{ESS}} - P_{t,i}^{\\mathrm{ESS}} \\right)^2 + \\left( \\bar{P}_{t,i}^{\\mathrm{ESS},d} + \\bar{P}_{t,i}^{\\mathrm{ESS},c} \\right) \\right]",
+          "image_source": "images/page_7_equation_6.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.593,
+            0.488,
+            0.672
+          ],
+          "content": "condition (i), meaning that if closing the switch of a given line creates a loop in the network graph, the action is classified as invalid, as illustrated in Fig. 2(c). To efficiently identify such violations, a union-findbased cycle detection algorithm is employed. In this disjoint-set structure, each subset represents a connected component of the current network. The algorithm proceeds in the following steps:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.672,
+            0.487,
+            0.726
+          ],
+          "content": "i) Initialize the union-find structure: At the beginning of the MGF process, all switches are open, and each node is assigned to an independent set. For instance, in Fig. 3(a), the disjoint sets are initialized as {{1},{2},{3},{4},{5},{6}}."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.725,
+            0.488,
+            0.817
+          ],
+          "content": "ii) Cycle detection before action execution: Before executing a switching action, the algorithm checks whether the two terminal nodes of the corresponding line belong to the same set. If they do, closing the switch would form a loop and is therefore identified as an invalid action. For example, in Fig. 3(b), the disjoint sets are $\\{ \\{ 1 \\} , \\{ 2 , 3 , 4 , 6 \\} , \\{ 5 \\} \\}$ . Line 2–6 connects two nodes already in the same set, so closing this line would create a loop and violate the radiality constraint."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.817,
+            0.488,
+            0.87
+          ],
+          "content": "iii) Set merging after valid action: If the terminal nodes of a line belong to different sets, the action is valid, and their respective sets are merged. For instance, after closing the line 5–6 in Fig. 3(b), the resulting disjoint sets become {1} and $\\{ 2 , 3 , 4 , 5 , 6 \\}$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.87,
+            0.489,
+            0.937
+          ],
+          "content": "d) Redundant closure actions: In addition to the aforementioned cases, switches that have already been closed should not be operated again, as illustrated in Fig. 2(d). Repeated closures introduce redundant computations and reduce learning efficiency. The filtering method is as follows: If the switch on line ij is already closed, i.e. $z _ { t , i j }   =   1$ , any"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.067,
+            0.901,
+            0.079
+          ],
+          "continues_prev": true,
+          "content": "subsequent attempt to reclose it is classified as an invalid action."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.08,
+            0.94,
+            0.146
+          ],
+          "content": "The above IAM mechanism performs deterministic, rule-based logical evaluations based on the network topology of the distribution system and the real-time status of nodes and branches at each time step. Under the assumption of accurate system modeling, this approach ensures complete coverage in identifying all infeasible discrete actions."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.146,
+            0.94,
+            0.198
+          ],
+          "content": "To assess the scalability and real-time applicability of the proposed IAM mechanism, a formal computational complexity analysis is conducted. The complexity of each rule-based filtering method is outlined as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.199,
+            0.94,
+            0.264
+          ],
+          "content": "a) Substation-connecting and redundant closure checks are based on direct comparisons of node membership and binary switch statuses. These operations are executed over the entire set of switchable lines, resulting in a time complexity of $O ( | W | )$ per decision step, where |W| represents the number of controllable switches."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.264,
+            0.94,
+            0.304
+          ],
+          "content": "b) Island-inducing action detection requires verifying the energization states of both terminal nodes for each line, which also incurs a computational cost of O(|W|)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.304,
+            0.94,
+            0.356
+          ],
+          "content": "c) Radiality-violation detection is implemented using a union-findbased cycle detection algorithm. At each decision step, the algorithm checks whether the two nodes of a line belong to the same disjoint set. The complexity of this process is likewise $O ( | W | )$ ."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.356,
+            0.94,
+            0.409
+          ],
+          "content": "In summary, the total computational cost of the IAM layer per decision step is bounded by O(|W|). This lightweight complexity renders the IAM mechanism suitable for real-time operation in distribution systems."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.53,
+            0.41,
+            0.841,
+            0.423
+          ],
+          "content": "2) Safety projection layer for continuous DER outputs."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.423,
+            0.94,
+            0.489
+          ],
+          "content": "This part introduces an optimization-based safety projection layer to converts unsafe actions into safe ones. To prevent the safety projection layer from significantly altering the agent's decisions and disrupting its convergence, the objective function is designed to minimize the adjustments of continuous actions:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.91,
+            0.535,
+            0.938,
+            0.548
+          ],
+          "content": "(55)"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.606,
+            0.94,
+            0.712
+          ],
+          "content": "where $P _ { t , i } ^ { \\mathrm { D G } } ,   P _ { t , i } ^ { \\mathrm { R E S } }$ , and $P _ { t , i } ^ { \\mathrm { E S S } }$ denote the active power outputs of the DG, RES, ESS at node i and time step t, as determined by the lower-level agent after processing through eqs. $(47) - (49); \\overline{P}_{t,i}^{ DG }, \\overline{P}_{t,i}^{ RES }$ , and $\\overline { { P } } _ { t , i } ^ { \\mathrm { E S S } }$ denote the corresponding safety-corrected active power; M denotes a large number; $\\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , c } }$ and $\\bar { P } _ { t , i } ^ { \\mathrm { E S S , d } }$ denote the safety-corrected charging and discharging active power of the ESS. These variables satisfy the following relation:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.718,
+            0.938,
+            0.737
+          ],
+          "content": "\\overline { { P } } _ { t , i } ^ { \\mathrm { E S S } } = \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , d } } - \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , c } }\\tag{56}",
+          "image_source": "images/page_7_equation_23.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.743,
+            0.941,
+            0.93
+          ],
+          "content": "The first three terms inside the brackets in eq. (55) represent the adjustments applied to the continuous control actions. With respect to constraints (2)–(35), the discrete topology-related variables $z _ { t , \\dot { y } }$ and $y _ { t , i j }$ are predetermined by the high-level agent after executing discrete switching actions. Consequently, constraints (26)–(35), which are associated with these discrete decisions, are already enforced at the high level and can therefore be excluded from the low-level safety projection layer. As a result, the safety layer only needs to consider constraints (2)– (25), among which only constraint (16) is nonlinear. This constraint prohibits the ESS from charging and discharging simultaneously. Traditional approaches typically handle this constraint by introducing additional binary variables, which substantially increase computational complexity. In contrast, the proposed method incorporates a relaxation term into the objective function of eq. (55), thereby eliminating the need"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.953,
+            0.506,
+            0.962
+          ],
+          "content": "8"
+        }
+      ]
+    },
+    {
+      "page_idx": 8,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.066,
+            0.488,
+            0.105
+          ],
+          "continues_prev": true,
+          "content": "for binary variables and reducing the computational burden of the safety projection layer. The proof of this relaxation can be found in Appendix $\\mathbf { A } .$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.107,
+            0.489,
+            0.146
+          ],
+          "content": "Consequently, the final safety projection layer can be formulated as a quadratic programming (QP) problem, the general form of which is shown in (57)–(59):"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.153,
+            0.486,
+            0.177
+          ],
+          "content": "\\min \\frac{1}{2} \\boldsymbol{x}^{\\mathrm{T}} \\mathbf{Q} \\boldsymbol{x} + \\boldsymbol{c}^{\\mathrm{T}} \\boldsymbol{x}\\tag{57}",
+          "image_source": "images/page_8_equation_4.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.188,
+            0.485,
+            0.201
+          ],
+          "content": "{ \\mathrm { s . t . } } \\mathrm { A } x \\leq b\\tag{58}",
+          "image_source": "images/page_8_equation_5.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.06,
+            0.213,
+            0.485,
+            0.225
+          ],
+          "content": "\\mathtt { E } x = d\\tag{59}",
+          "image_source": "images/page_8_equation_6.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.237,
+            0.487,
+            0.287
+          ],
+          "content": "where Q, A and E are coefficient matrices; c, b, and d are the coefficient vectors; x is the vector of continuous decision variables, and $\\pmb { x } = [ \\overline { { P } } _ { t , i } ^ { \\mathrm { D G } } ]$ $\\bar { P } _ { t , i } ^ { \\mathrm { R E S } } , \\bar { P } _ { t , i } ^ { \\mathrm { E S S } } , \\bar { P } _ { t , i } ^ { \\mathrm { E S S , c } } , \\bar { P } _ { t , i } ^ { \\mathrm { E S S , d } } ]$"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.287,
+            0.488,
+            0.353
+          ],
+          "content": "Accordingly, eq. (55) defines the objective function in the quadratic program (QP) formulation, corresponding to eq. (57). Constraints (2)– (5), (8)–(11), (14), and (23)–(25) correspond to the equality constraint described in eq. (58), while constraints (6)–(7), (12)–(13), (15), (19)– (20), and (22) correspond to the equality constraint in eq. (65)."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.353,
+            0.489,
+            0.422
+          ],
+          "content": "By solving the QP problem defined by eqs. (57)–(59), the safetycorrected active power outputs of the DG, RES, and ESS are obtained. Based on eqs. (47)–(49), the corresponding safety-corrected actions $\\overline { { a } } _ { t } ^ { \\mathrm { L } }$ can be recovered through inverse mapping and are subsequently used to compute the reward for the low-level agent."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.435,
+            0.263,
+            0.449
+          ],
+          "level": 2,
+          "content": "3.5. MPER for stabilizing learning"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.461,
+            0.488,
+            0.515
+          ],
+          "content": "Although the proposed method improves learning efficiency, the interdependence between high- and low-level agents may lead to policy convergence instability. To address it, MPER is introduced to stabilize training and accelerate convergence."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.515,
+            0.489,
+            0.646
+          ],
+          "content": "Conventional DRL methods typically employ a single experience buffer from which samples are randomly drawn for training. However, due to its multi-level structure, HRL exhibits greater instability in experience data distribution. Using conventional experience replay in HRL may lead to unstable policy convergence and inefficient policy updates. To mitigate this issue, MPER enhances training stability and accelerates policy convergence in HRL by optimizing the selection and utilization of critical and high-value experiences. It incorporates two essential mechanisms: prioritized experience replay (PER) and multiple experience buffers."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.08,
+            0.646,
+            0.277,
+            0.659
+          ],
+          "content": "1) Prioritized experience replay."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.659,
+            0.489,
+            0.779
+          ],
+          "content": "PER improves the conventional experience replay mechanism by assigning different sampling priorities to experience samples. Specifically, it evaluates the importance of each sample using the temporal difference (TD) error, where a larger TD error indicates a greater discrepancy between the predicted and actual rewards, contributing more significantly to policy updates. To ensure the agent prioritizes learning from the most informative experiences, these high-TD-error samples are assigned higher sampling probabilities, thereby accelerating policy convergence."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.779,
+            0.489,
+            0.883
+          ],
+          "content": "To ensure that newly generated samples are not ignored, all newly added experience samples are initially assigned the highest priority, guaranteeing that each sample is selected at least once. Additionally, to prevent samples with zero TD error from being completely discarded, a smoothed priority representation is employed to ensure that all experience samples retain a nonzero probability of being sampled. Each experience sample i is assigned a sampling probability defined as follows:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.89,
+            0.485,
+            0.928
+          ],
+          "content": "P ( i ) = \\frac { \\left( \\left| \\delta _ { i } + \\varepsilon \\right| \\right) ^ { \\alpha } } { \\sum _ { j } \\left( \\left| \\delta _ { j } + \\varepsilon \\right| \\right) ^ { \\alpha } }\\tag{60}",
+          "image_source": "images/page_8_equation_16.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.517,
+            0.068,
+            0.931,
+            0.219
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.51,
+                0.227,
+                0.938,
+                0.252
+              ],
+              "content": "Fig. 4. Training curves of different algorithms in the modified 123- node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_8_chart_17.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.271,
+            0.94,
+            0.298
+          ],
+          "content": "where δ<sub>i</sub> represents the TD error, α is a constant controlling the impact of prioritization, and ε is a small positive constant."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.531,
+            0.298,
+            0.719,
+            0.31
+          ],
+          "content": "2) Multiple experience buffers."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.311,
+            0.94,
+            0.351
+          ],
+          "content": "Building upon the standard experience buffer (SEB), this study further introduces a high-value experience buffer (HEB) to store highvalue experiences, thereby improving policy learning stability."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.351,
+            0.94,
+            0.416
+          ],
+          "content": "During each interaction with the environment, newly generated experiences are temporarily stored and evaluated at the end of the episode. If the agent successfully restores all distribution system loads in a given episode, the entire set of experiences from that episode is considered high-value and stored in HEB."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.416,
+            0.941,
+            0.566
+          ],
+          "content": "During training, experiences are sampled from SEB and HEB based on the PER mechanism to form a mini-batch for learning. Let k∈[0,1] denote the HEB sampling fraction and the SEB fraction is 1-k. At early training stages, we set k to a larger value to emphasize high-quality trajectories that successfully complete restoration tasks and thereby accelerate policy improvement. As training progresses and the policy stabilizes, k is gradually reduced while the SEB share 1-k increases. This design ensures a balanced utilization of both regular and high-value experiences, preventing critical experiences from being overwhelmed by low-value samples. As a result, it facilitates more stable and efficient policy learning."
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.51,
+            0.571,
+            0.938,
+            0.585
+          ],
+          "content": "\\mathbf{B} = \\mathrm{PER}(\\mathrm{SEB}, \\boldsymbol{k}) + \\mathrm{PER}(\\mathrm{HEB}, \\mathbf{1} - \\boldsymbol{k})\\tag{61}",
+          "image_source": "images/page_8_equation_24.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.595,
+            0.721,
+            0.609
+          ],
+          "content": "where B represents the minibatch."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.624,
+            0.617,
+            0.637
+          ],
+          "level": 2,
+          "content": "4. Case studies"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.65,
+            0.941,
+            0.717
+          ],
+          "content": "In this section, the training and application performance of the proposed method is demonstrated. We start by presenting the system and algorithm configurations. The training efficiency and practical performance are then demonstrated and compared with benchmark algorithms."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.511,
+            0.738,
+            0.62,
+            0.751
+          ],
+          "level": 2,
+          "content": "4.1. Case settings"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.764,
+            0.941,
+            0.939
+          ],
+          "content": "Two systems are used: the modified IEEE 123-node system [9], which contains one DGs, two RESs, and one ESS; and a modified 356- node regional system in China with three DGs, two RESs and two ESSs. The original load demand and RES output datasets are provided in Appendix B. The concept of node cells (N–Cs) [42] is introduced to reduce the search space. The network topologies of both test systems are provided in Appendix B. $\\eta ^ { \\mathrm { E S S , d } }$ and $\\eta ^ { \\mathrm { E S S , c } }$ are both set to be $0 . 9 9 , \\eta _ { i } ^ { \\mathrm { D G } }$ is set to be 0.35PDG,max i. To generate load and RES profile for each episode, the original load demands and RES output are multiplied randomly from 0.7 to 1.3 p.u., in order to simulate stochastic fluctuations in load and renewable generation. The restoration process is simulated over 96 discrete time steps. The corresponding normalized power profiles for load demand and RES generation are presented in Appendix B. To"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.495,
+            0.952,
+            0.506,
+            0.961
+          ],
+          "content": "9"
+        }
+      ]
+    },
+    {
+      "page_idx": 9,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.065,
+            0.068,
+            0.48,
+            0.217
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.146,
+                0.227,
+                0.399,
+                0.24
+              ],
+              "content": "Fig. 5. Ablation study on MPER components."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_9_chart_2.jpg"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.061,
+            0.29,
+            0.485,
+            0.376
+          ],
+          "content": "| Method | Average restored load | Average computation time (s) |\n| --- | --- | --- |\n| A1# | 99.843 ±1.789% | 0.051 |\n| A2# | 81.497 ±4.361% | 0.048 |\n| A3# | 73.960 ±4.679% | 0.041 |\n| A4# | 21.148 ±1.317% | 0.013 |\n| A5# | 91.820 ±8.347% | 0.049 |\n| MILP | 100% | 31.490 |",
+          "captions": [
+            {
+              "bbox": [
+                0.06,
+                0.276,
+                0.325,
+                0.288
+              ],
+              "content": "Testing results in the modified 123-node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_9_table_5.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.396,
+            0.488,
+            0.478
+          ],
+          "continues_prev": true,
+          "content": "emulate forecast uncertainties in load demand and RES output, Gaussian noise is introduced to their actual values. The observed values are modeled as $\\widetilde{x} = \\widehat{x} \\bullet (1 + \\varepsilon_t), \\varepsilon_t \\sim N(0, 0.15^2)$ , where $\\varepsilon _ { t }$ denotes a zeromean Gaussian random variable with a standard deviation of 15%. This reflects typical levels of prediction uncertainty commonly encountered in practical power system operations."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.478,
+            0.488,
+            0.531
+          ],
+          "content": "The proposed method was implemented using Python 3.11, PyTorch $2 . 4 . 0 ,$ and GUROBI 12.0.1 for optimization. All simulations were conducted on a Linux-based system equipped with an Intel® Xeon® Platinum 8160 CPU (2.10GHz) and an NVIDIA GeForce RTX 2080 Ti GPU."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.555,
+            0.269,
+            0.569
+          ],
+          "level": 2,
+          "content": "4.2. The modified 123-node system"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.581,
+            0.488,
+            0.62
+          ],
+          "content": "We manually tune the hyper-parameters of different algorithms to obtain their best performance, and the detailed settings are provided in Appendix B."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.079,
+            0.621,
+            0.32,
+            0.634
+          ],
+          "content": "1) Convergence of different algorithms."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.08,
+            0.634,
+            0.292,
+            0.646
+          ],
+          "content": "The comparative methods include:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.647,
+            0.487,
+            0.687
+          ],
+          "content": "A1#: The proposed SHHRL approach, which adopts a hierarchical structure to efficiently solve the MGF problem with discrete-continuous hybrid action spaces."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.688,
+            0.488,
+            0.74
+          ],
+          "content": "A2#: Action space transformation, where the continuous action space is discretized into multiple evenly spaced discrete actions and optimized using the DDQN algorithm. As a result, the method operates solely within a discrete action space."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.74,
+            0.488,
+            0.779
+          ],
+          "content": "A3#: Parameterized Double Deep Q-Network (PDDQN) [27,28], an implementation of the parameterized action space reinforcement learning (PARL) framework."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.779,
+            0.488,
+            0.832
+          ],
+          "content": "A4#: Hybrid Soft Actor-Critic (HSAC) [29], another PARL-based algorithm. Both A3# and A4# represent concurrent action learning approaches, where the agent attempts to learn discrete and continuous control decisions in parallel using a single integrated policy."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.832,
+            0.488,
+            0.885
+          ],
+          "content": "The training curves of our solution and the benchmark algorithms are given in Fig. 4. For all algorithms, the solid lines represent the mean performance over multiple training runs, while the shaded regions represent the 95% confidence intervals around the mean."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.885,
+            0.489,
+            0.938
+          ],
+          "content": "As illustrated in Fig. 4, the proposed SHHRL method (A1#) consistently achieves the highest cumulative reward during training, outperforming all baseline methods. In contrast, the action space transformation approach (A2#) shows significantly degraded"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.516,
+            0.068,
+            0.931,
+            0.219
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.51,
+                0.228,
+                0.939,
+                0.254
+              ],
+              "content": "Fig. 6. Invalid action counts during the training process under PPO-Lag. (a) Average triggering frequency. (b) Average correction $L _ { 2 } \\cdot$ norm."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_9_chart_18.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.268,
+            0.94,
+            0.321
+          ],
+          "continues_prev": true,
+          "content": "performance. This is primarily due to the discretization of continuous DER dispatch into a finite set of pre-defined actions, which reduces control granularity and impairs the agent's ability to generate precise restoration strategies."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.321,
+            0.941,
+            0.69
+          ],
+          "content": "Moreover, the PARL-based methods (A3# and A4#) also converge to suboptimal reward levels. The superior performance of the proposed hierarchical structure over these approaches can be attributed to several key factors. First, the MGF task is inherently a complex stochastic sequential decision problem involving a high-dimensional hybrid action space. Concurrent action learning methods attempt to optimize both action types simultaneously under a unified policy, which significantly increases learning difficulty. In contrast, the SHHRL framework decomposes the original complex task into two simpler sub-problems: discrete topology reconfiguration and continuous power dispatch. This decomposition enables each agent to operate within a smaller, more manageable action space, thereby improving learning ability. Second, the objective of MGF is to maximize the restored load while satisfying all operational constraints. In concurrent action learning, the reward function typically combines load restoration rewards and penalties for constraint violations. As discrete and continuous decisions are optimized jointly within a single policy network, their contributions to the final reward become entangled. This entanglement makes it difficult for the agent to assign proper credit to each action component, which leads to ambiguity in policy updates and degraded performance. This phenomenon is known as the credit assignment problem. In contrast, the proposed hierarchical design mitigates this issue by decoupling the learning processes. Specifically, the high-level agent is dedicated to maximizing load restoration through discrete topology decisions, while the low-level agent focuses on ensuring constraint satisfaction via continuous power dispatch. This separation allows for more accurate reward attribution, simplifies policy learning, and ultimately leads to superior performance in complex hybrid control tasks such as MGF."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.53,
+            0.69,
+            0.796,
+            0.702
+          ],
+          "content": "2) Ablation study on the MPER mechanism."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.703,
+            0.94,
+            0.742
+          ],
+          "content": "To evaluate the individual contributions of each component in the proposed MPER mechanism, an ablation study is performed. The following variants are compared:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.742,
+            0.94,
+            0.781
+          ],
+          "content": "A1#: The proposed SHHRL approach, which adopts a hierarchical structure to efficiently solve the MGF problem with discrete-continuous hybrid action spaces."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.531,
+            0.782,
+            0.704,
+            0.795
+          ],
+          "content": "A5# SHHRL without MPER."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.795,
+            0.938,
+            0.821
+          ],
+          "content": "A6#: SHHRL with only prioritized experience replay (PER), excluding the high-value buffer."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.821,
+            0.939,
+            0.848
+          ],
+          "content": "A7#: SHHRL with only multiple experience buffers, using uniform sampling."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.848,
+            0.941,
+            0.928
+          ],
+          "content": "As shown in ${ \\operatorname { F i g . } } 5 ,$ the full MPER-enabled method (A1#) achieves the highest cumulative rewards and demonstrates the most stable convergence throughout training. In contrast, removing MPER (A5#) results in a noticeable decline in both training stability and final performance, highlighting the critical role of MPER in mitigating the instability introduced by interdependent hierarchical agents. Both A6#"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.493,
+            0.953,
+            0.509,
+            0.962
+          ],
+          "content": "10"
+        }
+      ]
+    },
+    {
+      "page_idx": 10,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.129,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.043,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.069,
+            0.068,
+            0.492,
+            0.193
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.186,
+                0.195,
+                0.374,
+                0.208
+              ],
+              "content": "(a) Average triggering frequency."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_10_chart_2.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.506,
+            0.068,
+            0.929,
+            0.193
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.627,
+                0.195,
+                0.808,
+                0.207
+              ],
+              "content": "(b) Average correction $L _ { 2 } .$ -norm."
+            },
+            {
+              "bbox": [
+                0.131,
+                0.217,
+                0.866,
+                0.23
+              ],
+              "content": "Fig. 7. Convergence of average triggering frequency and average $L _ { 2 } \\cdot$ norm of correction for the safety projection layer during training."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_10_chart_4.jpg"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.06,
+            0.28,
+            0.485,
+            0.312
+          ],
+          "content": "| Method | Average triggering frequency | Average correction L2-norm |\n| --- | --- | --- |\n| SHHRL | 11.14% | 0.0570 |",
+          "captions": [
+            {
+              "bbox": [
+                0.059,
+                0.266,
+                0.479,
+                0.278
+              ],
+              "content": "Statistical performance of the safety projection layer in 100 testing scenarios."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_10_table_8.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.332,
+            0.489,
+            0.49
+          ],
+          "continues_prev": true,
+          "content": "and A7# outperform the baseline A5#, confirming that each MPER component independently enhances learning effectiveness. Specifically, A7# achieves higher cumulative rewards than A6# during the early training stage, indicating that reusing high-return trajectories improves convergence stability. As training progresses, A6# gradually catches up with A7#, suggesting that prioritizing transitions based on temporaldifference errors can also enhances learning efficiency. Moreover, compared to A6# and A7#, the proposed A1# approach integrates both prioritized experience replay and multiple experience buffers under the MPER framework. This joint implementation leads to faster convergence and stabilizes performance at the highest reward level, demonstrating the complementary benefits of combining both mechanisms."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.079,
+            0.491,
+            0.307,
+            0.502
+          ],
+          "content": "3) Performance of different methods."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.503,
+            0.489,
+            0.582
+          ],
+          "content": "To validate the effectiveness and computational efficiency of the proposed SHHRL method, comparative numerical tests were conducted across 100 randomly generated scenarios. The MILP model described in Section 2 was also solved as a performance benchmark. The performance metrics include the average restored load percentage and the average computation time per scenario, as summarized in Table 1."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.583,
+            0.489,
+            0.663
+          ],
+          "content": "As shown in Table 1, the action space transformation method (A2#) exhibited a notable decline in accuracy. This performance degradation arises from discretizing the continuous DER active power outputs into a limited set of discrete levels, which significantly restricts the agent's capacity to perform fine-grained control. As a result, the derived policies tend to be suboptimal, leading to lower restoration effectiveness. While"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.244,
+            0.94,
+            0.349
+          ],
+          "continues_prev": true,
+          "content": "increasing the discretization resolution can enhance control granularity, it also causes a significant increase in the action space size, introducing the curse of dimensionality. The resulting high-dimensional space severely impairs exploration efficiency and slows convergence, ultimately degrading learning performance. These challenges reflect an inherent trade-off in the action space transformation approach between control fidelity and computational feasibility, making it ill-suited for real-time restoration tasks that require high-precision."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.35,
+            0.941,
+            0.481
+          ],
+          "content": "Similarly, the PARL methods (A3# and A4#) also demonstrated inferior performance. In particular, HSAC (A4#) yielded the lowest average restored load of only 21.148%. This performance drop is attributed to the lack of inherent parameterized structure between discrete and continuous actions in the MGF problem. Forcing a parameter-action formulation on inherently independent decision variables, such as discrete topology reconfiguration and continuous DER dispatch, leads to ineffective policy learning and coordination. Moreover, solving the hybrid action space MGF problem directly without decomposition increases the learning complexity."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.481,
+            0.941,
+            0.547
+          ],
+          "content": "In addition, as shown in Table 1, SHHRL without MPER (A5#) has markedly higher variability, with a standard deviation of 8.347% in the average restored load, which exceeds that of the other methods. This variability reflects the inherent training instability of hierarchical agents."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.547,
+            0.941,
+            0.668
+          ],
+          "content": "By contrast, the proposed SHHRL (A1#) achieves an average restored load of 99.843%, which is nearly identical to the MILP optimum of 100%, while reducing the average computation time from 31.490 s to 0.058 s. In addition, A1# yields a much smaller standard deviation in restored load (1.789%). This variance reduction is attributable to the MPER mechanism, which stabilizes training by balancing high-value and regular experiences. These findings highlight the SHHRL method's superior trade-off between restoration performance and computational efficiency, demonstrating its strong practical potential for real-time"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.195,
+            0.692,
+            0.808,
+            0.808
+          ],
+          "content": "",
+          "captions": [],
+          "footnotes": [],
+          "image_source": "images/page_10_chart_17.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.187,
+            0.813,
+            0.808,
+            0.918
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.184,
+                0.925,
+                0.812,
+                0.938
+              ],
+              "content": "Fig. 8. Node voltage and branch active power flow in the testing scenarios of the modified IEEE 123-node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_10_chart_18.jpg"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.493,
+            0.953,
+            0.508,
+            0.962
+          ],
+          "content": "11"
+        }
+      ]
+    },
+    {
+      "page_idx": 11,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.068,
+            0.066,
+            0.93,
+            0.719
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.09,
+                0.716,
+                0.322,
+                0.729
+              ],
+              "content": "(j) Step 10: Switch RCS between N-C 2-8"
+            },
+            {
+              "bbox": [
+                0.372,
+                0.716,
+                0.62,
+                0.729
+              ],
+              "content": "(k) Step 11: Switch RCS between N-C 11-12"
+            },
+            {
+              "bbox": [
+                0.058,
+                0.737,
+                0.94,
+                0.798
+              ],
+              "content": "Fig. 9. Control sequence generated by the proposed SHHRL method for a representative scenario in the modified IEEE 123-node system. (a) Step 1: Switch RCS between N–C 3–14 (b) Step 2: Switch RCS between N–C 11–14 (c) Step 3: Switch RCS between N–C 4–11 (d) Step 4: Switch RCS between N–C 11–13 (e) Step 5: Switch RCS between N–C 1–13 (f) Step 6: Switch RCS between N–C 10–13 (g) Step 7: Switch RCS between N–C 6–10 (h) Step 8: Switch RCS between N–C 6–7 (i) Step 9: Switch RCS between N–C 7–8 (j) Step 10: Switch RCS between N–C 2–8 (k) Step 11: Switch RCS between N–C 11–12 (l) Step 12: Switch RCS between N–C 5–6."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_11_image_2.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.814,
+            0.25,
+            0.826
+          ],
+          "content": "distribution system restoration."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.079,
+            0.826,
+            0.351,
+            0.839
+          ],
+          "content": "4) Effectiveness of the proposed safety layer."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.84,
+            0.489,
+            0.933
+          ],
+          "content": "To evaluate the effectiveness of the proposed IAM layer for discrete actions, a comparative method was constructed. Constrained policy optimization, in which the MGF problem is modeled as a CMDP and optimized using PPO-Lagrangian (PPO-Lag). Since PPO-Lag is inherently designed for continuous action spaces, we first relaxed the discrete switching actions into continuous representations before applying the algorithm. Fig. 6 illustrates the number of invalid actions executed by"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.813,
+            0.941,
+            0.933
+          ],
+          "continues_prev": true,
+          "content": "the PPO-Lag agent during training. Although the PPO-Lag method leads to a gradual reduction in constraint violations, the count remains considerably high even after convergence. Such persistent violations are unacceptable in real-world distribution systems, where operational safety must be guaranteed at every step. In contrast, the proposed SHHRL method, equipped with the IAM layer, effectively filters out infeasible discrete actions. As a result, the number of invalid actions remains strictly zero throughout training. This clearly demonstrates the superior capability of the proposed framework in maintaining constraint"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.492,
+            0.953,
+            0.509,
+            0.962
+          ],
+          "content": "12"
+        }
+      ]
+    },
+    {
+      "page_idx": 12,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.043,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.149,
+            0.067,
+            0.47,
+            0.241
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.115,
+                0.244,
+                0.498,
+                0.258
+              ],
+              "content": "(a) Final MGF results obtained using the proposed SHHRL method"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_12_image_2.jpg"
+        },
+        {
+          "type": "image",
+          "bbox": [
+            0.567,
+            0.068,
+            0.883,
+            0.242
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.567,
+                0.245,
+                0.883,
+                0.258
+              ],
+              "content": "(b) Final MGF results obtained using the MILP method"
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_12_image_4.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.065,
+            0.319,
+            0.479,
+            0.469
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.057,
+                0.267,
+                0.938,
+                0.292
+              ],
+              "content": "Fig. 10. Comparison of control sequences and microgrid formation results for the 123-node system. (a) Final MGF results obtained using the proposed SHHRL method. (b) Final MGF results obtained using the MILP method."
+            },
+            {
+              "bbox": [
+                0.069,
+                0.478,
+                0.476,
+                0.492
+              ],
+              "content": "Fig. 11. Dispatch result of SHHRL in the modified IEEE 123-node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_12_chart_7.jpg"
+        },
+        {
+          "type": "chart",
+          "bbox": [
+            0.064,
+            0.514,
+            0.479,
+            0.665
+          ],
+          "content": "",
+          "captions": [
+            {
+              "bbox": [
+                0.058,
+                0.673,
+                0.487,
+                0.699
+              ],
+              "content": "Fig. 12. Training curves of different algorithms in the modified 356- node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_12_chart_9.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.059,
+            0.713,
+            0.326,
+            0.726
+          ],
+          "continues_prev": true,
+          "content": "adherence from the early stages of learning."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.726,
+            0.49,
+            0.926
+          ],
+          "content": "To further assess the performance of the proposed safety projection layer for continuous actions, the average triggering frequency and average correction L<sub>2</sub>-norm were recorded throughout the training and testing phases. Specifically, during training, the policy was evaluated every 250 steps over 20 random episodes to track these metrics. Fig. 7 illustrates the convergence of both metrics during training. In the initial exploration stage, the triggering frequency reaches approximately 90% with an average correction norm exceeding 0.4 p.u., indicating that stochastic explorations frequently lead to significant constraint violations. As training progresses, the SHHRL agent progressively internalizes these constraints through the safety-guided reward mechanism. Consequently, both metrics exhibit a consistent decline, ultimately stabilizing at a low level. In the testing phase, the proposed SHHRL method was validated across 100 stochastic scenarios, as summarized in Table. 2. Statistical results show an average triggering frequency of 11.14% per"
+        },
+        {
+          "type": "table",
+          "bbox": [
+            0.512,
+            0.341,
+            0.938,
+            0.406
+          ],
+          "content": "| Method | Average restored load | Average computation time(s) |\n| --- | --- | --- |\n| A1# | 98.288 ±5.142% | 0.427 |\n| A2# | 55.136 ±8.367% | 0.395 |\n| A3# | 31.441 ±9.971% | 0.100 |\n| MILP | / | Out of time (>1 h) |",
+          "captions": [
+            {
+              "bbox": [
+                0.511,
+                0.315,
+                0.56,
+                0.326
+              ],
+              "content": "Table 3"
+            },
+            {
+              "bbox": [
+                0.511,
+                0.327,
+                0.776,
+                0.34
+              ],
+              "content": "Testing results in the modified 356-node system."
+            }
+          ],
+          "footnotes": [],
+          "image_source": "images/page_12_table_15.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.426,
+            0.941,
+            0.505
+          ],
+          "continues_prev": true,
+          "content": "episode and an average correction norm of 0.0570 p.u. These results demonstrate that the trained agent can generate actions within or near the feasible region. This indicates that the proposed method, once fully trained, can make secure decisions with minimal intervention from the safety projection layer, thereby validating its efficacy in internalizing complex physical constraints."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.505,
+            0.941,
+            0.584
+          ],
+          "content": "Furthermore, the node voltage magnitudes and branch active power flows are recorded in Fig. 8. The results indicate that both node voltages and branch power flows remained within predefined safety limits. These results demonstrate that the proposed method effectively enforces power flow constraints during the MGF process, thereby ensuring operational safety throughout the restoration."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.584,
+            0.94,
+            0.61
+          ],
+          "content": "5) Demonstration of the proposed method in a single restoration scenario."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.61,
+            0.941,
+            0.702
+          ],
+          "content": "To clearly demonstrate the decision-making results of the proposed method, Fig. 9 illustrates the control sequence generated by the SHHRL algorithm for a representative scenario in the 123-node system. Fig. 10 presents the final microgrid formation results obtained using the proposed SHHRL and the MILP methods for comparison. The corresponding dispatch results of DERs during the restoration process are also depicted in Fig. 11."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.703,
+            0.941,
+            0.928
+          ],
+          "content": "As illustrated in Fig. 9 (a), the restoration process begins at the DG in N–C 3. The agent subsequently prioritizes reconnecting the ESS in N–C 4 at step 3 (Fig. 9 (c)), the RES in N–C 1 at step 5 (Fig. 9 (e)), and the RES in N–C 2 at step 10 (Fig. 9 (h)). This restoration sequence ensures sufficient power support across the system during the entire restoration process. As shown in Fig. 10 (a), all loads are fully restored without violating topological or operational constraints. This outcome demonstrates the effectiveness of the proposed IAM layer in filtering out infeasible discrete actions and the safety projection layer in correcting unsafe continuous actions, thus guaranteeing operational safety during microgrid formation. In Fig. 10 (b), both the proposed SHHRL method and the MILP benchmark exhibit similar restoration strategies, prioritizing the reconnection of the ESS in N–C 4 and the RESs in N–C 1 and N–C 2. The primary difference lies in the selected restoration paths. However, results from Table 1 show a significant advantage in computational efficiency. While the MILP method requires an average computation time of 31.490 s, SHHRL completes decision-making in"
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.492,
+            0.952,
+            0.509,
+            0.962
+          ],
+          "content": "13"
+        }
+      ]
+    },
+    {
+      "page_idx": 13,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.055
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.94,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.067,
+            0.488,
+            0.119
+          ],
+          "continues_prev": true,
+          "content": "only 0.051 s. These findings indicate that the proposed method is capable of learning near-optimal strategies comparable to those generated by the MILP solver, while offering substantially improved computational efficiency for real-time applications."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.12,
+            0.489,
+            0.278
+          ],
+          "content": "As shown in Fig. 11, with the given dispatch policy and safety projection layer for continuous actions, the distribution network can effectively maintain supply-demand balance during the restoration process. At step 3, the ESS at N–C 4 is reconnected, as shown in Fig. 9 (c). Subsequently, during steps 3–7, when the restored load demand remains relatively low, the algorithm strategically charges the ESS. Later, during steps 8–13, as load restoration progresses and system demand increases, the algorithm appropriately switches to discharging the ESS to meet the rising demand. This adaptive behavior not only highlights the future foresight of the proposed method but also confirms its capability for coordinated optimization between discrete switching actions and continuous DER outputs."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.291,
+            0.371,
+            0.304
+          ],
+          "level": 2,
+          "content": "4.3. The modified 356-node regional system in China"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.317,
+            0.489,
+            0.423
+          ],
+          "content": "To analyze the scalability, we test the proposed solution on the modified 356-node distribution system in China. The system consists of 47 N-Cs. As shown in Fig. 12, the proposed SHHRL method (A1#) demonstrates the fastest convergence and achieves the highest accumulative reward throughout the training process. In contrast, A2# and A3#, which represent ablated versions with partial or no constraint handling, converge to significantly lower reward levels and exhibit limited performance improvement over time."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.423,
+            0.489,
+            0.567
+          ],
+          "content": "The robustness of the learned policies is further validated through testing results, as summarized in Table 3. A1# restores on average 98.29% of the total load with a computation time of 0.522 s, striking an effective balance between restoration quality and decision speed. It is important to note that the reported computation time includes not only the decision time of the RL agent, but also the execution time of the proposed invalid action masking and safety projection layer. This confirms that the proposed method satisfies the real-time computational requirements for DSR. A2# restores only 55.14%, while A3# drops to 31.44%, highlighting the crucial role of hierarchical coordination and constraint filtering in complex MGF tasks."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.567,
+            0.49,
+            0.753
+          ],
+          "content": "Compared with the traditional MILP method, the results in Table 1 and Table 3 demonstrate that as the system scale increases from the 123- node to the 356-node network, the computation time of MILP grows exponentially, rising from 31.490 s to over one hour. In contrast, the proposed SHHRL method maintains low computational latency, increasing only from 0.051 s to 0.427 s. This efficiency is attributed to the RL agent's ability to internalize the optimal control policy into neural network parameters during the training phase. At inference time, decisions are generated through a single forward pass, enabling fast response. In comparison, optimization-based methods require solving the problem from scratch for each new scenario, which becomes computationally intractable as the system size grows. These results clearly demonstrate the superior scalability of the proposed SHHRL approach over the MILP-based method."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.059,
+            0.766,
+            0.158,
+            0.778
+          ],
+          "level": 2,
+          "content": "5. Conclusion"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.791,
+            0.489,
+            0.846
+          ],
+          "content": "This paper presents a model-free two-level SHHRL-based scheme for MGF within a hybrid action space, while ensuring strict compliance of physical constraints. We demonstrated the effectiveness of SHHRL in comparison with other state-of-the-art algorithms. Main points drawn"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.51,
+            0.066,
+            0.761,
+            0.079
+          ],
+          "continues_prev": true,
+          "content": "from simulations are outlined as follows:"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.08,
+            0.941,
+            0.159
+          ],
+          "content": "1) The proposed hierarchical framework decomposes the complex MGF task into two subproblems: topology reconfiguration and power dispatch, enabling each agent to operate in a reduced subspace. This significantly improves learning efficiency and decision quality. Simulation results demonstrate that SHHRL consistently outperforms benchmark hybrid RL algorithms in restoration performance."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.159,
+            0.941,
+            0.238
+          ],
+          "content": "2) By leveraging the expert knowledge, the IAM layer filters out infeasible discrete switching actions, while the safety projection layer corrects unsafe continuous DER output. Together, these mechanisms ensure strict compliance with physical constraints, including both topological and operational constraints, thereby guaranteeing operational safety throughout the restoration process."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.238,
+            0.94,
+            0.278
+          ],
+          "content": "3) The MPER technique mitigate instability arising from agent interdependence during training. These enhancements accelerate policy convergence and contribute to improved policy robustness."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.278,
+            0.941,
+            0.582
+          ],
+          "content": "However, as the penetration of DERs continues to increase, distribution systems are subject to greater uncertainty. Rapid fluctuations in load demand and renewable generation, combined with sensor inaccuracies and communication delays, may compromise the reliability and adaptability of control policies trained using conventional RL methods. Therefore, enhancing policy robustness under scenarios with volatile source-load profiles and inaccurate measurements is of critical importance for the practical deployment of MGF strategies. Recent studies have demonstrated that using historical observation trajectories instead of single-step observations can substantially enhance policy robustness. These approaches often leverage temporal neural architectures, such as recurrent neural networks (RNNs) and graph neural networks (GNNs), to better capture latent patterns in noisy and uncertain measurement sequences. Furthermore, inspired by the sequence modeling capability of decision transformers (DTs), emerging research has explored reformulating MDP-based control problems as sequence prediction tasks. By applying supervised learning with decision transformer architectures, these methods have shown strong potential in improving generalization across diverse scenarios and enhancing resilience to sensor errors. Future work will explore the integration of these advanced sequence modeling techniques into the SHHRL framework, aiming to further improve its robustness and adaptability in complex, uncertain distribution system environments."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.51,
+            0.594,
+            0.79,
+            0.607
+          ],
+          "level": 2,
+          "content": "CRediT authorship contribution statement"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.508,
+            0.62,
+            0.941,
+            0.701
+          ],
+          "content": "**Wencong Xiao:** Writing – original draft, Visualization, Software, Conceptualization. **Qingquan Luo:** Software, Resources, Methodology. **Tao Yu:** Validation, Supervision, Funding acquisition. **Yufeng Wu:** Writing – review & editing, Formal analysis. **Zhanhong Huang:** Writing – review & editing, Data curation. **Zhenning Pan:** Resources, Methodology."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.51,
+            0.712,
+            0.735,
+            0.727
+          ],
+          "level": 2,
+          "content": "Declaration of competing interest"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.738,
+            0.94,
+            0.78
+          ],
+          "content": "The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.51,
+            0.791,
+            0.63,
+            0.805
+          ],
+          "level": 2,
+          "content": "Acknowledgment"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.509,
+            0.817,
+            0.94,
+            0.845
+          ],
+          "content": "This work was supported by Smart Grid-National Science and Technology Major Project No.2024ZD0802200."
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.493,
+            0.952,
+            0.509,
+            0.962
+          ],
+          "content": "14"
+        }
+      ]
+    },
+    {
+      "page_idx": 14,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.06,
+            0.044,
+            0.128,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.055
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.067,
+            0.929,
+            0.093
+          ],
+          "content": "**Appendix A. The original constraint (16) prohibits simultaneous charging and discharging of the ESS. It is formulated as a hard, non-convex constraint**"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.112,
+            0.938,
+            0.128
+          ],
+          "content": "P _ { t , i } ^ { \\mathrm { E S S , d } } \\cdot P _ { t , i } ^ { \\mathrm { E S S , c } } = 0 , t \\in \\mathcal { T } , i \\in \\mathcal { M }\\tag{A.1}",
+          "image_source": "images/page_14_equation_3.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.15,
+            0.938,
+            0.179
+          ],
+          "content": "where $P _ { t , i } ^ { \\mathrm { E S S , c } }$ and $P _ { t , i } ^ { \\mathrm { E S S , d } }$ denote the charging and discharging active power of the ESS at node i and time step t, respectively. Enforcing constraint (A.1) typically requires introducing binary variables, which significantly increases computational complexity."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.077,
+            0.18,
+            0.903,
+            0.193
+          ],
+          "content": "To avoid this, we relax constraint (A.1) by adding the following penalty term to the objective function (55) of the safety projection layer:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.061,
+            0.198,
+            0.938,
+            0.219
+          ],
+          "content": "\\left( \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , d } } + \\overline { { P } } _ { t , i } ^ { \\mathrm { E S S , c } } \\right) \\Big / M\\tag{A.2}",
+          "image_source": "images/page_14_equation_6.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.239,
+            0.739,
+            0.252
+          ],
+          "content": "where M is a sufficiently large constant. This term penalizes any simultaneous nonzero charging and discharging."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.254,
+            0.94,
+            0.3
+          ],
+          "content": "Let $P _ { t , i , 1 } ^ { \\mathrm { E S S , c } }$ and $P _ { t , i , 1 } ^ { \\mathrm { E S S , d } }$ denote the output of the low-level agent before safety correction; $P _ { t , i , 2 } ^ { \\mathrm { E S S , c } }$ and $P _ { t , i , 2 } ^ { \\mathrm { E S S , d } }$ denote the optimal safety-corrected output with (A.1) enforced; $P _ { t , i , 3 } ^ { \\mathrm { E S S , c } }$ and $P _ { t , i , 3 } ^ { \\mathrm { E S S , d } }$ denote the optima; safety-corrected output without enforcing (A.1). Since the first three terms of (55) penalize deviations from the original continuous actions, the net ESS output satisfies:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.306,
+            0.938,
+            0.322
+          ],
+          "content": "P _ { t , i , 2 } ^ { \\mathrm { E S S } } = P _ { t , i , 2 } ^ { \\mathrm { E S S , d } } - P _ { t , i , 2 } ^ { \\mathrm { E S S , c } } = P _ { t , i , 3 } ^ { \\mathrm { E S S , d } } - P _ { t , i , 3 } ^ { \\mathrm { E S S , c } } = P _ { t , i , 3 } ^ { \\mathrm { E S S } }\\tag{A.3}",
+          "image_source": "images/page_14_equation_9.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.079,
+            0.329,
+            0.348,
+            0.341
+          ],
+          "content": "Assume there exists a deviation Δ such that:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.348,
+            0.937,
+            0.362
+          ],
+          "content": "P _ { t , i , 3 } ^ { \\mathrm { E S S , c } } = P _ { t , i , 2 } ^ { \\mathrm { E S S , c } } + \\Delta \\geq 0\\tag{A.4}",
+          "image_source": "images/page_14_equation_11.jpg"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.373,
+            0.938,
+            0.39
+          ],
+          "content": "P _ { t , i , 3 } ^ { \\mathrm { E S S , d } } = P _ { t , i , 2 } ^ { \\mathrm { E S S , d } } + \\Delta \\geq 0\\tag{A.5}",
+          "image_source": "images/page_14_equation_12.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.077,
+            0.398,
+            0.906,
+            0.425
+          ],
+          "content": "Since constraint (A.1) requires $P _ { t , i , 2 } ^ { \\mathrm { E S S , c } } \\bullet P _ { t , i , 2 } ^ { \\mathrm { E S S , d } } { = } 0$ , at least one of the terms is zero. Thus, both $P _ { t , i , 3 } ^ { \\mathrm { E S S , c } }$ and $P _ { t , i , 3 } ^ { \\mathrm { E S S , d } }$ become non-zero only if $\\Delta \\geq 0$ The penalty term (A.2) satisfies:"
+        },
+        {
+          "type": "equation",
+          "bbox": [
+            0.059,
+            0.431,
+            0.938,
+            0.448
+          ],
+          "content": "P_{t,i,2}^{ ESS,c } + P_{t,i,2}^{ ESS,d } \\leq P_{t,i,2}^{ ESS,c } + P_{t,i,2}^{ ESS,d } + 2\\Delta = P_{t,i,3}^{ ESS,c } + P_{t,i,3}^{ ESS,d }\\tag{A.6}",
+          "image_source": "images/page_14_equation_14.jpg"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.057,
+            0.455,
+            0.939,
+            0.481
+          ],
+          "content": "Therefore, minimizing (A.2) forces $\\Delta { \\rightarrow } 0 ,$ , implicitly enforcing mutual exclusivity without explicit binary variables. This soft relaxation guarantees that simultaneous charging and discharging are penalized and effectively avoided."
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.058,
+            0.482,
+            0.939,
+            0.508
+          ],
+          "content": "The detailed datasets for load demand and RES output, the network topologies of the modified test systems, and the complete hyper-parameter configurations are available in the supplementary document at: https://github.com/maple-cyber/SHHRL-for-DSR"
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.06,
+            0.538,
+            0.172,
+            0.551
+          ],
+          "level": 2,
+          "content": "Data availability"
+        },
+        {
+          "type": "text",
+          "bbox": [
+            0.079,
+            0.565,
+            0.32,
+            0.576
+          ],
+          "content": "Data will be made available on request."
+        },
+        {
+          "type": "paragraph_title",
+          "bbox": [
+            0.06,
+            0.59,
+            0.135,
+            0.603
+          ],
+          "level": 2,
+          "content": "References"
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.067,
+            0.615,
+            0.483,
+            0.645
+          ],
+          "content": "[1] Hawker G, Bell K, Bialek J, MacIver C. Management of extreme weather impacts on electricity grids: an international review. Prog Energy 2024;6(3):032005. [https://doi.org/10.1088/2516-1083/ad3f6a](https://doi.org/10.1088/2516-1083/ad3f6a)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.646,
+            0.482,
+            0.676
+          ],
+          "content": "[2] [Gkika AV, Zacharis EA, Skikos DN, Lekkas EL. Battling the extreme: lessons learned from weather-induced disasters on electricity distribution systems and climate change adaptation strategies. Hydrol Res 2023;54(10):1196–226](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0010)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.676,
+            0.482,
+            0.705
+          ],
+          "content": "[3] Maharjan S, Bai C, Wang H, Yao Y, Ding F, Wang Z. Distribution system blackstart and restoration using DERs and dynamically formed microgrids. IEEE Trans Smart Grid 2025;16(3):2100–14. [https://doi.org/10.1109/TSG.2025.3536847](https://doi.org/10.1109/TSG.2025.3536847)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.707,
+            0.483,
+            0.745
+          ],
+          "content": "[4] Huang Y, Lei S, Liu J, Wang C, Tao J, Akang W. A frequency-secured load pickup strategy for black-start restoration in IBR-rich distribution systems under dynamic microgrid formation. Appl Energy 2025;401. [https://doi.org/10.1016/j.apenergy.2025.126752](https://doi.org/10.1016/j.apenergy.2025.126752)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.746,
+            0.473,
+            0.776
+          ],
+          "content": "[5] Huang Y, Li G, Chen C, Bian Y, Qian T, Bie Z. Resilient distribution systems by microgrid formation using deep reinforcement learning. IEEE Trans Smart Grid 2022;13(6):4918–30. [https://doi.org/10.1109/TSG.2022.3179593](https://doi.org/10.1109/TSG.2022.3179593)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.776,
+            0.482,
+            0.805
+          ],
+          "content": "[6] Zhao J, Li F, Mukherjee S, Sticht C. Deep reinforcement learning-based model-free on-line dynamic multi-microgrid formation to enhance resilience. IEEE Trans Smart Grid 2022;13(4):2557–67. [https://doi.org/10.1109/TSG.2022.3160387](https://doi.org/10.1109/TSG.2022.3160387)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.807,
+            0.47,
+            0.836
+          ],
+          "content": "[7] [Korkas CD, Baldi S, Kosmatopoulos EB. 9 - grid-connected microgrids: demand management via distributed control and human-in-the-loop optimization. Adv Renew Energy Power Technol 2018;2:315–44](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0035)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.068,
+            0.837,
+            0.479,
+            0.866
+          ],
+          "content": "[8] [Korkas CD, Baldi S, Michailidis I, Kosmatopoulos EB. Occupancy-based demand response and thermal comfort optimization in microgrids with renewable energy sources and energy storage. Appl Energy 2016;163:93–104](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0040)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.067,
+            0.867,
+            0.482,
+            0.896
+          ],
+          "content": "[9] Liu J, Qin C, Yu Y. A comprehensive resilience-oriented FLISR method for distribution systems. IEEE Trans Smart Grid 2021;12(3):2136–52. [https://doi.org/10.1109/TSG.2020.3047477](https://doi.org/10.1109/TSG.2020.3047477)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.897,
+            0.473,
+            0.927
+          ],
+          "content": "[10] Liu J, Qin C, Yu Y. Enhancing distribution system resilience with proactive islanding and RCS-based fast fault isolation and service restoration. IEEE Trans Smart Grid 2020;11(3):2381–95. [https://doi.org/10.1109/TSG.2019.2953716](https://doi.org/10.1109/TSG.2019.2953716)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.538,
+            0.908,
+            0.567
+          ],
+          "content": "[11] [Ye Z, Chen C, Chen B, Wu K. Resilient service restoration for unbalanced distribution systems with distributed energy resources by leveraging mobile generators. IEEE Trans Industr Inform 2021;17(2):1386–96](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0055)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.568,
+            0.935,
+            0.597
+          ],
+          "content": "[12] [Ma C, Wang D, Shan X, et al. A fault recovery strategy of distribution system based on mixed-integer second-order cone programming. In: Proc. 5th Asia Conf. Power Electr. Eng. (ACPEE), Chengdu, China; 2020. p. 1584–9](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0060)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.598,
+            0.934,
+            0.627
+          ],
+          "content": "[13] [Li Y, Xiao J, Chen C, Tan Y, Cao Y. Service restoration model with mixed-integer second-order cone programming for distribution network with distributed generations. IEEE Trans Smart Grid 2018;10(4):4138–50](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0065)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.628,
+            0.933,
+            0.667
+          ],
+          "content": "[14] Yang T, Guo Y, Deng L, Sun H, Wu W. A linear branch flow model for radial distribution systems and its application to reactive power optimization and network reconfiguration. IEEE Trans Smart Grid 2021;12(3):2027–36. [https://doi.org/10.1109/TSG.2020.3039984](https://doi.org/10.1109/TSG.2020.3039984)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.668,
+            0.931,
+            0.697
+          ],
+          "content": "[15] Zhao T, Wang J. Learning sequential distribution system restoration via graphreinforcement learning. IEEE Trans Power Syst 2022;37(2):1601–11. [https://doi.org/10.1109/TPWRS.2021.3102870](https://doi.org/10.1109/TPWRS.2021.3102870)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.698,
+            0.935,
+            0.727
+          ],
+          "content": "[16] Jacob RA, Paul S, Chowdhury S, et al. Real-time outage management in active distribution systems using reinforcement learning over graphs. Nat Commun 2024; 15:4766. [https://doi.org/10.1038/s41467-024-49207-y](https://doi.org/10.1038/s41467-024-49207-y)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.728,
+            0.935,
+            0.757
+          ],
+          "content": "[17] Vu L, Vu T, Vu TL, Srivastava A. Multi-agent deep reinforcement learning for distributed load restoration. IEEE Trans Smart Grid 2024;15(2):1749–60. [https://doi.org/10.1109/TSG.2023.3310893](https://doi.org/10.1109/TSG.2023.3310893)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.759,
+            0.935,
+            0.788
+          ],
+          "content": "[18] Wu T, Wang J, Lu X, Du Y. AC/DC hybrid distribution system reconfiguration with microgrid formation using multi-agent soft actor-critic. Appl Energy 2022;307: 118189. [https://doi.org/10.1016/j.apenergy.2021.118189](https://doi.org/10.1016/j.apenergy.2021.118189)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.789,
+            0.935,
+            0.818
+          ],
+          "content": "[19] Zhang Y, Qiu F, Hong T, Wang Z, Li F. Hybrid imitation learning for real-time service restoration in resilient distribution systems. IEEE Trans Ind Inform 2022;18 (3):2089–99. [https://doi.org/10.1109/TII.2021.3078110](https://doi.org/10.1109/TII.2021.3078110)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.819,
+            0.926,
+            0.848
+          ],
+          "content": "[20] Du Y, Wu D. Deep reinforcement learning from demonstrations to assist service restoration in islanded microgrids. IEEE Trans Sustain Energy 2022;13(2): 1062–72. [https://doi.org/10.1109/TSTE.2022.3148236](https://doi.org/10.1109/TSTE.2022.3148236)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.849,
+            0.935,
+            0.887
+          ],
+          "content": "[21] Xie H, Tang L, Zhu H, Cheng X, Bie Z. Robustness assessment and enhancement of deep reinforcement learning-enabled load restoration for distribution systems. Reliab Eng Syst Saf 2023;237:109340. [https://doi.org/10.1016/j.ress.2023.109340](https://doi.org/10.1016/j.ress.2023.109340)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.889,
+            0.935,
+            0.928
+          ],
+          "content": "[22] Fan B, Liu X, Xiao G, Yang X, Chen B, Wang P. Enhancing adaptability of restoration strategy for distribution system: a meta-based graph reinforcement learning approach. IEEE Internet Things J 2024;11(14):25440–53. [https://doi.org/10.1109/JIOT.2024.3396641](https://doi.org/10.1109/JIOT.2024.3396641)."
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.493,
+            0.953,
+            0.508,
+            0.962
+          ],
+          "content": "15"
+        }
+      ]
+    },
+    {
+      "page_idx": 15,
+      "blocks": [
+        {
+          "type": "header",
+          "bbox": [
+            0.061,
+            0.044,
+            0.128,
+            0.054
+          ],
+          "content": "W. Xiao et al."
+        },
+        {
+          "type": "header",
+          "bbox": [
+            0.771,
+            0.044,
+            0.939,
+            0.054
+          ],
+          "content": "Applied Energy 417 (2026) 128001"
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.068,
+            0.483,
+            0.097
+          ],
+          "content": "[23] Zhang X, Eseye AT, Knueven B, Liu W, Reynolds M, Jones W. Curriculum-based reinforcement learning for distribution system critical load restoration. IEEE Trans Power Syst 2023;38(5):4418–31. [https://doi.org/10.1109/TPWRS.2022.3209919](https://doi.org/10.1109/TPWRS.2022.3209919)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.098,
+            0.483,
+            0.127
+          ],
+          "content": "[24] Zhao J, Li F, Chen X, Wu Q. Deep learning based model-free robust load restoration to enhance bulk system resilience with wind power penetration. IEEE Trans Power Syst 2022;37(3):1969–78. [https://doi.org/10.1109/TPWRS.2021.3115399](https://doi.org/10.1109/TPWRS.2021.3115399)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.128,
+            0.481,
+            0.167
+          ],
+          "content": "[25] Hosseini MM, Rodriguez-Garcia L, Parvania M. Hierarchical combination of deep reinforcement learning and quadratic programming for distribution system restoration. IEEE Trans Sustain Energy 2023;14(2):1088–98. [https://doi.org/10.1109/TSTE.2023.3245090](https://doi.org/10.1109/TSTE.2023.3245090)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.168,
+            0.482,
+            0.188
+          ],
+          "content": "[26] [Kanervisto A, Scheller C, Hautam¨aki V. Action space shaping in deep reinforcement learning. In: Proc. IEEE Conf. Games (CoG), Osaka, Japan; 2020. p. 479–86](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0130)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.189,
+            0.441,
+            0.208
+          ],
+          "content": "[27] Delalleau O, Peter M, Alonso E, Logut A. Discrete and continuous action representation for practical RL in video games. 2019. [arXiv:1912.11077](https://arxiv.org/abs/1912.11077)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.209,
+            0.482,
+            0.237
+          ],
+          "content": "[28] Fan X, Guo L, Hong J, Wang Z, Chen H. Constrained hierarchical hybrid Q-network for energy management of HEVs. IEEE Trans Transp Electrific 2024;10(4): 9579–90. [https://doi.org/10.1109/TTE.2024.3353765](https://doi.org/10.1109/TTE.2024.3353765)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.238,
+            0.481,
+            0.277
+          ],
+          "content": "[29] Wang Y, Qiu D, Teng F, Strbac G. Towards microgrid resilience enhancement via mobile power sources and repair crews: a multi-agent reinforcement learning approach. IEEE Trans Power Syst 2024;39(1):1329–45. [https://doi.org/10.1109/TPWRS.2023.3240479](https://doi.org/10.1109/TPWRS.2023.3240479)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.278,
+            0.47,
+            0.317
+          ],
+          "content": "[30] Qiu D, Wang Y, Zhang T, Sun M, Strbac G. Hybrid multiagent reinforcement learning for electric vehicle resilience control towards a low-carbon transition. IEEE Trans Ind Inform 2022;18(11):8258–69. [https://doi.org/10.1109/TII.2022.3166215](https://doi.org/10.1109/TII.2022.3166215)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.319,
+            0.482,
+            0.357
+          ],
+          "content": "[31] Yang L, Li X, Sun M, Sun C. Hybrid policy-based reinforcement learning of adaptive energy management for the energy transmission-constrained island group. IEEE Trans Ind Inform 2023;19(11):10751–62. [https://doi.org/10.1109/TII.2023.3241682](https://doi.org/10.1109/TII.2023.3241682)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.062,
+            0.359,
+            0.483,
+            0.388
+          ],
+          "content": "[32] Hutsebaut-Buysse M, Mets K, Latre S. Hierarchical reinforcement learning: a survey and open research challenges. Mach Learn Knowl Extr 2022;4(1):172–221. [https://doi.org/10.3390/make4010009](https://doi.org/10.3390/make4010009)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.068,
+            0.923,
+            0.097
+          ],
+          "content": "[33] Pateria S, Subagdja B, Tan A-h, Quek C. Hierarchical reinforcement learning: a comprehensive survey. ACM Comput Surv 2022;54(5):109. [https://doi.org/10.1145/3453160](https://doi.org/10.1145/3453160)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.098,
+            0.934,
+            0.137
+          ],
+          "content": "[34] Yan L, Chen X, Chen Y, Wen J. A hierarchical deep reinforcement learning-based community energy trading scheme for a neighborhood of smart households. IEEE Trans Smart Grid 2022;13(6):4747–58. [https://doi.org/10.1109/TSG.2022.3181329](https://doi.org/10.1109/TSG.2022.3181329)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.138,
+            0.925,
+            0.176
+          ],
+          "content": "[35] Lu T, Hao R, Ai Q, He H. Distributed online dispatch for microgrids using hierarchical reinforcement learning embedded with operation knowledge. IEEE Trans Power Syst 2023;38(4):2989–3002. [https://doi.org/10.1109/TPWRS.2021.3092220](https://doi.org/10.1109/TPWRS.2021.3092220)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.178,
+            0.929,
+            0.217
+          ],
+          "content": "[36] Wu Y, Zhao T, Yan H, Liu M, Liu N. Hierarchical hybrid multi-agent deep reinforcement learning for peer-to-peer energy trading among multiple heterogeneous microgrids. IEEE Trans Smart Grid 2023;14(6):4649–65. [https://doi.org/10.1109/TSG.2023.3250321](https://doi.org/10.1109/TSG.2023.3250321)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.218,
+            0.934,
+            0.248
+          ],
+          "content": "[37] Wang W, Yu N, Gao Y, Shi J. Safe off-policy deep reinforcement learning algorithm for volt-var control in power distribution systems. IEEE Trans Smart Grid 2020;11 (4):3008–18. [https://doi.org/10.1109/TSG.2020.2975271](https://doi.org/10.1109/TSG.2020.2975271)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.249,
+            0.927,
+            0.278
+          ],
+          "content": "[38] Lee S, Choi D-H. Federated reinforcement learning for energy management of multiple smart homes with distributed energy resources. IEEE Trans Ind Inform 2022;18(1):488–97. [https://doi.org/10.1109/TII.2021.3069285](https://doi.org/10.1109/TII.2021.3069285)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.278,
+            0.931,
+            0.298
+          ],
+          "content": "[39] [Achiam J, Held D, Tamar A, Abbeel P. Constrained policy optimization. In: Proc. 34th Int. Conf. Mach. Learn. (ICML), Sydney, Australia; 2017. p. 22–31](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0195)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.298,
+            0.914,
+            0.318
+          ],
+          "content": "[40] [Tessler C, Mankowitz DJ, Mannor S. Reward constrained policy optimization. Representations (ICLR), New Orleans, USA: in Proc. Int. Conf. Learn; 2019](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0200)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.514,
+            0.319,
+            0.933,
+            0.348
+          ],
+          "content": "[41] [Yang TY, Rosca J, Narasimhan K, Ramadge PJ. “Projection-based constrained policy optimization,” in proc. Int. Conf. Learn. Representations (ICLR), Addis Ababa, Ethiopia. 2020](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0205)."
+        },
+        {
+          "type": "ref_text",
+          "bbox": [
+            0.513,
+            0.349,
+            0.931,
+            0.377
+          ],
+          "content": "[42] [Chen B, Chen C, Wang J, Butler-Purry KL. Sequential service restoration for unbalanced distribution systems and microgrids. IEEE Trans Power Syst 2018;33 (2):1507–20](http://refhub.elsevier.com/S0306-2619%2826%2900653-7/rf0210)."
+        },
+        {
+          "type": "page_number",
+          "bbox": [
+            0.493,
+            0.953,
+            0.508,
+            0.962
+          ],
+          "content": "16"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "file_suffix": "pdf",
+    "producer": {
+      "name": "mineru",
+      "version": "4.0.12"
+    },
+    "document": {
+      "title": "Toward resilient distribution system via microgrid formation: A safe hierarchical hybrid reinforcement learning approach",
+      "authors": [
+        "Wencong Xiao"
+      ],
+      "subject": "Applied Energy, 417 (2026) 128001. doi:10.1016/j.apenergy.2026.128001",
+      "keywords": [
+        "Microgrid formation,Resilience,Safe hierarchical hybrid reinforcement learning,Hybrid action space,Safety layer"
+      ],
+      "description": "Applied Energy, 417 (2026) 128001. doi:10.1016/j.apenergy.2026.128001",
+      "languages": [
+        "English"
+      ],
+      "identifiers": [
+        "10.1016/j.apenergy.2026.128001"
+      ],
+      "publisher": "Elsevier Ltd",
+      "created_at": "2026-05-29T12:11:40Z",
+      "modified_at": "2026-05-29T12:22:33Z",
+      "creator_application": "Elsevier",
+      "producer_application": "Acrobat Distiller 8.1.0 (Windows)",
+      "page_count": 16,
+      "page_count_kind": "physical"
+    }
+  },
+  "extensions": {
+    "mineru": {
+      "tier": "basic",
+      "parse_mode": "txt"
+    },
+    "docvortex_layout": {
+      "version": 1,
+      "pages": [
+        {
+          "page_idx": 0,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 1,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 2,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 3,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 4,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 5,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 6,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 7,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 8,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 9,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 10,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 11,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 12,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 13,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 14,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        },
+        {
+          "page_idx": 15,
+          "width_pt": 595.2760009765625,
+          "height_pt": 793.7009887695312
+        }
+      ]
+    }
+  },
+  "is_full_document": true
+}

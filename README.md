@@ -60,7 +60,7 @@ uv run python src/direct_main.py --config gavdac_ea_main --env-config microgrid 
 | `src/envs/data/` | 版本化负荷、电价、光伏 CSV |
 | `tools/` | MILP、PPO 辅助实验、评估、绘图、性能分析及报告恢复 |
 | `tests/` | 物理模型、训练、张量、EA、经济性和最终图回归测试 |
-| `docs/` | 当前模型、论文计划及工具说明；`archive/` 为历史资料 |
+| `docs/` | [文档索引](docs/README.md)：当前说明；`archive/` 为必要历史审计 |
 | `results/` | 本地运行结果，不纳入 Git；保留 v03 完成及中止运行 |
 
 历史建模文档和旧模型 MILP 检查仍可用于解释模型演变，但不是当前正式评估协议。

@@ -1,13 +1,90 @@
 # Python-generated files
 __pycache__/
 *.py[oc]
+*$py.class
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
+.eggs/
 
 # Virtual environments
-.venv
+.venv/
+.venv-*/
+venv/
+env/
+ENV/
+
+# Tool caches and test reports
+.uv-cache/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.tox/
+.nox/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.ipynb_checkpoints/
+node_modules/
 
 # Generated experiment artifacts
-results/
+/results/
+/wandb/
+/runs/
+/checkpoints/
+/models/
+events.out.tfevents.*
+*.wandb
+*.log
+
+# Local credentials; example configuration remains versioned
+.env
+.env.*
+!.env.example
+!.env.template
+!.env.sample
+.netrc
+_netrc
+*.pem
+*.key
+credentials.json
+credentials.*.json
+# Temporary browser download link with signed access parameters
+/paper/qa/lean_browser_pdf_url.txt
+
+# Editor and operating-system temporary files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+~$*
+
+# LaTeX build products; keep source, references and reading assets
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+*.xdv
+*.dvi
+*.run.xml
+*-blx.bib
+/paper/manuscript/main.pdf
+/paper/manuscript/*.out
