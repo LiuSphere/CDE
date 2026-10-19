@@ -65,9 +65,16 @@ uv run python src/direct_main.py --config gavdac_ea_main --env-config microgrid 
 | `results/` | 本地运行结果，不纳入 Git；保留 v03 完成及中止运行 |
 
 历史建模文档和旧模型 MILP 检查仍可用于解释模型演变，但不是当前正式评估协议。
-当前物理模型 MILP 工具为 `tools/run_physical_microgrid_milp.py`，
+连续库存货币成本参考为 `tools/run_continuous_microgrid_milp.py`；
+`tools/run_physical_microgrid_milp.py` 保留逐日循环 SOC、综合成本参考，
 使用前通过 `--help` 核对选项；完美预测与学习策略的信息及库存边界差异必须披露。
 不要依据脚本名称中的 “oracle” 或 “current” 推断其适用于最新模型。
+
+七天验证试算（输出路径须未使用）：
+
+```powershell
+uv run python tools/run_continuous_microgrid_milp.py --output results/new_milp_pilot
+```
 
 ## 验证
 

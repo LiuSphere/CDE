@@ -31,8 +31,13 @@ COLORS = ["#176f85", "#b33e65", "#49813e", "#8952a5", "#b77815", "#3d60b3"]
 
 def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
                   soc_min=0.2, soc_max=0.8, terminal_soc=None, segments=32,
-                  battery_enabled=True):
+                  battery_enabled=True, objective="full_cost", time_limit=60,
+                  mip_gap=1e-7):
     """Joint dispatch on a uniform-loss, finite-capacity community bus."""
+    if objective not in {"economic_cost", "full_cost"}:
+        raise ValueError("Unknown MILP objective")
+    if not np.isfinite([time_limit, mip_gap]).all() or time_limit <= 0 or mip_gap < 0:
+        raise ValueError("Invalid solver limits")
     load, pv, price = [np.asarray(a, dtype=float) for a in (load, pv, price)]
     limits = np.asarray(limits, dtype=float)
     if not (
@@ -62,7 +67,7 @@ def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
             model.row({soc[-1]: 1}, terminal_soc, terminal_soc)
         decisions = []
         for t in range(len(load)):
-            generation = model.var(0, dg, cost=p["env_param"])
+            generation = model.var(0, dg, cost=p["env_param"] if objective == "full_cost" else 0)
             charge = model.var(0, pc, cost=p["cycle_cost"])
             discharge = model.var(0, pdmax, cost=p["cycle_cost"])
             mode = model.var(0, 1, integer=True)
@@ -99,7 +104,7 @@ def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
         error_bound += len(load) * p["costa"] * (dg / segments)**2 / 4
     for entries in transfer_rows:
         model.row(entries, 0, 0)
-    result = model.solve(gap=1e-7, limit=60)
+    result = model.solve(gap=mip_gap, limit=time_limit)
     if result.x is None or result.status not in (0, 1):
         raise RuntimeError(f"Physical MILP failed: {result.message}")
     schedules = []
@@ -112,6 +117,9 @@ def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
         schedule["soc"] = result.x[soc].tolist()
         schedules.append(schedule)
     return {
+        "objective_name": objective, "message": result.message,
+        "time_limit_seconds": time_limit, "requested_mip_gap": mip_gap,
+        "variables": len(model.lower), "constraints": len(model.rows),
         "status": int(result.status), "mip_gap": float(result.mip_gap),
         "objective": float(result.fun), "dual_bound": float(result.mip_dual_bound),
         "interpolation_error_bound": float(error_bound),
