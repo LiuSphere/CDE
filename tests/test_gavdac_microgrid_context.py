@@ -22,7 +22,7 @@ class DispatchContextTest(unittest.TestCase):
         directory = tempfile.TemporaryDirectory(dir=ROOT / "results")
         self.addCleanup(directory.cleanup)
         config.update(result_dir=directory.name, seed=0)
-        return MGEnv(deepcopy(config), "facmac_context_tests")
+        return MGEnv(deepcopy(config), "gavdac_context_tests")
 
     def test_fraction_actions_are_feasible_and_invertible(self):
         env = self.make_env()

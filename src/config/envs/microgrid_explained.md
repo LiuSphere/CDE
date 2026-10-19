@@ -1,4 +1,4 @@
-# 微电网环境：facmac_dispatch_v3
+# 微电网环境：gavdac_dispatch_v3
 
 当前分支采用异构、物理耦合的合作场景，不再复现 `maenv_sep_v1` 的数值公式。
 修改前源码由 tag `maenv-sep-v1-pre-physical-20261017` 保留。
@@ -212,4 +212,4 @@ EA 代数、更新强度、变异和交叉算法均不变。
 - 所有联合/对照 MILP 求解成功，通过日末 SOC、回放和误差证书检查。
 
 上述设备校准的历史细节见 `docs/heterogeneous_microgrid_validation.md`。
-v3 的兼容性、物理等价验证和短训练限制见 `docs/facmac_environment_v3.md`。
+v3 的兼容性、物理等价验证和短训练限制见 `docs/gavdac_environment_v3.md`。

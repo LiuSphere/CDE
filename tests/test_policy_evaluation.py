@@ -111,7 +111,7 @@ class PolicyEvaluationTest(unittest.TestCase):
                           else executed / agent["raw_dis"])
                 after = before - energy / agent["battery_cap"]
                 self.assertAlmostEqual(float(r["soc"]), after)
-                self.assertEqual(r["battery_model_version"], "facmac_dispatch_v3")
+                self.assertEqual(r["battery_model_version"], "gavdac_dispatch_v3")
             manifest = json.loads((Path(directory) / "best/best_ea.json").read_text(encoding="utf-8"))
             self.assertEqual(manifest["checkpoint"], str(checkpoint.resolve()))
             runner.env.time_step_hours = 0.25

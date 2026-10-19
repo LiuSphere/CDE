@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 import direct_main
 from ea.ssne_base import SSNEBase
-from learners.facmac_learner import FACMACLearner
+from learners.gavdac_learner import GAVDACLearner
 from runners.episode_runner import EpisodeRunner
 
 
@@ -20,7 +20,7 @@ class TrainingTest(unittest.TestCase):
             with self.subTest(generations=generations):
                 with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
                     calls = {"learner": 0, "ea": 0}
-                    train = FACMACLearner.train
+                    train = GAVDACLearner.train
                     epoch = SSNEBase.epoch
                     rollout = EpisodeRunner.run
                     scenario_runs = []
@@ -59,7 +59,7 @@ class TrainingTest(unittest.TestCase):
 
                     argv = [
                         "direct_main.py", "--config",
-                        "facmac_ea" if generations else "facmac_no_ea",
+                        "gavdac_ea" if generations else "gavdac_no_ea",
                         "--env-config", "microgrid",
                         "--override", "wandb_mode=disabled",
                         "--override", "save_model=False",
@@ -71,7 +71,7 @@ class TrainingTest(unittest.TestCase):
                         "--override", f"wandb_dir={directory}/wandb",
                     ]
                     with patch.object(sys, "argv", argv), \
-                         patch.object(FACMACLearner, "train", count_train), \
+                         patch.object(GAVDACLearner, "train", count_train), \
                          patch.object(SSNEBase, "epoch", count_epoch), \
                          patch.object(EpisodeRunner, "run", count_rollout):
                         direct_main.main()

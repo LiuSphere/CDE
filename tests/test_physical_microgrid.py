@@ -24,7 +24,7 @@ class PhysicalMicrogridTest(unittest.TestCase):
 
     def test_physical_version_and_positive_settlement_inputs(self):
         env = self.make_env()
-        self.assertEqual(env.battery_model_version, "facmac_dispatch_v3")
+        self.assertEqual(env.battery_model_version, "gavdac_dispatch_v3")
         self.assertTrue(np.all(env.data_dict["price"] > 0))
         self.assertTrue(np.all(env.data_dict["load"] >= 0))
         self.assertTrue(np.all(env.data_dict["pv"] >= 0))

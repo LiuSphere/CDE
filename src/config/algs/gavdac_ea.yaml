@@ -1,0 +1,3 @@
+# Main method: GAVDAC with evolutionary augmentation.
+name: "gavdac_ea"
+use_cuda: false

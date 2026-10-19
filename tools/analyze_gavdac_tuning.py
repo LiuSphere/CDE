@@ -95,7 +95,7 @@ def analyze(directory, recovery=None):
     reports_root = directory / "dispatch_showcases"
     recovery_record = None
     if recovery is not None:
-        from recover_facmac_showcase import reporting_failure_step
+        from recover_gavdac_showcase import reporting_failure_step
         recovery_record = json.loads(recovery.read_text(encoding="utf-8"))
         expected_step = reporting_failure_step(stderr, recovery_record["requested_steps"])
         if (Path(recovery_record["original_run"]).resolve() != directory.resolve()

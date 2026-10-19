@@ -17,7 +17,7 @@ import direct_main
 from controllers.cqmix_controller import CQMixMAC
 from ea.ssne_base import SSNEBase
 from envs.maenv import MGEnv
-from learners.facmac_learner import FACMACLearner
+from learners.gavdac_learner import GAVDACLearner
 
 
 def load_runtime_config(name):
@@ -31,8 +31,8 @@ def load_runtime_config(name):
 
 class V03ConfigTest(unittest.TestCase):
     def test_dimensions_and_inherited_training_settings(self):
-        baseline = load_runtime_config("facmac_ea")
-        config = load_runtime_config("facmac_ea_tune_v03_long")
+        baseline = load_runtime_config("gavdac_ea")
+        config = load_runtime_config("gavdac_ea_tune_v03_long")
         for key in baseline:
             if key not in {
                 "name", "batch_size", "rnn_hidden_dim", "mixing_embed_dim", "test_interval",
@@ -71,7 +71,7 @@ class V03ConfigTest(unittest.TestCase):
                     "actions": {"vshape": (info["n_actions"],), "group": "agents"},
                 }
                 mac = CQMixMAC(scheme, {"agents": info["n_agents"]}, args)
-                learner = FACMACLearner(
+                learner = GAVDACLearner(
                     mac, scheme, SimpleNamespace(log_stat=lambda *unused: None), args
                 )
                 self.assertEqual(mac.agent.fc1.in_features, 25)
@@ -86,11 +86,11 @@ class V03ConfigTest(unittest.TestCase):
                 env.close()
 
     def test_v03_training_crosses_original_warmup_and_evolution(self):
-        self._check_training("facmac_ea_tune_v03_long", 50000)
+        self._check_training("gavdac_ea_tune_v03_long", 50000)
 
     def _check_training(self, config_name, expected_buffer_size):
         calls = {"learner": 0, "ea": 0}
-        original_train = FACMACLearner.train
+        original_train = GAVDACLearner.train
         original_epoch = SSNEBase.epoch
 
         def check_train(learner, batch, t_env, episode_num):
@@ -132,7 +132,7 @@ class V03ConfigTest(unittest.TestCase):
                 "--override", f"wandb_dir={directory}/wandb",
             ]
             with patch.object(sys, "argv", argv), \
-                 patch.object(FACMACLearner, "train", check_train), \
+                 patch.object(GAVDACLearner, "train", check_train), \
                  patch.object(SSNEBase, "epoch", check_epoch):
                 direct_main.main()
         self.assertGreater(calls["learner"], 0)

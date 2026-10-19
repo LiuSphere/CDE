@@ -1,4 +1,4 @@
-# --- Shared FACMAC training options ---
+# --- Shared GAVDAC training options ---
 batch_size_run: 1
 batch_size: 512
 buffer_size: 100000
@@ -57,7 +57,7 @@ evaluation_initial_soc: 0.35
 policy_checkpoint: ""
 evaluation_output_id: ""
 
-# --- FACMAC optimization ---
+# --- GAVDAC optimization ---
 gamma: 0.99
 lr: 3e-4
 critic_lr: 1e-4

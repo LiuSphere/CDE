@@ -1,6 +1,6 @@
 env: "microgrid"
 env_args:
-  model_version: "facmac_dispatch_v3"
+  model_version: "gavdac_dispatch_v3"
   # Scenario assumptions, not verified CSV metadata: kW, kWh, CU/kWh.
   # price_scale converts the source numeric tariff to scenario currency units.
   time_step_hours: 1.0

@@ -1,4 +1,4 @@
-"""Profile one fixed-length FACMAC run without changing production code."""
+"""Profile one fixed-length GAVDAC run without changing production code."""
 
 import argparse
 import csv
@@ -22,7 +22,7 @@ from controllers.cqmix_controller import CQMixMAC
 from direct_main import config_copy, load_yaml, normalize_scalars, recursive_dict_update
 from ea.ssne_base import SSNEBase
 from envs.maenv import MGEnv
-from learners.facmac_learner import FACMACLearner
+from learners.gavdac_learner import GAVDACLearner
 from run import run
 from runners.episode_runner import EpisodeRunner
 from utils.logging import get_logger
@@ -101,8 +101,8 @@ def load_config(config_name):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Profile FACMAC training bottlenecks.")
-    parser.add_argument("--config", default="facmac_ea")
+    parser = argparse.ArgumentParser(description="Profile GAVDAC training bottlenecks.")
+    parser.add_argument("--config", default="gavdac_ea")
     parser.add_argument("--timesteps", type=int, default=12144)
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--output", default="results/training_timing.csv")
@@ -211,7 +211,7 @@ def main():
     timed_method(ReplayBuffer, "sample", timer, "replay_sample", report_replay_sample)
     timed_method(EpisodeRunner, "run", timer, "episode_rollout", report_episode)
     timed_method(EpisodeRunner, "close_env", timer, "environment_close", report_training_end)
-    timed_method(FACMACLearner, "train", timer, "learner_update", report_update)
+    timed_method(GAVDACLearner, "train", timer, "learner_update", report_update)
     timed_method(SSNEBase, "epoch", timer, "evolution", report_evolution)
 
     logger = get_logger()

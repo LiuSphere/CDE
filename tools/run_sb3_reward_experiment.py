@@ -217,7 +217,7 @@ def prepare(experiment, seeds, steps, *, recipes=None, test_rows=None,
     files = [
         ROOT / "src/envs/maenv.py", ROOT / "src/config/default.yaml",
         ROOT / "src/config/envs/microgrid.yaml",
-        ROOT / "src/config/algs/facmac_no_ea.yaml",
+        ROOT / "src/config/algs/gavdac_no_ea.yaml",
         Path(__file__), ROOT / "tools/sb3_dispatch_reward_env.py",
         ROOT / "pyproject.toml", ROOT / "uv.lock", *extra_files,
         *sorted((ROOT / "src/envs/data").glob("*.csv")),
@@ -236,7 +236,7 @@ def prepare(experiment, seeds, steps, *, recipes=None, test_rows=None,
     from direct_main import load_yaml, normalize_scalars, recursive_dict_update
     config = {}
     for relative in ("src/config/default.yaml", "src/config/envs/microgrid.yaml",
-                     "src/config/algs/facmac_no_ea.yaml"):
+                     "src/config/algs/gavdac_no_ea.yaml"):
         config = recursive_dict_update(config, load_yaml(str(snapshot / relative)))
     config = normalize_scalars(config)
     save_json(experiment / "merged_config.json", config)
@@ -254,7 +254,7 @@ def prepare(experiment, seeds, steps, *, recipes=None, test_rows=None,
             "clip_range": 0.2, "ent_coef": 0.0, "vf_coef": 0.5,
             "max_grad_norm": 0.5,
         },
-        "scope": "centralized PPO reward diagnosis; not FACMAC algorithm comparison",
+        "scope": "centralized PPO reward diagnosis; not GAVDAC algorithm comparison",
         "boundaries": "all modes: random training day, initial SOC 0.35, true terminal at 24h",
         "selection": "final endpoint only; no best-seed/checkpoint/test selection",
         "reward_formulas": {

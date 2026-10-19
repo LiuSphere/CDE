@@ -199,7 +199,7 @@ class ShowcaseTest(unittest.TestCase):
             return original(reporter, runner, mac, store, step)
 
         argv = [
-            "direct_main.py", "--config", "facmac_ea_tune_v03_long",
+            "direct_main.py", "--config", "gavdac_ea_tune_v03_long",
             "--env-config", "microgrid",
             "--override", "wandb_mode=disabled",
             "--override", f"t_max={limit}",

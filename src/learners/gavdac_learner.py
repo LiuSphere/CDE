@@ -4,11 +4,11 @@ import torch as th
 from torch.optim import Adam, RMSprop
 
 from components.episode_buffer import EpisodeBatch
-from modules.critic import FACMACCritic
+from modules.critic import GAVDACCritic
 from modules.graph_mixer import GraphDec
 
 
-class FACMACLearner:
+class GAVDACLearner:
     def __init__(self, mac, scheme, logger, args):
         self.args = args
         self.n_agents = args.n_agents
@@ -19,7 +19,7 @@ class FACMACLearner:
         self.target_mac = copy.deepcopy(self.mac)
         self.agent_params = list(mac.parameters())
 
-        self.critic = FACMACCritic(scheme, args)
+        self.critic = GAVDACCritic(scheme, args)
         self.target_critic = copy.deepcopy(self.critic)
         self.critic_params = list(self.critic.parameters())
 

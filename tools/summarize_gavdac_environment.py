@@ -25,7 +25,7 @@ def main():
     parser.add_argument("--after", type=Path, nargs="+", required=True)
     parser.add_argument("--output-id", required=True)
     args = parser.parse_args()
-    out = ROOT / "results/facmac_environment" / args.output_id
+    out = ROOT / "results/gavdac_environment" / args.output_id
     out.mkdir(parents=True, exist_ok=False)
     groups = [
         {run["seed"]: run for run in [json.loads(p.read_text(encoding="utf-8")) for p in files]}
@@ -73,7 +73,7 @@ def main():
         ax.grid(alpha=0.18)
         ax.spines[["top", "right"]].set_visible(False)
     axes.flat[0].set_ylabel("Operating cost, excluding request penalties (CU/day)")
-    fig.suptitle("Same-budget FACMAC + EA | six fixed validation days", fontsize=15, y=0.98)
+    fig.suptitle("Same-budget GAVDAC + EA | six fixed validation days", fontsize=15, y=0.98)
     handles, labels = axes.flat[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.91),
                ncol=4, frameon=False)

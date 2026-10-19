@@ -97,13 +97,13 @@ Only local disabled-W&B smoke tests have been run during implementation.
 An example full-run command, not started automatically:
 
 ```powershell
-uv run python src/direct_main.py --config facmac_ea --env-config microgrid `
+uv run python src/direct_main.py --config gavdac_ea --env-config microgrid `
   --override wandb_mode=disabled `
   --override unique_token=facmac_ea_battery_v2_seed0 `
   --override t_max=3000000
 ```
 
-For the non-EA comparison, use `--config facmac_no_ea` and a different
+For the non-EA comparison, use `--config gavdac_no_ea` and a different
 `unique_token`, retaining the same seed, environment and fixed-day settings.
 Never reuse a run/output id containing existing artifacts.
 
@@ -113,7 +113,7 @@ Read the best EA pointer and run inference-only evaluation:
 
 ```powershell
 $best = Get-Content results/models/facmac_ea_battery_v2_seed0/best_policies/best_ea.json -Raw | ConvertFrom-Json
-uv run python src/direct_main.py --config facmac_ea --env-config microgrid `
+uv run python src/direct_main.py --config gavdac_ea --env-config microgrid `
   --override "policy_checkpoint=$($best.checkpoint)" `
   --override evaluate=True `
   --override wandb_mode=disabled `

@@ -20,7 +20,7 @@ def main():
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--source-root", type=Path, default=ROOT)
     parser.add_argument("--cpu-threads", type=int, default=1)
-    parser.add_argument("--config", choices=["facmac_ea", "facmac_no_ea"], default="facmac_ea")
+    parser.add_argument("--config", choices=["gavdac_ea", "gavdac_no_ea"], default="gavdac_ea")
     args = parser.parse_args()
     source = args.source_root.resolve(strict=True)
     sys.path.insert(0, str(source / "src"))
@@ -37,7 +37,7 @@ def main():
     torch.set_num_threads(args.cpu_threads)
     torch.use_deterministic_algorithms(True)
 
-    out = ROOT / "results/facmac_environment" / args.output_id
+    out = ROOT / "results/gavdac_environment" / args.output_id
     out.mkdir(parents=True, exist_ok=False)
     history = []
     references = {}

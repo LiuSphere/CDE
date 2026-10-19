@@ -14,8 +14,8 @@ import torch as th
 from components.episode_buffer import ReplayBuffer
 from controllers.cqmix_controller import CQMixMAC
 from ea import mod_neuro_evo as utils_ne
-from learners.EA_facmac_learner import EA_FACMACLearner
-from learners.facmac_learner import FACMACLearner
+from learners.EA_gavdac_learner import EA_GAVDACLearner
+from learners.gavdac_learner import GAVDACLearner
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -164,9 +164,9 @@ def run_sequential(args, logger):
                 )
     # Learner
     if args.EA:
-        learner = EA_FACMACLearner(mac, buffer.scheme, logger, args)
+        learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
-        learner = FACMACLearner(mac, buffer.scheme, logger, args)
+        learner = GAVDACLearner(mac, buffer.scheme, logger, args)
 
     if args.use_cuda:
         learner.cuda(device=args.device)

@@ -101,7 +101,7 @@ the comparison.
 Repeat the measured optimized workload with a new output filename:
 
 ```powershell
-uv run python tests/test_training_timing.py --config facmac_ea --timesteps 12720 --output results/<new-file>.csv
+uv run python tests/test_training_timing.py --config gavdac_ea --timesteps 12720 --output results/<new-file>.csv
 ```
 
 ## Follow-Up Candidates

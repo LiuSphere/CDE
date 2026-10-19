@@ -112,10 +112,13 @@ class SSNEBase:
             self.clone(pop[random.choice(new_elitists)], pop[index1], agent_index)
             self.clone(pop[random.choice(offsprings)], pop[index2], agent_index)
             if self.use_agent_level_clone_crossover and agent_level:
-                if random.random() < 0.5:
-                    self.clone(pop[index1], pop[index2], agent_index)
-                else:
-                    self.clone(pop[index2], pop[index1], agent_index)
+                # Preserve the default p=1 RNG sequence; p=0 must disable this path too.
+                probability = self.args.crossover_prob
+                if probability > 0 and (probability >= 1 or random.random() < probability):
+                    if random.random() < 0.5:
+                        self.clone(pop[index1], pop[index2], agent_index)
+                    else:
+                        self.clone(pop[index2], pop[index1], agent_index)
             elif random.random() < self.args.crossover_prob:
                 self.crossover_inplace(pop[index1], pop[index2], agent_index)
 

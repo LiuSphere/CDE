@@ -11,11 +11,11 @@ from pettingzoo import ParallelEnv
 
 
 class MGEnv(ParallelEnv):
-    metadata = {"render_modes": ["human", None], "name": "MGEnv_facmac_dispatch_v3"}
+    metadata = {"render_modes": ["human", None], "name": "MGEnv_gavdac_dispatch_v3"}
 
     def __init__(self, config, algo_name, render_mode="human"):
-        if config.get("model_version") != "facmac_dispatch_v3":
-            raise ValueError("Use facmac_dispatch_v3; legacy models require their saved code")
+        if config.get("model_version") != "gavdac_dispatch_v3":
+            raise ValueError("Use gavdac_dispatch_v3; legacy models require their saved code")
         self.battery_model_version = config["model_version"]
         self.render_mode = render_mode
         self.time_step_hours = float(config["time_step_hours"])

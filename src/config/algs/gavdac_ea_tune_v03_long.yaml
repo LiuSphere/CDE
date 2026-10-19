@@ -1,6 +1,6 @@
 # First tuning experiment: isolate training horizon from compact_v2.
 # Same optimizer, exploration, network, EA and update intensity.
-name: "facmac_ea_tune_v03_long"
+name: "gavdac_ea_tune_v03_long"
 batch_size: 128
 rnn_hidden_dim: 48
 mixing_embed_dim: 32

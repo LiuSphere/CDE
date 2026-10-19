@@ -173,9 +173,9 @@ Raw runs:
 Always use new output names.
 
 ```powershell
-uv run python tests/test_facmac_sequence.py
-uv run python tools/benchmark_facmac_learner.py --compare-source-root results/facmac_arch_reference_20261017 --iterations 12 --threads 6 --output results/<new-file>.json
-uv run python tests/test_training_timing.py --config facmac_ea --timesteps 14400 --output results/<new-file>.csv
+uv run python tests/test_gavdac_sequence.py
+uv run python tools/benchmark_gavdac_learner.py --compare-source-root results/facmac_arch_reference_20261017 --iterations 12 --threads 6 --output results/<new-file>.json
+uv run python tests/test_training_timing.py --config gavdac_ea --timesteps 14400 --output results/<new-file>.csv
 ```
 
 The paired command requires the captured source directory. Ordinary current

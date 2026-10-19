@@ -10,11 +10,11 @@ import numpy as np
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-VERSIONS = {"heterogeneous_exchange_v2": "v2", "facmac_dispatch_v3": "v3"}
+VERSIONS = {"heterogeneous_exchange_v2": "v2", "gavdac_dispatch_v3": "v3"}
 
 
 def final_policies(run):
-    expected = {"rl", "ea"} if run["algorithm"] == "facmac_ea" else {"rl"}
+    expected = {"rl", "ea"} if run["algorithm"] == "gavdac_ea" else {"rl"}
     evaluations = [x for x in run["history"] if x.get("phase") == "final"]
     if len(evaluations) != len(expected) or {x["policy"] for x in evaluations} != expected:
         raise ValueError("Final evaluations are missing or duplicated")
@@ -61,14 +61,14 @@ def compare_runs(runs):
     paired = []
     for seed in seeds:
         pair = {"seed": seed}
-        for algorithm in ("facmac_no_ea", "facmac_ea"):
+        for algorithm in ("gavdac_no_ea", "gavdac_ea"):
             old, new = [index[seed, version, algorithm] for version in ("v2", "v3")]
             for field in ("requested_steps", "actual_steps", "validation_rows", "cpu_threads",
                           "rng_protocol", "deterministic_algorithms"):
                 if old[field] != new[field]:
                     raise ValueError(f"Unmatched {field} for seed {seed} / {algorithm}")
             old_cost, new_cost = final_policies(old), final_policies(new)
-            categories = (("facmac_only", "rl"),) if algorithm == "facmac_no_ea" else (
+            categories = (("gavdac_only", "rl"),) if algorithm == "gavdac_no_ea" else (
                 ("actor_with_ea", "rl"), ("ea_elite", "ea"),
             )
             for category, policy in categories:
@@ -79,7 +79,7 @@ def compare_runs(runs):
                     "v2_resources": resource_metrics(old, policy),
                     "v3_resources": resource_metrics(new, policy),
                 }
-            if algorithm == "facmac_ea":
+            if algorithm == "gavdac_ea":
                 a, b = min(old_cost.values()), min(new_cost.values())
                 old_policy, new_policy = min(old_cost, key=old_cost.get), min(new_cost, key=new_cost.get)
                 pair["best_with_ea"] = {
@@ -91,7 +91,7 @@ def compare_runs(runs):
                 }
         paired.append(pair)
     aggregate = {}
-    for category in ("facmac_only", "actor_with_ea", "ea_elite", "best_with_ea"):
+    for category in ("gavdac_only", "actor_with_ea", "ea_elite", "best_with_ea"):
         values = np.array([row[category]["improvement_pct"] for row in paired])
         aggregate[category] = {
             "v2_mean_cost": float(np.mean([row[category]["v2_cost"] for row in paired])),
@@ -114,8 +114,8 @@ def compare_runs(runs):
 
 
 def plot_comparison(summary, path):
-    categories = ("facmac_only", "actor_with_ea", "ea_elite")
-    labels = ("FACMAC only\n(no EA)", "FACMAC actor\n(with EA)", "EA elite\n(with EA)")
+    categories = ("gavdac_only", "actor_with_ea", "ea_elite")
+    labels = ("GAVDAC only\n(no EA)", "GAVDAC actor\n(with EA)", "EA elite\n(with EA)")
     fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
     seeds = summary["seeds"]
     offsets = np.linspace(-0.20, 0.20, len(seeds))

@@ -1,0 +1,13 @@
+# Parent: gavdac_ea_tune_v03_long.
+# Only behavioral change: crossover_prob 1.0 -> 0.25.
+# Reduce extra whole-actor clone recombination; retain mutation and elitism.
+# Exploratory candidate, not a replacement for the selected v03 default.
+name: "gavdac_v03_crossover025"
+batch_size: 128
+rnn_hidden_dim: 48
+mixing_embed_dim: 32
+test_interval: 10000
+buffer_size: 50000
+save_model_interval: 50000
+t_max: 6000000
+crossover_prob: 0.25

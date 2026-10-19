@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-class FACMACCritic(nn.Module):
+class GAVDACCritic(nn.Module):
     def __init__(self, scheme, args):
         super().__init__()
         self.args = args

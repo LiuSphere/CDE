@@ -21,7 +21,7 @@ def validate_run(path, source, seed, algorithm, timesteps):
             or not run.get("pre_rollout_reseed") or run["rng_protocol"] !=
             "entrypoint numpy/torch; benchmark python/fastrand/gym action spaces"):
         raise ValueError(f"Run protocol mismatch: {path}")
-    expected = {"rl", "ea"} if algorithm == "facmac_ea" else {"rl"}
+    expected = {"rl", "ea"} if algorithm == "gavdac_ea" else {"rl"}
     final = [row for row in run["history"] if row.get("phase") == "final"]
     if {row["policy"] for row in final} != expected or len(final) != len(expected):
         raise ValueError(f"Final policies missing: {path}")
@@ -43,10 +43,10 @@ def run_job(experiment, version, algorithm, seed, timesteps):
         return {"name": name, "result": str(result), "reused_valid_run": True}
     if destination.exists():
         raise FileExistsError(f"Incomplete run retained at {destination}; use a new experiment")
-    relative = destination.relative_to(ROOT / "results/facmac_environment")
+    relative = destination.relative_to(ROOT / "results/gavdac_environment")
     command = [
         "uv", "run", "--no-sync", sys.executable, "-B",
-        str(ROOT / "tools/benchmark_facmac_environment.py"),
+        str(ROOT / "tools/benchmark_gavdac_environment.py"),
         "--source-root", str(source), "--output-id", str(relative),
         "--seed", str(seed), "--config", algorithm, "--timesteps", str(timesteps),
         "--cpu-threads", "1",
@@ -88,14 +88,14 @@ def main():
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     experiment = args.experiment.resolve(strict=True)
-    if not experiment.is_relative_to(ROOT / "results/facmac_environment"):
+    if not experiment.is_relative_to(ROOT / "results/gavdac_environment"):
         raise ValueError("Experiment must remain in the project results directory")
     if len(set(args.seeds)) != len(args.seeds) or args.workers not in (1, 2):
         raise ValueError("Use distinct seeds and one or two CPU workers")
     manifest = {
         "seeds": args.seeds, "timesteps_per_run": args.timesteps,
         "workers": args.workers, "versions": ["v2", "v3"],
-        "algorithms": ["facmac_ea", "facmac_no_ea"],
+        "algorithms": ["gavdac_ea", "gavdac_no_ea"],
         "cpu_threads_per_run": 1,
         "source_hashes": {
             str(path.relative_to(experiment)): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -103,7 +103,7 @@ def main():
             if path.is_file() and path.suffix in {".py", ".yaml", ".csv"}
         },
         "benchmark_sha256": hashlib.sha256(
-            (ROOT / "tools/benchmark_facmac_environment.py").read_bytes()
+            (ROOT / "tools/benchmark_gavdac_environment.py").read_bytes()
         ).hexdigest(),
     }
     manifest_path = experiment / "experiment.json"
@@ -137,7 +137,7 @@ def main():
     for name, digest in manifest["source_hashes"].items():
         if hashlib.sha256((experiment / name).read_bytes()).hexdigest() != digest:
             raise RuntimeError(f"Frozen experiment source changed: {name}")
-    if hashlib.sha256((ROOT / "tools/benchmark_facmac_environment.py").read_bytes()).hexdigest() != manifest["benchmark_sha256"]:
+    if hashlib.sha256((ROOT / "tools/benchmark_gavdac_environment.py").read_bytes()).hexdigest() != manifest["benchmark_sha256"]:
         raise RuntimeError("Benchmark changed during the experiment")
     with (experiment / "completed.json").open("x", encoding="utf-8") as file:
         json.dump({"runs": completed, "seconds": time.perf_counter() - start}, file, indent=2)

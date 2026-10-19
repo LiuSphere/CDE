@@ -11,13 +11,13 @@ sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "src"))
 
 import direct_main
-from analyze_facmac_tuning import (
+from analyze_gavdac_tuning import (
     evaluation_history, summarize_candidates, summarize_series,
 )
 
 
 class TuningTest(unittest.TestCase):
-    def test_default_entry_uses_v03_and_preserves_explicit_config_selection(self):
+    def test_default_entry_uses_crossover_free_main_and_preserves_explicit_selection(self):
         def load(arguments):
             configs = []
             with patch.object(sys, "argv", ["direct_main.py", *arguments]), \
@@ -26,15 +26,17 @@ class TuningTest(unittest.TestCase):
             return configs[0]
 
         default = load([])
-        self.assertEqual(default, load(["--config", "facmac_ea_tune_v03_long"]))
+        self.assertEqual(default, load(["--config", "gavdac_ea_main"]))
+        self.assertEqual(default["crossover_prob"], 0.0)
+        self.assertEqual(load(["--config", "gavdac_ea_tune_v03_long"])["crossover_prob"], 1.0)
         self.assertEqual(default["t_max"], 6000000)
         self.assertEqual(default["lr"], 3e-4)
         self.assertEqual(default["env"], "microgrid")
-        self.assertFalse(load(["--config", "facmac_no_ea"])["EA"])
+        self.assertFalse(load(["--config", "gavdac_no_ea"])["EA"])
         self.assertEqual(load(["--override", "t_max=24"])["t_max"], 24)
 
     def test_recovery_only_accepts_verified_post_budget_showcase_path_failure(self):
-        from recover_facmac_showcase import reporting_failure_step
+        from recover_gavdac_showcase import reporting_failure_step
         log = ("root EA cycle 10 at t_env=5997984\n"
                "showcase.publish_final(runner, mac, policy_store, runner.t_env)\n"
                "FileNotFoundError: [WinError 206] checkpoint_100_logged_6000144\n")
@@ -97,14 +99,14 @@ class TuningTest(unittest.TestCase):
                 direct_main.main()
             return configs[0]
 
-        before = load("facmac_ea")
+        before = load("gavdac_ea")
         expected = deepcopy(before)
         expected.update(
-            name="facmac_ea_tune_v03_long", t_max=6000000,
+            name="gavdac_ea_tune_v03_long", t_max=6000000,
             batch_size=128, rnn_hidden_dim=48, mixing_embed_dim=32,
             test_interval=10000, buffer_size=50000, save_model_interval=50000,
         )
-        self.assertEqual(load("facmac_ea_tune_v03_long"), expected)
+        self.assertEqual(load("gavdac_ea_tune_v03_long"), expected)
 
 
 if __name__ == "__main__":

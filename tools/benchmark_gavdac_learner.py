@@ -35,7 +35,7 @@ def load_reference(source_root):
         ("modules.graph.gin_layer", "GINGraphConvolution"),
         ("modules.graph.gnn", "GNN"),
         ("modules.graph_mixer", "GraphDec"),
-        ("learners.facmac_learner", "FACMACLearner"),
+        ("learners.gavdac_learner", "GAVDACLearner"),
     )
     classes = {}
     with ExitStack() as stack:
@@ -46,7 +46,7 @@ def load_reference(source_root):
             exec(compile(path.read_text(encoding="utf-8"), str(path), "exec"), namespace)
             classes[symbol] = namespace[symbol]
             stack.enter_context(patch.object(module, symbol, namespace[symbol]))
-    return classes["CQMixMAC"], classes["FACMACLearner"]
+    return classes["CQMixMAC"], classes["GAVDACLearner"]
 
 
 def snapshot(learner, logger):
@@ -80,7 +80,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", type=Path)
     parser.add_argument("--compare-source-root", type=Path)
-    parser.add_argument("--config", default="facmac_ea")
+    parser.add_argument("--config", default="gavdac_ea")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--batch-size", type=int, default=512)
     parser.add_argument("--warmup", type=int, default=2)
@@ -105,7 +105,7 @@ def main():
     from controllers.cqmix_controller import CQMixMAC
     from direct_main import load_yaml, normalize_scalars, recursive_dict_update
     from envs.maenv import MGEnv
-    from learners.facmac_learner import FACMACLearner
+    from learners.gavdac_learner import GAVDACLearner
 
     random.seed(args.seed)
     np.random.seed(args.seed)
@@ -150,7 +150,7 @@ def main():
     batch.update(data)
     mac = CQMixMAC(scheme, groups, learner_args)
     logger = LossLog()
-    learner = FACMACLearner(mac, scheme, logger, learner_args)
+    learner = GAVDACLearner(mac, scheme, logger, learner_args)
     reference = None
     if args.compare_source_root is not None:
         reference_mac, reference_learner = load_reference(args.compare_source_root)

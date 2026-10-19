@@ -165,13 +165,13 @@ Windows 上少数 uv 启动因权限错误未启动 Python，不计作实验。
 ## 复现与边界
 
 ```powershell
-uv run python src/direct_main.py --config facmac_ea --env-config microgrid --override wandb_mode=disabled --override save_model=False --override t_max=12500
+uv run python src/direct_main.py --config gavdac_ea --env-config microgrid --override wandb_mode=disabled --override save_model=False --override t_max=12500
 uv run python tests/test_corrected_training.py
-uv run python tools/benchmark_facmac_environment.py --output-id <new-id> --timesteps 20000 --seed 0
+uv run python tools/benchmark_gavdac_environment.py --output-id <new-id> --timesteps 20000 --seed 0
 uv run python tools/run_physical_microgrid_milp.py --all-test-days --output-id <new-id>
 ```
 
-`benchmark_facmac_environment.py --source-root <snapshot>` 可以对照旧源码，
+`benchmark_gavdac_environment.py --source-root <snapshot>` 可以对照旧源码，
 不切换当前分支，也不修改归档源码。后续运行保存入口实际收到的合并配置和参数，
 所有实验使用新目录，不覆盖旧结果。
 

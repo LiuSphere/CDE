@@ -25,7 +25,7 @@ from tools.run_current_model_milp import LinearModel, quadratic_epigraph
 from direct_main import load_yaml, recursive_dict_update
 from envs.maenv import MGEnv
 
-VERSION = "facmac_dispatch_v3"
+VERSION = "gavdac_dispatch_v3"
 COLORS = ["#176f85", "#b33e65", "#49813e", "#8952a5", "#b77815", "#3d60b3"]
 
 

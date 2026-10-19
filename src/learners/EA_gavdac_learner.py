@@ -1,7 +1,7 @@
-from .facmac_learner import FACMACLearner
+from .gavdac_learner import GAVDACLearner
 
 
-class EA_FACMACLearner(FACMACLearner):
+class EA_GAVDACLearner(GAVDACLearner):
     # Continuous EA relies on rollout/evolution/sync in `run.py`, not population-aware learner updates.
     uses_population_training = False
 

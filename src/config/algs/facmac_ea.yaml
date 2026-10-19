@@ -1,3 +1,0 @@
-# Main method: FACMAC with evolutionary augmentation.
-name: "facmac_ea"
-use_cuda: false

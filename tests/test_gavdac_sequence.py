@@ -1,4 +1,4 @@
-"""Differential checks for sequence execution and complete FACMAC updates."""
+"""Differential checks for sequence execution and complete GAVDAC updates."""
 
 import copy
 import sys
@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from components.episode_buffer import EpisodeBatch
 from controllers.cqmix_controller import CQMixMAC
-from learners.facmac_learner import FACMACLearner
+from learners.gavdac_learner import GAVDACLearner
 from modules.graph_mixer import GraphDec
 from modules.graph.gin_layer import GINGraphConvolution
 
@@ -195,7 +195,7 @@ class PolicySequenceTest(unittest.TestCase):
 class LearnerSequenceTest(unittest.TestCase):
     def test_policy_recurrence_is_run_once_per_update(self):
         batch, mac, args, scheme = fixture()
-        learner = FACMACLearner(mac, scheme, LossLog(), args)
+        learner = GAVDACLearner(mac, scheme, LossLog(), args)
         calls = []
         hook = mac.agent.rnn.register_forward_hook(lambda *unused: calls.append(1))
         try:
@@ -215,7 +215,7 @@ class LearnerSequenceTest(unittest.TestCase):
                     n_agents=n_agents, optimizer=optimizer, target_update_mode=target_mode
                 )
                 logger = LossLog()
-                candidate = FACMACLearner(mac, scheme, logger, args)
+                candidate = GAVDACLearner(mac, scheme, logger, args)
                 reference = copy.deepcopy(candidate)
                 for update in range(3):
                     expected_losses = reference_update(reference, batch)
