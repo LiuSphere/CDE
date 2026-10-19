@@ -1,0 +1,6 @@
+# Fixed before this campaign's holdout evaluation; thresholds use train data only.
+name: "tariff_soc_rule_v1"
+low_price_quantile: 0.35
+high_price_quantile: 0.70
+reserve_soc: 0.30
+charge_target_soc: 0.65

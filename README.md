@@ -38,6 +38,7 @@ uv run python src/direct_main.py --config gavdac_ea_main --env-config microgrid 
 | 配置 | 用途 |
 | --- | --- |
 | `gavdac_ea_main` | 默认主方法：无交叉，batch128、hidden48、mixer32、buffer50000、600万步 |
+| `gavdac_ea_main_no_ea` | 本轮匹配 C1：主方法同尺寸、同预算，仅关闭 EA |
 | `gavdac_ea_tune_v03_long` | 保留的历史 v03，启用交叉，不再是默认主方法 |
 | `gavdac_ea` | 历史通用大尺寸 GAVDAC + EA，沿用含交叉的共享默认值，不等同于主方法 |
 | `gavdac_no_ea` | 通用去 EA 控制组 |
@@ -85,6 +86,22 @@ uv run python src/direct_main.py --override wandb_mode=disabled --override save_
 现有入口未完整固定全部随机源，不宣称种子标签保证完全复现。
 
 ## 实验与历史版本
+
+本轮按 [正式实验计划](docs/paper_experiment_plan.md) 重新训练 C1、C2、MAPPO，
+各3个种子，不复用历史结果。连续 SOC 为主评价，每日重置版另列。
+规则基线只用当前观测和训练数据派生的固定阈值。
+
+验证时段的评价底座检查（输出目录必须尚不存在）：
+
+```powershell
+uv run python tools/evaluate_microgrid_comparison.py --rule --split validation --rows 731 732 733 734 735 736 737 --mode continuous --output results/rulecheck01
+uv run python tools/freeze_paper_protocol.py --output results/protocol01/frozen.json
+```
+
+评价保存轨迹、独立成本汇总与物理检查。已有 Actor 用 `--checkpoint` 替代 `--rule`，
+自动从其保存源码生成独立运行目录，并保留源码、输入与权重哈希校验。
+仅在最终评价阶段使用 `--split test --all-days --retrospective-holdout`；
+工具默认不允许无明确标记的保留评价，不在开发时查看保留结果。
 
 主方法移除交叉是配置选择，不是一次新的完整多种子验证。
 历史 v03、消融和0.25交叉运行保留原配置、源码快照和指标；中止运行不能计作完成。

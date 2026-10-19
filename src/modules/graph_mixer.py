@@ -17,11 +17,11 @@ class GraphDec(nn.Module):
         self.embed_dim = args.mixing_embed_dim
         self.state_norm = nn.LayerNorm(self.state_dim)
         self.mixer_weight_scale = getattr(args, "mixer_weight_scale", 0.1)
+        # The microgrid exchanges energy through one shared community bus, so
+        # every agent is physically reachable from every other agent.
         self.register_buffer(
             "communication_adjacency",
-            th.tensor(
-                [[1.0, 1.0, 1.0], [1.0, 1.0, 0.0], [1.0, 0.0, 1.0]]
-            ),
+            th.ones(self.n_agents, self.n_agents),
         )
 
         self.mixing_GNN = GNN(

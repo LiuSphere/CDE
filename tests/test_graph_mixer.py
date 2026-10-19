@@ -40,10 +40,24 @@ class GraphMixerTest(unittest.TestCase):
         self.assertTrue(
             th.equal(
                 mixer.communication_adjacency,
-                th.tensor([[1.0, 1.0, 1.0], [1.0, 1.0, 0.0], [1.0, 0.0, 1.0]]),
+                th.ones(3, 3),
             )
         )
         self.assertTrue(th.all(gradients.abs() > 0))
+
+    def test_adjacency_follows_agent_count(self):
+        args = SimpleNamespace(
+            n_agents=5,
+            state_shape=55,
+            rnn_hidden_dim=64,
+            mixing_embed_dim=64,
+            hypernet_embed=64,
+            mixer_weight_scale=0.1,
+        )
+        mixer = GraphDec(args)
+
+        self.assertEqual(mixer.communication_adjacency.shape, (5, 5))
+        self.assertTrue(th.equal(mixer.communication_adjacency, th.ones(5, 5)))
 
 
 if __name__ == "__main__":

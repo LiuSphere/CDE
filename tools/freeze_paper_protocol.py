@@ -16,10 +16,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import direct_main
 
 
-CONFIGS = [
-    "gavdac_ea_tune_v03_long", "gavdac_v03_no_ea",
-    "gavdac_v03_no_mutation", "gavdac_v03_no_crossover",
-]
+CONFIGS = ["gavdac_ea_main_no_ea", "gavdac_ea_main"]
 
 
 def hashes(paths):
@@ -40,7 +37,19 @@ def freeze():
     validation_end = 731 + (days - 731 + 1) // 2
     if days != 1095:
         raise ValueError("Review the frozen split protocol before using different input dimensions")
+    parent = configs["gavdac_ea_main"]
+    child = configs["gavdac_ea_main_no_ea"]
+    if child != {**parent, "name": "gavdac_ea_main_no_ea", "EA": False}:
+        raise ValueError("C1 differs from C2 beyond EA and its name")
     return {
+        "campaign": "Fresh full-connectivity GAVDAC comparison",
+        "historical_reuse": False,
+        "formal_matrix": {"C0": "rule", "C1": CONFIGS[0], "C2": CONFIGS[1],
+                          "C3": "MAPPO, implementation/configuration pending P3",
+                          "C4": "physical MILP, continuous boundary validation pending P1"},
+        "formal_seeds": [0, 1, 2],
+        "formal_training_runs": 9,
+        "stage_scope": "P0 C0/C1/C2 freeze; P1/P3 need separate verified implementation records",
         "created_at": datetime.now().astimezone().isoformat(),
         "git_commit": subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True,
@@ -53,6 +62,17 @@ def freeze():
             [p for p in (ROOT / "src").rglob("*") if p.suffix in {".py", ".yaml"}]
         ),
         "data_sha256": hashes((ROOT / "src/envs/data").glob("*.csv")),
+        "tool_sha256": hashes([
+            ROOT / "tools/freeze_paper_protocol.py",
+            ROOT / "tools/evaluate_microgrid_comparison.py",
+            ROOT / "tools/run_physical_microgrid_milp.py",
+        ]),
+        "document_sha256": hashes([
+            ROOT / "docs/paper_experiment_plan.md", ROOT / "docs/paper_execution.md",
+        ]),
+        "rule_settings": direct_main.load_yaml(
+            ROOT / "src/config/baselines/microgrid_rule.yaml",
+        ),
         "splits": {
             "train": [0, 730], "validation": [731, validation_end - 1],
             "retrospective_holdout": [validation_end, days - 1],
@@ -63,7 +83,23 @@ def freeze():
         "rng_protocol": "Existing NumPy/PyTorch/MGEnv seeding; Python/fastrand/Gym spaces not fully seeded",
         "training_budget": "6M total non-test environment steps, including EA population interactions",
         "primary_actor": "Validation-selected RL Actor; EA separately supplementary",
-        "crossover_fix": "p=0 now disables clone recombination; p=1 operations and RNG sequence unchanged",
+        "inventory_protocol": {
+            "primary": "continuous SOC", "secondary": "daily reset SOC",
+            "initial_soc": 0.35, "terminal_soc": "free within device bounds",
+            "hidden_state_and_previous_action": "reset daily for all learning actors",
+            "checkpoint_selection": "8 independent days, mean validation return",
+        },
+        "decision_protocol": {
+            "primary_metric": "whole-period economic_cost",
+            "secondary_metric": "whole-period full_cost",
+            "practical_improvement_fraction": 0.01,
+            "direction_requirement": "all three seeds lower than C0; all three C2/C1 label differences lower",
+            "interpretation": "1% practical threshold and three-seed consistency are descriptive, not significance",
+            "statistics": "per-seed whole-period totals, mean, sample standard deviation (ddof=1)",
+            "daily_comparisons": "descriptive only; consecutive days are not independent training repeats",
+        },
+        "tolerances": {"balance_power": 1e-8, "soc_transition": 1e-10,
+                       "cost_per_agent_step": 1e-8, "action_box": 1e-7},
     }
 
 

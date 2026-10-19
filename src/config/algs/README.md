@@ -6,6 +6,7 @@ configured separately by `src/config/envs/microgrid.yaml`.
 | Configuration | Purpose |
 | --- | --- |
 | `gavdac_ea_main` | Selected main: v03 dimensions/budget, `crossover_prob: 0.0`; selection, mutation and RL injection retained. |
+| `gavdac_ea_main_no_ea` | Fresh C1 control: entry-merged main parameters, only `EA: false` and the name differ. |
 | `gavdac_ea_tune_v03_long` | Historical v03 with crossover: 6M steps, batch128, hidden48, mixer32, buffer50000. |
 | `gavdac_ea` | Historical generic GAVDAC + EA using shared defaults, including crossover; not v03 dimensions. |
 | `gavdac_no_ea` | Generic baseline with `EA: false`. |
@@ -40,6 +41,11 @@ validation from this default change.
 Compare total environment interactions including EA rollouts, validation-selected
 checkpoints, physical feasibility, inventory diagnostics and all evaluation days.
 Do not select RL/EA actors independently for each test day.
+
+The fresh comparison uses C1/C2/MAPPO seeds 0/1/2, without reusing historical
+models or results. The full-connectivity mixer and continuous evaluation
+protocol are frozen before formal runs; MAPPO is a separate implementation.
+See `docs/paper_experiment_plan.md` for phase gates and interpretation limits.
 
 Execution of the fixed paper matrix is recorded in `docs/paper_execution.md`.
 Historical VMAS and optimizer/noise sweeps are preserved in the pre-cleanup backup

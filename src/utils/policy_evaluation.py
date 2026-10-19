@@ -113,7 +113,7 @@ class BestPolicyStore:
         return path
 
 
-def evaluate_saved_policy(runner, mac, args):
+def validate_policy_checkpoint(runner, args):
     checkpoint = Path(args.policy_checkpoint)
     metadata = json.loads((checkpoint / "metadata.json").read_text(encoding="utf-8"))
     with (checkpoint / "config.yaml").open(encoding="utf-8") as file:
@@ -141,6 +141,12 @@ def evaluate_saved_policy(runner, mac, args):
             raise ValueError(f"Checkpoint input data changed: {name}")
     if hashlib.sha256((checkpoint / "agent.th").read_bytes()).hexdigest() != metadata["policy_sha256"]:
         raise ValueError("Checkpoint policy hash mismatch")
+    return metadata
+
+
+def evaluate_saved_policy(runner, mac, args):
+    checkpoint = Path(args.policy_checkpoint)
+    metadata = validate_policy_checkpoint(runner, args)
     mac.load_models(str(checkpoint))
     rows = fixed_rows(runner.env, "test", args.typical_day_rows, args.fixed_eval_days)
     if not set(rows).isdisjoint(metadata["validation"]["rows"]):
