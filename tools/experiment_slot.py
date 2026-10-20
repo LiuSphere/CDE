@@ -90,8 +90,11 @@ def validate_job(config, seed, token, slot, slots):
         raise ValueError("Invalid slot or formal seed")
 
 
-def supervise(config, seed, token, slot, slots, threads=1, credential_file=None, smoke=False):
+def supervise(config, seed, token, slot, slots, threads=1, credential_file=None, smoke=False,
+              engineering=False):
     validate_job(config, seed, token, slot, slots)
+    if engineering and (smoke or config != "gavdac_mappo"):
+        raise ValueError("Engineering budget is only for the independent MAPPO pilot")
     env = job_environment(threads, credential_file)
     if not (ROOT / "src/config/algs" / f"{config}.yaml").is_file():
         raise ValueError("Algorithm configuration is not implemented")
@@ -122,6 +125,8 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
         }
         if smoke:
             overrides.update(t_max=12500, save_model=False, showcase_enabled=False)
+        if engineering:
+            overrides.update(t_max=500000)
         for key, value in overrides.items():
             command += ["--override", f"{key}={json.dumps(value)}"]
         source_hashes = {
@@ -143,6 +148,7 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
                 "python_version": platform.python_version(),
                 "supervisor_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "credential_file_used": bool(credential_file), "smoke": smoke,
+                "engineering": engineering,
                 "source_sha256": source_hashes,
                 "git_commit": subprocess.check_output(
                     ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True,
@@ -179,6 +185,7 @@ def main():
     parser.add_argument("--threads", type=int, default=1)
     parser.add_argument("--credential-file", type=Path)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--engineering", action="store_true")
     parser.add_argument("--detach", action="store_true")
     args = parser.parse_args()
     if args.status:
@@ -208,7 +215,7 @@ def main():
                           "status": "detached_pending_slot_acquisition"}))
         return
     raise SystemExit(supervise(args.config, args.seed, args.token, args.slot, args.slots,
-                               args.threads, args.credential_file, args.smoke))
+                               args.threads, args.credential_file, args.smoke, args.engineering))
 
 
 if __name__ == "__main__":

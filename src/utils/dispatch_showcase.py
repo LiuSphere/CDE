@@ -240,7 +240,11 @@ class DispatchShowcase:
         # A learner's GRU state may retain a non-leaf autograd graph. Construct
         # an inference controller without copying it or consuming training RNG.
         with torch.random.fork_rng(devices=[]):
-            clone = CQMixMAC(runner.batch.scheme, runner.batch.groups, runner.args)
+            if self.args.name == "gavdac_mappo":
+                from modules.mappo import MAPPOController
+                clone = MAPPOController(runner.batch.scheme, runner.batch.groups, runner.args)
+            else:
+                clone = CQMixMAC(runner.batch.scheme, runner.batch.groups, runner.args)
         clone.load_models(str(checkpoint))
         args = deepcopy(runner.args)
         args.env_args.update(result_dir=str(directory), run_id="display", log_trajectories=False)

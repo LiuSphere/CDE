@@ -1,0 +1,16 @@
+name: "gavdac_mappo"
+EA: false
+t_max: 6000000
+test_interval: 10000
+save_model_interval: 50000
+mappo_width: 64
+mappo_learning_rate: 0.0003
+mappo_n_steps: 240
+mappo_epochs: 5
+mappo_gae_lambda: 0.95
+mappo_clip_range: 0.2
+mappo_clip_range_vf: 0.2
+mappo_ent_coef: 0.01
+mappo_vf_coef: 0.5
+mappo_max_grad_norm: 0.5
+mappo_log_std_init: -0.5

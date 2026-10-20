@@ -96,6 +96,9 @@ uv run python src/direct_main.py --override wandb_mode=disabled --override save_
 
 本轮按 [正式实验计划](docs/paper_experiment_plan.md) 重新训练 C1、C2、MAPPO，
 各3个种子，不复用历史结果。连续 SOC 为主评价，每日重置版另列。
+独立 MAPPO 的信息边界、PPO 核心及有限开发预算见
+[MAPPO 基线协议](docs/mappo_baseline.md)。正式配置为 `gavdac_mappo`；
+使用同一 `src/direct_main.py` 入口，不调用旧环境的 SB3 参考工具。
 规则基线只用当前观测和训练数据派生的固定阈值。
 
 验证时段的评价底座检查（输出目录必须尚不存在）：

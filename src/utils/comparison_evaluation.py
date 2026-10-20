@@ -33,7 +33,13 @@ def make_evaluation_runner(config, policy=None):
         "terminated": {"vshape": (1,), "dtype": torch.uint8},
     }
     groups = {"agents": info["n_agents"]}
-    mac = policy if policy is not None else CQMixMAC(scheme, groups, args)
+    if policy is not None:
+        mac = policy
+    elif args.name == "gavdac_mappo":
+        from modules.mappo import MAPPOController
+        mac = MAPPOController(scheme, groups, args)
+    else:
+        mac = CQMixMAC(scheme, groups, args)
     if policy is None:
         mac.agent.eval()
     runner.setup(scheme, groups, {}, mac)

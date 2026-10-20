@@ -31,6 +31,9 @@ def rl_to_evo(rl_agent, evo_net):
 
 
 def run(_config, _log):
+    if _config["name"] == "gavdac_mappo":
+        from run_mappo import run_mappo
+        return run_mappo(_config, _log)
     # check args sanity
     _config = args_sanity_check(_config, _log)
 

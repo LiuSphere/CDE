@@ -17,6 +17,14 @@ from tools import experiment_slot, sync_remote_wandb, validate_experiment_host
 
 
 class ExperimentSlotTest(unittest.TestCase):
+    def test_engineering_budget_cannot_modify_main_algorithm(self):
+        with self.assertRaisesRegex(ValueError, "Engineering budget"):
+            experiment_slot.supervise("gavdac_ea_main", 0, "bad_engineer", 0, 1,
+                                      engineering=True)
+        with self.assertRaisesRegex(ValueError, "Engineering budget"):
+            experiment_slot.supervise("gavdac_mappo", 0, "bad_both", 0, 1,
+                                      smoke=True, engineering=True)
+
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory(dir=ROOT / "results")
         self.addCleanup(self.directory.cleanup)
