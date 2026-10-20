@@ -120,6 +120,47 @@ def solve_continuous(env, config, rows, source="validation", initial=0.35,
     return summary, solution, records
 
 
+def solve_inventory(env, config, rows, source="validation", initial=0.35,
+                    segments=32, time_limit=60, mip_gap=1e-7, mode="continuous"):
+    if mode == "continuous":
+        return solve_continuous(
+            env, config, rows, source, initial, segments, time_limit, mip_gap)
+    if mode != "daily_reset":
+        raise ValueError("Unknown MILP inventory mode")
+    rows = list(rows)
+    if not rows or rows != sorted(set(rows)):
+        raise ValueError("Daily-reset rows must be ordered and unique")
+    records, summaries, solutions = [], [], []
+    for row in rows:
+        summary, solution, day_records = solve_continuous(
+            env, config, [row], source, initial, segments, time_limit, mip_gap)
+        records.extend(day_records)
+        summaries.append(summary)
+        solutions.append(solution)
+    summary = summarize_trajectories(records, env, rows, initial, "daily_reset")
+    summary.update(
+        objective_name="economic_cost", terminal_constraint="free each day within device bounds",
+        solve_seconds=sum(s["solve_seconds"] for s in summaries),
+        max_schedule_replay_error=max(s["max_schedule_replay_error"] for s in summaries),
+        interpolation_difference=sum(s["interpolation_difference"] for s in summaries),
+        certificate_passed=all(s["certificate_passed"] for s in summaries),
+        certified_economic_suboptimality_upper=sum(
+            s["certified_economic_suboptimality_upper"] for s in summaries),
+        acceptance_passed=all(s["acceptance_passed"] for s in summaries),
+        boundary="Independent daily perfect foresight; initial SOC reset, free daily terminal SOC")
+    solution = {
+        "status": max(s["status"] for s in solutions),
+        "mip_gap": max(s["mip_gap"] for s in solutions),
+        "objective_name": "economic_cost", "joint_milps": len(solutions),
+        "objective": sum(s["objective"] for s in solutions),
+        "dual_bound": sum(s["dual_bound"] for s in solutions),
+        "interpolation_error_bound": sum(s["interpolation_error_bound"] for s in solutions),
+        "exact_cost_lower_bound": sum(s["exact_cost_lower_bound"] for s in solutions),
+        "daily_solutions": solutions,
+    }
+    return summary, solution, records
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--rows", nargs="+", type=int, default=list(range(731, 738)))
@@ -128,6 +169,7 @@ def main():
     parser.add_argument("--segments", type=int, default=32)
     parser.add_argument("--time-limit", type=float, default=60)
     parser.add_argument("--mip-gap", type=float, default=1e-7)
+    parser.add_argument("--mode", choices=["continuous", "daily_reset"], default="continuous")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     if args.split == "test" and not args.retrospective_holdout:
@@ -142,9 +184,9 @@ def main():
     (out / "config_snapshot.yaml").write_text(
         yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
     env = make_env(config["env_args"], out)
-    summary, solution, records = solve_continuous(
+    summary, solution, records = solve_inventory(
         env, config["env_args"], args.rows, args.split, config["evaluation_initial_soc"],
-        args.segments, args.time_limit, args.mip_gap)
+        args.segments, args.time_limit, args.mip_gap, args.mode)
     summary.update(
         split=args.split, hardware=platform.platform(), scipy_version=scipy.__version__,
         process_peak_working_set_bytes=peak_memory_bytes(),

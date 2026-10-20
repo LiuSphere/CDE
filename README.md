@@ -76,6 +76,12 @@ uv run python src/direct_main.py --config gavdac_ea_main --env-config microgrid 
 uv run python tools/run_continuous_microgrid_milp.py --output results/new_milp_pilot
 ```
 
+`--mode daily_reset` 是独立重置初始 SOC、自由日末 SOC 的货币成本参考，
+不是旧工具的每日循环 SOC。连续版默认联合求解全部指定行。
+正式比较先用 `tools/freeze_comparison_evaluation.py` 固定原主机的验证集 Actor，
+再通过 `tools/experiment_slot.py --evaluation-manifest <manifest>` 执行隔离评估队列。
+冻结清单含 Actor、配置、源码、数据与评估工具哈希；不取消旧 checkpoint 校验。
+
 ## 验证
 
 ```powershell

@@ -91,10 +91,14 @@ def validate_job(config, seed, token, slot, slots):
 
 
 def supervise(config, seed, token, slot, slots, threads=1, credential_file=None, smoke=False,
-              engineering=False):
+              engineering=False, evaluation_manifest=None):
     validate_job(config, seed, token, slot, slots)
     if engineering and (smoke or config != "gavdac_mappo"):
         raise ValueError("Engineering budget is only for the independent MAPPO pilot")
+    if evaluation_manifest and (engineering or smoke):
+        raise ValueError("Evaluation cannot use training smoke/engineering flags")
+    manifest_path = Path(evaluation_manifest).resolve() if evaluation_manifest else None
+    manifest_hash = hashlib.sha256(manifest_path.read_bytes()).hexdigest() if manifest_path else None
     env = job_environment(threads, credential_file)
     if not (ROOT / "src/config/algs" / f"{config}.yaml").is_file():
         raise ValueError("Algorithm configuration is not implemented")
@@ -129,6 +133,12 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
             overrides.update(t_max=500000)
         for key, value in overrides.items():
             command += ["--override", f"{key}={json.dumps(value)}"]
+        if evaluation_manifest:
+            command = [
+                uv, "run", "--frozen", "python", "tools/run_comparison_queue.py",
+                "--manifest", str(manifest_path),
+                "--seed", str(seed), "--token", token,
+            ]
         source_hashes = {
             path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted((ROOT / "src").rglob("*"))
@@ -149,6 +159,8 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
                 "supervisor_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "credential_file_used": bool(credential_file), "smoke": smoke,
                 "engineering": engineering,
+                "evaluation_manifest": str(manifest_path) if manifest_path else None,
+                "evaluation_manifest_sha256": manifest_hash,
                 "source_sha256": source_hashes,
                 "git_commit": subprocess.check_output(
                     ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True,
@@ -186,6 +198,7 @@ def main():
     parser.add_argument("--credential-file", type=Path)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--engineering", action="store_true")
+    parser.add_argument("--evaluation-manifest", type=Path)
     parser.add_argument("--detach", action="store_true")
     args = parser.parse_args()
     if args.status:
@@ -215,7 +228,8 @@ def main():
                           "status": "detached_pending_slot_acquisition"}))
         return
     raise SystemExit(supervise(args.config, args.seed, args.token, args.slot, args.slots,
-                               args.threads, args.credential_file, args.smoke, args.engineering))
+                               args.threads, args.credential_file, args.smoke, args.engineering,
+                               args.evaluation_manifest))
 
 
 if __name__ == "__main__":

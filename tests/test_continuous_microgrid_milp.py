@@ -13,11 +13,29 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
-from tools.run_continuous_microgrid_milp import main, solve_continuous
+from tools.run_continuous_microgrid_milp import main, solve_continuous, solve_inventory
 from tools.run_physical_microgrid_milp import make_env, solve_network
 
 
 class ContinuousMilpTest(unittest.TestCase):
+    def test_daily_reset_is_free_terminal_and_not_cyclic(self):
+        config = yaml.safe_load((ROOT / "src/config/envs/microgrid.yaml").read_text(
+            encoding="utf-8"))["env_args"]
+        with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+            env = make_env(config, Path(directory))
+            summary, solution, records = solve_inventory(
+                env, config, [731, 732], mode="daily_reset")
+            self.assertTrue(summary["acceptance_passed"])
+            self.assertEqual(solution["joint_milps"], 2)
+            for day in summary["days"]:
+                np.testing.assert_allclose(day["initial_soc"], .35, atol=1e-10)
+            self.assertFalse(np.allclose(summary["terminal_soc"], .35))
+            singles = [solve_continuous(env, config, [row])[0] for row in [731, 732]]
+            self.assertAlmostEqual(summary["totals"]["economic_cost"],
+                                   sum(s["totals"]["economic_cost"] for s in singles), places=6)
+            json.dumps(solution, allow_nan=False)
+            self.assertEqual(len(records), 144)
+
     def test_entry_writes_complete_serializable_evidence(self):
         with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
             output = Path(directory) / "pilot"
