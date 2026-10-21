@@ -16,6 +16,7 @@ from controllers.cqmix_controller import CQMixMAC
 from ea import mod_neuro_evo as utils_ne
 from learners.EA_gavdac_learner import EA_GAVDACLearner
 from learners.gavdac_learner import GAVDACLearner
+from learners.clipped_double_gavdac_learner import ClippedDoubleGAVDACLearner
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -166,7 +167,9 @@ def run_sequential(args, logger):
                     logger, args,
                 )
     # Learner
-    if args.EA:
+    if getattr(args, "clipped_double_critic", False):
+        learner = ClippedDoubleGAVDACLearner(mac, buffer.scheme, logger, args)
+    elif args.EA:
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
         learner = GAVDACLearner(mac, buffer.scheme, logger, args)
@@ -390,6 +393,8 @@ def run_sequential(args, logger):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
+    if getattr(args, "clipped_double_critic", False):
+        learner.write_completion(args.local_results_path, runner.t_env, episode, ea_cycle)
     runner.close_env()
     logger.console_logger.info("Finished Training")
 
