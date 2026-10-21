@@ -8,6 +8,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | Hypothesis | Intervention | Engineering | Economic Gate | State |
 | --- | --- | --- | --- | --- |
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Closed; reverted69d60ef/62b1bfa;146tests passed |
+| [H02](H02.md) | Clipped double mixed-Q targets | Pending | Unchanged3%each/mean | Registered; no algorithm edits or runs yet |
 
 ## Record Rules
 
