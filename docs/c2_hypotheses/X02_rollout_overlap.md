@@ -47,4 +47,23 @@ those speculative samples or claim exact resume after such an error.
 
 ## State
 
-Registered; implementation and evidence pending.
+Accepted on 2026-10-21. Implementation `3d364cb`; registration `ce8dbc6`.
+
+- `results/x02_focused_b.log`: all 11 focused tests passed in 67.986 seconds.
+  The population policies are distinct; both warmup Box sampling and Gaussian
+  exploration preserve physical states, hidden states, CSV order and RNGs.
+- `results/x02_count_a.csv/log`: 14,400 joint steps and 45 actual learner
+  updates, with no nested-rollout double count. This was a counting check
+  concurrent with correctness tests, not an accepted timing comparison.
+- `results/x02_full_a.log`: all 168 tests passed in 294.254 seconds.
+- `results/x02_pair_a/`: 57,600 steps and 945 updates per case. AB/BA reference
+  seconds 112.392/112.589; candidate 108.732/109.197. Each paired throughput
+  improvement 3.37%/3.11%, aggregate 3.24%, post-warmup 3.61%.
+- `results/x02_trace_reference_a.json` and `x02_trace_candidate_a.json`:
+  exact full-training trace match over 101 replay episodes and 48 complete
+  updates, including recorded parameter/gradient/optimizer/target digests and
+  captured parent Python/NumPy/PyTorch random states.
+
+The original 2% practical gate and both engineering/comparison gates passed.
+Keep X02; no rollback required. The source/failure boundaries above remain
+mandatory. No economic or remote-host claim follows from this local screen.

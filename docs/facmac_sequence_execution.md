@@ -43,6 +43,18 @@ after validation, episode counters and recurrent hidden states. Workers never
 explore: exploration RNG consumption remains in the parent, and dependent RL
 episodes and critic-before-actor updates retain their original ordering.
 
+X02 overlaps the EA cycle's single common-start exploring RL rollout in a
+separate parent-side runner while population workers execute. The main Actor's
+exploration RNG is used at the original post-population `t_env` offset. The
+parent commits population episodes, then the RL episode; only then can learning
+or evolution proceed. This does not parallelize dependent ordinary RL episodes.
+The helper never writes CSVs; ordered parent commits own all trajectory output.
+A fatal population failure may follow a physically executed speculative RL
+rollout: fail the run, do not reuse those samples or claim exact resume.
+See [X02 evidence](c2_hypotheses/X02_rollout_overlap.md): exact short training
+trace match, 168 tests passed, two paired local screens improved total
+throughput a further 3.24% versus X01, not an economic advantage.
+
 This rollout path does not implement asynchronous learning, larger rollout
 batches or additional training interactions. More CPU usage is not
 itself evidence of a speedup. The five-member population exposes at most five
