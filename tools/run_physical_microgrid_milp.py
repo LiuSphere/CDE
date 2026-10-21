@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,7 +33,7 @@ COLORS = ["#176f85", "#b33e65", "#49813e", "#8952a5", "#b77815", "#3d60b3"]
 def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
                   soc_min=0.2, soc_max=0.8, terminal_soc=None, segments=32,
                   battery_enabled=True, objective="full_cost", time_limit=60,
-                  mip_gap=1e-7):
+                  mip_gap=1e-7, diagnostics_path=None):
     """Joint dispatch on a uniform-loss, finite-capacity community bus."""
     if objective not in {"economic_cost", "full_cost"}:
         raise ValueError("Unknown MILP objective")
@@ -104,7 +105,28 @@ def solve_network(load, pv, price, params, limits, efficiency, fee, initial_soc,
         error_bound += len(load) * p["costa"] * (dg / segments)**2 / 4
     for entries in transfer_rows:
         model.row(entries, 0, 0)
+    started = time.perf_counter()
     result = model.solve(gap=mip_gap, limit=time_limit)
+    if diagnostics_path is not None:
+        # Persist solver evidence before raising on an absent incumbent.
+        finite = lambda value: float(value) if value is not None and np.isfinite(value) else None
+        diagnostic = {
+            "status": int(result.status), "message": str(result.message),
+            "has_incumbent": result.x is not None,
+            "objective": finite(result.fun),
+            "dual_bound": finite(getattr(result, "mip_dual_bound", None)),
+            "mip_gap": finite(getattr(result, "mip_gap", None)),
+            "mip_node_count": finite(getattr(result, "mip_node_count", None)),
+            "objective_name": objective, "time_limit_seconds": time_limit,
+            "requested_mip_gap": mip_gap, "segments": segments,
+            "solver_wall_seconds": time.perf_counter() - started,
+            "variables": len(model.lower), "constraints": len(model.rows),
+            "interpolation_error_bound": error_bound,
+            "incumbent_variables": result.x.tolist() if result.x is not None else None,
+            "scope": "Solver evidence only; physical replay and cost certificate must pass separately",
+        }
+        with Path(diagnostics_path).open("x", encoding="utf-8") as file:
+            json.dump(diagnostic, file, indent=2, allow_nan=False)
     if result.x is None or result.status not in (0, 1):
         raise RuntimeError(f"Physical MILP failed: {result.message}")
     schedules = []

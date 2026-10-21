@@ -50,7 +50,7 @@ def peak_memory_bytes():
 
 
 def solve_continuous(env, config, rows, source="validation", initial=0.35,
-                     segments=32, time_limit=60, mip_gap=1e-7):
+                     segments=32, time_limit=60, mip_gap=1e-7, diagnostics_path=None):
     rows = list(rows)
     allowed = getattr(env, f"{source}_indices")
     if (not rows or any(isinstance(r, bool) or not isinstance(r, (int, np.integer))
@@ -65,6 +65,7 @@ def solve_continuous(env, config, rows, source="validation", initial=0.35,
         env.params["exchange_max"], env.exchange_efficiency, env.exchange_fee,
         initial, env.soc_min, env.soc_max, terminal_soc=None, segments=segments,
         objective="economic_cost", time_limit=time_limit, mip_gap=mip_gap,
+        diagnostics_path=diagnostics_path,
     )
     solve_seconds = time.perf_counter() - started
     records, end = [], np.full(env.n_agents, initial)
@@ -121,10 +122,12 @@ def solve_continuous(env, config, rows, source="validation", initial=0.35,
 
 
 def solve_inventory(env, config, rows, source="validation", initial=0.35,
-                    segments=32, time_limit=60, mip_gap=1e-7, mode="continuous"):
+                    segments=32, time_limit=60, mip_gap=1e-7, mode="continuous",
+                    diagnostics_dir=None):
     if mode == "continuous":
         return solve_continuous(
-            env, config, rows, source, initial, segments, time_limit, mip_gap)
+            env, config, rows, source, initial, segments, time_limit, mip_gap,
+            Path(diagnostics_dir) / "solver_diagnostics.json" if diagnostics_dir else None)
     if mode != "daily_reset":
         raise ValueError("Unknown MILP inventory mode")
     rows = list(rows)
@@ -133,7 +136,8 @@ def solve_inventory(env, config, rows, source="validation", initial=0.35,
     records, summaries, solutions = [], [], []
     for row in rows:
         summary, solution, day_records = solve_continuous(
-            env, config, [row], source, initial, segments, time_limit, mip_gap)
+            env, config, [row], source, initial, segments, time_limit, mip_gap,
+            Path(diagnostics_dir) / f"solver_row_{row}.json" if diagnostics_dir else None)
         records.extend(day_records)
         summaries.append(summary)
         solutions.append(solution)
@@ -184,9 +188,19 @@ def main():
     (out / "config_snapshot.yaml").write_text(
         yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
     env = make_env(config["env_args"], out)
+    with (out / "attempt.json").open("x", encoding="utf-8") as file:
+        json.dump({
+            "rows": args.rows, "split": args.split, "mode": args.mode,
+            "time_limit_seconds": args.time_limit, "segments": args.segments,
+            "mip_gap": args.mip_gap, "initial_soc": config["evaluation_initial_soc"],
+            "terminal_soc": "free within equipment bounds", "objective": "economic_cost",
+            "entry_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+            "solver_entry_sha256": hashlib.sha256(
+                (ROOT / "tools/run_physical_microgrid_milp.py").read_bytes()).hexdigest(),
+        }, file, indent=2, allow_nan=False)
     summary, solution, records = solve_inventory(
         env, config["env_args"], args.rows, args.split, config["evaluation_initial_soc"],
-        args.segments, args.time_limit, args.mip_gap, args.mode)
+        args.segments, args.time_limit, args.mip_gap, args.mode, out)
     summary.update(
         split=args.split, hardware=platform.platform(), scipy_version=scipy.__version__,
         process_peak_working_set_bytes=peak_memory_bytes(),

@@ -81,6 +81,11 @@ uv run python tools/run_continuous_microgrid_milp.py --output results/new_milp_p
 正式比较先用 `tools/freeze_comparison_evaluation.py` 固定原主机的验证集 Actor，
 再通过 `tools/experiment_slot.py --evaluation-manifest <manifest>` 执行隔离评估队列。
 冻结清单含 Actor、配置、源码、数据与评估工具哈希；不取消旧 checkpoint 校验。
+经明确授权可在新冻结清单中增加 MILP 时限，模型、目标及时域保持不变。
+MILP 每次返回后先保存求解诊断，包括可得的 incumbent、下界和 gap；
+超时诊断不等于通过回放或获得最优解。无可行解仍会报错。
+`tools/report_comparison_results.py --index <index.json> --output <new-results-dir>`
+从哈希核验后的轨迹重算成本，分别生成连续和日重置描述性统计。
 
 ## 验证
 

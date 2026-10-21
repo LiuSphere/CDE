@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from types import SimpleNamespace
 
 import numpy as np
 import yaml
@@ -18,6 +19,25 @@ from tools.run_physical_microgrid_milp import make_env, solve_network
 
 
 class ContinuousMilpTest(unittest.TestCase):
+    def test_timeout_without_incumbent_preserves_diagnostic_before_failure(self):
+        config = yaml.safe_load((ROOT / "src/config/envs/microgrid.yaml").read_text(
+            encoding="utf-8"))["env_args"]
+        with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+            env = make_env(config, Path(directory))
+            diagnostic = Path(directory) / "timeout.json"
+            result = SimpleNamespace(
+                status=1, message="Time limit reached", x=None, fun=None,
+                mip_dual_bound=float("-inf"), mip_gap=None, mip_node_count=0)
+            with patch("tools.run_physical_microgrid_milp.LinearModel.solve",
+                       return_value=result), self.assertRaisesRegex(RuntimeError, "Time limit"):
+                solve_continuous(env, config, [731], time_limit=1800,
+                                 diagnostics_path=diagnostic)
+            saved = json.loads(diagnostic.read_text())
+            self.assertFalse(saved["has_incumbent"])
+            self.assertIsNone(saved["dual_bound"])
+            self.assertEqual(saved["time_limit_seconds"], 1800)
+            self.assertEqual(saved["status"], 1)
+
     def test_daily_reset_is_free_terminal_and_not_cyclic(self):
         config = yaml.safe_load((ROOT / "src/config/envs/microgrid.yaml").read_text(
             encoding="utf-8"))["env_args"]
@@ -48,6 +68,9 @@ class ContinuousMilpTest(unittest.TestCase):
             self.assertIn("tools/run_continuous_microgrid_milp.py", summary["source_sha256"])
             self.assertEqual(len((output / "trajectories.csv").read_text().splitlines()), 73)
             self.assertEqual(json.loads((output / "solver.json").read_text())["status"], 0)
+            diagnostic = json.loads((output / "solver_diagnostics.json").read_text())
+            self.assertTrue(diagnostic["has_incumbent"])
+            self.assertTrue(diagnostic["incumbent_variables"])
 
     def test_joint_validation_replay_and_cost_certificate(self):
         config = yaml.safe_load((ROOT / "src/config/envs/microgrid.yaml").read_text(
