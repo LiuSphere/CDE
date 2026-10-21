@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 import torch
 
@@ -13,6 +14,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tests"))
 
 from learners.gavdac_learner import GAVDACLearner
+from learners import gradient_pool
 from test_gavdac_sequence import LossLog, fixture
 
 
@@ -41,6 +43,9 @@ class ParallelLearnerTest(unittest.TestCase):
                     for step in range(4):
                         serial.train(batch, step + 1, step)
                         parallel.train(batch, step + 1, step)
+                        self.assertIsNone(parallel.gradient_pool.pending_batch)
+                        self.assertEqual(parallel.gradient_pool.last_phase_pids["critic"],
+                                         parallel.gradient_pool.last_phase_pids["actor"])
                         for name in ("critic", "mixer", "target_critic", "target_mixer",
                                      "agent_optimiser", "critic_optimiser"):
                             if not hasattr(serial, name) or getattr(serial, name) is None:
@@ -89,6 +94,32 @@ class ParallelLearnerTest(unittest.TestCase):
             torch.testing.assert_close(before, learner.mac.agent.state_dict(), rtol=0, atol=0)
         finally:
             learner.close()
+
+    def test_cached_worker_actor_uses_one_history_and_rejects_wrong_phase(self):
+        batch, mac, args, scheme = fixture(use_cuda=False)
+        learner = GAVDACLearner(mac, scheme, LossLog(), args)
+        weights = {
+            name: {key: value.numpy().copy() for key, value in module.state_dict().items()}
+            for name, module in gradient_pool._modules(learner).items()
+        }
+        data = {key: value.numpy().copy()
+                for key, value in batch.data.transition_data.items()}
+        mask = batch["filled"][:, :-1].float()
+        mask[:, 1:] *= 1 - batch["terminated"][:, :-2].float()
+        actor_weights = {key: weights[key] for key in ("critic", "mixer")}
+        with patch.multiple(gradient_pool, _learner=learner, _scheme=scheme,
+                            _groups=batch.groups, _pending=None), \
+             patch.object(mac, "forward_sequence", wraps=mac.forward_sequence) as forward:
+            with self.assertRaisesRegex(RuntimeError, "matching cached"):
+                gradient_pool._gradients("actor", actor_weights, None, None, None, 1)
+            gradient_pool._gradients("critic", weights, data, float(mask.sum()), 1, 1)
+            with self.assertRaisesRegex(RuntimeError, "still pending"):
+                gradient_pool._gradients("critic", weights, data, float(mask.sum()), 1, 2)
+            with self.assertRaisesRegex(RuntimeError, "matching cached"):
+                gradient_pool._gradients("actor", actor_weights, None, None, None, 2)
+            gradient_pool._gradients("actor", actor_weights, None, None, None, 1)
+            self.assertEqual(forward.call_count, 1)
+            self.assertIsNone(gradient_pool._pending)
 
 
 if __name__ == "__main__":

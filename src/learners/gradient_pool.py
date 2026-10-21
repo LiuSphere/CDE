@@ -16,6 +16,7 @@ from controllers.cqmix_controller import CQMixMAC
 _learner = None
 _scheme = None
 _groups = None
+_pending = None
 
 
 class _NoLog:
@@ -51,29 +52,40 @@ def _modules(learner):
     return modules
 
 
-def _gradients(phase, weights, data, denominator, actor_weight):
+def _gradients(phase, weights, data, denominator, actor_weight, round_id):
+    global _pending
     learner = _learner
-    for name, module in _modules(learner).items():
-        module.load_state_dict({
-            key: torch.from_numpy(value) for key, value in weights[name].items()
+    modules = _modules(learner)
+    expected = (set(modules) if phase == "critic"
+                else {"critic", "mixer"} if learner.mixer is not None else {"critic"})
+    if set(weights) != expected:
+        raise ValueError("Unexpected weights for gradient phase")
+    if phase == "critic" and _pending is not None:
+        raise RuntimeError("Previous Actor phase is still pending")
+    if phase == "actor" and (_pending is None or _pending[0] != round_id):
+        raise RuntimeError("Actor phase needs the matching cached critic round")
+    for name, state in weights.items():
+        modules[name].load_state_dict({
+            key: torch.from_numpy(value) for key, value in state.items()
         })
-    transition = {key: torch.from_numpy(value) for key, value in data.items()}
-    first = next(iter(transition.values()))
-    batch = EpisodeBatch(
-        _scheme, _groups, first.shape[0], first.shape[1],
-        data=SimpleNamespace(transition_data=transition, episode_data={}),
-    )
     if phase == "critic":
+        transition = {key: torch.from_numpy(value) for key, value in data.items()}
+        first = next(iter(transition.values()))
+        batch = EpisodeBatch(
+            _scheme, _groups, first.shape[0], first.shape[1],
+            data=SimpleNamespace(transition_data=transition, episode_data={}),
+        )
         learner.critic_optimiser.zero_grad(set_to_none=True)
-        _, _, loss = learner._critic_loss(batch, denominator=denominator)
+        policy, inputs, loss = learner._critic_loss(batch, denominator=denominator)
         loss.backward()
+        _pending = (round_id, batch, policy, inputs, actor_weight)
         params = learner.critic_params
     else:
+        _, batch, policy, inputs, actor_weight = _pending
+        _pending = None
         learner.agent_optimiser.zero_grad(set_to_none=True)
         learner._set_critic_grad(False)
         try:
-            policy = learner.mac.forward_sequence(batch, end=-1)
-            inputs = learner._build_inputs_sequence(batch, end=-1)
             loss = learner._actor_loss(batch, policy, inputs) * actor_weight
             loss.backward()
         finally:
@@ -97,47 +109,72 @@ class GradientPool:
                for module in _modules(learner).values() for p in module.parameters()):
             raise ValueError("Parallel learner networks must be CPU float32")
         context = multiprocessing.get_context("spawn")
-        self.executor = ProcessPoolExecutor(
-            max_workers=workers, mp_context=context, initializer=_initialize,
-            initargs=(deepcopy(learner.args), scheme, context.Barrier(workers)),
-        )
+        self.executors = []
         initialized = False
         try:
-            ready = [self.executor.submit(_ready) for _ in range(workers)]
-            for future in ready:
-                future.result()
+            barrier = context.Barrier(workers)
+            for _ in range(workers):
+                self.executors.append(ProcessPoolExecutor(
+                    max_workers=1, mp_context=context, initializer=_initialize,
+                    initargs=(deepcopy(learner.args), scheme, barrier),
+                ))
+            ready = [executor.submit(_ready) for executor in self.executors]
+            self.pids = tuple(future.result() for future in ready)
             initialized = True
         finally:
             if not initialized:
-                self.executor.shutdown(wait=True, cancel_futures=True)
+                self.close()
         self.workers = workers
-        self.worker_pids = set()
+        self.worker_pids = set(self.pids)
+        self.last_phase_pids = {}
+        self.pending_batch = None
+        self.round_id = 0
 
     def backward(self, learner, batch, phase):
+        if phase not in {"critic", "actor"}:
+            raise ValueError("Unknown gradient phase")
+        if phase == "critic" and self.pending_batch is not None:
+            raise RuntimeError("Complete the pending Actor phase before another critic")
+        if phase == "actor" and self.pending_batch is not batch:
+            raise RuntimeError("Actor phase must reuse the same critic batch")
+        modules = _modules(learner)
+        if phase == "actor":
+            # Reloading Actor parameters would invalidate its retained autograd graph.
+            modules = {name: modules[name] for name in ("critic", "mixer") if name in modules}
         weights = {
             name: {key: value.detach().numpy().copy()
                    for key, value in module.state_dict().items()}
-            for name, module in _modules(learner).items()
+            for name, module in modules.items()
         }
-        mask = batch["filled"][:, :-1].float().clone()
-        mask[:, 1:] *= 1 - batch["terminated"][:, :-2].float()
-        denominator = float(mask.sum())
-        if denominator <= 0:
-            raise ValueError("Learner batch has no valid transitions")
-        if any(tensor.device.type != "cpu"
-               for tensor in batch.data.transition_data.values()):
-            raise ValueError("Parallel learner batches must stay on CPU")
+        denominator = None
+        if phase == "critic":
+            mask = batch["filled"][:, :-1].float().clone()
+            mask[:, 1:] *= 1 - batch["terminated"][:, :-2].float()
+            denominator = float(mask.sum())
+            if denominator <= 0:
+                raise ValueError("Learner batch has no valid transitions")
+            if any(tensor.device.type != "cpu"
+                   for tensor in batch.data.transition_data.values()):
+                raise ValueError("Parallel learner batches must stay on CPU")
+            self.round_id += 1
+            self.pending_batch = batch
         futures = []
-        for indices in np.array_split(np.arange(batch.batch_size),
-                                      min(batch.batch_size, self.workers)):
+        for index, indices in enumerate(np.array_split(
+            np.arange(batch.batch_size), min(batch.batch_size, self.workers),
+        )):
             start, stop = int(indices[0]), int(indices[-1]) + 1
-            data = {key: tensor[start:stop].detach().numpy().copy()
-                    for key, tensor in batch.data.transition_data.items()}
-            futures.append(self.executor.submit(
+            data = ({key: tensor[start:stop].detach().numpy().copy()
+                     for key, tensor in batch.data.transition_data.items()}
+                    if phase == "critic" else None)
+            futures.append(self.executors[index].submit(
                 _gradients, phase, weights, data, denominator,
-                (stop - start) / batch.batch_size,
+                (stop - start) / batch.batch_size if phase == "critic" else None,
+                self.round_id,
             ))
         results = [future.result() for future in futures]
+        self.last_phase_pids[phase] = tuple(pid for _, _, pid in results)
+        if self.last_phase_pids[phase] != self.pids[:len(results)]:
+            raise RuntimeError("Gradient shard changed worker identity")
         params = learner.critic_params if phase == "critic" else learner.agent_params
         for index, param in enumerate(params):
             gradients = [gradients[index] for _, gradients, _ in results]
@@ -156,7 +193,10 @@ class GradientPool:
         loss = torch.tensor(sum(loss for loss, _, _ in results), dtype=torch.float32)
         if not torch.isfinite(loss):
             raise ValueError("Non-finite sharded loss")
+        if phase == "actor":
+            self.pending_batch = None
         return loss
 
     def close(self):
-        self.executor.shutdown(wait=True, cancel_futures=True)
+        for executor in self.executors:
+            executor.shutdown(wait=True, cancel_futures=True)
