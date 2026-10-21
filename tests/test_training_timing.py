@@ -105,8 +105,12 @@ def main():
     parser.add_argument("--config", default="gavdac_ea")
     parser.add_argument("--timesteps", type=int, default=12144)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--rollout-workers", type=int, default=0)
+    parser.add_argument("--learner-workers", type=int, default=0)
+    parser.add_argument("--threads", type=int, default=1)
     parser.add_argument("--output", default="results/training_timing.csv")
     args = parser.parse_args()
+    th.set_num_threads(args.threads)
 
     random.seed(args.seed)
     np.random.seed(args.seed)
@@ -131,6 +135,8 @@ def main():
     config.update(
         {
             "seed": args.seed,
+            "rollout_workers": args.rollout_workers,
+            "learner_workers": args.learner_workers,
             "use_cuda": False,
             "wandb_mode": "disabled",
             "save_model": False,
@@ -170,6 +176,27 @@ def main():
             first_update_started = time.perf_counter() - elapsed
             first_update_t_env = method_args[1]
         csv_log.write("learner_update", elapsed, method_args[1], method_args[2])
+
+    original_group = EpisodeRunner.run_group
+
+    def timed_group(runner, *method_args, **method_kwargs):
+        nonlocal training_steps, training_started
+        before = runner.t_env
+        started = time.perf_counter()
+        result = original_group(runner, *method_args, **method_kwargs)
+        elapsed = time.perf_counter() - started
+        # Serial fallback already passes through the timed run() method.
+        if args.rollout_workers > 0 and len(method_args[0]) > 1:
+            timer.record("parallel_group", elapsed)
+            if not method_kwargs.get("test_mode", False):
+                if training_started is None:
+                    training_started = started
+                training_steps += runner.t_env - before
+                csv_log.write("parallel_population", elapsed, runner.t_env,
+                              step=runner.t_env - before)
+        return result
+
+    EpisodeRunner.run_group = timed_group
 
     def report_training_end(runner, method_args, method_kwargs, elapsed):
         finished = time.perf_counter()
@@ -228,12 +255,15 @@ def main():
     print(f"training_steps: {training_steps}")
     print(f"training_steps_per_second: {training_steps / total:.3f}")
     print(f"torch_threads: {th.get_num_threads()}")
+    print(f"rollout_workers: {args.rollout_workers}")
+    print(f"learner_workers: {args.learner_workers}")
     for name, (steps, seconds) in phase_times.items():
         print(f"{name}_phase_wall_clock: {seconds:.3f}s")
         print(f"{name}_phase_steps_per_second: {steps / seconds:.3f}")
     print(f"detail_csv: {args.output}")
     for name in (
         "episode_rollout",
+        "parallel_group",
         "learner_update",
         "evolution",
         "replay_sample",

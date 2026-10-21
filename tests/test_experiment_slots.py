@@ -98,6 +98,43 @@ class ExperimentSlotTest(unittest.TestCase):
         self.assertEqual(exit_record["status"], "exited_pending_validation")
         self.assertFalse((self.root / "results/cmp20/slot_locks/slot0.json").exists())
 
+    def test_parallel_options_preserve_budget_and_are_recorded(self):
+        config = self.root / "src/config/algs/gavdac_ea_main.yaml"
+        config.parent.mkdir(parents=True)
+        config.write_text("name: gavdac_ea_main\n")
+        process = SimpleNamespace(pid=os.getpid(), wait=lambda: 0, poll=lambda: 0)
+        with patch.object(experiment_slot, "ROOT", self.root), \
+             patch.object(experiment_slot.shutil, "which", return_value="uv"), \
+             patch.object(experiment_slot.subprocess, "Popen", return_value=process), \
+             patch.object(experiment_slot.subprocess, "check_output", return_value="commit"):
+            experiment_slot.supervise("gavdac_ea_main", 0, "parallel", 0, 1,
+                                      rollout_workers=4, learner_workers=8)
+        launch = json.loads((self.root / "results/parallel/launch.json").read_text())
+        self.assertEqual((launch["rollout_workers"], launch["learner_workers"]), (4, 8))
+        self.assertEqual(launch["cpu_threads"], 1)
+        self.assertIn("rollout_workers=4", launch["command"])
+        self.assertIn("learner_workers=8", launch["command"])
+        self.assertFalse(any("t_max=" in arg for arg in launch["command"]))
+
+    def test_parallel_options_reject_unregistered_comparator_and_resource_changes(self):
+        for config, threads, rollout, learner, manifest in (
+            ("gavdac_mappo", 1, 4, 4, None),
+            ("gavdac_ea_main", 1, 4, 0, "frozen.json"),
+            ("gavdac_ea_main", 2, 0, 4, None),
+            ("gavdac_ea_main", 1, -1, 0, None),
+            ("gavdac_ea_main", 1, True, 0, None),
+        ):
+            with self.subTest(config=config, threads=threads, rollout=rollout,
+                              learner=learner, manifest=manifest), \
+                 patch.object(experiment_slot, "ROOT", self.root), \
+                 patch.object(experiment_slot.subprocess, "Popen") as spawn, \
+                 self.assertRaises(ValueError):
+                experiment_slot.supervise(config, 0, "bad_workers", 0, 1, threads=threads,
+                                          rollout_workers=rollout, learner_workers=learner,
+                                          evaluation_manifest=manifest)
+            spawn.assert_not_called()
+            self.assertFalse((self.root / "results/cmp20/slot_locks").exists())
+
     def test_interrupted_supervisor_keeps_lock_while_child_is_alive(self):
         config = self.root / "src/config/algs/gavdac_ea_main.yaml"
         config.parent.mkdir(parents=True)

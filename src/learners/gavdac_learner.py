@@ -10,6 +10,11 @@ from modules.graph_mixer import GraphDec
 
 class GAVDACLearner:
     def __init__(self, mac, scheme, logger, args):
+        workers = getattr(args, "learner_workers", 0)
+        if isinstance(workers, bool) or not isinstance(workers, int) or workers < 0:
+            raise ValueError("learner_workers must be a nonnegative integer")
+        self.scheme = scheme
+        self.gradient_pool = None
         self.args = args
         self.n_agents = args.n_agents
         self.n_actions = args.n_actions
@@ -71,7 +76,7 @@ class GAVDACLearner:
 
         self.log_stats_t = -self.args.learner_log_interval - 1
 
-    def train(self, batch: EpisodeBatch, t_env: int, episode_num: int):
+    def _critic_loss(self, batch, denominator=None):
         # Get the relevant quantities
         rewards = batch["reward"][:, :-1]
         actions = batch["actions"][:, :-1]
@@ -137,47 +142,61 @@ class GAVDACLearner:
         td_error = targets.detach() - q_taken
         mask = mask.expand_as(td_error)
         masked_td_error = td_error * mask
-        loss = (masked_td_error**2).sum() / mask.sum()
-
-        self.critic_optimiser.zero_grad(set_to_none=True)
-        loss.backward()
-        th.nn.utils.clip_grad_norm_(
-            self.critic_params, self.args.grad_norm_clip
+        loss = (masked_td_error**2).sum() / (
+            mask.sum() if denominator is None else denominator
         )
+        return actor_policy, critic_inputs, loss
+
+    def _actor_loss(self, batch, actor_policy, critic_inputs):
+        self.critic.init_hidden(batch.batch_size)
+        chosen_action_qvals, self.critic.hidden_states = self.critic(
+            critic_inputs,
+            actor_policy["actions"],
+            self.critic.hidden_states,
+        )
+        if self.mixer is not None:
+            actor_context = actor_policy["hidden_states"]
+            if not getattr(self.args, "actor_mixer_context_grad", True):
+                # H01 keeps the critic context fixed without detaching actions.
+                actor_context = actor_context.detach()
+            chosen_action_qvals = self._mix_q_values(
+                self.mixer,
+                chosen_action_qvals,
+                batch["state"][:, :-1],
+                agent_obs=batch["obs"][:, :-1],
+                hidden_states=actor_context,
+            )
+        else:
+            chosen_action_qvals = chosen_action_qvals.view(
+                batch.batch_size, batch.max_seq_length - 1, self.n_agents
+            )
+        return (
+            -chosen_action_qvals.mean()
+            + actor_policy["raw_actions"].square().mean() * 1e-3
+        )
+
+    def train(self, batch: EpisodeBatch, t_env: int, episode_num: int):
+        if getattr(self.args, "learner_workers", 0) and self.gradient_pool is None:
+            from learners.gradient_pool import GradientPool
+            self.gradient_pool = GradientPool(self, self.scheme)
+        self.critic_optimiser.zero_grad(set_to_none=True)
+        if self.gradient_pool is None:
+            actor_policy, critic_inputs, loss = self._critic_loss(batch)
+            loss.backward()
+        else:
+            loss = self.gradient_pool.backward(self, batch, "critic")
+        th.nn.utils.clip_grad_norm_(self.critic_params, self.args.grad_norm_clip)
         self.critic_optimiser.step()
 
-        # Optimize the actor against the newly updated critic.
-        self.critic.init_hidden(batch.batch_size)
+        # All critic shards finish and the parent steps before any actor gradient.
         self._set_critic_grad(False)
         try:
-            chosen_action_qvals, self.critic.hidden_states = self.critic(
-                critic_inputs,
-                actor_policy["actions"],
-                self.critic.hidden_states,
-            )
-            if self.mixer is not None:
-                actor_context = actor_policy["hidden_states"]
-                if not getattr(self.args, "actor_mixer_context_grad", True):
-                    # H01 keeps the critic context fixed without detaching actions.
-                    actor_context = actor_context.detach()
-                chosen_action_qvals = self._mix_q_values(
-                    self.mixer,
-                    chosen_action_qvals,
-                    batch["state"][:, :-1],
-                    agent_obs=batch["obs"][:, :-1],
-                    hidden_states=actor_context,
-                )
-            else:
-                chosen_action_qvals = chosen_action_qvals.view(
-                    batch.batch_size, batch.max_seq_length - 1, self.n_agents
-                )
-            pg_loss = (
-                -chosen_action_qvals.mean()
-                + actor_policy["raw_actions"].square().mean() * 1e-3
-            )
-
             self.agent_optimiser.zero_grad(set_to_none=True)
-            pg_loss.backward()
+            if self.gradient_pool is None:
+                pg_loss = self._actor_loss(batch, actor_policy, critic_inputs)
+                pg_loss.backward()
+            else:
+                pg_loss = self.gradient_pool.backward(self, batch, "actor")
         finally:
             self._set_critic_grad(True)
         th.nn.utils.clip_grad_norm_(
@@ -209,6 +228,11 @@ class GAVDACLearner:
                 "loss/policy_loss", pg_loss.item(), t_env
             )
             self.log_stats_t = t_env
+
+    def close(self):
+        if self.gradient_pool is not None:
+            self.gradient_pool.close()
+            self.gradient_pool = None
 
     def _update_targets_soft(self, tau):
         with th.no_grad():

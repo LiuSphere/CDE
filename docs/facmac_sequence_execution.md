@@ -19,6 +19,142 @@ were retained. The starting controller, policy, learner, and graph modules
 were captured under `results/facmac_arch_reference_20261017/` before editing.
 Those generated reference files are local artifacts, not new production paths.
 
+## Spawned Rollout Execution
+
+The `codex/multiprocess-rollouts` branch adds opt-in
+`--override rollout_workers=N` (default `0`, serial). This is per-training-run
+capacity, separate from the experiment supervisor's exclusive slot count.
+Do not change a running campaign's frozen source or resume an old checkpoint
+under this source. Qualify the execution variant before a new formal campaign.
+
+Persistent CPU workers execute independent EA population policies on their
+explicit common training scenario, and independent fixed validation days on
+explicit rows and initial inventories. Each process has one PyTorch compute
+thread; initialization uses `spawn` on both Windows and Linux. The pool is
+reused, with a startup barrier so very short initial jobs do not all execute
+on the first worker. Errors propagate; there is no silent serial fallback
+after worker failure. Shutdown is performed on normal and exceptional exits.
+
+Only the parent owns replay insertion, training counters, statistics, trajectory
+files, learner updates, evolution, checkpoint selection and W&B. Worker results
+are committed in original population/day order, regardless of completion order.
+The parent restores final environment inventory and the pending training state
+after validation, episode counters and recurrent hidden states. Workers never
+explore: exploration RNG consumption remains in the parent, and dependent RL
+episodes and critic-before-actor updates retain their original ordering.
+
+This rollout path does not implement asynchronous learning, larger rollout
+batches or additional training interactions. More CPU usage is not
+itself evidence of a speedup. The five-member population exposes at most five
+simultaneous population jobs; eight validation days expose at most eight.
+Increasing workers beyond available independent jobs cannot accelerate them,
+while model learning still has sequential dependencies.
+
+Run the equivalence checks and alternating-order real training benchmark:
+
+```powershell
+uv run python -m unittest discover -s tests -p test_parallel_rollouts.py
+uv run python tools/benchmark_parallel_rollouts.py --workers 0 2 4 8 --timesteps 28800 --repeats 2 --output results/<new-benchmark-directory>
+```
+
+The tests compare exact real rollout tensors, episode returns, inventory,
+training restore, hidden states, ordered statistics and CSVs. A seeded complete
+training comparison includes every replay episode, per-update actor/critic/
+target weights, gradients, optimizer state, update step/episode and parent RNG.
+Worker failures must surface without partially committing the group's parent
+inventory or counters. These short-run checks do not prove identical long-run
+economic performance.
+
+### Synchronous Learner Sharding
+
+The separate opt-in `learner_workers` setting partitions the already-sampled
+batch on its episode dimension, never the recurrent time dimension. Worker
+processes compute gradients without stepping an optimizer. The parent sums
+critic gradients normalized by the original global valid-transition count,
+clips once and performs exactly one original critic optimizer step.
+Only then are updated critic weights sent for the actor phase. Actor shard
+means are weighted by episode count, including the original unmasked policy
+regularizer; parent aggregation, clipping and one actor optimizer step follow.
+Target updates happen once in the parent, after both optimizers.
+
+No extra sampling, learning steps, target updates or environment interactions
+are introduced. Shard reductions and smaller GEMMs can change float32 rounding,
+so this mode requires tolerance-based full-update checks rather than a claim
+of bitwise or long-horizon policy identity. Rollout-only mode is tested for
+exact equality. Each learner worker and rollout worker is a separate process;
+budget their combined memory and CPU use across concurrent experiment slots.
+
+The benchmark logs both startup-inclusive wall clock and post-warmup wall clock,
+actual joint interactions and learner-update counts. It alternates candidate
+order across repetitions; use a fresh results directory. Instrumented timers
+overlap and the worker subprocess internals are not included in the parent's
+single-episode profiler counters. Measure whole training time, not the sum of
+those counters. Preserve the existing frozen original results separately.
+
+Explicit pairs avoid running an unnecessary Cartesian grid:
+
+```powershell
+uv run python tools/benchmark_parallel_rollouts.py --setting 0 0 --setting 4 4 --setting 4 8 --timesteps 57600 --repeats 1 --output results/<new-benchmark-directory>
+```
+
+Each pair is `(rollout_workers, learner_workers)`. Every process is assigned one
+compute thread. For direct launches, set `OMP_NUM_THREADS`, `MKL_NUM_THREADS`
+and `OPENBLAS_NUM_THREADS` to `1` before starting Python, and pass the selected
+counts using `--override rollout_workers=N --override learner_workers=M`.
+Do not multiply these counts by every experimental slot without budgeting RAM
+and CPU for all concurrently active runs.
+The exclusive-slot supervisor accepts `--rollout-workers N --learner-workers M`
+and records both counts in `launch.json`. Defaults add no overrides to its
+original command. Nonzero settings require `--threads 1` and are rejected for
+MAPPO and frozen evaluation queues; they cannot silently change C3 or an
+already-frozen evaluation manifest. Preserve the existing `--detach`,
+credential-file, new-token and per-host slot requirements.
+
+The profiler disables checkpoint saving, suppresses repeated evaluation/logging
+and holds those settings identical between candidates. Its results are
+controlled training benchmarks, not measured durations of the complete formal
+campaign. `manifest.json` records raw source/config/data/tool hashes, platform
+and thread settings; changing the inputs mid-benchmark raises an error.
+`summary.json` includes individual runs, first-update startup, steady mean
+update time and actual update/interaction budgets. `comparison.json` separates
+startup-inclusive, post-warmup and steady-update throughput. Do not substitute
+one for another or extrapolate a short noisy sample into a guaranteed speedup.
+
+Validation artifacts in this worktree:
+
+- `results/mp_full_a.log`: all 161 tests passed in 277.234 seconds.
+- `results/mp_focused_b.log`: final seven spawned-rollout/sharded-learner tests
+  passed in 53.284 seconds after the startup-cleanup-only adjustment.
+- `results/mp_full_b.log`: final 163-test suite, including supervised parallel
+  launch and comparator/evaluation guards, passed in 273.089 seconds.
+- `results/mpbench_a/`: initial rollout-only alternating-order screen.
+- `results/mpbench_b/`: combined rollout/learner first grid screen.
+- `results/mpbench_c/`: final longer 57,600-step, 0/0 versus 4/4 versus 4/8
+  screen with frozen actual inputs. One repetition per setting is descriptive,
+  not a statistical performance guarantee.
+
+Final Windows screen: every setting performed 57,600 joint interactions and
+945 learner updates, CPU float32, one compute thread per process. An existing
+local H01 run remained active on another core. No running formal source was
+modified. Total time includes process startup/shutdown. Post-warmup time includes
+the first learner update's pool startup and remaining shutdown, but not the
+earlier rollout-pool startup. Steady update time excludes the first update.
+
+| Rollout / Learner Workers | Total Seconds | Post-Warmup Seconds | Steady Update ms |
+| --- | ---: | ---: | ---: |
+| 0 / 0 | 135.399 | 120.489 | 87.378 |
+| 4 / 4 | 122.178 | 103.361 | 69.950 |
+| 4 / 8 | 122.735 | 103.778 | 66.730 |
+
+Relative to serial, 4/4 increased startup-inclusive throughput by 10.8%,
+post-warmup throughput by 16.6%, and steady-update throughput by 24.9%.
+4/8 increased steady-update throughput by 30.9%, but did not improve this
+short run's total time over 4/4. Prefer 4/4 as the measured low-resource starting
+point, not as a proved global optimum. These are one-repeat local controlled
+benchmarks, not demonstrated 6M-step or remote-host speedups, convergence
+improvements or economic advantages. The long-run source/selection protocol
+still requires its own qualification before use.
+
 ## Execution Changes
 
 ### Policy Sequence Interface
