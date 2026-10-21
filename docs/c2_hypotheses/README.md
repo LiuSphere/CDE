@@ -9,6 +9,16 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | --- | --- | --- | --- | --- |
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Pending | Three seeds running |
 
+## Isolated Execution Rounds
+
+These `X` records concern execution cost only, not the C2 economic hypothesis
+queue. They neither start H02 nor modify/deploy to frozen H01 hosts. They have
+their own correctness and timing gates; economic superiority is not assessed.
+
+| Record | Intervention | State |
+| --- | --- | --- |
+| [X01](X01_execution_cache.md) | Affine shards reuse Actor history and inputs | Registered |
+
 ## Record Rules
 
 - One file per hypothesis, registered before algorithm changes. At most one
