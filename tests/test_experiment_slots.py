@@ -141,6 +141,46 @@ class ExperimentSlotTest(unittest.TestCase):
         self.assertNotIn(key, str(raised.exception))
         self.assertIn("[REDACTED]", str(raised.exception))
 
+    def test_credential_file_only_preserves_netrc_and_other_project_environment(self):
+        netrc = self.root / ".netrc"
+        netrc.write_text("sentinel-existing-other-project")
+        payload = {"base_url": "https://api.wandb.ai", "api_key": "fake_task_key",
+                   "persist_netrc": False}
+        response = SimpleNamespace(
+            status_code=200, json=lambda: {"data": {"viewer": {"username": "test_user"}}})
+        output = io.StringIO()
+        with patch("pathlib.Path.home", return_value=self.root), \
+             patch("requests.post", return_value=response), \
+             patch("wandb.sdk.lib.wbauth.write_netrc_auth") as write_netrc, \
+             patch("wandb.sdk.lib.wbauth.read_netrc_auth") as read_netrc, \
+             patch.object(sys, "stdin", io.StringIO(json.dumps(payload))), \
+             patch.object(sys, "stdout", output), \
+             patch.dict(os.environ, {"WANDB_API_KEY": "other_project_key"}):
+            exec(compile(sync_remote_wandb.REMOTE_SETUP, "<remote_setup_test>", "exec"), {})
+            self.assertEqual(os.environ["WANDB_API_KEY"], "other_project_key")
+        write_netrc.assert_not_called()
+        read_netrc.assert_not_called()
+        self.assertEqual(netrc.read_text(), "sentinel-existing-other-project")
+        self.assertEqual(json.loads((self.root / ".config/gavdac/wandb.json").read_text()),
+                         payload)
+        self.assertFalse(json.loads(output.getvalue())["netrc_modified"])
+        self.assertNotIn(payload["api_key"], output.getvalue())
+
+    def test_sync_can_request_task_file_without_global_login_changes(self):
+        key = "fake_key_for_test"
+        settings = SimpleNamespace(base_url="https://api.wandb.ai", api_key=key)
+        completed = SimpleNamespace(
+            returncode=0, stdout='{"verified":true,"matches_local":true}', stderr="")
+        with patch.dict(os.environ, {"WANDB_API_KEY": ""}), \
+             patch.object(sync_remote_wandb.wandb, "setup",
+                          return_value=SimpleNamespace(settings=settings)), \
+             patch.object(sync_remote_wandb.subprocess, "run", return_value=completed) as run:
+            sync_remote_wandb.sync("715", "/home/bless/projects/CDE_c2opt21",
+                                  persist_netrc=False)
+        self.assertFalse(json.loads(run.call_args.kwargs["input"])["persist_netrc"])
+        self.assertEqual(json.loads(run.call_args.kwargs["input"])["host"], "715")
+        self.assertNotIn(key, str(run.call_args.args))
+
     def test_host_validation_lists_only_the_explicit_external_fixture_exclusion(self):
         class Case(unittest.TestCase):
             def __init__(self, identifier):

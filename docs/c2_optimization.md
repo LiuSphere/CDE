@@ -14,6 +14,8 @@ each code change and reverting a failed hypothesis.
   EA rollouts count toward C2's budget. No checkpoint weight transfer.
 - Same original hosts:707slot0seed0,707slot1seed1,local slot0seed2.
   CPU float32; OMP/MKL/OPENBLAS1thread. Check identities and exclusive slots.
+- A fourth auxiliary slot is authorized on arch715 via SSH alias715, without
+  migrating H01or adding a seed. See [execution hosts](c2_execution_hosts.md).
 - Validation-only checkpoint selection remains rows731-738 every10000steps.
   Freeze the RL Actor before exploratory retained comparison.
 - Main comparison is continuous SOC over rows913-1094, initialSOC0.35,
@@ -58,7 +60,7 @@ Success is an optimization target, not a promised attainable outcome.
 
 One round's budget is three fresh6Mjoint-step runs plus necessary explicitly
 recorded engineering tests and evaluation; there is no hidden parameter grid.
-Use the existing three-slot supervisor and same heartbeat with phase-aware ETA.
+Use the per-host exclusive-slot supervisor and same heartbeat with phase-aware ETA.
 When earliest remaining ETA>10minutes, reschedule near it and end the turn.
 No new automated training wave until tests and the current hypothesis freeze pass.
 

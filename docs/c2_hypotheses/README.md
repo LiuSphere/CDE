@@ -28,7 +28,9 @@ The original `results/cmp20/` campaign remains separate and preserved.
 
 ## Scheduling
 
-Reuse the same `gavdac` heartbeat. One local and two SSH707 slots are available.
+Reuse the same `gavdac` heartbeat. One local, two SSH707 and one arch715 slot
+are authorized; readiness is checked separately. See
+[execution hosts](../c2_execution_hosts.md). H01still has only three seeds.
 Check every active slot and schedule at the earliest estimated completion plus
 a small buffer, not the end of the whole batch.
 If remaining time exceeds10minutes, reschedule and end the turn. Otherwise
