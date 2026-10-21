@@ -82,9 +82,8 @@ def slot_status(slots):
 
 
 def validate_job(config, seed, token, slot, slots):
-    if config not in {"gavdac_ea_main", "gavdac_ea_main_no_ea", "gavdac_mappo",
-                      "gavdac_c2_h01"}:
-        raise ValueError("Only the frozen matrix or explicitly registered hypothesis is supported")
+    if config not in {"gavdac_ea_main", "gavdac_ea_main_no_ea", "gavdac_mappo"}:
+        raise ValueError("Only the fresh formal matrix is supported")
     if not re.fullmatch(r"[a-z][a-z0-9_]{0,31}", token):
         raise ValueError("Use a new short lowercase alphanumeric token")
     if not 0 <= slot < slots <= 2 or seed not in (0, 1, 2):

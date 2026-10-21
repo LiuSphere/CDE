@@ -156,16 +156,12 @@ class GAVDACLearner:
                 self.critic.hidden_states,
             )
             if self.mixer is not None:
-                actor_context = actor_policy["hidden_states"]
-                if not getattr(self.args, "actor_mixer_context_grad", True):
-                    # H01 keeps the critic context fixed without detaching actions.
-                    actor_context = actor_context.detach()
                 chosen_action_qvals = self._mix_q_values(
                     self.mixer,
                     chosen_action_qvals,
                     batch["state"][:, :-1],
                     agent_obs=batch["obs"][:, :-1],
-                    hidden_states=actor_context,
+                    hidden_states=actor_policy["hidden_states"],
                 )
             else:
                 chosen_action_qvals = chosen_action_qvals.view(
