@@ -18,6 +18,7 @@ their own correctness and timing gates; economic superiority is not assessed.
 | Record | Intervention | State |
 | --- | --- | --- |
 | [X01](X01_execution_cache.md) | Affine shards reuse Actor history and inputs | Accepted: +7.14% versus previous 4/4 execution |
+| [X02](X02_rollout_overlap.md) | Overlap the EA cycle's one common-start RL rollout | Registered |
 
 ## Record Rules
 
