@@ -30,7 +30,7 @@ def config(name):
     return loaded[0]
 
 
-def freeze():
+def freeze(rollback_commits=None):
     parent, candidate = config("gavdac_ea_main"), config("gavdac_c2_h01")
     if candidate != {**parent, "name": "gavdac_c2_h01", "actor_mixer_context_grad": False}:
         raise ValueError("H01 contains changes beyond the registered intervention")
@@ -63,6 +63,12 @@ def freeze():
             "economic_cost": summary["totals"]["economic_cost"],
             "candidate_maximum_cost": .97 * summary["totals"]["economic_cost"],
         }
+    head = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    rollback_commits = [
+        subprocess.check_output(
+            ["git", "rev-parse", f"{commit}^{{commit}}"], cwd=ROOT, text=True).strip()
+        for commit in (rollback_commits or [head])]
     return {
         "campaign": "Exploratory single-hypothesis C2 optimization",
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -72,10 +78,11 @@ def freeze():
         "active_hypothesis": "H01",
         "hypothesis": "Fixing the attention context during Actor optimization removes a "
                       "non-action policy-gradient route and improves physical dispatch",
-        "implementation_commit": subprocess.check_output(
-            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
-        "rollback": "If any of three seeds or the mean misses3%, git revert ONLY "
-                    "implementation_commit after all runs/evaluations finish; normal push",
+        "implementation_commit": head,
+        "rollback_commits": rollback_commits,
+        "rollback": "If any of three seeds or the mean misses3%, git revert the explicitly "
+                    "listed rollback_commits in reverse order after all runs/evaluations "
+                    "finish; preserve protocol/results and normally push",
         "config": candidate,
         "baseline_C3": baseline,
         "protected_sha256": {name: digest(ROOT / name) for name in protected},
@@ -111,6 +118,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--register-runs", action="store_true")
+    parser.add_argument("--rollback-commit", action="append")
     args = parser.parse_args()
     path = args.output.resolve()
     if not path.is_relative_to((ROOT / "results").resolve()):
@@ -118,7 +126,7 @@ def main():
     if args.register_runs:
         register_runs(path)
         return
-    payload = freeze()
+    payload = freeze(args.rollback_commit)
     with path.open("x", encoding="utf-8") as file:
         json.dump(payload, file, indent=2, allow_nan=False)
     print(json.dumps({"output": str(path), "hypothesis": "H01",
