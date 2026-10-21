@@ -98,6 +98,12 @@ This does not establish that H01 must improve this implementation.
 
 ## Records
 
+Version-controlled per-hypothesis evidence and conclusions live in
+[the hypothesis ledger](c2_hypotheses/README.md), one file per round.
+Record both successful and failed hypotheses, separating engineering checks
+from economic acceptance. Append final results and actual revert commits;
+never remove a failed record when its implementation is reverted.
+
 Detailed state, hypotheses, commits, source/data/config/checkpoint identities,
 failures, reversions, run acceptance and scheduling belong under
 results/c2opt21/. They do not overwrite results/cmp20/state.json.
