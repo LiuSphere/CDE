@@ -77,6 +77,17 @@ means are weighted by episode count, including the original unmasked policy
 regularizer; parent aggregation, clipping and one actor optimizer step follow.
 Target updates happen once in the parent, after both optimizers.
 
+The X01 iteration uses one single-worker executor per affine shard, retaining
+its Actor graph and batch across the parent critic step. The second phase sends
+only updated critic/mixer weights. Actor parameters are not reloaded while its
+graph is live. Explicit phase/round/batch and worker-identity checks prevent
+stale-cache reuse. The cache is released after each Actor gradient phase.
+See [X01 evidence](c2_hypotheses/X01_execution_cache.md): exact reference trace
+match over 48 complete updates, all 165 tests passed, two paired 57,600-step
+benchmarks improved total throughput by 7.14% versus the initial 4/4 sharder.
+This additional gain is not directly combinable with timings from a different
+screen, and is not a long-run or economic advantage claim.
+
 No extra sampling, learning steps, target updates or environment interactions
 are introduced. Shard reductions and smaller GEMMs can change float32 rounding,
 so this mode requires tolerance-based full-update checks rather than a claim

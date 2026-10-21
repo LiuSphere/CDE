@@ -41,4 +41,23 @@ Keep the parent aggregation/clipping/critic-then-actor/target order unchanged.
 
 ## State
 
-Registered; implementation and measurements pending. No economic results used.
+Accepted for execution use on 2026-10-21. No economic results used.
+
+Implementation: `d129a94`. Shared ABBA benchmark infrastructure: `de8d97e`
+(not a hypothesis rollback commit). Registration: `4119327`.
+
+- `results/x01_focused_a.log`: 8 tests passed in 55.238 seconds.
+- `results/x01_full_a.log`: all 165 tests passed in 288.004 seconds.
+- `results/x01_pair_a/`: two AB/BA pairs, each case 57,600 joint interactions
+  and 945 updates. Reference total seconds 120.509/120.575; candidate
+  113.110/111.910. Each paired throughput gain 6.54%/7.74%, aggregate 7.14%;
+  post-warmup gain 9.46%, steady-update gain 18.05%.
+- `results/x01_trace_reference_a.json` and `x01_trace_candidate_a.json`:
+  exact full-training trace match for 101 replay episodes and 48 complete
+  updates, including recorded parameter/gradient/optimizer/target digests and
+  captured Python/NumPy/PyTorch parent RNG state. This is not proof of strict
+  long-horizon reproducibility or a claim about unrecorded RNG sources.
+
+Both pairs improved and exceeded the original 5% aggregate gate. Keep the
+implementation. No rollback required. Local controlled execution evidence
+does not establish remote-host gains or improved dispatch economics.

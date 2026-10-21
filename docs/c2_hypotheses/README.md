@@ -17,7 +17,7 @@ their own correctness and timing gates; economic superiority is not assessed.
 
 | Record | Intervention | State |
 | --- | --- | --- |
-| [X01](X01_execution_cache.md) | Affine shards reuse Actor history and inputs | Registered |
+| [X01](X01_execution_cache.md) | Affine shards reuse Actor history and inputs | Accepted: +7.14% versus previous 4/4 execution |
 
 ## Record Rules
 
