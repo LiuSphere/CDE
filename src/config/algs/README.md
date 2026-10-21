@@ -56,6 +56,11 @@ faster steady learner updates but a larger startup/memory footprint. Counts are
 not a universal optimum: qualify and benchmark the actual host before a new
 formal wave. See `docs/facmac_sequence_execution.md` for exact/tolerance
 equivalence boundaries, benchmark commands, evidence and throughput definitions.
+The accepted X01/X02 execution iterations subsequently measured 22.73% higher
+total throughput for 4/4 versus serial in two alternating-order 57,600-step local
+repetitions. X03 did not accept 5/4: its extra 1.79% missed the original 2%
+resource gate. These results do not guarantee remote/6M-step speedups or better
+dispatch; the shared execution defaults still remain serial.
 
 `gavdac_v03_no_crossover` has the same algorithm parameters as the new main;
 it is no longer a meaningful ablation of the new main. The retained paper

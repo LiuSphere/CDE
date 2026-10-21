@@ -178,6 +178,40 @@ benchmarks, not demonstrated 6M-step or remote-host speedups, convergence
 improvements or economic advantages. The long-run source/selection protocol
 still requires its own qualification before use.
 
+### Final Bounded Iteration
+
+The later X01/X02 rounds were individually preregistered, committed and accepted
+only after correctness and paired timing gates passed. Failed/marginal records
+are retained in [the execution ledger](c2_hypotheses/README.md). X03 tested
+population-width resource allocation without changing code or shared defaults.
+
+The final direct serial comparison in `results/x03_width_a/` used two
+alternating-order repetitions per setting, 57,600 joint steps and 945 learner
+updates each, unchanged actual input hashes, CPU float32 and one compute thread
+per process. Mean total seconds were 134.266 (serial), 109.400 (4/4) and 107.480
+(5/4). Recommended 4/4 increased total throughput 22.73% and reduced elapsed time
+18.52%; post-warmup throughput improved 31.70%, steady-update throughput 48.28%.
+These are direct final-versus-serial measurements, not accumulated percentages.
+
+Five rollout workers improved total throughput over 4/4 by only 1.79%, below
+the preregistered 2% resource gate. Retain 4/4. Do not claim 5/4 is universally
+inferior. Windows snapshots recorded about 5898 MiB summed working sets for
+the 4/4 process tree and 6420 MiB for 5/4 (`results/x03_memory_snapshots_a.json`);
+these are not peaks or unique resident-memory estimates and can double-count
+shared pages. Private committed sums are recorded separately.
+
+Final source regression: all 168 tests passed in 294.254 seconds
+(`results/x02_full_a.log`). X01 and X02 each matched their predecessor's exact
+short full-training trace over 101 replay episodes and 48 complete updates,
+including recorded gradients/optimizer/target weights and captured parent RNG.
+The original serial-versus-sharded float32 tolerance limits still apply; no
+long-run economic equivalence or exact-resume guarantee is implied.
+
+This closes the local execution iteration at its declared practical stopping
+point. Further source, learning-equation or remote-campaign changes require a
+separately registered scope. Neither this branch nor its resource counts were
+deployed into the frozen active H01 source or merged into main.
+
 ## Execution Changes
 
 ### Policy Sequence Interface
