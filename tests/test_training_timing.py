@@ -182,6 +182,8 @@ def main():
     def timed_group(runner, *method_args, **method_kwargs):
         nonlocal training_steps, training_started
         before = runner.t_env
+        before_steps = training_steps
+        before_started = training_started
         started = time.perf_counter()
         result = original_group(runner, *method_args, **method_kwargs)
         elapsed = time.perf_counter() - started
@@ -189,9 +191,10 @@ def main():
         if args.rollout_workers > 0 and len(method_args[0]) > 1:
             timer.record("parallel_group", elapsed)
             if not method_kwargs.get("test_mode", False):
-                if training_started is None:
+                if before_started is None:
                     training_started = started
-                training_steps += runner.t_env - before
+                # The nested parent rollout was already timed; count its steps once.
+                training_steps = before_steps + runner.t_env - before
                 csv_log.write("parallel_population", elapsed, runner.t_env,
                               step=runner.t_env - before)
         return result

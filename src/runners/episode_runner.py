@@ -58,24 +58,34 @@ class EpisodeRunner:
         self.env.close()
 
     def run_group(self, policies, *, test_mode=False, test_options=None,
-                  training_options=None):
+                  training_options=None, tail_policy=None):
         """Execute independent deterministic episodes, committing in input order."""
         policies = list(policies)
         options = test_options if test_options is not None else [None] * len(policies)
         if len(options) != len(policies):
             raise ValueError("One test option is required per policy")
+        if tail_policy is not None and (test_mode or training_options is None):
+            raise ValueError("An exploring tail needs an explicit common training scenario")
+        if tail_policy is not None and any(
+            param.device.type != "cpu" or param.dtype != th.float32
+            for param in tail_policy.parameters()
+        ):
+            raise ValueError("An exploring tail must be CPU float32")
         workers = getattr(self.args, "rollout_workers", 0)
         if workers == 0 or len(policies) < 2:
-            return [
+            episodes = [
                 self.run(mac, test_mode=test_mode, test_options=option,
                          training_options=training_options, explore=False)
                 for mac, option in zip(policies, options, strict=True)
             ]
+            if tail_policy is not None:
+                episodes.append(self.run(tail_policy, training_options=training_options))
+            return episodes
         if self.rollout_pool is None:
             from runners.rollout_pool import RolloutPool
             self.rollout_pool = RolloutPool(self, workers)
         return self.rollout_pool.run(
-            self, policies, test_mode, options, training_options,
+            self, policies, test_mode, options, training_options, tail_policy,
         )
 
     def reset(self, test_mode=False, test_options=None, training_options=None):

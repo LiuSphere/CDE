@@ -249,16 +249,20 @@ def _run_with_runner(args, logger, runner, resources):
             scenario = runner.env.training_scenario() if args.env == "microgrid" else None
             ea_options = ({"training_options": scenario, "explore": False}
                           if scenario is not None else {})
-            population_results = (
-                runner.run_group(pop, training_options=scenario)
-                if getattr(args, "rollout_workers", 0)
-                else (runner.run(ea_mac, test_mode=False, **ea_options) for ea_mac in pop)
-            )
+            tail_result = None
+            if getattr(args, "rollout_workers", 0):
+                results = runner.run_group(pop, training_options=scenario, tail_policy=mac)
+                population_results, tail_result = results[:-1], results[-1]
+            else:
+                population_results = (
+                    runner.run(ea_mac, test_mode=False, **ea_options) for ea_mac in pop
+                )
             for episode_batch, episode_return in population_results:
                 fitness.append(episode_return)
                 buffer.insert_episode_batch(episode_batch)
             elite_index = np.argmax(fitness)
-            episode_batch, _ = runner.run(mac, test_mode=False, training_options=scenario)
+            episode_batch, _ = (tail_result if tail_result is not None else
+                                runner.run(mac, test_mode=False, training_options=scenario))
             buffer.insert_episode_batch(episode_batch)
 
             # Each generation updates the complete shared policy once.

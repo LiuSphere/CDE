@@ -67,6 +67,10 @@ def _episode(weights, state, test_mode, test_options, training_options, t_env):
         runner.mac, test_mode=test_mode, test_options=test_options,
         training_options=training_options, explore=False,
     )
+    return _result(runner, batch, value)
+
+
+def _result(runner, batch, value):
     return {
         "transition": {key: tensor.numpy() for key, tensor in
                        batch.data.transition_data.items()},
@@ -84,6 +88,7 @@ class RolloutPool:
             raise ValueError("rollout_workers must be a nonnegative integer")
         if runner.args.use_cuda:
             raise ValueError("Parallel rollouts support CPU execution only")
+        self.tail_runner = None
         context = multiprocessing.get_context("spawn")
         self.executor = ProcessPoolExecutor(
             max_workers=workers, mp_context=context,
@@ -103,7 +108,7 @@ class RolloutPool:
                 self.executor.shutdown(wait=True, cancel_futures=True)
         self.worker_pids = set()
 
-    def run(self, runner, policies, test_mode, options, training_options):
+    def run(self, runner, policies, test_mode, options, training_options, tail_policy=None):
         if test_mode:
             if training_options is not None or any(
                 option is None or option.get("row_idx") is None
@@ -131,11 +136,31 @@ class RolloutPool:
                 _episode, weights, state, test_mode, option, training_options,
                 runner.t_env + (0 if test_mode else index * runner.episode_limit),
             ))
+        tail_result = None
+        if tail_policy is not None:
+            if self.tail_runner is None:
+                args = deepcopy(runner.args)
+                args.rollout_workers = 0
+                args.env_args["log_trajectories"] = False
+                self.tail_runner = EpisodeRunner(args, _NoLog())
+                self.tail_runner.setup(runner.scheme, runner.groups,
+                                       runner.preprocess, tail_policy)
+            tail = self.tail_runner
+            state = deepcopy(initial)
+            state["ep_counter"] += len(policies)
+            _restore(tail.env, state)
+            tail.t_env = runner.t_env + len(policies) * runner.episode_limit
+            batch, value = tail.run(tail_policy, training_options=training_options)
+            tail_result = _result(tail, batch, value)
         # Resolve the whole group before mutating parent state; worker errors propagate.
         results = [future.result() for future in futures]
+        if tail_result is not None:
+            results.append(tail_result)
+            policies = [*policies, tail_policy]
         episodes = []
         for mac, result in zip(policies, results, strict=True):
-            self.worker_pids.add(result["pid"])
+            if result["pid"] != os.getpid():
+                self.worker_pids.add(result["pid"])
             _restore(runner.env, result["env"])
             runner.t = runner.env._ep_steps
             runner.batch = runner.new_batch()
@@ -172,3 +197,5 @@ class RolloutPool:
 
     def close(self):
         self.executor.shutdown(wait=True, cancel_futures=True)
+        if self.tail_runner is not None:
+            self.tail_runner.close_env()

@@ -220,6 +220,100 @@ class ParallelRolloutTest(unittest.TestCase):
             finally:
                 runner.close_env()
 
+    def test_exploring_tail_preserves_noise_inventory_logs_and_csv_order(self):
+        for start_steps in (0, 1000):
+            with self.subTest(start_steps=start_steps), \
+                 tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+                serial, mac = runner_fixture(f"{directory}/serial", 0)
+                parallel, _ = runner_fixture(f"{directory}/parallel", 2)
+                population = [copy.deepcopy(mac) for _ in range(5)]
+                with torch.no_grad():
+                    for index, policy in enumerate(population):
+                        policy.agent.fc2.bias.add_(.03 * index)
+                candidates = copy.deepcopy(population)
+                tail, candidate_tail = copy.deepcopy(mac), copy.deepcopy(mac)
+                for policy in (tail, candidate_tail):
+                    policy.args.start_steps = start_steps
+                    for index, space in enumerate(policy.args.action_spaces):
+                        space.seed(51 + index)
+                for runner in (serial, parallel):
+                    runner.env.log_trajectories = True
+                    runner.env.log_trajectories_mode = "all"
+                scenario = serial.env.training_scenario()
+                try:
+                    torch.manual_seed(89)
+                    np.random.seed(89)
+                    expected = serial.run_group(
+                        population, training_options=scenario, tail_policy=tail,
+                    )
+                    rng = (torch.get_rng_state().clone(), copy.deepcopy(np.random.get_state()))
+                    torch.manual_seed(89)
+                    np.random.seed(89)
+                    actual = parallel.run_group(
+                        candidates, training_options=scenario, tail_policy=candidate_tail,
+                    )
+                    self.assertEqual(tensor_digest(rng),
+                                     tensor_digest((torch.get_rng_state(), np.random.get_state())))
+                    self.assertEqual(serial.t_env, 144)
+                    self.assertEqual(serial.t_env, parallel.t_env)
+                    for (a, av), (b, bv) in zip(expected, actual, strict=True):
+                        self.assertEqual(av, bv)
+                        torch.testing.assert_close(a.data.transition_data,
+                                                   b.data.transition_data, rtol=0, atol=0)
+                    self.assertEqual(tensor_digest(_snapshot(serial.env)),
+                                     tensor_digest(_snapshot(parallel.env)))
+                    torch.testing.assert_close(tail.hidden_states,
+                                               candidate_tail.hidden_states, rtol=0, atol=0)
+                    self.assertEqual(serial.logger.values, parallel.logger.values)
+                    self.assertEqual(
+                        next(serial.env.render_dir.glob("*.csv")).read_bytes(),
+                        next(parallel.env.render_dir.glob("*.csv")).read_bytes(),
+                    )
+                    for a, b in zip(tail.args.action_spaces, candidate_tail.args.action_spaces,
+                                    strict=True):
+                        self.assertEqual(a.np_random.bit_generator.state,
+                                         b.np_random.bit_generator.state)
+                finally:
+                    serial.close_env()
+                    parallel.close_env()
+
+    def test_failed_population_never_commits_speculative_tail(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+            runner, mac = runner_fixture(directory, 2)
+            bad, tail = copy.deepcopy(mac), copy.deepcopy(mac)
+            with torch.no_grad():
+                next(bad.parameters()).fill_(float("nan"))
+            runner.env.log_trajectories = True
+            runner.env.log_trajectories_mode = "all"
+            before = tensor_digest(_snapshot(runner.env))
+            try:
+                with self.assertRaises(ValueError):
+                    runner.run_group([mac, bad], training_options=runner.env.training_scenario(),
+                                     tail_policy=tail)
+                self.assertEqual(runner.t_env, 0)
+                self.assertEqual(before, tensor_digest(_snapshot(runner.env)))
+                self.assertEqual(runner.rollout_pool.tail_runner.t_env, 72)
+                self.assertFalse(list(runner.env.render_dir.glob("*.csv")))
+            finally:
+                runner.close_env()
+
+    def test_tail_rejects_implicit_scenario_evaluation_and_wrong_dtype(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
+            runner, mac = runner_fixture(directory, 2)
+            try:
+                with self.assertRaisesRegex(ValueError, "explicit common training"):
+                    runner.run_group([mac, mac], tail_policy=mac)
+                with self.assertRaisesRegex(ValueError, "explicit common training"):
+                    runner.run_group([mac, mac], tail_policy=mac, test_mode=True)
+                tail = copy.deepcopy(mac)
+                tail.agent.double()
+                with self.assertRaisesRegex(ValueError, "CPU float32"):
+                    runner.run_group([mac, mac], tail_policy=tail,
+                                     training_options=runner.env.training_scenario())
+                self.assertIsNone(runner.rollout_pool)
+            finally:
+                runner.close_env()
+
     def test_complete_training_replay_updates_optimizers_and_rng_match(self):
         with tempfile.TemporaryDirectory(dir=ROOT / "results") as directory:
             serial = training_trace(f"{directory}/s", 0)
