@@ -7,7 +7,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 
 | Hypothesis | Intervention | Engineering | Economic Gate | State |
 | --- | --- | --- | --- | --- |
-| [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Pending | Three seeds running |
+| [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Complete evidence; rollback pending |
 
 ## Record Rules
 
