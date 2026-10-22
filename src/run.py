@@ -7,6 +7,7 @@ from os.path import abspath, dirname
 from types import SimpleNamespace as SN
 from copy import deepcopy
 from pathlib import Path
+from contextlib import ExitStack
 
 import numpy as np
 import torch as th
@@ -85,6 +86,16 @@ def run(_config, _log):
     print("Exiting script")
 
 def run_sequential(args, logger):
+    workers = getattr(args, "rollout_workers", 0)
+    if isinstance(workers, bool) or not isinstance(workers, int) or workers < 0:
+        raise ValueError("rollout_workers must be a nonnegative integer")
+    runner = EpisodeRunner(args=args, logger=logger)
+    with ExitStack() as resources:
+        resources.callback(runner.close_env)
+        return _run_with_runner(args, logger, runner, resources)
+
+
+def _run_with_runner(args, logger, runner, resources):
 
     saved_config = deepcopy(vars(args))
     if getattr(args, "policy_checkpoint", "") and not args.evaluate:
@@ -92,7 +103,6 @@ def run_sequential(args, logger):
     if args.env == "microgrid" and args.use_cuda:
         raise ValueError("Microgrid training and evaluation must run on CPU")
     # Init runner so we can get env info
-    runner = EpisodeRunner(args=args, logger=logger)
 
     # Set up schemes and groups here
     env_info = runner.get_env_info()
@@ -144,7 +154,6 @@ def run_sequential(args, logger):
 
     if getattr(args, "policy_checkpoint", ""):
         evaluate_saved_policy(runner, mac, args)
-        runner.close_env()
         return
 
     policy_store = None
@@ -170,6 +179,7 @@ def run_sequential(args, logger):
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
         learner = GAVDACLearner(mac, buffer.scheme, logger, args)
+    resources.callback(learner.close)
 
     if args.use_cuda:
         learner.cuda(device=args.device)
@@ -209,7 +219,6 @@ def run_sequential(args, logger):
         if args.evaluate:
             for _ in range(args.test_nepisode):
                 runner.run(mac, test_mode=True)
-            runner.close_env()
             return
 
     # start training
@@ -240,12 +249,20 @@ def run_sequential(args, logger):
             scenario = runner.env.training_scenario() if args.env == "microgrid" else None
             ea_options = ({"training_options": scenario, "explore": False}
                           if scenario is not None else {})
-            for ea_mac in pop:
-                episode_batch, episode_return = runner.run(ea_mac, test_mode=False, **ea_options)
+            tail_result = None
+            if getattr(args, "rollout_workers", 0):
+                results = runner.run_group(pop, training_options=scenario, tail_policy=mac)
+                population_results, tail_result = results[:-1], results[-1]
+            else:
+                population_results = (
+                    runner.run(ea_mac, test_mode=False, **ea_options) for ea_mac in pop
+                )
+            for episode_batch, episode_return in population_results:
                 fitness.append(episode_return)
                 buffer.insert_episode_batch(episode_batch)
             elite_index = np.argmax(fitness)
-            episode_batch, _ = runner.run(mac, test_mode=False, training_options=scenario)
+            episode_batch, _ = (tail_result if tail_result is not None else
+                                runner.run(mac, test_mode=False, training_options=scenario))
             buffer.insert_episode_batch(episode_batch)
 
             # Each generation updates the complete shared policy once.
@@ -390,7 +407,6 @@ def run_sequential(args, logger):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
-    runner.close_env()
     logger.console_logger.info("Finished Training")
 
 

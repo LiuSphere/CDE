@@ -33,6 +33,23 @@ def evaluate_fixed(runner, mac, rows, initial_soc, source, policy_source, step,
         runner.env.log_trajectories_mode = "test"
     try:
         with torch.no_grad():
+            options = [
+                {"row_idx": row, "source": source, "initial_soc": initial_soc,
+                 "trajectory_context": {
+                     "policy_source": policy_source, "checkpoint_step": step,
+                 }}
+                for row in rows
+            ]
+            if getattr(runner.args, "rollout_workers", 0) and len(rows) > 1:
+                returns = [
+                    value for _, value in runner.run_group(
+                        [mac] * len(rows), test_mode=True, test_options=options,
+                    )
+                ]
+                if not all(math.isfinite(value) for value in returns):
+                    raise ValueError("Non-finite fixed evaluation return")
+                return {"rows": rows, "returns": returns,
+                        "mean_return": float(np.mean(returns))}
             for row in rows:
                 _, value = runner.run(
                     mac, test_mode=True,
