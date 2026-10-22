@@ -94,8 +94,10 @@ def validate_job(config, seed, token, slot, slots):
 
 
 def supervise(config, seed, token, slot, slots, threads=1, credential_file=None, smoke=False,
-              engineering=False, evaluation_manifest=None):
+              engineering=False, evaluation_manifest=None, rollout_workers=0, learner_workers=0):
     validate_job(config, seed, token, slot, slots)
+    validate_worker_options(config, threads, rollout_workers, learner_workers,
+                            evaluation_manifest)
     if engineering and (smoke or config != "gavdac_mappo"):
         raise ValueError("Engineering budget is only for the independent MAPPO pilot")
     if evaluation_manifest and (engineering or smoke):
@@ -134,6 +136,8 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
             overrides.update(t_max=12500, save_model=False, showcase_enabled=False)
         if engineering:
             overrides.update(t_max=500000)
+        if rollout_workers or learner_workers:
+            overrides.update(rollout_workers=rollout_workers, learner_workers=learner_workers)
         for key, value in overrides.items():
             command += ["--override", f"{key}={json.dumps(value)}"]
         if evaluation_manifest:
@@ -158,6 +162,7 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
                 "command": command, "child_pid": process.pid,
                 "child_identity": process_identity(process.pid),
                 "platform": platform.platform(), "cpu_threads": threads,
+                "rollout_workers": rollout_workers, "learner_workers": learner_workers,
                 "python_version": platform.python_version(),
                 "supervisor_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "credential_file_used": bool(credential_file), "smoke": smoke,
@@ -190,6 +195,20 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
             lock_path.unlink()
 
 
+def validate_worker_options(config, threads, rollout_workers, learner_workers,
+                            evaluation_manifest=None):
+    for value in (rollout_workers, learner_workers):
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ValueError("Worker counts must be nonnegative integers")
+    if rollout_workers or learner_workers:
+        if config == "gavdac_c2_h02" and learner_workers:
+            raise ValueError("H02 learner sharding is not supported; use learner_workers=0")
+        if config == "gavdac_mappo" or evaluation_manifest:
+            raise ValueError("Parallel training options cannot modify MAPPO or frozen evaluation")
+        if threads != 1:
+            raise ValueError("Parallel execution requires one compute thread per process")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--status", action="store_true")
@@ -199,6 +218,8 @@ def main():
     parser.add_argument("--seed", type=int)
     parser.add_argument("--token")
     parser.add_argument("--threads", type=int, default=1)
+    parser.add_argument("--rollout-workers", type=int, default=0)
+    parser.add_argument("--learner-workers", type=int, default=0)
     parser.add_argument("--credential-file", type=Path)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--engineering", action="store_true")
@@ -211,6 +232,8 @@ def main():
     if any(value is None for value in (args.slot, args.config, args.seed, args.token)):
         parser.error("Launching requires --slot, --config, --seed and --token")
     validate_job(args.config, args.seed, args.token, args.slot, args.slots)
+    validate_worker_options(args.config, args.threads, args.rollout_workers,
+                            args.learner_workers, args.evaluation_manifest)
     if args.detach:
         uv = shutil.which("uv")
         if uv is None:
@@ -233,7 +256,8 @@ def main():
         return
     raise SystemExit(supervise(args.config, args.seed, args.token, args.slot, args.slots,
                                args.threads, args.credential_file, args.smoke, args.engineering,
-                               args.evaluation_manifest))
+                               args.evaluation_manifest, args.rollout_workers,
+                               args.learner_workers))
 
 
 if __name__ == "__main__":

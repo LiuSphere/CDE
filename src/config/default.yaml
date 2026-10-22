@@ -1,5 +1,9 @@
 # --- Shared GAVDAC training options ---
 batch_size_run: 1
+# Independent deterministic EA/validation episodes; 0 preserves serial execution.
+rollout_workers: 0
+# Synchronous episode-batch gradient shards; 0 retains the original learner.
+learner_workers: 0
 batch_size: 512
 buffer_size: 100000
 buffer_warmup: 512

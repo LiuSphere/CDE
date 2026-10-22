@@ -32,8 +32,10 @@ class EpisodeRunner:
 
         # Log the first run
         self.log_train_stats_t = -1000000
+        self.rollout_pool = None
 
     def setup(self, scheme, groups, preprocess, mac):
+        self.scheme, self.groups, self.preprocess = scheme, groups, preprocess
         self.new_batch = partial(
             EpisodeBatch,
             scheme,
@@ -50,7 +52,41 @@ class EpisodeRunner:
         return self.env.get_env_info()
 
     def close_env(self):
+        if self.rollout_pool is not None:
+            self.rollout_pool.close()
+            self.rollout_pool = None
         self.env.close()
+
+    def run_group(self, policies, *, test_mode=False, test_options=None,
+                  training_options=None, tail_policy=None):
+        """Execute independent deterministic episodes, committing in input order."""
+        policies = list(policies)
+        options = test_options if test_options is not None else [None] * len(policies)
+        if len(options) != len(policies):
+            raise ValueError("One test option is required per policy")
+        if tail_policy is not None and (test_mode or training_options is None):
+            raise ValueError("An exploring tail needs an explicit common training scenario")
+        if tail_policy is not None and any(
+            param.device.type != "cpu" or param.dtype != th.float32
+            for param in tail_policy.parameters()
+        ):
+            raise ValueError("An exploring tail must be CPU float32")
+        workers = getattr(self.args, "rollout_workers", 0)
+        if workers == 0 or len(policies) < 2:
+            episodes = [
+                self.run(mac, test_mode=test_mode, test_options=option,
+                         training_options=training_options, explore=False)
+                for mac, option in zip(policies, options, strict=True)
+            ]
+            if tail_policy is not None:
+                episodes.append(self.run(tail_policy, training_options=training_options))
+            return episodes
+        if self.rollout_pool is None:
+            from runners.rollout_pool import RolloutPool
+            self.rollout_pool = RolloutPool(self, workers)
+        return self.rollout_pool.run(
+            self, policies, test_mode, options, training_options, tail_policy,
+        )
 
     def reset(self, test_mode=False, test_options=None, training_options=None):
         self.batch = self.new_batch()
@@ -110,6 +146,10 @@ class EpisodeRunner:
 
         self.batch.update({"actions": actions.cpu()}, ts=self.t)
 
+        self._record_episode(episode_return, env_info, test_mode)
+        return self.batch, episode_return
+
+    def _record_episode(self, episode_return, env_info, test_mode):
         cur_stats = self.test_stats if test_mode else self.train_stats
         cur_returns = self.test_returns if test_mode else self.train_returns
         log_prefix = "test_" if test_mode else ""
@@ -132,8 +172,6 @@ class EpisodeRunner:
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
             self.log_train_stats_t = self.t_env
-
-        return self.batch, episode_return
 
     def _log(self, returns, stats, prefix):
         return_mean = np.mean(returns)

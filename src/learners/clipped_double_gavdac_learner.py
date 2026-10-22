@@ -20,6 +20,8 @@ class ClippedDoubleGAVDACLearner(GAVDACLearner):
             raise ValueError("The H02 learner requires clipped_double_critic=True")
         if getattr(args, "use_cuda", False):
             raise ValueError("H02 is a CPU float32 experiment")
+        if getattr(args, "learner_workers", 0):
+            raise ValueError("H02 learner sharding is not supported; use learner_workers=0")
         super().__init__(mac, scheme, logger, args)
         self.critic2 = GAVDACCritic(scheme, args)
         self.mixer2 = GraphDec(args) if self.mixer is not None else None
