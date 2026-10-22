@@ -55,6 +55,8 @@ def job_environment(threads, credential_file=None):
     env = dict(os.environ, OMP_NUM_THREADS=str(threads), MKL_NUM_THREADS=str(threads),
                OPENBLAS_NUM_THREADS=str(threads), CUDA_VISIBLE_DEVICES="",
                PYTHONUTF8="1", PYTHONUNBUFFERED="1")
+    # Independent jobs must own a backend that outlives their short-lived launcher.
+    env.pop("WANDB_SERVICE", None)
     if credential_file:
         path = Path(credential_file).expanduser()
         if os.name != "nt" and path.stat().st_mode & 0o077:
@@ -159,6 +161,7 @@ def supervise(config, seed, token, slot, slots, threads=1, credential_file=None,
                 "python_version": platform.python_version(),
                 "supervisor_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "credential_file_used": bool(credential_file), "smoke": smoke,
+                "wandb_service_isolation": "independent_child_backend",
                 "engineering": engineering,
                 "evaluation_manifest": str(manifest_path) if manifest_path else None,
                 "evaluation_manifest_sha256": manifest_hash,
@@ -222,7 +225,7 @@ def main():
              (logs / f"{args.token}.stderr.log").open("x", encoding="utf-8") as stderr:
             process = subprocess.Popen(
                 command, cwd=ROOT, stdin=subprocess.DEVNULL, stdout=stdout, stderr=stderr,
-                close_fds=True, **options,
+                close_fds=True, env=job_environment(args.threads), **options,
             )
         print(json.dumps({"token": args.token, "manager_pid": process.pid,
                           "manager_identity": process_identity(process.pid),

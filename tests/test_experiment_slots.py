@@ -3,6 +3,7 @@
 import json
 import io
 import os
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -49,6 +50,69 @@ class ExperimentSlotTest(unittest.TestCase):
         self.assertEqual(env["CUDA_VISIBLE_DEVICES"], "")
         with self.assertRaises(ValueError):
             experiment_slot.job_environment(0, path)
+
+    def test_independent_job_drops_only_parent_service_reference(self):
+        with patch.dict(os.environ, {
+            "WANDB_SERVICE": "parent_owned_reference",
+            "WANDB_API_KEY": "fake_existing_key",
+            "WANDB_BASE_URL": "https://api.wandb.ai",
+            "UNRELATED_JOB_SETTING": "preserved",
+        }):
+            before = dict(os.environ)
+            env = experiment_slot.job_environment(1)
+            self.assertEqual(dict(os.environ), before)
+        self.assertFalse("WANDB_SERVICE" in env)
+        for key in ("WANDB_API_KEY", "WANDB_BASE_URL", "UNRELATED_JOB_SETTING"):
+            self.assertEqual(env[key], before[key])
+
+    def test_detached_manager_does_not_inherit_parent_service(self):
+        process = SimpleNamespace(pid=os.getpid())
+        argv = ["experiment_slot.py", "--slots", "1", "--slot", "0",
+                "--config", "gavdac_c2_h02", "--seed", "2",
+                "--token", "test_detach", "--detach"]
+        with patch.object(experiment_slot, "ROOT", self.root), \
+             patch.object(sys, "argv", argv), \
+             patch.dict(os.environ, {"WANDB_SERVICE": "parent_owned_reference"}), \
+             patch.object(experiment_slot.shutil, "which", return_value="uv"), \
+             patch.object(experiment_slot.subprocess, "Popen", return_value=process) as spawn, \
+             patch.object(sys, "stdout", io.StringIO()):
+            experiment_slot.main()
+        self.assertFalse("WANDB_SERVICE" in spawn.call_args.kwargs["env"])
+
+    def test_real_child_can_start_service_after_parent_service_ends(self):
+        # Reproduce the short-lived launcher's ownership without a cloud run.
+        script = r'''
+import json, os, subprocess
+import wandb
+from tools.experiment_slot import job_environment
+wandb.setup()
+reference = os.environ["WANDB_SERVICE"]
+wandb.teardown()
+os.environ["WANDB_SERVICE"] = reference
+environment = job_environment(1)
+child = subprocess.run(
+    ["uv", "run", "--frozen", "python", "-c",
+     "import wandb; wandb.setup(); wandb.teardown()"],
+    env=environment, capture_output=True, timeout=60,
+)
+print(json.dumps({
+    "exitcode": child.returncode,
+    "inherited_service": "WANDB_SERVICE" in environment,
+    "connection_error": b"WandbServiceConnectionError" in child.stderr,
+    "cloud_run_created": False,
+}))
+'''
+        result = subprocess.run(
+            ["uv", "run", "--frozen", "python", "-c", script],
+            cwd=ROOT, env=experiment_slot.job_environment(1),
+            capture_output=True, timeout=90,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", errors="replace"))
+        report = json.loads(result.stdout)
+        self.assertEqual(report["exitcode"], 0, report)
+        self.assertFalse(report["inherited_service"], report)
+        self.assertFalse(report["connection_error"], report)
+        self.assertFalse(report["cloud_run_created"], report)
 
     def test_status_distinguishes_free_live_and_stale_slots(self):
         locks = self.root / "results/cmp20/slot_locks"
