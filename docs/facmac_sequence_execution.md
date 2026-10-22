@@ -317,6 +317,16 @@ Local adoption checks: `mp_adopt_full_a.log` passed172tests in286.161seconds;
 parent RNG. All files are under `results/c2opt21/`; cross-host qualification
 and exclusive2/2smokes are separate acceptance gates.
 
+Adoption commit `9f03926` was normally pushed and synchronized ff-only to
+idle707and715. Both remotes passed168tests, with exactly four old external
+desktop fixtures excluded_not_passed and no other failure/error/skip.
+Four exclusive2/2smokes passed;707slot0/slot1overlapped25.750473seconds.
+Baseline short smokes do not emit exact final counters or reliably flush
+periodic losses; records distinguish those unavailable measurements from
+enforced finite-gradient/loss guards and normal budget-crossing completion.
+No new speed benchmark or economic evaluation was used to select this setting.
+See `results/c2opt21/mp_adoption_acceptance_a.json` and `decision_014.md`.
+
 ### Policy Sequence Interface
 
 `CQMixMAC.forward_sequence(batch, end=None)` owns sequence input preparation

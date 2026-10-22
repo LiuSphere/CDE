@@ -65,3 +65,34 @@ The same `gavdac` heartbeat checks every registered host and schedules at the
 earliest active ETA plus a small buffer. A free fourth slot does not permit
 an unregistered second hypothesis or changes to active frozen source.
 Only synchronize repositories when their own active jobs have ended.
+
+## Qualified Multiprocessing Execution
+
+After H02closed, execution commit `9f03926` was merged into main and both
+idle remotes synchronized ff-only. The future campaign's initial accepted
+per-slot setting is `--rollout-workers 2 --learner-workers 2 --threads 1`,
+not four new seeds or one process per slot. Two707slots have ten PyTorch
+processes including their two training parents, plus supervisor/uv/service
+helpers. Check actual free RAM and competing jobs again before each wave.
+
+Local172tests passed;707and715each168tests passed with four explicitly
+excluded old desktop fixtures, zero other failures/errors/skips. All118
+source/config/data/dependency/tool/test files match after LFnormalization,
+with72actual raw EOLdifferences per remote retained; parsed float64data
+match. Never replace original-host checkpoint rawhash checks with this proof.
+
+Four fixed12500joint-budget exclusive2/2engineering smokes passed:
+local `mpls0a`,707 `mprs0a`/`mprs1a`,715 `mp715a`.
+The707tasks actually overlapped25.750473seconds. W&Bwas disabled; no formal
+seed, extra economic pilot or economic benefit was inferred. Baseline smoke
+code does not emit final exact counters; normal budget-crossing completion,
+finite runtime gradient/loss guards, finite available returns and original
+launch/source/identity hashes were checked without inventing unlogged counts.
+Formal training still requires its actual final W&Binteraction counters.
+
+Evidence under `results/c2opt21/`: immutable `mp_adoption_protocol_a.json`,
+`mp_adoption_acceptance_a.json`, `mp_exclusive_smokes_acceptance_a.json`,
+host comparisons/qualifications and `decision_014.md`. These qualify execution,
+not long-horizon identical policies, guaranteed remote speedup, or a new
+economic hypothesis. Shared YAMLdefaults remain serial for compatibility;
+campaign launch manifests must explicitly include the accepted worker counts.

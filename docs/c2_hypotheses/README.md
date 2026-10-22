@@ -15,6 +15,10 @@ The original `results/cmp20/` campaign remains separate and preserved.
 These `X` records concern execution cost only, not the C2 economic hypothesis
 queue. They neither start H02 nor modify/deploy to frozen H01 hosts. They have
 their own correctness and timing gates; economic superiority is not assessed.
+After H02closure, the user authorized adopting this execution infrastructure.
+Main integration `9f03926` passed172local/168per-remote tests and four exclusive
+2/2smokes; see [qualified execution](../c2_execution_hosts.md#qualified-multiprocessing-execution).
+This adoption does not alter or reopen the closed H01/H02results.
 
 | Record | Intervention | State |
 | --- | --- | --- |
