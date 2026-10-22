@@ -17,6 +17,7 @@ _learner = None
 _scheme = None
 _groups = None
 _pending = None
+_transport = None
 
 
 class _NoLog:
@@ -24,8 +25,8 @@ class _NoLog:
         pass
 
 
-def _initialize(args, scheme, barrier):
-    global _learner, _scheme, _groups
+def _initialize(args, scheme, barrier, transport=None):
+    global _learner, _scheme, _groups, _transport
     from learners.gavdac_learner import GAVDACLearner
     for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
         os.environ[name] = "1"
@@ -35,6 +36,7 @@ def _initialize(args, scheme, barrier):
     _scheme, _groups = scheme, {"agents": args.n_agents}
     mac = CQMixMAC(scheme, _groups, args)
     _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
+    _transport = transport
     barrier.wait(timeout=120)
 
 
@@ -52,7 +54,8 @@ def _modules(learner):
     return modules
 
 
-def _gradients(phase, weights, data, denominator, actor_weight, round_id):
+def _gradients(phase, weights, data, denominator, actor_weight, round_id,
+               gradient_buffers=None):
     global _pending
     learner = _learner
     modules = _modules(learner)
@@ -91,11 +94,41 @@ def _gradients(phase, weights, data, denominator, actor_weight, round_id):
         finally:
             learner._set_critic_grad(True)
         params = learner.agent_params
-    return (
-        float(loss.detach()),
-        [None if param.grad is None else param.grad.numpy().copy() for param in params],
-        os.getpid(),
-    )
+    if gradient_buffers is None:
+        gradients = [None if p.grad is None else p.grad.numpy().copy() for p in params]
+    else:
+        gradients = []
+        for buffer, param in zip(gradient_buffers, params, strict=True):
+            gradients.append(param.grad is not None)
+            if param.grad is not None:
+                buffer.copy_(param.grad)
+    return float(loss.detach()), gradients, os.getpid()
+
+
+def _shared_gradients(phase, denominator, actor_weight, round_id, start, stop, data):
+    if data is not None:
+        _transport["batch"] = data
+    names = (_transport["weights"] if phase == "critic"
+             else ("critic", "mixer") if _learner.mixer is not None else ("critic",))
+    weights = {
+        name: {key: value.numpy() for key, value in _transport["weights"][name].items()}
+        for name in names
+    }
+    transition = ({key: value[start:stop].numpy()
+                   for key, value in _transport["batch"].items()}
+                  if phase == "critic" else None)
+    return _gradients(phase, weights, transition, denominator, actor_weight, round_id,
+                      _transport["gradients"][phase])
+
+
+def _shared_grad_buffers(params):
+    flat = torch.empty(sum(param.numel() for param in params), dtype=torch.float32).share_memory_()
+    views = []
+    offset = 0
+    for param in params:
+        views.append(flat[offset:offset + param.numel()].view_as(param))
+        offset += param.numel()
+    return views
 
 
 class GradientPool:
@@ -109,14 +142,29 @@ class GradientPool:
                for module in _modules(learner).values() for p in module.parameters()):
             raise ValueError("Parallel learner networks must be CPU float32")
         context = multiprocessing.get_context("spawn")
+        self.weight_buffers = {
+            name: {key: value.detach().clone().share_memory_()
+                   for key, value in module.state_dict().items()}
+            for name, module in _modules(learner).items()
+        }
+        self.gradient_buffers = [{
+            "critic": _shared_grad_buffers(learner.critic_params),
+            "actor": _shared_grad_buffers(learner.agent_params),
+        } for _ in range(workers)]
+        self.batch_buffers = {}
+        self.batch_generation = 0
+        self.worker_batch_generations = [0] * workers
         self.executors = []
         initialized = False
         try:
             barrier = context.Barrier(workers)
-            for _ in range(workers):
+            for index in range(workers):
                 self.executors.append(ProcessPoolExecutor(
                     max_workers=1, mp_context=context, initializer=_initialize,
-                    initargs=(deepcopy(learner.args), scheme, barrier),
+                    initargs=(deepcopy(learner.args), scheme, barrier, {
+                        "weights": self.weight_buffers,
+                        "gradients": self.gradient_buffers[index],
+                    }),
                 ))
             ready = [executor.submit(_ready) for executor in self.executors]
             self.pids = tuple(future.result() for future in ready)
@@ -141,11 +189,9 @@ class GradientPool:
         if phase == "actor":
             # Reloading Actor parameters would invalidate its retained autograd graph.
             modules = {name: modules[name] for name in ("critic", "mixer") if name in modules}
-        weights = {
-            name: {key: value.detach().numpy().copy()
-                   for key, value in module.state_dict().items()}
-            for name, module in modules.items()
-        }
+        for name, module in modules.items():
+            for key, value in module.state_dict().items():
+                self.weight_buffers[name][key].copy_(value.detach())
         denominator = None
         if phase == "critic":
             mask = batch["filled"][:, :-1].float().clone()
@@ -156,6 +202,19 @@ class GradientPool:
             if any(tensor.device.type != "cpu"
                    for tensor in batch.data.transition_data.values()):
                 raise ValueError("Parallel learner batches must stay on CPU")
+            transition = batch.data.transition_data
+            if (self.batch_buffers.keys() != transition.keys() or any(
+                value.shape != self.batch_buffers[key].shape
+                or value.dtype != self.batch_buffers[key].dtype
+                for key, value in transition.items()
+            )):
+                self.batch_buffers = {
+                    key: torch.empty_like(value).share_memory_()
+                    for key, value in transition.items()
+                }
+                self.batch_generation += 1
+            for key, value in transition.items():
+                self.batch_buffers[key].copy_(value.detach())
             self.round_id += 1
             self.pending_batch = batch
         futures = []
@@ -163,29 +222,30 @@ class GradientPool:
             np.arange(batch.batch_size), min(batch.batch_size, self.workers),
         )):
             start, stop = int(indices[0]), int(indices[-1]) + 1
-            data = ({key: tensor[start:stop].detach().numpy().copy()
-                     for key, tensor in batch.data.transition_data.items()}
-                    if phase == "critic" else None)
+            data = (self.batch_buffers if phase == "critic"
+                    and self.worker_batch_generations[index] != self.batch_generation else None)
             futures.append(self.executors[index].submit(
-                _gradients, phase, weights, data, denominator,
+                _shared_gradients, phase, denominator,
                 (stop - start) / batch.batch_size if phase == "critic" else None,
-                self.round_id,
+                self.round_id, start, stop, data,
             ))
         results = [future.result() for future in futures]
         self.last_phase_pids[phase] = tuple(pid for _, _, pid in results)
         if self.last_phase_pids[phase] != self.pids[:len(results)]:
             raise RuntimeError("Gradient shard changed worker identity")
+        if phase == "critic":
+            self.worker_batch_generations[:len(results)] = [self.batch_generation] * len(results)
         params = learner.critic_params if phase == "critic" else learner.agent_params
         for index, param in enumerate(params):
             gradients = [gradients[index] for _, gradients, _ in results]
-            if all(value is None for value in gradients):
+            if not any(gradients):
                 param.grad = None
-            elif any(value is None for value in gradients):
+            elif not all(gradients):
                 raise ValueError("Inconsistent shard gradient participation")
             else:
-                gradient = torch.from_numpy(gradients[0]).clone()
-                for value in gradients[1:]:
-                    gradient.add_(torch.from_numpy(value))
+                gradient = self.gradient_buffers[0][phase][index].clone()
+                for worker in range(1, len(results)):
+                    gradient.add_(self.gradient_buffers[worker][phase][index])
                 if not torch.isfinite(gradient).all():
                     raise ValueError("Non-finite sharded gradient")
                 param.grad = gradient

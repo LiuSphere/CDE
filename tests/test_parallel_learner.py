@@ -95,6 +95,61 @@ class ParallelLearnerTest(unittest.TestCase):
         finally:
             learner.close()
 
+    def test_shared_transport_reuses_buffers_and_refreshes_changed_batch_shapes(self):
+        batch, mac, args, scheme = fixture(use_cuda=False)
+        serial = GAVDACLearner(mac, scheme, LossLog(), args)
+        parallel = copy.deepcopy(serial)
+        parallel.args.learner_workers = 3
+        previous = None
+        try:
+            for step, (size, length) in enumerate(((5, 7), (2, 4), (2, 4), (7, 8))):
+                batch, _, _, _ = fixture(batch_size=size, length=length, use_cuda=False)
+                serial.train(batch, step + 1, step)
+                parallel.train(batch, step + 1, step)
+                pool = parallel.gradient_pool
+                self.assertTrue(all(value.is_shared() for value in pool.batch_buffers.values()))
+                pointers = {key: value.data_ptr() for key, value in pool.batch_buffers.items()}
+                if step == 2:
+                    self.assertEqual(previous, pointers)
+                previous = pointers
+                self.assertEqual(len(pool.last_phase_pids["critic"]), min(size, 3))
+                for name in ("critic", "mixer", "target_critic", "target_mixer",
+                             "agent_optimiser", "critic_optimiser"):
+                    torch.testing.assert_close(
+                        getattr(serial, name).state_dict(), getattr(parallel, name).state_dict(),
+                        rtol=1e-4, atol=1e-5,
+                    )
+                torch.testing.assert_close(
+                    serial.mac.agent.state_dict(), parallel.mac.agent.state_dict(),
+                    rtol=1e-4, atol=1e-5,
+                )
+                torch.testing.assert_close(
+                    [p.grad for p in serial.agent_params + serial.critic_params],
+                    [p.grad for p in parallel.agent_params + parallel.critic_params],
+                    rtol=1e-4, atol=1e-5,
+                )
+                # A retained parent batch must never become a shared transport alias.
+                saved = {key: value.clone() for key, value in pool.batch_buffers.items()}
+                batch["obs"].add_(10)
+                torch.testing.assert_close(saved, pool.batch_buffers, rtol=0, atol=0)
+                with self.assertRaisesRegex(RuntimeError, "same critic batch"):
+                    pool.backward(parallel, batch, "actor")
+        finally:
+            serial.close()
+            parallel.close()
+
+    def test_shared_transport_nonfinite_worker_gradient_is_rejected(self):
+        batch, mac, args, scheme = fixture(use_cuda=False, learner_workers=2)
+        learner = GAVDACLearner(mac, scheme, LossLog(), args)
+        batch["reward"].fill_(float("nan"))
+        before = copy.deepcopy(learner.critic.state_dict())
+        try:
+            with self.assertRaisesRegex(ValueError, "Non-finite sharded gradient"):
+                learner.train(batch, 1, 1)
+            torch.testing.assert_close(before, learner.critic.state_dict(), rtol=0, atol=0)
+        finally:
+            learner.close()
+
     def test_cached_worker_actor_uses_one_history_and_rejects_wrong_phase(self):
         batch, mac, args, scheme = fixture(use_cuda=False)
         learner = GAVDACLearner(mac, scheme, LossLog(), args)

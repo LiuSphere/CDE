@@ -212,6 +212,55 @@ point. Further source, learning-equation or remote-campaign changes require a
 separately registered scope. Neither this branch nor its resource counts were
 deployed into the frozen active H01 source or merged into main.
 
+### Shared-Transport Follow-Up (2026-10-22)
+
+A separate authorized follow-up retained X04 shared learner transport buffers.
+The parent publishes weights and a copied batch into reusable CPU shared
+buffers; each affine worker writes its gradients into worker-specific output slots.
+Executor messages carry phase/round/shard metadata and gradient participation,
+not repeated NumPy payloads. Workers retain local parameters and the original
+cached Actor graph. The parent still adds gradients in worker order and owns
+clipping, optimizer steps and targets. Shared batch descriptors are refreshed
+when shape or dtype changes, including when previously idle shards rejoin.
+
+The fixed 2/2 comparison against `f08eb68` used two alternating pairs, each
+57,600 interactions and 945 updates: mean total 127.409 -> 123.212 seconds,
+total throughput +3.41%, post-warmup +2.98%, steady updates +8.79%.
+First-update time increased from 4.948 to 7.806 seconds; that startup penalty
+is included in the total gate. Do not add these gains to earlier 4/4-versus-
+serial figures, which use different settings and measurements.
+
+The attempted 4/4 case was interrupted when free physical RAM fell to about
+600 MiB alongside the existing H02 training process. Only this task's benchmark
+was stopped. New timing acceptance is limited to 2/2, not a new 4/4, remote-host,
+long-run, economic or exact-resume guarantee. Shared defaults remain serial,
+and neither the running H02 source nor its process was changed.
+
+X05 bound-state synchronization failed its initial timing gate (steady
+throughput -0.72%). X06 flat gradient reduction also failed its original >=2%
+screen gate (+1.31%). Both passed their focused correctness/trace checks, but
+their implementations were restored to X04 with SHA256 verification.
+Rejected source snapshots and raw runs remain under `results/x05_rejected_a/`
+and `results/x06_rejected_a/`. See the individual ledger records for all gates.
+These failures do not prove either idea universally useless.
+
+X04's full suite passed all 170 tests (`results/x04_full_a.log`), with exact
+short predecessor training traces and float32 serial/sharded tolerance gates.
+The bounded follow-up stops after two further candidates miss their declared
+practical screen. Final restoration/regression evidence is recorded in X04.
+
+Diagnostic tools, separate from acceptance benchmarks:
+
+```powershell
+uv run python tools/profile_parallel_learner.py --output results/<new-profile> --timesteps 28800 --rollout-workers 2 --learner-workers 2
+uv run python tools/capture_parallel_training_trace.py --output results/<new-trace>.json --rollout-workers 2 --learner-workers 2
+```
+
+The profiler reports worker CPU profiles and parent phase wall clocks; their
+times overlap and profiling perturbs execution. The trace tool can select a
+frozen `--source-root` and `--compare` a predecessor JSON, including additional
+critic-gradient digests. Neither tool establishes long-horizon equivalence.
+
 ## Execution Changes
 
 ### Policy Sequence Interface

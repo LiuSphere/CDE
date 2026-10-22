@@ -61,6 +61,10 @@ total throughput for 4/4 versus serial in two alternating-order 57,600-step loca
 repetitions. X03 did not accept 5/4: its extra 1.79% missed the original 2%
 resource gate. These results do not guarantee remote/6M-step speedups or better
 dispatch; the shared execution defaults still remain serial.
+The 2026-10-22 shared-transport follow-up measured a further +3.41% total
+throughput against its own predecessor at fixed 2/2 workers. Its 4/4 attempt
+was stopped for low available RAM alongside a formal run; the new result is
+not a 4/4 qualification and must not be added to the earlier speedup figure.
 
 `gavdac_v03_no_crossover` has the same algorithm parameters as the new main;
 it is no longer a meaningful ablation of the new main. The retained paper

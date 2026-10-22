@@ -20,6 +20,9 @@ their own correctness and timing gates; economic superiority is not assessed.
 | [X01](X01_execution_cache.md) | Affine shards reuse Actor history and inputs | Accepted: +7.14% versus previous 4/4 execution |
 | [X02](X02_rollout_overlap.md) | Overlap the EA cycle's one common-start RL rollout | Accepted: +3.24% versus X01 |
 | [X03](X03_worker_width.md) | Match rollout width to the five-member population | Not accepted: +1.79% below 2% gate; retain 4/4 |
+| [X04](X04_shared_transport.md) | Reuse shared learner weight/batch/gradient buffers | Accepted at 2/2: +3.41%; 4/4 resource-unqualified |
+| [X05](X05_bound_state_sync.md) | Bind model/shared state pairs once | Not accepted: initial timing gate failed; restored X04 |
+| [X06](X06_flat_gradient_reduce.md) | Reduce/check gradients as a flat phase vector | Not accepted: +1.31% below screen gate; restored X04 |
 
 ## Record Rules
 
