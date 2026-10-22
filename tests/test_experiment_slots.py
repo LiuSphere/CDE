@@ -68,7 +68,7 @@ class ExperimentSlotTest(unittest.TestCase):
     def test_detached_manager_does_not_inherit_parent_service(self):
         process = SimpleNamespace(pid=os.getpid())
         argv = ["experiment_slot.py", "--slots", "1", "--slot", "0",
-                "--config", "gavdac_c2_h02", "--seed", "2",
+                "--config", "gavdac_ea_main", "--seed", "2",
                 "--token", "test_detach", "--detach"]
         with patch.object(experiment_slot, "ROOT", self.root), \
              patch.object(sys, "argv", argv), \

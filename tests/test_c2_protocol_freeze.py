@@ -1,4 +1,4 @@
-"""No-training guards for the H02protocol-freeze tool."""
+"""Retained no-training guards for the archived H02 protocol-freeze tool."""
 
 import copy
 import sys
@@ -15,7 +15,8 @@ from tools.freeze_c2_protocol import (
 class ProtocolFreezeTest(unittest.TestCase):
     def test_actual_entry_config_only_enables_registered_intervention(self):
         parent = entry_config("gavdac_ea_main")
-        candidate = entry_config("gavdac_c2_h02")
+        # The failed opt-in config is retired; exercise the retained guard synthetically.
+        candidate = {**parent, "name": "gavdac_c2_h02", "clipped_double_critic": True}
         validate_candidate(parent, candidate)
         for name, value in (("lr", .02), ("EA", False), ("t_max", 500000),
                             ("crossover_prob", 1.), ("checkpoint_path", "old_weights")):
@@ -39,7 +40,7 @@ class ProtocolFreezeTest(unittest.TestCase):
                 compare_host(previous, {**current, key: value})
 
     def test_per_seed_entry_export_keeps_frozen_budget_and_seeds_environment(self):
-        config = entry_config("gavdac_c2_h02", {
+        config = entry_config("gavdac_ea_main", {
             "seed": 2, "unique_token": "h02_export_test", "wandb_mode": "online"})
         self.assertEqual(config["seed"], 2)
         self.assertEqual(config["env_args"]["seed"], 2)

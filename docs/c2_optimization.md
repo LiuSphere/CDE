@@ -110,3 +110,25 @@ Detailed state, hypotheses, commits, source/data/config/checkpoint identities,
 failures, reversions, run acceptance and scheduling belong under
 results/c2opt21/. They do not overwrite results/cmp20/state.json.
 The original P4 solver acceptance question remains paused and unresolved.
+
+## Execution Amendment: 2026-10-22
+
+After all H02training finished, the user requested multiprocessing for future
+rounds. This supersedes the earlier instruction not to adopt the independent
+execution branch, but does not change H02's actual serial execution identity,
+C3, physical-interaction budgets, optimizer-update rules or economic gates.
+Do not retrospectively relabel old results or rerun them merely for this change.
+
+Verify the integration commit and serial/parallel output, gradient and complete
+update checks before use. Freeze the new exact execution source/configuration,
+rollout-worker and learner-worker counts per host, and process/thread/RAM
+budgets across concurrent slots before any new formal launch. Qualify the
+chosen settings on both hosts; do not assume that four experiment slots mean
+four processes, or that one local timing screen guarantees remote speedup.
+Use multiple processes within a run, each with one compute thread.
+
+Rollout-only exact equality and tolerance-based sharded-gradient equivalence
+are distinct. Float32 reduction differences do not establish long-horizon
+policy/economic identity. Report this execution amendment when comparing to
+the frozen C3, and preserve original baseline/protected file identities rather
+than overwriting them with the new execution hashes.
