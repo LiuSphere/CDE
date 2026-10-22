@@ -9,7 +9,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | --- | --- | --- | --- | --- |
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Closed; reverted69d60ef/62b1bfa;146tests passed |
 | [H02](H02.md) | Clipped double mixed-Q targets | All training/evaluation accepted | Only seed2 meets3%; mean saving0.9007%; target failed | Closed; reverted859f242;153restoration tests passed |
-| [H03](H03.md) | Actor optimizer every second Critic step; targets unchanged | Local179tests/7isolated/strict source passed; host/smoke gates pending | Unassessed; original each/mean3% gate | Registeredf18155f; implementatione9975bf; no formal run |
+| [H03](H03.md) | Actor optimizer every second Critic step; targets unchanged | Local179/remote175each plus4exclusive smokes accepted | Unassessed; original each/mean3% gate | Implementatione9975bf; engineering accepted; formal freeze pending |
 
 ## Isolated Execution Rounds
 
