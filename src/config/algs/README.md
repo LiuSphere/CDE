@@ -7,7 +7,6 @@ configured separately by `src/config/envs/microgrid.yaml`.
 | --- | --- |
 | `gavdac_ea_main` | Selected main: v03 dimensions/budget, `crossover_prob: 0.0`; selection, mutation and RL injection retained. |
 | `gavdac_ea_main_no_ea` | Fresh C1 control: entry-merged main parameters, only `EA: false` and the name differ. |
-| `gavdac_c2_h03` | Exploratory H03: main with `actor_update_interval: 2`; Critic/target cadence unchanged. Pending host qualification and protocol freeze, not a proven improvement. |
 | `gavdac_mappo` | Independent feed-forward shared local Gaussian actor, centralized critic, SB3 PPO core; see `docs/mappo_baseline.md`. |
 | `gavdac_ea_tune_v03_long` | Historical v03 with crossover: 6M steps, batch128, hidden48, mixer32, buffer50000. |
 | `gavdac_ea` | Historical generic GAVDAC + EA using shared defaults, including crossover; not v03 dimensions. |
