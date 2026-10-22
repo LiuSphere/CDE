@@ -10,7 +10,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Closed; reverted69d60ef/62b1bfa;146tests passed |
 | [H02](H02.md) | Clipped double mixed-Q targets | All training/evaluation accepted | Only seed2 meets3%; mean saving0.9007%; target failed | Closed; reverted859f242;153restoration tests passed |
 | [H03](H03.md) | Actor optimizer every second Critic step; targets unchanged | All training and primary evaluations accepted | Onlyseed2meets3%; mean saving1.3118%; target failed | Closed; reverted45c40fd;177restoration tests passed |
-| [H04](H04.md) | Scaled unit-Huber Critic TD regression; local MSEscale retained | All-host engineering and4exclusive2/2smokes passed | Not evaluated; original each/mean3% gate unchanged | Implementationcbc0b16; qualifiedruntime81c49c3; formal freeze pending; no formal run |
+| [H04](H04.md) | Scaled unit-Huber Critic TD regression; local MSEscale retained | All-host engineering,4exclusive2/2smokes and8new freeze guards/host passed | Not evaluated; original each/mean3% gate unchanged | Implementationcbc0b16; formalruntime23973fb;3fresh6Mruns started, online healthy |
 
 ## Isolated Execution Rounds
 
