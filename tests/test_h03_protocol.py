@@ -1,4 +1,4 @@
-"""H03 freeze guard tests without launching training or touching saved evidence."""
+"""Retained freeze guards for the retired H03 candidate, without training."""
 
 import copy
 from pathlib import Path
@@ -18,7 +18,9 @@ class H03ProtocolTest(unittest.TestCase):
     def test_entry_config_allows_only_registered_algorithm_difference(self):
         compile(HOST_PROBE, "<H03 original-host probe>", "exec")
         workers = {"rollout_workers": 2, "learner_workers": 2}
-        parent, candidate = (entry_config(name, workers) for name in ("gavdac_ea_main", "gavdac_c2_h03"))
+        parent = entry_config("gavdac_ea_main", workers)
+        # Preserve protocol checks without restoring the failed opt-in runtime.
+        candidate = {**parent, "name": "gavdac_c2_h03", "actor_update_interval": 2}
         validate_candidate(parent, candidate)
         for key, value in (
             ("actor_update_interval", 1), ("lr", .001), ("learner_workers", 0),
