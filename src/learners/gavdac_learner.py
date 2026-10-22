@@ -142,10 +142,13 @@ class GAVDACLearner:
         td_error = targets.detach() - q_taken
         mask = mask.expand_as(td_error)
         masked_td_error = td_error * mask
-        loss = (masked_td_error**2).sum() / (
-            mask.sum() if denominator is None else denominator
+        loss = self._td_error_loss(
+            masked_td_error, mask.sum() if denominator is None else denominator
         )
         return actor_policy, critic_inputs, loss
+
+    def _td_error_loss(self, masked_td_error, denominator):
+        return (masked_td_error**2).sum() / denominator
 
     def _actor_loss(self, batch, actor_policy, critic_inputs):
         self.critic.init_hidden(batch.batch_size)
