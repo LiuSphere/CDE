@@ -12,7 +12,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H03](H03.md) | Actor optimizer every second Critic step; targets unchanged | All training and primary evaluations accepted | Onlyseed2meets3%; mean saving1.3118%; target failed | Closed; reverted45c40fd;177restoration tests passed |
 | [H04](H04.md) | Scaled unit-Huber Critic TD regression; local MSEscale retained | All3training/primaryevaluations accepted | Onlyseed2passes3%; mean saving1.2008%; targetfailed | Closed; reverted249a127;185restoration tests passed |
 | [H05](H05.md) | Fixed five-step within-episode Critic targets | All3training and original-host primaryevaluations accepted | All3miss3%; ratio-of-means saving-9.5328%; targetfailed | Closed; revertedbdab135;195restoration tests passed |
-| [H06](H06.md) | Per-sample LayerNorm at both Critic hidden preactivations | Local9focused/204full,200per-remote and four exclusive2/2smokes passed | Not evaluated; unchanged each/mean3% gate | All-host engineering accepted; independent formal freeze pending; no formal run |
+| [H06](H06.md) | Per-sample LayerNorm at both Critic hidden preactivations | All-host engineering plus12newfreeze guards eachhost and initial online health passed | Not evaluated; unchanged each/mean3% gate | Immutable protocol frozen; exactly3fresh6Mjoint runs active |
 
 ## Isolated Execution Rounds
 
