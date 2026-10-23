@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import pprint
 import threading
@@ -17,6 +18,7 @@ from controllers.cqmix_controller import CQMixMAC
 from ea import mod_neuro_evo as utils_ne
 from learners.EA_gavdac_learner import EA_GAVDACLearner
 from learners.gavdac_learner import GAVDACLearner
+from learners.target_smoothing_learner import TargetSmoothedGAVDACLearner, target_policy_smoothing_enabled
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -32,6 +34,7 @@ def rl_to_evo(rl_agent, evo_net):
 
 
 def run(_config, _log):
+    target_policy_smoothing_enabled(SN(**_config))
     if _config["name"] == "gavdac_mappo":
         from run_mappo import run_mappo
         return run_mappo(_config, _log)
@@ -175,7 +178,9 @@ def _run_with_runner(args, logger, runner, resources):
                     logger, args,
                 )
     # Learner
-    if args.EA:
+    if target_policy_smoothing_enabled(args):
+        learner = TargetSmoothedGAVDACLearner(mac, buffer.scheme, logger, args)
+    elif args.EA:
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
         learner = GAVDACLearner(mac, buffer.scheme, logger, args)
@@ -407,6 +412,13 @@ def _run_with_runner(args, logger, runner, resources):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
+    if target_policy_smoothing_enabled(args):
+        completion = {
+            **learner.diagnostics(), "joint_interactions": runner.t_env,
+            "agent_transitions": runner.t_env * args.n_agents, "ea_cycles": ea_cycle,
+        }
+        (Path(args.local_results_path) / "h07_completion.json").write_text(
+            json.dumps(completion, indent=2, allow_nan=False), encoding="utf-8")
     logger.console_logger.info("Finished Training")
 
 

@@ -76,6 +76,9 @@ class GAVDACLearner:
 
         self.log_stats_t = -self.args.learner_log_interval - 1
 
+    def _target_actions(self, batch, target_policy):
+        return self.target_mac._clamp_actions_to_space(target_policy["actions"])
+
     def _critic_loss(self, batch, denominator=None):
         # Get the relevant quantities
         rewards = batch["reward"][:, :-1]
@@ -87,9 +90,7 @@ class GAVDACLearner:
         # Train the critic batched
         with th.no_grad():
             target_policy = self.target_mac.forward_sequence(batch)
-            target_actions = self.target_mac._clamp_actions_to_space(
-                target_policy["actions"]
-            )
+            target_actions = self._target_actions(batch, target_policy)
 
         # Actor weights do not change during the critic update. Reuse its history,
         # detaching only the critic's view so its loss cannot enter the actor graph.
