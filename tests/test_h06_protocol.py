@@ -1,4 +1,4 @@
-"""Independent H06 freeze guards; these tests never train, freeze or launch."""
+"""Retired H06 guards using the real baseline and synthetic candidate, never failed runtime."""
 
 import copy
 from pathlib import Path
@@ -20,9 +20,10 @@ from tools.freeze_h06_protocol import (
 class H06ProtocolTest(unittest.TestCase):
     def entries(self):
         workers = {"rollout_workers": 2, "learner_workers": 2}
-        return (entry_config(name, workers) for name in ("gavdac_ea_main", "gavdac_c2_h06"))
+        parent = entry_config("gavdac_ea_main", workers)
+        return parent, {**parent, "name": "gavdac_c2_h06", "critic_layer_norm": True}
 
-    def test_actual_entry_name_and_LayerNorm_only(self):
+    def test_real_baseline_synthetic_retired_entry_name_and_LayerNorm_only(self):
         parent, candidate = self.entries()
         validate_candidate(parent, candidate)
         for key, value in (
