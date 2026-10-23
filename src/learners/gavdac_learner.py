@@ -135,7 +135,10 @@ class GAVDACLearner:
                     batch.batch_size, batch.max_seq_length - 1, self.n_agents
                 )
 
-        targets = self._build_td_targets(rewards, terminated, mask, target_vals)
+        targets = (
+            rewards.expand_as(target_vals)
+            + self.args.gamma * (1 - terminated.expand_as(target_vals)) * target_vals
+        )
         td_error = targets.detach() - q_taken
         mask = mask.expand_as(td_error)
         masked_td_error = td_error * mask
@@ -143,12 +146,6 @@ class GAVDACLearner:
             mask.sum() if denominator is None else denominator
         )
         return actor_policy, critic_inputs, loss
-
-    def _build_td_targets(self, rewards, terminated, mask, target_vals):
-        return (
-            rewards.expand_as(target_vals)
-            + self.args.gamma * (1 - terminated.expand_as(target_vals)) * target_vals
-        )
 
     def _actor_loss(self, batch, actor_policy, critic_inputs):
         self.critic.init_hidden(batch.batch_size)

@@ -17,7 +17,6 @@ from controllers.cqmix_controller import CQMixMAC
 from ea import mod_neuro_evo as utils_ne
 from learners.EA_gavdac_learner import EA_GAVDACLearner
 from learners.gavdac_learner import GAVDACLearner
-from learners.five_step_learner import FiveStepGAVDACLearner, five_step_enabled
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -176,9 +175,7 @@ def _run_with_runner(args, logger, runner, resources):
                     logger, args,
                 )
     # Learner
-    if five_step_enabled(args):
-        learner = FiveStepGAVDACLearner(mac, buffer.scheme, logger, args)
-    elif args.EA:
+    if args.EA:
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
         learner = GAVDACLearner(mac, buffer.scheme, logger, args)
@@ -410,14 +407,6 @@ def _run_with_runner(args, logger, runner, resources):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
-    if five_step_enabled(args):
-        import json
-        completion = {
-            **learner.diagnostics(), "joint_interactions": runner.t_env,
-            "agent_transitions": runner.t_env * args.n_agents, "ea_cycles": ea_cycle,
-        }
-        with (Path(args.local_results_path) / "h05_completion.json").open("x", encoding="utf-8") as handle:
-            json.dump(completion, handle, indent=2, allow_nan=False)
     logger.console_logger.info("Finished Training")
 
 
