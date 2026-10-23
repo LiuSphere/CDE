@@ -1,4 +1,4 @@
-"""H05-only freeze guard checks, without training or retained reevaluation."""
+"""Retired H05 guards using real baseline and synthetic candidate, not failed runtime."""
 
 import copy
 from pathlib import Path
@@ -17,9 +17,10 @@ from tools.freeze_h05_protocol import (
 
 
 class H05ProtocolTest(unittest.TestCase):
-    def test_actual_H05_entry_is_only_name_and_flag(self):
+    def test_baseline_entry_and_synthetic_retired_H05_guards(self):
         workers = {"rollout_workers": 2, "learner_workers": 2}
-        parent, candidate = (entry_config(name, workers) for name in ("gavdac_ea_main", "gavdac_c2_h05"))
+        parent = entry_config("gavdac_ea_main", workers)
+        candidate = {**parent, "name": "gavdac_c2_h05", "five_step_critic": True}
         validate_candidate(parent, candidate)
         for key, value in (
             ("five_step_critic", False), ("five_step_critic", 1), ("lr", .001),
@@ -32,7 +33,8 @@ class H05ProtocolTest(unittest.TestCase):
 
     def test_joint_budget_CPU_fresh_weights_selection_and_online_are_fixed(self):
         workers = {"rollout_workers": 2, "learner_workers": 2}
-        parent, candidate = (entry_config(name, workers) for name in ("gavdac_ea_main", "gavdac_c2_h05"))
+        parent = entry_config("gavdac_ea_main", workers)
+        candidate = {**parent, "name": "gavdac_c2_h05", "five_step_critic": True}
         for key, value in (
             ("t_max", 500000), ("t_max", 6000000.0), ("use_cuda", True),
             ("learner_workers", 2.0), ("checkpoint_path", "old"), ("policy_checkpoint", "old"),
