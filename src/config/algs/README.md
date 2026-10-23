@@ -72,9 +72,6 @@ The exploratory campaign now requires explicit multiprocessing settings for
 future rounds; its initial qualification setting is 2/2 with one compute
 thread per process. Shared defaults stay serial for compatibility.
 
-`gavdac_c2_h06` is the opt-in Critic-hidden LayerNorm hypothesis only; see
-`docs/c2_hypotheses/H06.md`. No formal launch is authorized before new qualification/freeze.
-
 `gavdac_v03_no_crossover` has the same algorithm parameters as the new main;
 it is no longer a meaningful ablation of the new main. The retained paper
 controls and 0.25 experiment describe the old v03 protocol, not a new matched

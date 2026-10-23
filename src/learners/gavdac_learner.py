@@ -24,7 +24,7 @@ class GAVDACLearner:
         self.target_mac = copy.deepcopy(self.mac)
         self.agent_params = list(mac.parameters())
 
-        self.critic = self._make_critic(scheme, args)
+        self.critic = GAVDACCritic(scheme, args)
         self.target_critic = copy.deepcopy(self.critic)
         self.critic_params = list(self.critic.parameters())
 
@@ -75,9 +75,6 @@ class GAVDACLearner:
             )
 
         self.log_stats_t = -self.args.learner_log_interval - 1
-
-    def _make_critic(self, scheme, args):
-        return GAVDACCritic(scheme, args)
 
     def _critic_loss(self, batch, denominator=None):
         # Get the relevant quantities
