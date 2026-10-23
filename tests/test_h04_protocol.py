@@ -1,4 +1,4 @@
-"""H04 freeze rejection guards; no training or cloud connections."""
+"""Retired H04 freeze guards without restoring the rejected learner/config."""
 
 import copy
 from pathlib import Path
@@ -16,11 +16,12 @@ from tools.freeze_h04_protocol import (
 
 
 class H04ProtocolTest(unittest.TestCase):
-    def test_real_entry_allows_only_name_and_boolean_huber(self):
+    def test_baseline_entry_and_synthetic_retired_candidate_guards(self):
         compile(HOST_PROBE, "<H04 original-host read-only probe>", "exec")
         workers = {"rollout_workers": 2, "learner_workers": 2}
         parent = entry_config("gavdac_ea_main", workers)
-        candidate = entry_config("gavdac_c2_h04", workers)
+        # Keep protocol rejection coverage without retaining the failed runtime.
+        candidate = {**parent, "name": "gavdac_c2_h04", "scaled_huber_critic": True}
         validate_candidate(parent, candidate)
         for key, value in (
             ("scaled_huber_critic", False), ("scaled_huber_critic", 1),
