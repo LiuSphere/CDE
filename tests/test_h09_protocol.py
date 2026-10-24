@@ -1,4 +1,4 @@
-"""Independent H09 freeze guards; no training or economic evaluation."""
+"""Retired H09 guards: real baseline and synthetic candidate, no failed runtime."""
 
 import copy
 import json
@@ -22,9 +22,9 @@ from tools.freeze_h09_protocol import (
 class H09ProtocolTest(unittest.TestCase):
     def entries(self):
         parent = entry_config("gavdac_ea_main", {"rollout_workers": 2, "learner_workers": 2})
-        return parent, entry_config("gavdac_c2_h09", {"rollout_workers": 2, "learner_workers": 2})
+        return parent, {**parent, "name": "gavdac_c2_h09", "actor_no_action_l2": True}
 
-    def test_real_entry_only_registered_actor_action_l2_ablation(self):
+    def test_real_baseline_synthetic_retired_actor_action_l2_ablation(self):
         parent, candidate = self.entries()
         validate_candidate(parent, candidate)
         for key, value in (("actor_no_action_l2", False), ("actor_no_action_l2", 1),
