@@ -1,0 +1,11 @@
+# H10: only center the local Critic generator-fraction action coordinate.
+name: "gavdac_c2_h10"
+batch_size: 128
+rnn_hidden_dim: 48
+mixing_embed_dim: 32
+test_interval: 10000
+buffer_size: 50000
+save_model_interval: 50000
+t_max: 6000000
+crossover_prob: 0.0
+critic_center_generator_action: true

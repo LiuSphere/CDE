@@ -28,6 +28,12 @@ class _NoLog:
 def _initialize(args, scheme, barrier, transport=None):
     global _learner, _scheme, _groups, _transport
     from learners.gavdac_learner import GAVDACLearner
+    from learners.centered_generator_learner import (
+        CenteredGeneratorGAVDACLearner, validate_center_generator_flag,
+    )
+    centered = validate_center_generator_flag(
+        getattr(args, "critic_center_generator_action", False)
+    )
     for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
         os.environ[name] = "1"
     torch.set_num_threads(1)
@@ -35,7 +41,10 @@ def _initialize(args, scheme, barrier, transport=None):
     args.learner_workers = 0
     _scheme, _groups = scheme, {"agents": args.n_agents}
     mac = CQMixMAC(scheme, _groups, args)
-    _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
+    if centered:
+        _learner = CenteredGeneratorGAVDACLearner(mac, scheme, _NoLog(), args)
+    else:
+        _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
     _transport = transport
     barrier.wait(timeout=120)
 
