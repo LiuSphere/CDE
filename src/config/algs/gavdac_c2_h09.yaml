@@ -1,0 +1,11 @@
+# H09: omit only the Actor normalized-action L2 penalty.
+name: "gavdac_c2_h09"
+batch_size: 128
+rnn_hidden_dim: 48
+mixing_embed_dim: 32
+test_interval: 10000
+buffer_size: 50000
+save_model_interval: 50000
+t_max: 6000000
+crossover_prob: 0.0
+actor_no_action_l2: true

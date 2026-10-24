@@ -31,7 +31,7 @@ class RepositoryScopeTest(unittest.TestCase):
         self.assertEqual(
             {path.stem for path in (ROOT / "src/config/algs").glob("*.yaml")},
             {
-                "gavdac_ea_main", "gavdac_ea_main_no_ea", "gavdac_mappo",
+                "gavdac_ea_main", "gavdac_ea_main_no_ea", "gavdac_mappo", "gavdac_c2_h09",
                 "gavdac_ea", "gavdac_ea_tune_v03_long", "gavdac_no_ea",
                 "gavdac_ea_no_mutation", "gavdac_ea_no_crossover",
                 "gavdac_ea_no_variation",
