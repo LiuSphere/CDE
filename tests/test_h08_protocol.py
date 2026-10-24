@@ -1,4 +1,4 @@
-"""H08 freeze guards: actual entries and synthetic integrity failures, no training."""
+"""Retired H08 guards: real baseline and synthetic candidate, no failed runtime."""
 
 import copy
 import json
@@ -21,10 +21,10 @@ from tools.freeze_h08_protocol import (
 
 class H08ProtocolTest(unittest.TestCase):
     def entries(self):
-        return tuple(entry_config(name, {"rollout_workers": 2, "learner_workers": 2})
-                     for name in ("gavdac_ea_main", "gavdac_c2_h08"))
+        parent = entry_config("gavdac_ea_main", {"rollout_workers": 2, "learner_workers": 2})
+        return parent, {**parent, "name": "gavdac_c2_h08", "critic_small_output_init": True}
 
-    def test_real_entries_only_registered_output_initialization(self):
+    def test_real_baseline_synthetic_retired_entry_only_registered_output_initialization(self):
         parent, candidate = self.entries()
         validate_candidate(parent, candidate)
         for key, value in (("critic_small_output_init", False), ("critic_small_output_init", 1),
