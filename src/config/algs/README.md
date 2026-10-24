@@ -90,6 +90,3 @@ See `docs/paper_experiment_plan.md` for phase gates and interpretation limits.
 Execution of the fixed paper matrix is recorded in `docs/paper_execution.md`.
 Historical VMAS and optimizer/noise sweeps are preserved in the pre-cleanup backup
 and Git history, not in this active configuration directory.
-
-`gavdac_c2_h07` opts into target-action smoothing only. It preserves rollout
-exploration, the original single Critic and all shared training settings.
