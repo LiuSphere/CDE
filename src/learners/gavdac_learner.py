@@ -147,7 +147,7 @@ class GAVDACLearner:
         )
         return actor_policy, critic_inputs, loss
 
-    def _actor_q_loss(self, batch, actor_policy, critic_inputs):
+    def _actor_loss(self, batch, actor_policy, critic_inputs):
         self.critic.init_hidden(batch.batch_size)
         chosen_action_qvals, self.critic.hidden_states = self.critic(
             critic_inputs,
@@ -166,11 +166,8 @@ class GAVDACLearner:
             chosen_action_qvals = chosen_action_qvals.view(
                 batch.batch_size, batch.max_seq_length - 1, self.n_agents
             )
-        return -chosen_action_qvals.mean()
-
-    def _actor_loss(self, batch, actor_policy, critic_inputs):
         return (
-            self._actor_q_loss(batch, actor_policy, critic_inputs)
+            -chosen_action_qvals.mean()
             + actor_policy["raw_actions"].square().mean() * 1e-3
         )
 
