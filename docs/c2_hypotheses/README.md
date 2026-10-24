@@ -14,7 +14,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H05](H05.md) | Fixed five-step within-episode Critic targets | All3training and original-host primaryevaluations accepted | All3miss3%; ratio-of-means saving-9.5328%; targetfailed | Closed; revertedbdab135;195restoration tests passed |
 | [H06](H06.md) | Per-sample LayerNorm at both Critic hidden preactivations | All3training/primaryevaluations accepted | All3miss3%; mean saving0.8320%; targetfailed | Closed; revertedc462786;207restoration tests passed |
 | [H07](H07.md) | Fixed clipped normalized target-action noise, original single Critic | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.3511%;targetfailed | Closed;revertedc43fd12;223restoration tests passed |
-| [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | Local12focused/235full and NEWexclusive2/2smoke passed;remote qualification pending | Unchanged each/mean3% gate;no economic result | Opt-in2b348e7 normally pushed;no formal launch/protocolfreeze yet |
+| [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | Local12focused/235full/smoke and eachremote231qualification passed;host comparison/remote smokes pending | Unchanged each/mean3% gate;no economic result | Paused:local availableRAM below3GiB gate;no formal launch/protocolfreeze |
 
 ## Isolated Execution Rounds
 
