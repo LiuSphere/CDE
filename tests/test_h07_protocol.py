@@ -1,4 +1,4 @@
-"""H07 guard checks, synthetic corruption only; no training or retained evaluation."""
+"""Retired H07 guard checks against real baseline and synthetic candidate only."""
 
 import copy
 import json
@@ -20,10 +20,10 @@ from tools.freeze_h07_protocol import (
 
 class H07ProtocolTest(unittest.TestCase):
     def entries(self):
-        return tuple(entry_config(name, {"rollout_workers": 2, "learner_workers": 2})
-                     for name in ("gavdac_ea_main", "gavdac_c2_h07"))
+        parent = entry_config("gavdac_ea_main", {"rollout_workers": 2, "learner_workers": 2})
+        return parent, {**parent, "name": "gavdac_c2_h07", "target_policy_smoothing": True}
 
-    def test_actual_entries_only_name_and_registered_smoothing(self):
+    def test_real_baseline_synthetic_retired_entry_only_registered_smoothing(self):
         parent, candidate = self.entries()
         validate_candidate(parent, candidate)
         for key, value in (
