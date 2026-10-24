@@ -16,6 +16,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H07](H07.md) | Fixed clipped normalized target-action noise, original single Critic | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.3511%;targetfailed | Closed;revertedc43fd12;223restoration tests passed |
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
+| [H10](H10.md) | Center only generator-fraction action input inside Critic | Preregistration algebra only; implementation/qualification pending | Unchanged each-seed and ratio-of-means3% gate; no economics | Registered before production edits; not formal |
 
 ## Isolated Execution Rounds
 
