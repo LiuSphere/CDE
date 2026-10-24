@@ -13,7 +13,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H04](H04.md) | Scaled unit-Huber Critic TD regression; local MSEscale retained | All3training/primaryevaluations accepted | Onlyseed2passes3%; mean saving1.2008%; targetfailed | Closed; reverted249a127;185restoration tests passed |
 | [H05](H05.md) | Fixed five-step within-episode Critic targets | All3training and original-host primaryevaluations accepted | All3miss3%; ratio-of-means saving-9.5328%; targetfailed | Closed; revertedbdab135;195restoration tests passed |
 | [H06](H06.md) | Per-sample LayerNorm at both Critic hidden preactivations | All3training/primaryevaluations accepted | All3miss3%; mean saving0.8320%; targetfailed | Closed; revertedc462786;207restoration tests passed |
-| [H07](H07.md) | Fixed clipped normalized target-action noise, original single Critic | All engineering plus16newfreezeguards perhost accepted | Unchanged each/mean3% gate; no economic result | Independently frozen;3fresh6Mformal runs online and initially healthy |
+| [H07](H07.md) | Fixed clipped normalized target-action noise, original single Critic | Seed2training/primaryevaluation accepted;two707training healthy | Seed2saving-1.5079%,misses3%;fullround pending | Frozen3fresh6M;no earlystop/retry/rollback before complete evidence |
 
 ## Isolated Execution Rounds
 
