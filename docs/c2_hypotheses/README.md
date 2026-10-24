@@ -15,7 +15,7 @@ The original `results/cmp20/` campaign remains separate and preserved.
 | [H06](H06.md) | Per-sample LayerNorm at both Critic hidden preactivations | All3training/primaryevaluations accepted | All3miss3%; mean saving0.8320%; targetfailed | Closed; revertedc462786;207restoration tests passed |
 | [H07](H07.md) | Fixed clipped normalized target-action noise, original single Critic | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.3511%;targetfailed | Closed;revertedc43fd12;223restoration tests passed |
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
-| [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All-hostengineering+independentfreeze accepted;3formalruns initially healthy | Frozen eachseed/mean3% gate;no economic result | h09s0a/1a/2a running;originalhostslots |
+| [H09](H09.md) | Remove only Actor normalized-action L2 penalty | Seed2fulltraining+primaryevaluation accepted;707two traininghealthy | Seed2saving3.1576%passes;otherseeds/meanpending | h09s0a/1a running;no whole-roundclaim |
 
 ## Isolated Execution Rounds
 
