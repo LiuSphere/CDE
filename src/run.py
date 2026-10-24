@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import pprint
 import threading
@@ -17,6 +18,7 @@ from controllers.cqmix_controller import CQMixMAC
 from ea import mod_neuro_evo as utils_ne
 from learners.EA_gavdac_learner import EA_GAVDACLearner
 from learners.gavdac_learner import GAVDACLearner
+from learners.small_init_learner import SmallInitGAVDACLearner, small_init_enabled
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -175,7 +177,9 @@ def _run_with_runner(args, logger, runner, resources):
                     logger, args,
                 )
     # Learner
-    if args.EA:
+    if small_init_enabled(args):
+        learner = SmallInitGAVDACLearner(mac, buffer.scheme, logger, args)
+    elif args.EA:
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
     else:
         learner = GAVDACLearner(mac, buffer.scheme, logger, args)
@@ -407,10 +411,18 @@ def _run_with_runner(args, logger, runner, resources):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
+    if small_init_enabled(args):
+        completion = {
+            **learner.diagnostics(), "joint_transitions": runner.t_env,
+            "agent_transitions": runner.t_env * args.n_agents, "ea_cycles": ea_cycle,
+        }
+        with (Path(args.local_results_path) / "h08_completion.json").open("x", encoding="utf-8") as file:
+            json.dump(completion, file, indent=2)
     logger.console_logger.info("Finished Training")
 
 
 def args_sanity_check(config, _log):
+    small_init_enabled(SN(**config))
     # set CUDA flags
     # config["use_cuda"] = True # Use cuda whenever possible!
     if config["use_cuda"] and not th.cuda.is_available():
