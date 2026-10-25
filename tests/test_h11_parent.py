@@ -306,7 +306,7 @@ class H11ParentTest(unittest.TestCase):
     def test_validation_diagnostics_load_and_actual_post_step_finite_guard(self):
         for name, value in (("actor_update_interval", True), ("actor_update_interval", 2.0),
                             ("actor_update_interval", 3), ("target_update_interval", False),
-                            ("target_update_interval", 1.0), ("target_update_interval", 2)):
+                            ("target_update_interval", 1.0), ("target_update_interval", 3)):
             args = SimpleNamespace(actor_update_interval=2, target_update_interval=1)
             setattr(args, name, value)
             with self.subTest(name=name, value=value), self.assertRaises(ValueError):
