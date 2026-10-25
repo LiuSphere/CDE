@@ -53,7 +53,7 @@ new engineering acceptance and immutable protocol freeze.
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
-| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Enabled-host engineering/C3readonlyaudit/NEW24incremental freeze guards perhost pass; independent protocol frozen | Eachseed beatsC3;ratio-of-means>=3%;separate parent-retention rule | 3fresh6Mformal runs online;715aux re-enabled after freeze but not added to H11;no economic result |
+| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Seed2training+primaryaccepted;2original707training healthy;protocol unchanged | Seed2saving-3.9553%,fails strictcost<C3;no single-seed3%threshold;complete3seedreport pending | Continue originalseed0/1 without earlystop/retry;715aux idle,not added to H11 |
 
 ## Isolated Execution Rounds
 
