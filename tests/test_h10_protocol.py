@@ -1,4 +1,4 @@
-"""Independent H10 protocol guards; no training, optimizer or environment."""
+"""Retired H10 guards: real baseline and synthetic candidate, no failed runtime."""
 
 import copy
 import json
@@ -22,7 +22,8 @@ from tools.freeze_h10_protocol import (
 class H10ProtocolTest(unittest.TestCase):
     def entries(self):
         workers = {"rollout_workers": 2, "learner_workers": 2}
-        return tuple(entry_config(name, workers) for name in ("gavdac_ea_main", "gavdac_c2_h10"))
+        parent = entry_config("gavdac_ea_main", workers)
+        return parent, {**parent, "name": "gavdac_c2_h10", "critic_center_generator_action": True}
 
     def test_real_entry_only_critic_generator_centering_and_retired_flags(self):
         parent, candidate = self.entries()
