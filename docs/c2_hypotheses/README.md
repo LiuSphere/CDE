@@ -18,6 +18,25 @@ rewriting any frozen artifact. None passes the mean3% condition, so their
 closed/reverted state is unchanged. The same gavdac remains paused; this
 clarification alone does not authorize a new launch or resume.
 
+## Experiment Lineage
+
+Beijing2026-10-25 user authorization permits descendants of promising
+variants and new attempts based on previously tested mechanisms, not a
+mandatory root reset after every round. One new delta per round; record all
+inherited mechanisms, exact parent/delta/rollback identities, complete seed
+results and keep/reject rationale. Final C3 success is distinct from
+exploratory parent retention. Compare against parent, original C2 and fixed
+C3 without attributing accumulated gains to the last delta.
+
+Rules: [lineage amendment](../c2_optimization.md#lineage-amendment-2026-10-25).
+Machine index: `results/c2opt21/lineage_registry_a.json`; future node records
+are new immutable artifacts, with index/status changes recorded incrementally.
+Working checkout=C2_ROOT; selected parent=none; active child=none. H03 is a
+candidate for review, not an adopted parent or confirmed causal improvement.
+H01-H10 below remain historical closed nodes; revisit only through a newly
+registered/qualified descendant, never old tokens or successful mains.
+Samegavdac remains paused; no new training or restoration is triggered here.
+
 | Hypothesis | Intervention | Engineering | Economic Gate | State |
 | --- | --- | --- | --- | --- |
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Closed; reverted69d60ef/62b1bfa;146tests passed |
@@ -52,8 +71,9 @@ This adoption does not alter or reopen the closed H01/H02results.
 
 ## Record Rules
 
-- One file per hypothesis, registered before algorithm changes. At most one
-  active hypothesis; no simultaneous interventions or parameter grid.
+- One file per new hypothesis/node, registered before algorithm changes.
+  At most one active child; one new intervention relative to its exact
+  recorded parent, no simultaneous new interventions or parameter grid.
 - Record the causal conjecture, single change, frozen comparator, success/
   failure criteria, exact commits, configuration, tokens, host/slot allocation,
   validation evidence, per-seed/mean results and rollback verification.
@@ -61,9 +81,12 @@ This adoption does not alter or reopen the closed H01/H02results.
   gradient change is not evidence that the cost target has been met.
 - Append dated observations and final decisions. Do not rewrite the original
   hypothesis or threshold after seeing results. Preserve failed records too.
-- On failure, revert the explicitly recorded implementation commits in reverse
-  order; preserve this ledger, protocol and raw artifacts. Record revert SHAs,
-  baseline-restoration checks and normal push before opening the next round.
+- Record fixed-C3 target status separately from incremental parent retention.
+  Retain a promising node only with complete accepted evidence and its
+  preregistered rationale/criterion. Otherwise revert child delta commits
+  in reverse order to the exact recorded parent, not necessarily C2_ROOT.
+  Preserve ledger/protocol/raw artifacts and record restoration checks,
+  revert SHAs and normal push before opening the next child.
 - On success, report all three seeds and limitations. Reused retained data
   remain exploratory, not independent superiority evidence.
 

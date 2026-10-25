@@ -3,7 +3,9 @@
 Authorized2026-10-21 by the user, separate from the immutable cmp20 campaign.
 The user approved freezing C3 and common experimental conditions, optimizing
 only C2 (including structural design), one hypothesis per round, committing
-each code change and reverting a failed hypothesis.
+each code change and preserving an explicit rollback destination. The
+Beijing2026-10-25 lineage amendment below permits incremental descendants
+of promising variants instead of mandatory return to the original baseline.
 
 ## Frozen Comparison
 
@@ -44,7 +46,7 @@ mean of per-seed percentage savings. Seed labels do not imply matched RNG.
 H01-H10 were registered and closed under the older EACH-seed3% plus
 ratio-of-means3% rule. Preserve their immutable protocols/results/archives
 and original closure decisions. A separately labelled new-rule reassessment
-does not retrain, re-evaluate, restore a retired algorithm or rewrite history.
+does not itself retrain, re-evaluate, restore an algorithm or rewrite history.
 The current authoritative gate is state.current_economic_gate; historical
 evaluation/closed-state candidate_maximum_cost fields are not current
 per-seed thresholds. New rounds must freeze independent guards for this
@@ -58,8 +60,9 @@ Success is an optimization target, not a promised attainable outcome.
 
 ## Round Lifecycle
 
-1. Register exactly one hypothesis, its single intervention, mechanical checks,
-   fixed configuration and success/failure rule before editing algorithm code.
+1. Select and record an exact parent version, then register one incremental
+   hypothesis relative to that parent, mechanical checks, fixed configuration,
+   final-target and parent-retention criteria before editing algorithm code.
 2. Implement it as an opt-in variant. Preserve baseline behavior by default.
    No simultaneous learning-rate, network-width, reward or EA schedule search.
 3. Test gradients/contracts, run a real smoke crossing warmup, a learner update
@@ -69,11 +72,13 @@ Success is an optimization target, not a promised attainable outcome.
    Store that exact implementation commit in the round record.
 5. Accept all three complete training runs and original-host/source evaluations.
    Do not change active source, judge from early losses or replace a bad seed.
-6. If any seed fails to beat its corresponding C3, or ratio-of-means saving
-   misses3%, mark the round failed, preserve all outputs and use git revert
-   on ONLY that round's implementation commit; normal push.
-   No reset/amend/force, no deletion, and no rollback of unrelated user work.
-   Register the next single hypothesis only after this round is closed.
+6. Report the fixed C3 final target separately from incremental progress.
+   Missing the final target need not discard a defensible improvement:
+   after all evidence is accepted, explicitly retain it as an exploratory
+   parent if its preregistered retention criteria pass. Otherwise normally
+   revert ONLY the child's registered delta commits to its exact parent.
+   Preserve all outputs; no reset/amend/force, deletion or unrelated rollback.
+   Close and record this decision before registering another child.
 7. Stop on all target conditions, or pause and ask on correctness/provenance,
    permissions, resource failures, ambiguous rollback conflicts or absence of
    a defensible next intervention. Do not fabricate success or keep retrying
@@ -84,6 +89,70 @@ recorded engineering tests and evaluation; there is no hidden parameter grid.
 Use the per-host exclusive-slot supervisor and same heartbeat with phase-aware ETA.
 When earliest remaining ETA>10minutes, reschedule near it and end the turn.
 No new automated training wave until tests and the current hypothesis freeze pass.
+
+## Lineage Amendment: 2026-10-25
+
+The user explicitly permits improving a promising tested hypothesis further,
+revisiting an earlier mechanism with a new defensible change, and building
+on a retained variant rather than always returning to the original C2 root.
+Only one new incremental intervention is active at a time. The complete
+inherited mechanism list is frozen alongside that delta; an accumulated
+multi-mechanism variant must not be presented as a root-isolated ablation.
+
+Keep three distinct references: the actual parent, the original C2 root,
+and the unchanged frozen C3 PPO/MAPPO. Report per-seed costs and ratio-of-means
+against all available accepted references, including regressions; do not
+attribute the total accumulated gain to the latest delta. A historical
+same-seed label is not paired RNG, and a numerical improvement on reused
+retained data is not independent evidence of causality or significance.
+
+Before implementation, each new node must record:
+
+- Unique node/round ID and parent ID, exact parent code commit or complete
+  reproducible code recipe, configuration, immutable protocol/result hashes,
+  qualification scope and selection rationale.
+- Original-root identity, all inherited mechanisms, the sole new delta,
+  primary basis, risks, mechanical tests and accumulated compute.
+- New implementation/delta commits, new source/config/data/tool/dependency
+  identities, parent equivalence checks, and exact rollback destination.
+- Fixed C3 final gate, a separate preregistered criterion for retaining or
+  replacing the parent, and the three-seed fresh-run budget.
+- Every host/slot/token/creation identity, validation-selected Actor and
+  evaluation artifact, all seed outcomes, parent/root/C3 differences, and
+  the final keep/reject/revisit decision with its evidence.
+
+Code inheritance is NOT checkpoint weight transfer or exact resume. Each
+formal child still uses exactly three fresh6Mphysical-joint runs including
+EA, the original seeds/hosts, validation-only Actor selection and frozen
+evaluation/inventory boundaries. No extra economic pilot, grid, seed
+replacement, lucky retry or early-stop-based promotion. A failed seed
+cannot be hidden by choosing a different Actor, day or metric.
+
+A parent may miss the final3% gate yet be useful for further exploration if
+its training/evaluation/provenance and engineering checks are accepted and
+the retention rationale is explicit. Passing the final C3 gate and being a
+promising exploratory parent are different statuses. Do not silently promote
+a parent from engineering-only or incomplete/invalid evidence.
+
+H01-H10 remain closed with their original commits, results and reversions.
+Revisiting one is a NEW registered lineage node with new outputs, not a
+reopened old run. The earlier blanket ban on reusing a tested economic
+mechanism is superseded only to this extent: a chosen parent/descendant
+must be explicitly reconstructed and qualified as new opt-in code. Never
+execute old successful freeze/launch/accept/copy mains, reuse old tokens,
+restore a known correctness failure or silently enable unrelated retired
+flags. New guards must enumerate the exact inherited mechanisms and reject
+all others. Active host source remains immutable.
+
+Use `state.research_lineage_policy` and the node records indexed by
+`results/c2opt21/lineage_registry_a.json`. New node artifacts are immutable;
+index/status changes retain incremental history. Distinguish working
+checkout, selected parent and active child. At this amendment the working
+code is the restored root, no parent/child is selected, and H03 is only a
+review candidate because all three historical seeds beat C3 while mean
+saving is1.3118%. That observation does not establish reproducible
+improvement or authorize restoring its code/runs. The same gavdac remains
+paused; this policy update does not automatically launch or resume anything.
 
 ## H01: Action-Only Actor Gradient Through the Mixer
 
