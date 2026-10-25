@@ -26,9 +26,29 @@ each code change and reverting a failed hypothesis.
 - Freeze C3 using the original evaluation manifests and accepted trajectory
   hashes. Preserve cmp20, including its unapproved MILP acceptance decision.
 
-The3% target means1-cost(C2)/cost(C3)>=0.03 for EACH seed label and for
-the ratio of three-seed mean costs. It does not mean a3percentage-point
-increase in savings versus the rule. Seed labels do not imply matched RNG.
+Current user clarification, Beijing2026-10-25:
+
+- EACH seed must have strictly lower economic_cost than its corresponding
+  frozen C3 PPO/MAPPO seed: cost(C2,seed)<cost(C3,seed).
+- The ratio of three-seed mean costs must save at least3%:
+  1-mean(cost(C2))/mean(cost(C3))>=0.03.
+- There is NO per-seed3% requirement. A seed saving1% is acceptable if all
+  seeds beat C3 and the ratio-of-means gate passes. Equality with C3 fails
+  the strict per-seed improvement condition.
+
+The comparator remains the existing frozen C3 MAPPO; "PPO" does not replace
+it with another implementation, Actor or evaluation. This is a cost
+reduction, not a3percentage-point increase versus the rule, nor an arithmetic
+mean of per-seed percentage savings. Seed labels do not imply matched RNG.
+
+H01-H10 were registered and closed under the older EACH-seed3% plus
+ratio-of-means3% rule. Preserve their immutable protocols/results/archives
+and original closure decisions. A separately labelled new-rule reassessment
+does not retrain, re-evaluate, restore a retired algorithm or rewrite history.
+The current authoritative gate is state.current_economic_gate; historical
+evaluation/closed-state candidate_maximum_cost fields are not current
+per-seed thresholds. New rounds must freeze independent guards for this
+clarified rule rather than execute retired H01-H10 freeze mains.
 
 Repeated iteration after observing the retained comparison makes this an
 EXPLORATORY benchmark-development campaign. Do not call the final selected
@@ -49,8 +69,9 @@ Success is an optimization target, not a promised attainable outcome.
    Store that exact implementation commit in the round record.
 5. Accept all three complete training runs and original-host/source evaluations.
    Do not change active source, judge from early losses or replace a bad seed.
-6. If any seed or the mean misses3%, mark the round failed, preserve all outputs
-   and use git revert on ONLY that round's implementation commit; normal push.
+6. If any seed fails to beat its corresponding C3, or ratio-of-means saving
+   misses3%, mark the round failed, preserve all outputs and use git revert
+   on ONLY that round's implementation commit; normal push.
    No reset/amend/force, no deletion, and no rollback of unrelated user work.
    Register the next single hypothesis only after this round is closed.
 7. Stop on all target conditions, or pause and ask on correctness/provenance,
@@ -65,6 +86,9 @@ When earliest remaining ETA>10minutes, reschedule near it and end the turn.
 No new automated training wave until tests and the current hypothesis freeze pass.
 
 ## H01: Action-Only Actor Gradient Through the Mixer
+
+Historical registration below retains its original pre-clarification gate.
+For future rounds use the current clarified gate above.
 
 Hypothesis: allowing Actor parameters to change the critic's attention context
 directly during policy optimization creates a non-action gradient route.

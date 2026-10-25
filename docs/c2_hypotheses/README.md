@@ -5,6 +5,19 @@ Version-controlled records for the exploratory campaign in
 Raw artifacts and live slot/ETA state stay in `results/c2opt21/`.
 The original `results/cmp20/` campaign remains separate and preserved.
 
+## Current Gate
+
+User clarified Beijing2026-10-25: every seed must strictly beat its
+corresponding frozen C3 PPO/MAPPO economic_cost; only the ratio of three-seed
+mean costs must save at least3%. There is no per-seed3% requirement.
+See [current protocol](../c2_optimization.md#frozen-comparison).
+H01-H10 rows below retain their historical registered decisions and
+per-seed3% counts. NEW `results/c2opt21/gate_reassessment_a.json` separately
+applies the clarified rule to original recorded costs, without rerunning or
+rewriting any frozen artifact. None passes the mean3% condition, so their
+closed/reverted state is unchanged. The same gavdac remains paused; this
+clarification alone does not authorize a new launch or resume.
+
 | Hypothesis | Intervention | Engineering | Economic Gate | State |
 | --- | --- | --- | --- | --- |
 | [H01](H01.md) | Fix mixer context during Actor optimization | Passed | Failed all3seed gates and mean | Closed; reverted69d60ef/62b1bfa;146tests passed |
