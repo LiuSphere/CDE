@@ -35,12 +35,28 @@ def _initialize(args, scheme, barrier, transport=None):
     args.learner_workers = 0
     _scheme, _groups = scheme, {"agents": args.n_agents}
     mac = CQMixMAC(scheme, _groups, args)
-    _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
+    from learners.delayed_actor_learner import (
+        DelayedActorGAVDACLearner, validate_update_intervals,
+    )
+    actor_interval, _ = validate_update_intervals(args)
+    if actor_interval == 2:
+        _learner = DelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
+    else:
+        _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
     _transport = transport
     barrier.wait(timeout=120)
 
 
 def _ready():
+    return os.getpid()
+
+
+def _discard_actor(round_id):
+    global _pending
+    if _pending is None or _pending[0] != round_id:
+        raise RuntimeError("Discard needs the matching cached critic round")
+    _pending = None
+    _learner.mac.hidden_states = _learner.mac.hidden_states.detach()
     return os.getpid()
 
 
@@ -260,3 +276,15 @@ class GradientPool:
     def close(self):
         for executor in self.executors:
             executor.shutdown(wait=True, cancel_futures=True)
+
+    def discard_actor(self, batch):
+        if self.pending_batch is not batch:
+            raise RuntimeError("Discard must reuse the same critic batch")
+        count = min(batch.batch_size, self.workers)
+        futures = [executor.submit(_discard_actor, self.round_id)
+                   for executor in self.executors[:count]]
+        pids = tuple(future.result() for future in futures)
+        if pids != self.pids[:count]:
+            raise RuntimeError("Discard shard changed worker identity")
+        self.last_phase_pids["discard"] = pids
+        self.pending_batch = None

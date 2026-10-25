@@ -33,7 +33,8 @@ Machine index: `results/c2opt21/lineage_registry_a.json`; future node records
 are new immutable artifacts, with index/status changes recorded incrementally.
 At the lineage amendment working checkout=C2_ROOT and no parent was chosen.
 After explicit resume, H11 selects H03 as its historical exploratory parent;
-new parent reconstruction/qualification and H11 implementation remain pending.
+new parent mechanical reconstruction is qualified; complete parent/child
+engineering and H11 child implementation remain pending.
 This is not a confirmed causal improvement or a restored training identity.
 H01-H10 below remain historical closed nodes; revisit only through a newly
 registered/qualified descendant, never old tokens or successful mains.
@@ -52,7 +53,7 @@ new engineering acceptance and immutable protocol freeze.
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
-| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Parent/source and algebra review only; production qualification pending | Eachseed beatsC3;ratio-of-means>=3%;separate parent-retention rule | Preregistered after resume;no implementation/formal/economic result |
+| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | NEW parent9mechanical+4scope checks pass; full parent/child engineering pending | Eachseed beatsC3;ratio-of-means>=3%;separate parent-retention rule | Parent separately reconstructed;child implementation/formal/economic result pending |
 
 ## Isolated Execution Rounds
 
