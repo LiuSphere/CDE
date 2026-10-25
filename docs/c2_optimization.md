@@ -16,8 +16,10 @@ of promising variants instead of mandatory return to the original baseline.
   EA rollouts count toward C2's budget. No checkpoint weight transfer.
 - Same original hosts:707slot0seed0,707slot1seed1,local slot0seed2.
   CPU float32; OMP/MKL/OPENBLAS1thread. Check identities and exclusive slots.
-- A fourth auxiliary slot is authorized on arch715 via SSH alias715, without
-  migrating H01or adding a seed. See [execution hosts](c2_execution_hosts.md).
+- The historical fourth auxiliary slot on arch715 was disabled by the user
+  on2026-10-25. Use only local/0 and707/0,707/1; no715 checks or new jobs
+  without explicit reauthorization. Original formal seed hosts are unchanged.
+  See [execution hosts](c2_execution_hosts.md).
 - Validation-only checkpoint selection remains rows731-738 every10000steps.
   Freeze the RL Actor before exploratory retained comparison.
 - Main comparison is continuous SOC over rows913-1094, initialSOC0.35,

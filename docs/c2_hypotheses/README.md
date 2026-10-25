@@ -53,7 +53,7 @@ new engineering acceptance and immutable protocol freeze.
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
-| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Child12focused/294full plus19incremental launch guards pass; exclusive/remote pending | Eachseed beatsC3;ratio-of-means>=3%;separate parent-retention rule | Parent separately committed;child implemented;no formal/economic result |
+| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Enabled-host engineering and3exclusive smokes accepted; C3readonlyaudit passed; independent freeze pending | Eachseed beatsC3;ratio-of-means>=3%;separate parent-retention rule | User resumed3slots;715disabled;no formal/economic result |
 
 ## Isolated Execution Rounds
 
@@ -97,8 +97,9 @@ This adoption does not alter or reopen the closed H01/H02results.
 
 ## Scheduling
 
-Reuse the same `gavdac` heartbeat. One local, two SSH707 and one arch715 slot
-are authorized; readiness is checked separately. See
+Reuse the same `gavdac` heartbeat. Current enabled capacity is one local
+and two SSH707 slots; the user disabled arch715 on2026-10-25. Do not check
+or use715until explicit reauthorization. Readiness is checked separately. See
 [execution hosts](../c2_execution_hosts.md). H01still has only three seeds.
 Check every active slot and schedule at the earliest estimated completion plus
 a small buffer, not the end of the whole batch.
