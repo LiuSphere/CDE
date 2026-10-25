@@ -1,10 +1,12 @@
 # C2 Execution Hosts
 
-User authorized the fourth slot on2026-10-21 and disabled715 on2026-10-25.
-Current available capacity is three slots: local/0 and707/0,707/1.
-715 remains in the historical inventory but is not eligible for checks,
-credential synchronization, qualification or new launches until the user
-explicitly reauthorizes it. See `results/c2opt21/decision_074.md` and the
+User authorized the fourth slot on2026-10-21,disabled715 on2026-10-25,
+then explicitly re-enabled it the same day. Authorized capacity is four
+slots: local/0,707/0,707/1 and715/0. The715auxiliary slot is idle and its
+W&B HTTPS connectivity works; fresh-wave credential and code qualification
+are still required before new work. The running H11 frozen protocol remains
+exactly three original seeds/hosts and does not add715retroactively.
+See `results/c2opt21/decision_077.md` and the
 [optimization protocol](c2_optimization.md) and
 [hypothesis ledger](c2_hypotheses/README.md).
 Qualification and live occupancy belong in `results/c2opt21/state.json`;
@@ -15,7 +17,7 @@ an entry in this table alone is not proof that a host is ready or idle.
 | Local/0 | Local | Current Windows host | `C:/Users/xyx/Desktop/GDE-main` | 1 |
 | 707/0 | `707` | `arch707` | `/home/arch707/data/CDE` | 2 total |
 | 707/1 | `707` | `arch707` | `/home/arch707/data/CDE` | 2 total |
-| arch715/0 (disabled) | `715` | `arch715` | `/home/bless/projects/CDE_c2opt21` | 0 available; 1 physical |
+| arch715/0 (auxiliary; readiness pending) | `715` | `arch715` | `/home/bless/projects/CDE_c2opt21` | 1 |
 
 The configured alias `715` uses user `bless`, port2222. Plain `ssh arch715`
 does not select that alias and would use the wrong default port/user.
@@ -57,9 +59,10 @@ environment key from that task file. Apply the same isolation to future waves.
 
 ## Scheduling And Comparison Boundaries
 
-The current available capacity is three slots, not four seeds.
-The following fourth-slot procedures describe historical authorization;
-they do not override the2026-10-25 user disablement.
+The current authorized capacity is four slots,not four seeds.
+715is re-enabled for qualified auxiliary work; an idle slot or HTTPresponse
+alone does not establish credential/code qualification. Current H11 keeps
+its immutable three-seed host allocation and715exclusion.
 H01retains its three already-running seeds on their original hosts.
 Do not duplicate/migrate them or add a fourth seed to fill capacity.
 The extra slot can perform qualified auxiliary work consistent with the
