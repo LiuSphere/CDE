@@ -58,7 +58,7 @@ mechanism on a different recorded parent,not an old run/config restoration.
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
 | [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | All3training/primaryaccepted;24focused+306full restoration pass | 2/3strictseed gates;ratio-of-meanssaving-1.1150%;final+retention fail | Closed;child-only revert89b0954 to qualifiedparent4e3aa00;ledger/support/results preserved |
-| [H12](H12.md) | H03 parent Actor2/targets1; ONLY newdelta scaledunit-Huber Critic TD regression | Local321/707317full+exact4excluded;3smokes+C3audit;23supportguards/host+freeze;seed2training/primary accepted | Seed2cost343647.18174337293,3.05836%below C3 but418.609above parent;three-seed final/retention pending | Implementationde78e9c;runtime8883790;two707formal runs healthy;local0free;no three-seed decision |
+| [H12](H12.md) | H03 parent Actor2/targets1; ONLY newdelta scaledunit-Huber Critic TD regression | All3originaltraining/182dayprimary accepted;independentfreeze/raw/finite/physics checks pass | All3strictly<C3;mean343315.2311,saving1.34171%fails3%;retentionmean104.0436belowH03passes;seed2parentregression418.6091 | Closed retained_target_not_met;retain implementationde78e9c/support8883790;no economicrevert;nextchild requires newregistration |
 
 ## Isolated Execution Rounds
 
