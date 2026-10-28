@@ -15,20 +15,16 @@ def validate_update_intervals(args):
                         ("target_update_interval", target)):
         if type(value) is not int or value not in (1, 2):
             raise ValueError(f"{name} must be integer 1 or 2")
-    if target == 2 and actor != 2:
-        raise ValueError("target interval 2 requires actor interval 2")
+    if target != 1:
+        raise ValueError("Only the reconstructed parent target interval 1 is qualified")
     return actor, target
 
 
 class DelayedActorGAVDACLearner(GAVDACLearner):
-    target_update_interval = 1
-    diagnostics_filename = "h11_parent_diagnostics.json"
-    lineage_role = "H11_reconstructed_H03_parent"
-
     def __init__(self, mac, scheme, logger, args):
         actor, target = validate_update_intervals(args)
-        if actor != 2 or target != self.target_update_interval:
-            raise ValueError("Learner class does not match registered actor/target intervals")
+        if actor != 2:
+            raise ValueError("Reconstructed H03 parent requires actor interval 2")
         super().__init__(mac, scheme, logger, args)
         self.actor_update_interval = actor
         self.target_update_interval = target
@@ -129,7 +125,7 @@ class DelayedActorGAVDACLearner(GAVDACLearner):
 
     def write_diagnostics(self, path, **context):
         payload = {
-            "lineage_role": self.lineage_role,
+            "lineage_role": "H11_reconstructed_H03_parent",
             "actor_update_interval": self.actor_update_interval,
             "target_update_interval": self.target_update_interval,
             "target_update_tau": getattr(self.args, "target_update_tau", 0.001),
@@ -147,4 +143,4 @@ class DelayedActorGAVDACLearner(GAVDACLearner):
 
     def save_models(self, path):
         super().save_models(path)
-        self.write_diagnostics(Path(path) / self.diagnostics_filename)
+        self.write_diagnostics(Path(path) / "h11_parent_diagnostics.json")

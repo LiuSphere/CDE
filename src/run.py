@@ -20,7 +20,6 @@ from learners.gavdac_learner import GAVDACLearner
 from learners.delayed_actor_learner import (
     DelayedActorGAVDACLearner, validate_update_intervals,
 )
-from learners.delayed_targets_learner import DelayedTargetsGAVDACLearner
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -179,9 +178,7 @@ def _run_with_runner(args, logger, runner, resources):
                     logger, args,
                 )
     # Learner
-    if getattr(args, "target_update_interval", 1) == 2:
-        learner = DelayedTargetsGAVDACLearner(mac, buffer.scheme, logger, args)
-    elif getattr(args, "actor_update_interval", 1) == 2:
+    if getattr(args, "actor_update_interval", 1) == 2:
         learner = DelayedActorGAVDACLearner(mac, buffer.scheme, logger, args)
     elif args.EA:
         learner = EA_GAVDACLearner(mac, buffer.scheme, logger, args)
@@ -416,10 +413,8 @@ def _run_with_runner(args, logger, runner, resources):
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
     if isinstance(learner, DelayedActorGAVDACLearner):
-        completion = ("h11_completion.json" if isinstance(learner, DelayedTargetsGAVDACLearner)
-                      else "h11_parent_completion.json")
         learner.write_diagnostics(
-            Path(args.local_results_path) / completion,
+            Path(args.local_results_path) / "h11_parent_completion.json",
             joint_interactions=runner.t_env,
             agent_transitions=runner.t_env * args.n_agents,
             ea_cycles=ea_cycle,

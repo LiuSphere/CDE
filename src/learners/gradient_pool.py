@@ -38,11 +38,8 @@ def _initialize(args, scheme, barrier, transport=None):
     from learners.delayed_actor_learner import (
         DelayedActorGAVDACLearner, validate_update_intervals,
     )
-    from learners.delayed_targets_learner import DelayedTargetsGAVDACLearner
-    actor_interval, target_interval = validate_update_intervals(args)
-    if target_interval == 2:
-        _learner = DelayedTargetsGAVDACLearner(mac, scheme, _NoLog(), args)
-    elif actor_interval == 2:
+    actor_interval, _ = validate_update_intervals(args)
+    if actor_interval == 2:
         _learner = DelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
     else:
         _learner = GAVDACLearner(mac, scheme, _NoLog(), args)
