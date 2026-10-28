@@ -38,8 +38,13 @@ def _initialize(args, scheme, barrier, transport=None):
     from learners.delayed_actor_learner import (
         DelayedActorGAVDACLearner, validate_update_intervals,
     )
+    from learners.delayed_actor_huber_learner import (
+        HuberDelayedActorGAVDACLearner, huber_enabled,
+    )
     actor_interval, _ = validate_update_intervals(args)
-    if actor_interval == 2:
+    if huber_enabled(args):
+        _learner = HuberDelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
+    elif actor_interval == 2:
         _learner = DelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
     else:
         _learner = GAVDACLearner(mac, scheme, _NoLog(), args)

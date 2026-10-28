@@ -87,6 +87,11 @@ models or results. The full-connectivity mixer and continuous evaluation
 protocol are frozen before formal runs; MAPPO is a separate implementation.
 See `docs/paper_experiment_plan.md` for phase gates and interpretation limits.
 
+`gavdac_c2_h12` is the preregistered exploratory H03 Actor2/target1 child:
+only Critic TD regression changes to scaled unit-Huber. It is not H04's
+retired runtime. See `docs/c2_hypotheses/H12.md`; qualification and an
+independent immutable protocol are mandatory before formal dispatch.
+
 Execution of the fixed paper matrix is recorded in `docs/paper_execution.md`.
 Historical VMAS and optimizer/noise sweeps are preserved in the pre-cleanup backup
 and Git history, not in this active configuration directory.

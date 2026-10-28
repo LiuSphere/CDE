@@ -35,6 +35,36 @@ def git_source(commit, path):
     )
 
 
+def without_registered_h12_hooks(source):
+    if b"def _td_error_loss(" not in source:
+        return source
+    replacements = (
+        (
+            b'        huber = getattr(args, "scaled_huber_critic", False)\n'
+            b"        if type(huber) is not bool:\n"
+            b'            raise ValueError("scaled_huber_critic must be boolean")\n'
+            b'        if huber and not getattr(self, "scaled_huber_critic", False):\n'
+            b'            raise ValueError("scaled_huber_critic requires its explicit H12 learner")\n',
+            b"",
+        ),
+        (
+            b"        loss = self._td_error_loss(masked_td_error,\n",
+            b"        loss = (masked_td_error**2).sum() / (\n",
+        ),
+        (
+            b"    def _td_error_loss(self, masked_td_error, denominator):\n"
+            b"        return (masked_td_error**2).sum() / denominator\n\n",
+            b"",
+        ),
+    )
+    # Accept only the registered extraction, then check all other parent bytes.
+    for current, original in replacements:
+        if source.count(current) != 1:
+            raise AssertionError("Not the exact registered H12 neutral hook")
+        source = source.replace(current, original, 1)
+    return source
+
+
 def import_source(name, source, directory):
     path = Path(directory) / f"{name}.py"
     path.write_bytes(source)
@@ -127,8 +157,29 @@ class H11ParentTest(unittest.TestCase):
                      "src/controllers/cqmix_controller.py", "src/modules/policy.py",
                      "src/modules/critic.py", "src/modules/graph_mixer.py"):
             actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+            if path == "src/learners/gavdac_learner.py":
+                actual = without_registered_h12_hooks(actual)
             self.assertEqual(actual, git_source(PRE, path).replace(b"\r\n", b"\n"))
             self.assertEqual(actual, git_source(H03, path).replace(b"\r\n", b"\n"))
+
+    def test_registered_h12_hook_guard_rejects_unrelated_mutations(self):
+        path = "src/learners/gavdac_learner.py"
+        actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+        original = git_source(PRE, path).replace(b"\r\n", b"\n")
+        for before, after in (
+            (b"masked_td_error**2", b"masked_td_error**3"),
+            (b"mask.sum() if denominator", b"mask.mean() if denominator"),
+            (b"1e-3", b"2e-3"),
+            (b"self.args = args", b"self.args = copy.copy(args)"),
+        ):
+            with self.subTest(mutation=before):
+                self.assertIn(before, actual)
+                with self.assertRaises(AssertionError):
+                    self.assertEqual(
+                        without_registered_h12_hooks(actual.replace(before, after)),
+                        original,
+                    )
+        self.assertEqual(without_registered_h12_hooks(original), original)
 
     def test_serial_full_update_exact_against_committed_H03_across_bursts_transfer(self):
         for optimizer, mode in (("adam", "soft"), ("rmsprop", "hard")):

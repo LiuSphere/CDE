@@ -10,6 +10,11 @@ from modules.graph_mixer import GraphDec
 
 class GAVDACLearner:
     def __init__(self, mac, scheme, logger, args):
+        huber = getattr(args, "scaled_huber_critic", False)
+        if type(huber) is not bool:
+            raise ValueError("scaled_huber_critic must be boolean")
+        if huber and not getattr(self, "scaled_huber_critic", False):
+            raise ValueError("scaled_huber_critic requires its explicit H12 learner")
         workers = getattr(args, "learner_workers", 0)
         if isinstance(workers, bool) or not isinstance(workers, int) or workers < 0:
             raise ValueError("learner_workers must be a nonnegative integer")
@@ -142,10 +147,13 @@ class GAVDACLearner:
         td_error = targets.detach() - q_taken
         mask = mask.expand_as(td_error)
         masked_td_error = td_error * mask
-        loss = (masked_td_error**2).sum() / (
+        loss = self._td_error_loss(masked_td_error,
             mask.sum() if denominator is None else denominator
         )
         return actor_policy, critic_inputs, loss
+
+    def _td_error_loss(self, masked_td_error, denominator):
+        return (masked_td_error**2).sum() / denominator
 
     def _actor_loss(self, batch, actor_policy, critic_inputs):
         self.critic.init_hidden(batch.batch_size)
