@@ -58,7 +58,7 @@ mechanism on a different recorded parent,not an old run/config restoration.
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
 | [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | All3training/primaryaccepted;24focused+306full restoration pass | 2/3strictseed gates;ratio-of-meanssaving-1.1150%;final+retention fail | Closed;child-only revert89b0954 to qualifiedparent4e3aa00;ledger/support/results preserved |
-| [H12](H12.md) | H03 parent Actor2/targets1; ONLY newdelta scaledunit-Huber Critic TD regression | Local321/707317full+exact4excluded;3exclusive2/2smokes+C3readonlyaudit accepted | Eachseed<C3 ANDmean saving>=3%;retention separatelyeach<C3 ANDmean<343419.27471629175 | Implementationde78e9c;independentfreeze pending;no formal training/economics |
+| [H12](H12.md) | H03 parent Actor2/targets1; ONLY newdelta scaledunit-Huber Critic TD regression | Local321/707317full+exact4excluded;3smokes+C3audit;independent23supportguards/host+freeze accepted | Eachseed<C3 ANDmean saving>=3%;retention separatelyeach<C3 ANDmean<343419.27471629175 | Implementationde78e9c;runtime8883790;3freshformal runs initiallyhealthy;no completedtraining/primary/economics |
 
 ## Isolated Execution Rounds
 
