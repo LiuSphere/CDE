@@ -65,6 +65,26 @@ def without_registered_h12_hooks(source):
     return source
 
 
+def without_registered_h13_controller_selection(source):
+    if b"actor_feature_norm_enabled" not in source:
+        return source
+    replacements = (
+        (b"from modules.actor_feature_norm import LayerNormRNNAgent, actor_feature_norm_enabled\n", b""),
+        (
+            b"        if actor_feature_norm_enabled(args):\n"
+            b"            self.agent = LayerNormRNNAgent(self._get_input_shape(scheme), args)\n"
+            b"        else:\n"
+            b"            self.agent = RNNAgent(self._get_input_shape(scheme), args)\n",
+            b"        self.agent = RNNAgent(self._get_input_shape(scheme), args)\n",
+        ),
+    )
+    for current, original in replacements:
+        if source.count(current) != 1:
+            raise AssertionError("Not the exact registered H13 controller selection")
+        source = source.replace(current, original, 1)
+    return source
+
+
 def import_source(name, source, directory):
     path = Path(directory) / f"{name}.py"
     path.write_bytes(source)
@@ -159,8 +179,31 @@ class H11ParentTest(unittest.TestCase):
             actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
             if path == "src/learners/gavdac_learner.py":
                 actual = without_registered_h12_hooks(actual)
+            if path == "src/controllers/cqmix_controller.py":
+                actual = without_registered_h13_controller_selection(actual)
             self.assertEqual(actual, git_source(PRE, path).replace(b"\r\n", b"\n"))
             self.assertEqual(actual, git_source(H03, path).replace(b"\r\n", b"\n"))
+
+    def test_registered_h13_selection_rejects_unrelated_controller_mutations(self):
+        path = "src/controllers/cqmix_controller.py"
+        actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+        original = git_source(PRE, path).replace(b"\r\n", b"\n")
+        self.assertEqual(without_registered_h13_controller_selection(actual), original)
+        self.assertEqual(without_registered_h13_controller_selection(original), original)
+        for before, after in (
+            (b"if actor_feature_norm_enabled(args)", b"if True"),
+            (b"self.agent = LayerNormRNNAgent(", b"self.agent = RNNAgent("),
+            (b"inputs.append(batch[\"obs\"]", b"inputs.append(batch[\"state\"]"),
+            (b"0.5 * (actions + 1.0)", b"0.6 * (actions + 1.0)"),
+            (b"self.hidden_states = ret[\"hidden_state\"]", b"self.hidden_states = None"),
+        ):
+            with self.subTest(mutation=before):
+                self.assertIn(before, actual)
+                with self.assertRaises(AssertionError):
+                    self.assertEqual(
+                        without_registered_h13_controller_selection(actual.replace(before, after)),
+                        original,
+                    )
 
     def test_registered_h12_hook_guard_rejects_unrelated_mutations(self):
         path = "src/learners/gavdac_learner.py"
