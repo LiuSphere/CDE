@@ -262,6 +262,22 @@ class H12ProtocolTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "MP exception"):
                 protocol.validate_protection(state, {})
 
+    def test_probe_binary_stdin_and_original_transport_bytes_before_parse(self):
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            base = root / "results/c2opt21"
+            base.mkdir(parents=True)
+            stdout, stderr = b'{"original":true}\n', b"original-stderr\n"
+            result = SimpleNamespace(returncode=0, stdout=stdout, stderr=stderr)
+            with patch.object(protocol, "ROOT", root), patch.object(
+                    protocol.subprocess, "run", return_value=result) as run:
+                value = protocol.probe("local", protocol.HOSTS["local"][0], ["h12s0z"], [], 1)
+            self.assertEqual(value, {"original": True})
+            self.assertIsInstance(run.call_args.kwargs["input"], bytes)
+            self.assertEqual((base / "h12s0z_freeze_local.stdout").read_bytes(), stdout)
+            self.assertEqual((base / "h12s0z_freeze_local.stderr").read_bytes(), stderr)
+
     def snapshot(self, root):
         import torch
         checkpoint = root / "models/best_policies/rl/100"

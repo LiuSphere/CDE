@@ -30,7 +30,7 @@ MP_DEFAULT = "836837797231fd52c41881f9a7b002e842a1122b9cbf19e6f5e4570485bbcbab"
 HOSTS = {"local": (str(ROOT), 1), "707": ("/home/arch707/data/CDE", 2)}
 ADDITIONS = {"tools/freeze_h12_protocol.py", "tests/test_h12_protocol.py"}
 MANUSCRIPTS = {"paper/manuscript/sections/method.tex", "paper/manuscript/sections/modeling.tex"}
-FOCUSED_TESTS = 22
+FOCUSED_TESTS = 23
 C3_COSTS = (344913.0888879933, 344550.706793143, 354488.7203334839)
 PARENT_MEAN = 343419.27471629175
 RETIRED = (
@@ -318,7 +318,7 @@ def probe(host, root, tokens, actors, slots):
         command = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=15", host,
                    shlex.join(["uv", "--directory", root, "run", "--frozen", "python", "-c", HOST_PROBE])]
     result = subprocess.run(command, cwd=ROOT, input=json.dumps({
-        "host": host, "tokens": tokens, "actors": actors, "slots": slots}),
+        "host": host, "tokens": tokens, "actors": actors, "slots": slots}).encode("utf-8"),
         capture_output=True, timeout=120)
     # Preserve original transport output before parsing, including failed probes.
     base = ROOT / "results/c2opt21"
@@ -376,7 +376,7 @@ def freeze(state_path, tokens):
     require(set(subprocess.check_output(
         ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", head], cwd=ROOT, text=True).splitlines())
         == ADDITIONS, "Support commit must contain exactly the two independent additions")
-    tooling_path = base / "h12_protocol_tool_acceptance_a.json"
+    tooling_path = base / "h12_protocol_tool_acceptance_b.json"
     tooling = read(tooling_path)
     require(tooling["accepted"] is True and tooling["support_commit"] == head
             and set(tooling["hosts"]) == set(HOSTS), "Both formal-host focused qualifications required")
