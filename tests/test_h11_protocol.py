@@ -1,4 +1,4 @@
-"""H11 independent protocol guards; no formal training or retired runtime."""
+"""Retired H11 guards: actual root/parent and synthetic child, no rejected runtime."""
 
 import copy
 import json
@@ -15,8 +15,10 @@ from tools import freeze_h11_protocol as protocol
 
 class H11ProtocolTest(unittest.TestCase):
     def entries(self):
-        return [protocol.entry_config(name, {"rollout_workers": 2, "learner_workers": 2})
-                for name in ("gavdac_ea_main", "gavdac_c2_h11_parent", "gavdac_c2_h11")]
+        workers = {"rollout_workers": 2, "learner_workers": 2}
+        root = protocol.entry_config("gavdac_ea_main", workers)
+        parent = protocol.entry_config("gavdac_c2_h11_parent", workers)
+        return root, parent, {**parent, "name": "gavdac_c2_h11", "target_update_interval": 2}
 
     def test_actual_parent_child_entries_only_registered_delta(self):
         root, parent, child = self.entries()

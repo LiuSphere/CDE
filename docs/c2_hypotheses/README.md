@@ -32,14 +32,15 @@ Rules: [lineage amendment](../c2_optimization.md#lineage-amendment-2026-10-25).
 Machine index: `results/c2opt21/lineage_registry_a.json`; future node records
 are new immutable artifacts, with index/status changes recorded incrementally.
 At the lineage amendment working checkout=C2_ROOT and no parent was chosen.
-After explicit resume, H11 selects H03 as its historical exploratory parent;
-new parent mechanical reconstruction and child local regression are qualified;
-complete exclusive/remote engineering and independent freeze remain pending.
-This is not a confirmed causal improvement or a restored training identity.
-H01-H10 below remain historical closed nodes; revisit only through a newly
+After explicit resume, H11 selected H03 as its historical exploratory parent.
+All new engineering,three-seed training and primary evaluations were accepted,
+but both economic rules failed. The registered child-only normal revert
+restores qualifiedparent4e3aa00,not C2_ROOT;the parent and all evidence remain.
+NEW306restoration tests passed. This does not establish causal improvement.
+H01-H11 below remain historical closed nodes; revisit only through a newly
 registered/qualified descendant, never old tokens or successful mains.
-Samegavdac resumes for actual H11 development; no formal training before its
-new engineering acceptance and immutable protocol freeze.
+Samegavdac continues actual next-single-hypothesis review; no new formal
+training before preregistration,engineering acceptance and immutable freeze.
 
 | Hypothesis | Intervention | Engineering | Economic Gate | State |
 | --- | --- | --- | --- | --- |
@@ -53,7 +54,7 @@ new engineering acceptance and immutable protocol freeze.
 | [H08](H08.md) | Small initialization of only local Critic fc3 weight and bias | All3training/original-host primaryevaluations accepted | All3miss3%;ratio-of-means saving-0.4992%;targetfailed | Closed;reverted496e125;239restoration tests passed |
 | [H09](H09.md) | Remove only Actor normalized-action L2 penalty | All3training/originalhostprimaryevaluations accepted | Onlyseed2passes3%;ratio-of-meanssaving-2.9197%;targetfailed | Closed;revertedbdbba2f;255restoration tests passed |
 | [H10](H10.md) | Center only generator-fraction action input inside Critic | All3training/originalhostprimary accepted | Onlyseed2passes3%;ratio-of-meanssaving0.9429%;targetfailed | Closed;reverted9f368c7;273restoration tests passed;nextreview paused |
-| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | Seed2training+primaryaccepted;2original707training healthy;protocol unchanged | Seed2saving-3.9553%,fails strictcost<C3;no single-seed3%threshold;complete3seedreport pending | Continue originalseed0/1 without earlystop/retry;715aux idle,not added to H11 |
+| [H11](H11.md) | H03 parent Actor2; ONLY newdelta alltargets every2Criticsteps | All3training/primaryaccepted;24focused+306full restoration pass | 2/3strictseed gates;ratio-of-meanssaving-1.1150%;final+retention fail | Closed;child-only revert89b0954 to qualifiedparent4e3aa00;ledger/support/results preserved |
 
 ## Isolated Execution Rounds
 
