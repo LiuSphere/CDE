@@ -166,6 +166,24 @@ class H13ProtocolTest(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 protocol.validate_runtime({**value, key: bad})
 
+    def test_probe_keeps_original_C3_zero_workers_and_H13_explicit_two(self):
+        configs = dict(zip(("gavdac_ea_main", "gavdac_c2_h11_parent", "gavdac_c2_h12",
+                            "gavdac_c2_h13"), self.entries(), strict=True))
+        configs["gavdac_mappo"] = protocol.entry_config("gavdac_mappo")
+        def entry(name, overrides):
+            expected = {} if name == "gavdac_mappo" else {"rollout_workers": 2, "learner_workers": 2}
+            self.assertEqual(overrides, expected)
+            return configs[name]
+        with patch.object(protocol, "inventory", return_value={}), patch.object(
+                protocol, "entry_config", side_effect=entry) as load, patch.object(
+                protocol, "runtime_identity", return_value=self.runtime()):
+            result = protocol.inspect_host({"host": "local"})
+        self.assertEqual(load.call_count, 5)
+        self.assertEqual(result["configs"]["gavdac_mappo"]["rollout_workers"], 0)
+        self.assertEqual(result["configs"]["gavdac_mappo"]["learner_workers"], 0)
+        self.assertEqual(result["configs"]["gavdac_c2_h13"]["learner_workers"], 2)
+        self.assertEqual(result["configs"]["gavdac_c2_h13"]["rollout_workers"], 2)
+
     def test_original_three_seed_host_allocation_and_typed_processes(self):
         plans = protocol.make_plans(["h13s0a", "h13s1a", "h13s2a"])
         protocol.validate_plans(plans)

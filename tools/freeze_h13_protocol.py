@@ -39,7 +39,7 @@ MANUSCRIPTS = {
 }
 C3_COSTS = (344913.0888879933, 344550.706793143, 354488.7203334839)
 PARENT_MEAN = 343315.2310756934
-FOCUSED_TESTS = 25
+FOCUSED_TESTS = 26
 RETIRED = (
     "actor_mixer_context_grad", "clipped_double_critic", "five_step_critic",
     "critic_layer_norm", "target_policy_smoothing", "critic_small_output_init",
@@ -357,7 +357,8 @@ def inspect_host(payload):
             "shape": list(values.shape), "dtype": str(values.dtype),
             "sha256": hashlib.sha256(values.tobytes()).hexdigest(),
         }
-    result["configs"] = {name: entry_config(name, {"rollout_workers": 2, "learner_workers": 2})
+    result["configs"] = {name: entry_config(
+        name, {} if name == "gavdac_mappo" else {"rollout_workers": 2, "learner_workers": 2})
                          for name in ("gavdac_ea_main", "gavdac_c2_h11_parent", "gavdac_c2_h12",
                                       "gavdac_c2_h13", "gavdac_mappo")}
     result["runtime_identity"] = runtime_identity(result["configs"]["gavdac_c2_h13"])
