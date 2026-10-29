@@ -92,10 +92,6 @@ only Critic TD regression changes to scaled unit-Huber. It is not H04's
 retired runtime. See `docs/c2_hypotheses/H12.md`; qualification and an
 independent immutable protocol are mandatory before formal dispatch.
 
-`gavdac_c2_h13` inherits retained H12 and adds only per-example LayerNorm
-at Actor fc1 before ReLU. Its GRU, Critic, losses and schedules are unchanged.
-See `docs/c2_hypotheses/H13.md`; this is not an already-qualified formal run.
-
 Execution of the fixed paper matrix is recorded in `docs/paper_execution.md`.
 Historical VMAS and optimizer/noise sweeps are preserved in the pre-cleanup backup
 and Git history, not in this active configuration directory.

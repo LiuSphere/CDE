@@ -41,12 +41,8 @@ def _initialize(args, scheme, barrier, transport=None):
     from learners.delayed_actor_huber_learner import (
         HuberDelayedActorGAVDACLearner, huber_enabled,
     )
-    from learners.actor_norm_huber_learner import ActorNormHuberGAVDACLearner
-    from modules.actor_feature_norm import actor_feature_norm_enabled
     actor_interval, _ = validate_update_intervals(args)
-    if actor_feature_norm_enabled(args):
-        _learner = ActorNormHuberGAVDACLearner(mac, scheme, _NoLog(), args)
-    elif huber_enabled(args):
+    if huber_enabled(args):
         _learner = HuberDelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
     elif actor_interval == 2:
         _learner = DelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)

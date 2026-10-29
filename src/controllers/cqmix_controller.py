@@ -3,16 +3,12 @@ import torch as th
 from gymnasium import spaces
 
 from modules.policy import RNNAgent
-from modules.actor_feature_norm import LayerNormRNNAgent, actor_feature_norm_enabled
 
 class CQMixMAC:
     def __init__(self, scheme, groups, args):
         self.n_agents = args.n_agents
         self.args = args
-        if actor_feature_norm_enabled(args):
-            self.agent = LayerNormRNNAgent(self._get_input_shape(scheme), args)
-        else:
-            self.agent = RNNAgent(self._get_input_shape(scheme), args)
+        self.agent = RNNAgent(self._get_input_shape(scheme), args)
         self.hidden_states = None
         if not all(isinstance(space, spaces.Box) for space in args.action_spaces):
             raise ValueError("Only continuous Box action spaces are supported.")

@@ -23,8 +23,6 @@ from learners.delayed_actor_learner import (
 from learners.delayed_actor_huber_learner import (
     HuberDelayedActorGAVDACLearner, huber_enabled,
 )
-from learners.actor_norm_huber_learner import ActorNormHuberGAVDACLearner
-from modules.actor_feature_norm import actor_feature_norm_enabled
 from runners.episode_runner import EpisodeRunner
 from utils.logging import Logger
 from utils.timehelper import time_left, time_str
@@ -183,9 +181,7 @@ def _run_with_runner(args, logger, runner, resources):
                     logger, args,
                 )
     # Learner
-    if actor_feature_norm_enabled(args):
-        learner = ActorNormHuberGAVDACLearner(mac, buffer.scheme, logger, args)
-    elif huber_enabled(args):
+    if huber_enabled(args):
         learner = HuberDelayedActorGAVDACLearner(mac, buffer.scheme, logger, args)
     elif getattr(args, "actor_update_interval", 1) == 2:
         learner = DelayedActorGAVDACLearner(mac, buffer.scheme, logger, args)
@@ -421,14 +417,7 @@ def _run_with_runner(args, logger, runner, resources):
 
     if showcase is not None:
         showcase.publish_final(runner, mac, policy_store, runner.t_env)
-    if isinstance(learner, ActorNormHuberGAVDACLearner):
-        learner.write_diagnostics(
-            Path(args.local_results_path) / "h13_completion.json",
-            joint_interactions=runner.t_env,
-            agent_transitions=runner.t_env * args.n_agents,
-            ea_cycles=ea_cycle,
-        )
-    elif isinstance(learner, HuberDelayedActorGAVDACLearner):
+    if isinstance(learner, HuberDelayedActorGAVDACLearner):
         learner.write_diagnostics(
             Path(args.local_results_path) / "h12_completion.json",
             joint_interactions=runner.t_env,
@@ -448,7 +437,6 @@ def _run_with_runner(args, logger, runner, resources):
 def args_sanity_check(config, _log):
     validate_update_intervals(SN(**config))
     huber_enabled(SN(**config))
-    actor_feature_norm_enabled(SN(**config))
     # set CUDA flags
     # config["use_cuda"] = True # Use cuda whenever possible!
     if config["use_cuda"] and not th.cuda.is_available():
