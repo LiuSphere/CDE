@@ -41,8 +41,13 @@ def _initialize(args, scheme, barrier, transport=None):
     from learners.delayed_actor_huber_learner import (
         HuberDelayedActorGAVDACLearner, huber_enabled,
     )
+    from learners.signed_mixer_huber_learner import (
+        SignedMixerHuberGAVDACLearner, signed_mixer_enabled,
+    )
     actor_interval, _ = validate_update_intervals(args)
-    if huber_enabled(args):
+    if signed_mixer_enabled(args):
+        _learner = SignedMixerHuberGAVDACLearner(mac, scheme, _NoLog(), args)
+    elif huber_enabled(args):
         _learner = HuberDelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)
     elif actor_interval == 2:
         _learner = DelayedActorGAVDACLearner(mac, scheme, _NoLog(), args)

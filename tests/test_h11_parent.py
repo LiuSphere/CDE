@@ -65,6 +65,40 @@ def without_registered_h12_hooks(source):
     return source
 
 
+def without_registered_h14_hooks(source, path):
+    replacements = {
+        "src/learners/gavdac_learner.py": [(
+            b'        signed = getattr(args, "signed_mixer_hyperweights", False)\n'
+            b"        if type(signed) is not bool:\n"
+            b'            raise ValueError("signed_mixer_hyperweights must be boolean")\n'
+            b'        if signed and not getattr(self, "signed_mixer_hyperweights", False):\n'
+            b'            raise ValueError("signed_mixer_hyperweights requires its explicit H14 learner")\n',
+            b"", 1)],
+        "src/modules/graph_mixer.py": [
+            (b'        signed = getattr(args, "signed_mixer_hyperweights", False)\n'
+             b"        if type(signed) is not bool:\n"
+             b'            raise ValueError("signed_mixer_hyperweights must be boolean")\n', b"", 1),
+            (b'weights_operation="signed_sigmoid" if signed else "sigmoid",',
+             b'weights_operation="sigmoid",', 1)],
+        "src/modules/graph/gnn.py": [
+            (b'        elif self.weights_operation == "signed_sigmoid":\n'
+             b"            wout = 2 * torch.sigmoid(wout) - 1\n", b"", 1),
+            (b'if self.weights_operation in ("sigmoid", "signed_sigmoid"):',
+             b'if self.weights_operation == "sigmoid":', 1)],
+        "src/modules/graph/gin_layer.py": [
+            (b'        elif self.weights_operation == "signed_sigmoid":\n'
+             b"            weight1 = 2 * torch.sigmoid(weight1) - 1\n"
+             b"            weight2 = 2 * torch.sigmoid(weight2) - 1\n", b"", 1),
+            (b'if self.weights_operation in ("sigmoid", "signed_sigmoid"):',
+             b'if self.weights_operation == "sigmoid":', 2)],
+    }
+    for current, original, count in replacements.get(path, []):
+        if source.count(current) != count:
+            raise AssertionError("Not the exact registered H14 neutral hook")
+        source = source.replace(current, original)
+    return source
+
+
 def import_source(name, source, directory):
     path = Path(directory) / f"{name}.py"
     path.write_bytes(source)
@@ -155,8 +189,10 @@ class H11ParentTest(unittest.TestCase):
     def test_actual_root_and_parent_loss_sources_are_unchanged(self):
         for path in ("src/learners/gavdac_learner.py",
                      "src/controllers/cqmix_controller.py", "src/modules/policy.py",
-                     "src/modules/critic.py", "src/modules/graph_mixer.py"):
+                     "src/modules/critic.py", "src/modules/graph_mixer.py",
+                     "src/modules/graph/gnn.py", "src/modules/graph/gin_layer.py"):
             actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+            actual = without_registered_h14_hooks(actual, path)
             if path == "src/learners/gavdac_learner.py":
                 actual = without_registered_h12_hooks(actual)
             self.assertEqual(actual, git_source(PRE, path).replace(b"\r\n", b"\n"))
@@ -165,6 +201,7 @@ class H11ParentTest(unittest.TestCase):
     def test_registered_h12_hook_guard_rejects_unrelated_mutations(self):
         path = "src/learners/gavdac_learner.py"
         actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+        actual = without_registered_h14_hooks(actual, path)
         original = git_source(PRE, path).replace(b"\r\n", b"\n")
         for before, after in (
             (b"masked_td_error**2", b"masked_td_error**3"),
@@ -180,6 +217,35 @@ class H11ParentTest(unittest.TestCase):
                         original,
                     )
         self.assertEqual(without_registered_h12_hooks(original), original)
+
+    def test_registered_h14_hooks_reject_missing_selection_and_unrelated_source_mutations(self):
+        changes = {
+            "src/learners/gavdac_learner.py": [
+                (b"if signed and not getattr", b"if not signed and not getattr"),
+                (b"mask.sum() if denominator", b"mask.mean() if denominator"),
+                (b"1e-3", b"2e-3")],
+            "src/modules/graph_mixer.py": [
+                (b'if signed else "sigmoid"', b'if signed else "abs"'),
+                (b"F.softmax(attention", b"F.relu(attention"),
+                (b"hidden_states).view", b"hidden_states.detach()).view")],
+            "src/modules/graph/gnn.py": [
+                (b"2 * torch.sigmoid(wout) - 1", b"torch.sigmoid(wout) - 1"),
+                (b"scalar_out * self.weight_scale", b"scalar_out * 0.2"),
+                (b"torch.sum(features * alive", b"torch.sum(features + alive")],
+            "src/modules/graph/gin_layer.py": [
+                (b"weight2 = 2 * torch.sigmoid(weight2) - 1", b"weight2 = torch.sigmoid(weight2)"),
+                (b"torch.matmul(adjacency, input_features)", b"torch.matmul(adjacency, input_features.detach())"),
+                (b"self.b1(states)", b"self.b2(states)")],
+        }
+        for path, mutations in changes.items():
+            actual = (ROOT / path).read_bytes().replace(b"\r\n", b"\n")
+            expected = git_source("8883790a9508cc6144c578bb3f6cf11571844961", path).replace(b"\r\n", b"\n")
+            self.assertEqual(without_registered_h14_hooks(actual, path), expected)
+            for before, after in mutations:
+                with self.subTest(path=path, mutation=before):
+                    self.assertIn(before, actual)
+                    with self.assertRaises(AssertionError):
+                        self.assertEqual(without_registered_h14_hooks(actual.replace(before, after), path), expected)
 
     def test_serial_full_update_exact_against_committed_H03_across_bursts_transfer(self):
         for optimizer, mode in (("adam", "soft"), ("rmsprop", "hard")):

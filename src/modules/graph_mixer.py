@@ -17,6 +17,9 @@ class GraphDec(nn.Module):
         self.embed_dim = args.mixing_embed_dim
         self.state_norm = nn.LayerNorm(self.state_dim)
         self.mixer_weight_scale = getattr(args, "mixer_weight_scale", 0.1)
+        signed = getattr(args, "signed_mixer_hyperweights", False)
+        if type(signed) is not bool:
+            raise ValueError("signed_mixer_hyperweights must be boolean")
         # The microgrid exchanges energy through one shared community bus, so
         # every agent is physically reachable from every other agent.
         self.register_buffer(
@@ -29,7 +32,7 @@ class GraphDec(nn.Module):
             hidden_layers=[self.embed_dim],
             state_dim=self.state_dim,
             hypernet_embed=args.hypernet_embed,
-            weights_operation="sigmoid",
+            weights_operation="signed_sigmoid" if signed else "sigmoid",
             weight_scale=self.mixer_weight_scale,
         )
         self.obs_enc_dim = 16
