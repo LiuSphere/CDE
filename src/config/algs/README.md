@@ -92,11 +92,6 @@ only Critic TD regression changes to scaled unit-Huber. It is not H04's
 retired runtime. See `docs/c2_hypotheses/H12.md`; qualification and an
 independent immutable protocol are mandatory before formal dispatch.
 
-`gavdac_c2_h14` is the preregistered retained-H12 child with bounded signed
-sigmoid hypernetwork weights in GIN w1/w2 and scalar readout. The original
-scale, Actor and H12 losses/cadence remain. See `docs/c2_hypotheses/H14.md`;
-NEW host qualification and an independent freeze are required before formal runs.
-
 Execution of the fixed paper matrix is recorded in `docs/paper_execution.md`.
 Historical VMAS and optimizer/noise sweeps are preserved in the pre-cleanup backup
 and Git history, not in this active configuration directory.

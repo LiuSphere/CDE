@@ -67,10 +67,8 @@ class GNN(nn.Module):
             wout = nn.ReLU()(wout)
         elif self.weights_operation == "sigmoid":
             wout = torch.sigmoid(wout)
-        elif self.weights_operation == "signed_sigmoid":
-            wout = 2 * torch.sigmoid(wout) - 1
         scalar_out = torch.matmul(readout.view(batch_size, 1, -1), wout)
-        if self.weights_operation in ("sigmoid", "signed_sigmoid"):
+        if self.weights_operation == "sigmoid":
             scalar_out = scalar_out * self.weight_scale
 
         if not compute_local_rewards:

@@ -47,17 +47,14 @@ class GINGraphConvolution(nn.Module):
         elif self.weights_operation == "sigmoid":
             weight1 = torch.sigmoid(weight1)
             weight2 = torch.sigmoid(weight2)
-        elif self.weights_operation == "signed_sigmoid":
-            weight1 = 2 * torch.sigmoid(weight1) - 1
-            weight2 = 2 * torch.sigmoid(weight2) - 1
         hidden = torch.matmul(aggregated, weight1)
-        if self.weights_operation in ("sigmoid", "signed_sigmoid"):
+        if self.weights_operation == "sigmoid":
             hidden = hidden * self.weight_scale
         hidden = torch.nn.functional.leaky_relu(
             hidden + self.b1(states).view(batch_size, 1, -1)
         )
         output = torch.matmul(hidden, weight2)
-        if self.weights_operation in ("sigmoid", "signed_sigmoid"):
+        if self.weights_operation == "sigmoid":
             # Scale the small contraction, not the per-sample weight matrix.
             output = output * self.weight_scale
         return output + self.b2(states).view(

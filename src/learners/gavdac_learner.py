@@ -10,11 +10,6 @@ from modules.graph_mixer import GraphDec
 
 class GAVDACLearner:
     def __init__(self, mac, scheme, logger, args):
-        signed = getattr(args, "signed_mixer_hyperweights", False)
-        if type(signed) is not bool:
-            raise ValueError("signed_mixer_hyperweights must be boolean")
-        if signed and not getattr(self, "signed_mixer_hyperweights", False):
-            raise ValueError("signed_mixer_hyperweights requires its explicit H14 learner")
         huber = getattr(args, "scaled_huber_critic", False)
         if type(huber) is not bool:
             raise ValueError("scaled_huber_critic must be boolean")
