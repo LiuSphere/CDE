@@ -1,5 +1,28 @@
 # C2 Single-Hypothesis Optimization
 
+## Final User Selection: 2026-10-30
+
+The user selected H03 as the primary algorithm and explicitly stopped
+iteration. The campaign is closed by user decision. Do not resume hypothesis
+review, register H15, retrain, re-evaluate or recreate the deleted gavdac
+automation without a new explicit request. This supersedes continuation
+instructions below; historical protocols and decisions remain unchanged.
+
+H03 uses Actor updates every2 successful Critic steps, original MSE TD loss
+and every-step target updates with tau.002. It excludes H12's Huber delta
+and H13/H14 changes. Its accepted original three-seed economic costs are
+344313.5095480575/342715.7419415101/343228.5726593077,
+mean343419.27471629175, sampleSD815.7761868530596.
+All three beat fixed C3; ratio-of-means saving is1.3118117592%, below the
+unchanged3% target. Selection does not convert that failed target into a pass
+or establish independent significance on reused retained data.
+
+This decision selects the algorithm and its existing original H03 results.
+It does not change the local H12-plus-support checkout, historical H12
+retention or remote runtime. Exact identities, selection scope and final
+stop are recorded in results/c2opt21/decision_100.md and
+results/c2opt21/h03_final_selection_a.json.
+
 Authorized2026-10-21 by the user, separate from the immutable cmp20 campaign.
 The user approved freezing C3 and common experimental conditions, optimizing
 only C2 (including structural design), one hypothesis per round, committing

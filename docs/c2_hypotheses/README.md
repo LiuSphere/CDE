@@ -5,6 +5,23 @@ Version-controlled records for the exploratory campaign in
 Raw artifacts and live slot/ETA state stay in `results/c2opt21/`.
 The original `results/cmp20/` campaign remains separate and preserved.
 
+## Final Selection And Stop: 2026-10-30
+
+The user selected **H03 as the primary algorithm** and stopped iteration.
+No further hypothesis, training, evaluation or automatic continuation is
+pending. The gavdac automation was already deleted and is not recreated.
+This final decision supersedes historical continuation instructions below.
+
+Use the original accepted H03 three-seed results: mean343419.27471629175,
+sampleSD815.7761868530596, all three strictly below fixed C3 and mean saving
+1.3118117592%. The original3% target remains unmet; historical closure,
+reversions, H12 retention and all negative evidence remain unchanged.
+H03 is Actor2/targets1tau.002 with original MSE, without H12 Huber.
+The local checkout still contains retained H12 and independent support;
+selecting the primary algorithm does not claim a runtime/default switch.
+See [H03](H03.md#final-user-selection-2026-10-30) and
+results/c2opt21/decision_100.md for the final record.
+
 ## Current Gate
 
 User clarified Beijing2026-10-25: every seed must strictly beat its
